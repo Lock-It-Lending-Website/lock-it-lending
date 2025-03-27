@@ -4,7 +4,7 @@ const Header: React.FC = () => {
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <a href="" className="flex items-center space-x-2">
+        <a href="/" className="flex items-center space-x-2">
         <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="Logo" className="h-10 w-auto" />
         </a>
         <nav className="hidden md:flex space-x-6 font-medium text-gray-800">

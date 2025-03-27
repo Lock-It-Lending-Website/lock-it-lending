@@ -90,7 +90,7 @@ const Home: React.FC = () => {
                 If you’re either Purchasing or refinancing, have the confidence to know you are working with the right team. Click Apply to sign up...
               </p>
               <a
-                href="#"
+                href="/"
                 className="inline-block bg-gold text-white px-6 py-2 rounded-full font-semibold shadow hover:opacity-90"
               >
                 Apply ↗
