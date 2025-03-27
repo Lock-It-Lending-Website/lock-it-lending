@@ -1,7 +1,7 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/Home";
-import Purchase from "./pages/Purchase";
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Home from './pages/Home';
+import Purchase from './pages/Purchase';
 
 const App: React.FC = () => {
   return (

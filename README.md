@@ -7,7 +7,9 @@ This guide is written to help anyone — even without coding experience — get 
 ---
 
 ## What This Project Does
+
 This website is a replica (and soon improvement!) of [https://lockitlending.com](https://lockitlending.com). It includes:
+
 - A beautiful homepage with sections (Hero, Purchase, Refinance, etc.)
 - A sticky header with navigation
 - A responsive layout that works on mobile and desktop
@@ -16,6 +18,7 @@ This website is a replica (and soon improvement!) of [https://lockitlending.com]
 ---
 
 ## Tools & Technologies
+
 - **React**: For building the user interface
 - **TypeScript**: Safer JavaScript with types
 - **Tailwind CSS**: For styling (utility-first)
@@ -25,6 +28,7 @@ This website is a replica (and soon improvement!) of [https://lockitlending.com]
 ---
 
 ## Folder Structure
+
 ```
 lockit-lending/
 ├── public/               # Static files
@@ -57,24 +61,31 @@ lockit-lending/
 ## How To Run This Locally
 
 ### Step 1: Install the tools
+
 1. Install [Node.js (LTS)](https://nodejs.org/en)
 2. (Optional) Install [VS Code](https://code.visualstudio.com/)
 
 ### Step 2: Open the project
+
 1. Clone or download the repo
 2. Open the folder in VS Code (or any editor)
 
 ### Step 3: Install the dependencies
+
 In the terminal:
+
 ```bash
 npm install
 ```
+
 This will install everything the website needs (React, Tailwind, etc.)
 
 ### Step 4: Start the development server
+
 ```bash
 npm start
 ```
+
 Open [http://localhost:3000](http://localhost:3000) in your browser — you should see the site!
 
 ---
@@ -82,20 +93,25 @@ Open [http://localhost:3000](http://localhost:3000) in your browser — you shou
 ## How To Update Content
 
 ### Change images:
+
 Put your new images in the `public/` folder, then reference them like:
+
 ```tsx
 <img src="/new-image.png" alt="something" />
 ```
 
 ### Change text:
+
 Go into the file inside `src/pages/` or `src/components/` and change the text like editing a document.
 
 ### Add new sections:
+
 Add a new `<section>` in `Home.tsx` or other page and style it with Tailwind.
 
 ---
 
 ## Known Issues / TODOs
+
 - ✅ Tailwind is working now
 - ✅ Routes go to the correct pages
 - ⚠️ Footer needs better styling to match the official site
@@ -106,6 +122,7 @@ Add a new `<section>` in `Home.tsx` or other page and style it with Tailwind.
 ---
 
 ## Features Still To Add
+
 Here’s what we still want to build:
 
 - [ ] Responsive mobile nav menu (hamburger style)
@@ -116,7 +133,6 @@ Here’s what we still want to build:
 
 ---
 
-
 ## Contribution Guide
 
 - Use `src/pages/` for pages
@@ -124,7 +140,6 @@ Here’s what we still want to build:
 - No need to learn React in depth — just copy/paste and edit text/images to help
 
 ---
-
 
 ## Code Quality Setup
 
@@ -134,13 +149,13 @@ We use **ESLint (Flat Config)** + **Prettier** to maintain clean, consistent cod
 
 ### Scripts Overview
 
-| Command                | Description                                 |
-|------------------------|---------------------------------------------|
-| `npm run lint`         | Lints the code for style & best practices   |
-| `npm run type-check`   | Runs TypeScript type checks                 |
-| `npm test`             | Runs all unit tests                         |
-| `npm run format`       | Formats the code using Prettier             |
-| `npm run format:check` | Checks if formatting is correct             |
+| Command                | Description                               |
+| ---------------------- | ----------------------------------------- |
+| `npm run lint`         | Lints the code for style & best practices |
+| `npm run type-check`   | Runs TypeScript type checks               |
+| `npm test`             | Runs all unit tests                       |
+| `npm run format`       | Formats the code using Prettier           |
+| `npm run format:check` | Checks if formatting is correct           |
 
 ---
 

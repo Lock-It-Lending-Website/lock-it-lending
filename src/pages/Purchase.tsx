@@ -1,6 +1,6 @@
-import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import React from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Home: React.FC = () => {
   return (
@@ -22,11 +22,7 @@ const Home: React.FC = () => {
               </p>
             </div>
             <div className="w-full md:w-1/2 mb-10 md:mb-0">
-              <img
-                src="/hero.jpg"
-                alt="Happy homeowners"
-                className="w-full rounded-lg shadow-md"
-              />
+              <img src="/hero.jpg" alt="Happy homeowners" className="w-full rounded-lg shadow-md" />
             </div>
           </div>
         </section>
