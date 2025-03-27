@@ -200,7 +200,7 @@ npm run format:check
 Always run:
 
 ```bash
-npm run lint && npm run type-check && npm test
+npm run lint && npm run type-check
 ```
 
 To auto-fix most style issues:

@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
   return (
@@ -20,8 +21,12 @@ const Home: React.FC = () => {
                 solution for home buyers before the need ever arises
               </p>
               <div className="flex justify-center md:justify-start gap-4">
-                <a href="#" className="bg-gold text-white font-semibold px-5 py-2 rounded-full shadow">Purchase</a>
-                <a href="#" className="border border-gold text-gold font-semibold px-5 py-2 rounded-full shadow">Refinance</a>
+              <Link to="/purchase" className="bg-gold text-white font-semibold px-5 py-2 rounded-full shadow">
+                Purchase
+              </Link>
+              <Link to="/refinance" className="border border-gold text-gold font-semibold px-5 py-2 rounded-full shadow">
+                Refinance
+              </Link>
               </div>
             </div>
             <div className="w-full md:w-1/2 mb-10 md:mb-0">
