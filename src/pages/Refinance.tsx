@@ -9,14 +9,12 @@ export default function Refinance() {
       <Header />
 
       <main className="main-content">
-        <section id="hero" className="bg-white py-24 px-4">
           <HeroSection
             title="Rate / Term Refinancing And"
             highlight="Cash Out"
             description="If you are wondering about your mortgage loan and if you can get a better deal, you can remove all of the uncertainty in just a few moments by getting the facts from one of our loan experts."
             image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Refinance.png`}
           />
-        </section>
         <FullRefinanceForm />
       </main>
 

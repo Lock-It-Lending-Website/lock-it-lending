@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import HeroSection from "../components/HeroSection";
 
 function Accordion({ title, content }: { title: string; content: string }) {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -24,28 +25,12 @@ export default function LoanPrograms() {
       <Header />
 
       <main className="bg-white">
-        {/* Hero Section */}
-        <section className="bg-white py-24 px-4">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
-            <div className="w-full md:w-1/2 mb-10 md:mb-0 md:pr-10">
-              <h1 className="text-5xl font-extrabold leading-tight mb-6">
-                What We <span className="text-gold">Offer</span>
-              </h1>
-              <p className="text-gray-700 text-lg font-semibold">
-                It is important to find the program that matches your long term and short-term goals. Our team selects from a wide array of lenders to help find the best possible solution for you and your family. Check out some of our programs below.
-              </p>
-            </div>
-            <div className="w-full md:w-1/2">
-              <img
-                src={`${process.env.PUBLIC_URL}/Lock-It-Lending-Loan-Programs.png`}
-                alt="Loan Program"
-                className="w-full rounded-lg shadow-md"
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Accordion + Form */}
+        <HeroSection
+          title="What We"
+          highlight="Offer"
+          description="It is important to find the program that matches your long term and short-term goals. Our team selects from a wide array of lenders to help find the best possible solution for you and your family. Check out some of our programs below."
+          image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Loan-Programs.png`}
+        />
         <section className="bg-gray-50 py-24 px-4">
           <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10">
             {/* Accordion */}
@@ -102,8 +87,8 @@ export default function LoanPrograms() {
                   className="w-full p-3 border rounded"
                 />
                 <div className="text-sm text-gray-600">
-                  <input type="checkbox" className="mr-2" />         
-By pressing “Submit” you are agreeing to receive a quote through the email provided and agreeing to Swift Home Loans Inc.'s Terms of Use, Privacy Policy,Email Policy and provide consent to receive text messages for important notifications about our services, updates on upcoming meetings, and replies from your dedicated representative. Message frequency varies. Message and data rates may apply. You can opt-out at any time by replying "STOP" to any message. Reply HELP for assistance.
+                  <input type="checkbox" className="mr-2" />
+                  By pressing “Submit” you are agreeing to receive a quote through the email provided and agreeing to Swift Home Loans Inc.'s Terms of Use, Privacy Policy,Email Policy and provide consent to receive text messages for important notifications about our services, updates on upcoming meetings, and replies from your dedicated representative. Message frequency varies. Message and data rates may apply. You can opt-out at any time by replying "STOP" to any message. Reply HELP for assistance.
                 </div>
                 <button
                   type="submit"
