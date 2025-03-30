@@ -20,20 +20,29 @@ export default function HeroSection({
   const layoutClass = reverseLayout ? 'md:flex-row-reverse' : 'md:flex-row';
 
   return (
-    <section className="bg-white py-24 px-4">
-      <div className={`max-w-7xl mx-auto flex flex-col ${layoutClass} items-center justify-between`}>
-        <div className="w-full md:w-1/2 text-center md:text-left">
-          <h1 className="text-5xl md:text-6xl font-extrabold leading-tight mb-4 text-black">
-            {title} <br />
-            <span className="text-gold">{highlight}</span>
-          </h1>
-          <p className="text-lg text-gray-700 max-w-md mx-auto md:mx-0 mb-6">
-            {description}
-          </p>
-          {buttons && <div className="flex justify-center md:justify-start gap-4">{buttons}</div>}
+    <section className="w-full h-screen bg-white overflow-hidden">
+      <div className={`flex flex-col ${layoutClass} md:flex-row h-full`}>
+        <div className="w-full md:w-1/2 flex flex-col justify-center px-6 md:px-16 py-12 z-10">
+          <div className="ml-auto text-left max-w-[520px] w-full">
+            <h1 className="text-5xl md:text-[3.25rem] leading-tight md:leading-[3.75rem] font-extrabold text-black mb-4">
+              {title} <br />
+              <span className="text-gold">{highlight}</span>
+            </h1>
+            <p className="text-lg text-gray-700 font-semibold mb-2">
+              We believe everyone should be treated as if they lived next door.
+            </p>
+            <p className="text-base md:text-lg text-slate-600 mb-6">
+              {description}
+            </p>
+            {buttons && <div className="flex gap-4 flex-wrap">{buttons}</div>}
+          </div>
         </div>
-        <div className="w-full md:w-1/2 mb-10 md:mb-0">
-          <img src={image} alt="Hero visual" className="w-full rounded-lg shadow-md" />
+        <div className="w-full md:w-1/2 h-64 md:h-full">
+          <img
+            src={image}
+            alt="Hero visual"
+            className="w-full h-full object-cover"
+          />
         </div>
       </div>
     </section>
