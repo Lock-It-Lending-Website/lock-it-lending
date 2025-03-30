@@ -1,7 +1,7 @@
-import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import HeroSection from "../components/HeroSection";
+import React from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import HeroSection from '../components/HeroSection';
 
 function Accordion({ title, content }: { title: string; content: string }) {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -12,7 +12,7 @@ function Accordion({ title, content }: { title: string; content: string }) {
         className="w-full flex justify-between items-center py-4 font-semibold text-left"
       >
         {title}
-        <span>{isOpen ? "▲" : "▼"}</span>
+        <span>{isOpen ? '▲' : '▼'}</span>
       </button>
       {isOpen && <p className="pb-4 text-gray-600">{content}</p>}
     </div>
@@ -45,7 +45,7 @@ export default function LoanPrograms() {
               />
               <Accordion
                 title="Adjustable Rate"
-                content="For the times when long term interest rate security isn’t a priority and you only need the guarantee of a lower rate for short time."
+                content="For the times when long term interest rate security isn't a priority and you only need the guarantee of a lower rate for short time."
               />
               <Accordion
                 title="FHA Loans"
@@ -82,13 +82,16 @@ export default function LoanPrograms() {
                   placeholder="lilwebsite@lockitlending.com"
                   className="w-full p-3 border rounded"
                 />
-                <input
-                  placeholder="(866) 400-6789"
-                  className="w-full p-3 border rounded"
-                />
+                <input placeholder="(866) 400-6789" className="w-full p-3 border rounded" />
                 <div className="text-sm text-gray-600">
                   <input type="checkbox" className="mr-2" />
-                  By pressing “Submit” you are agreeing to receive a quote through the email provided and agreeing to Swift Home Loans Inc.'s Terms of Use, Privacy Policy,Email Policy and provide consent to receive text messages for important notifications about our services, updates on upcoming meetings, and replies from your dedicated representative. Message frequency varies. Message and data rates may apply. You can opt-out at any time by replying "STOP" to any message. Reply HELP for assistance.
+                  By pressing &quot;Submit&quot; you are agreeing to receive a quote through the
+                  email provided and agreeing to Swift Home Loans Inc.&apos;s Terms of Use, Privacy
+                  Policy,Email Policy and provide consent to receive text messages for important
+                  notifications about our services, updates on upcoming meetings, and replies from
+                  your dedicated representative. Message frequency varies. Message and data rates
+                  may apply. You can opt-out at any time by replying &quot;STOP&quot; to any
+                  message. Reply HELP for assistance.
                 </div>
                 <button
                   type="submit"

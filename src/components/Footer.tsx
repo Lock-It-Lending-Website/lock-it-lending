@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Footer = () => {
   return (
@@ -96,25 +96,30 @@ const Footer = () => {
               alt="BBB Accredited"
               className="h-8"
             />
-            <img
-              src={`${process.env.PUBLIC_URL}/logo.svg`}
-              alt="Lock It Lending"
-              className="h-8"
-            />
+            <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="Lock It Lending" className="h-8" />
           </div>
 
           {/* Center: Social Icons */}
           <div className="flex gap-4 text-lg text-gray-700">
-            <a href="#"><i className="fab fa-facebook-f"></i></a>
-            <a href="#"><i className="fab fa-instagram"></i></a>
-            <a href="#"><i className="fab fa-linkedin-in"></i></a>
+            <a href="#">
+              <i className="fab fa-facebook-f"></i>
+            </a>
+            <a href="#">
+              <i className="fab fa-instagram"></i>
+            </a>
+            <a href="#">
+              <i className="fab fa-linkedin-in"></i>
+            </a>
           </div>
 
           {/* Right: Copyright */}
           <div className="text-center md:text-right text-xs text-gray-600">
-            © 2024 Powered by <span className="font-semibold text-black">Swift Home Loans Inc.</span>
+            © 2024 Powered by{' '}
+            <span className="font-semibold text-black">Swift Home Loans Inc.</span>
             <br />
-            <a href="#" className="text-blue-600">NMLS #2075228</a>
+            <a href="#" className="text-blue-600">
+              NMLS #2075228
+            </a>
           </div>
         </div>
       </div>

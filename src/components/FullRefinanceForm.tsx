@@ -1,3 +1,5 @@
+import React from 'react';
+
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
@@ -10,8 +12,11 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function ThreeOptions({ options }: { options: string[] }) {
   return (
     <div className="flex flex-col md:flex-row gap-4">
-      {options.map((opt) => (
-        <div key={opt} className="flex-1 border p-4 rounded text-center text-gray-700 hover:shadow-md cursor-pointer">
+      {options.map(opt => (
+        <div
+          key={opt}
+          className="flex-1 border p-4 rounded text-center text-gray-700 hover:shadow-md cursor-pointer"
+        >
           {opt}
         </div>
       ))}
@@ -22,15 +27,17 @@ function ThreeOptions({ options }: { options: string[] }) {
 function MultiOptions({ options }: { options: string[] }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-      {options.map((opt) => (
-        <div key={opt} className="border p-4 rounded text-center text-gray-700 hover:shadow-md cursor-pointer">
+      {options.map(opt => (
+        <div
+          key={opt}
+          className="border p-4 rounded text-center text-gray-700 hover:shadow-md cursor-pointer"
+        >
           {opt}
         </div>
       ))}
     </div>
   );
 }
-
 
 export default function FullRefinanceForm() {
   return (
@@ -39,7 +46,7 @@ export default function FullRefinanceForm() {
 
       {/* Goals */}
       <Section title="What are your goals?">
-        <ThreeOptions options={["Lower my payment", "Take cash out", "Shorter term"]} />
+        <ThreeOptions options={['Lower my payment', 'Take cash out', 'Shorter term']} />
       </Section>
 
       {/* State Selection */}
@@ -54,32 +61,64 @@ export default function FullRefinanceForm() {
 
       {/* Property Usage */}
       <Section title="How's this property used?">
-        <ThreeOptions options={["Primary Residence", "Secondary Home", "Investment Property"]} />
+        <ThreeOptions options={['Primary Residence', 'Secondary Home', 'Investment Property']} />
       </Section>
 
       {/* Mortgage Balance */}
       <Section title="Current mortgage balance?">
-        <MultiOptions options={["Below 100K", "100K - 174K", "175K - 249K", "250K - 349K", "350K - 549K", "550K - 999K", "1M+"]} />
+        <MultiOptions
+          options={[
+            'Below 100K',
+            '100K - 174K',
+            '175K - 249K',
+            '250K - 349K',
+            '350K - 549K',
+            '550K - 999K',
+            '1M+',
+          ]}
+        />
       </Section>
 
       {/* Property Value */}
       <Section title="Estimated value of your property?">
-        <MultiOptions options={["Below 100K", "100K - 174K", "175K - 249K", "250K - 349K", "350K - 549K", "550K - 999K", "1M+"]} />
+        <MultiOptions
+          options={[
+            'Below 100K',
+            '100K - 174K',
+            '175K - 249K',
+            '250K - 349K',
+            '350K - 549K',
+            '550K - 999K',
+            '1M+',
+          ]}
+        />
       </Section>
 
       {/* Credit Score */}
       <Section title="Estimated credit score?">
-        <MultiOptions options={["740+", "700 - 739", "660 - 699", "600 - 659", "Below 600"]} />
+        <MultiOptions options={['740+', '700 - 739', '660 - 699', '600 - 659', 'Below 600']} />
       </Section>
 
       {/* Home Retention Duration */}
       <Section title="How long do you plan on keeping the home?">
-        <MultiOptions options={["Under a year", "1–2", "3–5", "6–9", "10+"]} />
+        <MultiOptions options={['Under a year', '1–2', '3–5', '6–9', '10+']} />
       </Section>
 
       {/* Language */}
       <Section title="What is your language preference?">
-        <MultiOptions options={["English", "Spanish", "Chinese", "Korean", "Tagalog", "Vietnamese", "Arabic", "Albanian", "Other"]} />
+        <MultiOptions
+          options={[
+            'English',
+            'Spanish',
+            'Chinese',
+            'Korean',
+            'Tagalog',
+            'Vietnamese',
+            'Arabic',
+            'Albanian',
+            'Other',
+          ]}
+        />
       </Section>
 
       {/* Contact Info */}
@@ -91,8 +130,8 @@ export default function FullRefinanceForm() {
         <input placeholder="Email" className="border rounded p-2 w-full mt-4" />
         <input placeholder="Phone Number" className="border rounded p-2 w-full mt-4" />
         <div className="mt-4 text-sm text-gray-600">
-          <input type="checkbox" className="mr-2" />
-          I agree to receive communications per the privacy policy.
+          <input type="checkbox" className="mr-2" />I agree to receive communications per the
+          privacy policy.
         </div>
       </Section>
 

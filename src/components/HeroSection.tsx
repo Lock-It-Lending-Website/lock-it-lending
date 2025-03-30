@@ -27,19 +27,13 @@ export default function HeroSection({
             <h1 className="text-5xl md:text-[3.25rem] leading-tight md:leading-[3.75rem] font-extrabold text-black mb-4">
               {title} <br />
               <span className="text-gold">{highlight}</span>
-            </h1>   
-            <p className="text-base md:text-lg text-slate-600 mb-6">
-              {description}
-            </p>
+            </h1>
+            <p className="text-base md:text-lg text-slate-600 mb-6">{description}</p>
             {buttons && <div className="flex gap-4 flex-wrap">{buttons}</div>}
           </div>
         </div>
         <div className="w-full md:w-1/2 h-64 md:h-full">
-          <img
-            src={image}
-            alt="Hero visual"
-            className="w-full h-full object-cover"
-          />
+          <img src={image} alt="Hero visual" className="w-full h-full object-cover" />
         </div>
       </div>
     </section>

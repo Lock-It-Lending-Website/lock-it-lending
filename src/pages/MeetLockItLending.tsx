@@ -22,11 +22,8 @@ const MeetLockItLending = () => {
             Meet the individuals who make Lock It Lending Possible
           </p>
           <div className="max-w-6xl mx-auto grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {teamMembers.map((member) => (
-              <div
-                key={member.name}
-                className="bg-white rounded-2xl shadow-md p-6 text-center"
-              >
+            {teamMembers.map(member => (
+              <div key={member.name} className="bg-white rounded-2xl shadow-md p-6 text-center">
                 <img
                   src={member.image}
                   alt={member.name}
@@ -50,14 +47,13 @@ const MeetLockItLending = () => {
         <section className="bg-white py-16 px-4">
           <h2 className="text-4xl font-bold text-center mb-6">Our Teams</h2>
           <p className="text-center text-gray-600 max-w-2xl mx-auto mb-10">
-            Lock It Lending has several branches across the country to help you with your mortgage needs. Our experienced loan officers are ready to assist you in finding the perfect mortgage for your dream home.
+            Lock It Lending has several branches across the country to help you with your mortgage
+            needs. Our experienced loan officers are ready to assist you in finding the perfect
+            mortgage for your dream home.
           </p>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-            {teamGroups.map((team) => (
-              <div
-                key={team.name}
-                className="rounded-xl overflow-hidden shadow-md relative group"
-              >
+            {teamGroups.map(team => (
+              <div key={team.name} className="rounded-xl overflow-hidden shadow-md relative group">
                 <img src={team.image} alt={team.name} className="w-full h-64 object-cover" />
                 <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-4">
                   <h3 className="font-bold text-lg">{team.name}</h3>

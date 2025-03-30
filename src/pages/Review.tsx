@@ -30,7 +30,6 @@ export default function Reviews() {
           title="Voices of Satisfaction:"
           highlight="Comprehensive Customer Reviews"
           description="Real Reviews from Real Customers: Hear What Our Clients Are Saying About Lock It Lending."
-
           image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Reviews.png`}
         />
 
@@ -41,11 +40,12 @@ export default function Reviews() {
               <span className="text-lg font-bold text-gray-800">911 Google Reviews</span>
             </div>
             <p className="text-gray-600 font-medium mb-8">
-              We’re proud to have earned the trust of hundreds of homeowners. Here's what a few had to say:
+              We&apos;re proud to have earned the trust of hundreds of homeowners. Here&apos;s what
+              a few had to say:
             </p>
 
             <div className="grid gap-6">
-              {reviews.map((review) => (
+              {reviews.map(review => (
                 <div
                   key={review.name + review.date}
                   className="bg-gray-50 border border-gray-200 p-6 rounded-xl shadow-sm text-left"

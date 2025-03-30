@@ -39,7 +39,7 @@ export default defineFlatConfig([
       indent: ['warn', 2],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-debugger': 'warn',
-
+      'react/no-unescaped-entities': 'off',
       ...react.configs.recommended.rules,
     },
   },
