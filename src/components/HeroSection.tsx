@@ -27,10 +27,7 @@ export default function HeroSection({
             <h1 className="text-5xl md:text-[3.25rem] leading-tight md:leading-[3.75rem] font-extrabold text-black mb-4">
               {title} <br />
               <span className="text-gold">{highlight}</span>
-            </h1>
-            <p className="text-lg text-gray-700 font-semibold mb-2">
-              We believe everyone should be treated as if they lived next door.
-            </p>
+            </h1>   
             <p className="text-base md:text-lg text-slate-600 mb-6">
               {description}
             </p>
