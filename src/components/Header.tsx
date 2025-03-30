@@ -23,7 +23,7 @@ const Header: React.FC = () => {
           <a href="/reviews" className="hover:text-gold">
             Reviews
           </a>
-          <a href="/mortgage-terms" className="hover:text-gold">
+          <a href="/glossary" className="hover:text-gold">
             Mortgage Terms
           </a>
           <a href="/resources" className="hover:text-gold">
