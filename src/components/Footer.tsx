@@ -101,13 +101,13 @@ const Footer = () => {
 
           {/* Center: Social Icons */}
           <div className="flex gap-4 text-lg text-gray-700">
-            <a href="#">
+            <a href="/">
               <i className="fab fa-facebook-f"></i>
             </a>
-            <a href="#">
+            <a href="/">
               <i className="fab fa-instagram"></i>
             </a>
-            <a href="#">
+            <a href="/">
               <i className="fab fa-linkedin-in"></i>
             </a>
           </div>
@@ -117,7 +117,7 @@ const Footer = () => {
             © 2024 Powered by{' '}
             <span className="font-semibold text-black">Swift Home Loans Inc.</span>
             <br />
-            <a href="#" className="text-blue-600">
+            <a href="/" className="text-blue-600">
               NMLS #2075228
             </a>
           </div>

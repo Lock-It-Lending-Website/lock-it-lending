@@ -30,7 +30,9 @@
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.{js,ts,tsx}\"",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.{js,ts,tsx,jsx,json,css,md}\""
+    "format": "prettier --write \"src/**/*.{js,ts,tsx,jsx,json,css,md}\"",
+    "prepare": "husky install",
+    "check-all": "npm run lint && npm run type-check && npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -64,6 +66,8 @@
     "eslint-plugin-react": "^7.37.4",
     "gh-pages": "^6.3.0",
     "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "tailwindcss": "^3.4.17",
