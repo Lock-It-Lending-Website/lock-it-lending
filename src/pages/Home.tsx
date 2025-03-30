@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+import HeroSection from '../components/HeroSection';
 
 const Home: React.FC = () => {
   return (
@@ -9,41 +10,28 @@ const Home: React.FC = () => {
       <Header />
 
       <main className="main-content">
-        {/* Hero Section */}
-        <section id="hero" className="bg-white py-24 px-4">
-          <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between">
-            <div className="w-full md:w-1/2 text-center md:text-left">
-              <h1 className="text-5xl font-extrabold leading-tight mb-4 text-black">
-                Welcome to <br /> Lock It Lending
-              </h1>
-              <p className="text-lg text-gray-700 max-w-md mx-auto md:mx-0 mb-6">
-                Offering industry-leading expertise and aggressive pricing, ensuring the best
-                solution for home buyers before the need ever arises
-              </p>
-              <div className="flex justify-center md:justify-start gap-4">
-                <Link
-                  to="/purchase"
-                  className="bg-gold text-white font-semibold px-5 py-2 rounded-full shadow"
-                >
-                  Purchase
-                </Link>
-                <Link
-                  to="/refinance"
-                  className="border border-gold text-gold font-semibold px-5 py-2 rounded-full shadow"
-                >
-                  Refinance
-                </Link>
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 mb-10 md:mb-0">
-              <img
-                src={`${process.env.PUBLIC_URL}/banner-952x952px.jpg`}
-                alt="Modern house"
-                className="w-full rounded-lg shadow-md"
-              />
-            </div>
-          </div>
-        </section>
+        <HeroSection
+          title="Welcome to"
+          highlight="Lock It Lending"
+          description="Offering industry-leading expertise and aggressive pricing, ensuring the best solution for home buyers before the need ever arises"
+          image={`${process.env.PUBLIC_URL}/banner-952x952px.jpg`}
+          buttons={
+            <>
+              <Link
+                to="/purchase"
+                className="bg-gold text-white font-semibold px-5 py-2 rounded-full shadow"
+              >
+                Purchase
+              </Link>
+              <Link
+                to="/refinance"
+                className="border border-gold text-gold font-semibold px-5 py-2 rounded-full shadow"
+              >
+                Refinance
+              </Link>
+            </>
+          }
+        />
 
         {/* Reviews Section */}
         <section className="bg-gray-50 py-24 px-4 text-center">
