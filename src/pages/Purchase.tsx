@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import states from '../constants/states';
+import emailjs from 'emailjs-com';
+
 import {
   Home,
   UserX,
@@ -50,6 +52,11 @@ const Purchase: React.FC = () => {
     { label: 'Other', icon: <MessageCircleQuestion /> }
   ];
 
+  const yesNoIcons = {
+    Yes: <ShieldCheck />,
+    No: <ShieldOff />
+  };
+  
   const [submitted, setSubmitted] = useState(false);
   type FormDataKey = keyof typeof formData;
 
@@ -57,10 +64,49 @@ const Purchase: React.FC = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+
+    const requiredFields: (keyof typeof formData)[] = [
+      'firstTimeBuyer',
+      'militaryService',
+      'processStage',
+      'state',
+      'propertyType',
+      'occupancy',
+      'purchasePrice',
+      'downPayment',
+      'creditScore',
+      'hasAgent',
+      'preferredLanguage',
+      'firstName',
+      'lastName',
+      'email',
+      'phone',
+    ];
+  
+    const missingFields = requiredFields.filter(
+      field => formData[field] === '' || formData[field] === false
+    );
+  
+    if (missingFields.length > 0) {
+      alert('Please fill out all required fields before submitting.');
+      return;
+    }
+  
+    if (!formData.consent) {
+      alert('Please agree to the communication policy before submitting.');
+      return;
+    }
+  
+    emailjs
+      .sendForm('service_id', 'template_id', formRef.current!, 'user_id')
+      .then(() => setSubmitted(true))
+      .catch(err => console.error(err));
   };
+  
 
   const renderOption = (field: FormDataKey, value: string, label?: string, icon?: React.ReactNode) => (
     <button
@@ -75,7 +121,7 @@ const Purchase: React.FC = () => {
   );
 
   return (
-    <div className="home-page font-sans">
+    <div className="home-page font-sans bg-gray-50 min-h-screen">
       <Header />
       <main className="main-content">
         <HeroSection

@@ -35,33 +35,27 @@ const yesNoIcons = {
   No: <ShieldOff />
 };
 
-const Refinance: React.FC = () => {
+const RatesPage: React.FC = () => {
   const [formData, setFormData] = useState({
     state: '',
-    occupancy: '',
-    mortgageBalance: '',
-    propertyValue: '',
+    firstTimeBuyer: '',
+    residencyType: '',
+    propertyType: '',
+    homePrice: '',
+    downPayment: '',
     creditScore: '',
-    retentionDuration: '',
-    preferredLanguage: '',
-    firstName: '',
-    lastName: '',
     email: '',
-    phone: '',
-    consent: false,
-    goals: ''
   });
 
-  const [submitted, setSubmitted] = useState(false);
   type FormDataKey = keyof typeof formData;
 
-  const handleChange = (field: FormDataKey, value: string | boolean) => {
+  const handleChange = (field: FormDataKey, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    console.log(formData);
   };
 
   const renderOption = (field: FormDataKey, value: string, label?: string, icon?: React.ReactNode) => (
@@ -81,109 +75,114 @@ const Refinance: React.FC = () => {
       <Header />
       <main className="main-content">
         <HeroSection
-          title="Rate / Term Refinancing And"
-          highlight="Cash Out"
-          description="If you are wondering about your mortgage loan and if you can get a better deal, you can remove all of the uncertainty in just a few moments by getting the facts from one of our loan experts."
-          image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Refinance.png`}
+          title="Get your rate"
+          highlight="without the call"
+          description="Answer a few questions to help us understand your needs better."
+          image={`${process.env.PUBLIC_URL}/form.png`}
         />
 
         <form onSubmit={handleSubmit} className="max-w-5xl mx-auto mt-10 px-6 pb-20">
-          {!submitted ? (
-            <div className="bg-white rounded-xl shadow-md border border-gray-300">
-              <div className="p-8 border-b border-yellow-500">
-                <h2 className="text-3xl font-extrabold text-gray-800"> Refinance Application</h2>
-                <p className="text-sm text-gray-500 mt-2">Tell us more to customize your refinance solution.</p>
+          <div className="bg-white rounded-xl shadow-md border border-gray-300">
+            <div className="p-8 border-b border-yellow-500">
+              <h2 className="text-3xl font-extrabold text-gray-800">Refinance Form</h2>
+              <p className="text-sm text-gray-500 mt-2">
+                Just answer a few quick questions below, and we’ll match you with your best refinancing options.
+              </p>
+            </div>
+
+            <div className="divide-y divide-gray-200">
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">Which state are you shopping in?</p>
+                <select
+                  className="w-full border border-gray-300 rounded p-2 focus:ring-yellow-500"
+                  value={formData.state}
+                  onChange={e => handleChange('state', e.target.value)}
+                >
+                  <option value="">Select option</option>
+                  {states.map(state => (
+                    <option key={state} value={state}>{state}</option>
+                  ))}
+                </select>
               </div>
 
-              <div className="divide-y divide-gray-200">
-                <div className="p-6">
-                  <p className="text-lg font-semibold mb-4">What are your goals?</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    {['Lower my payment', 'Take cash out', 'Shorter term'].map(opt => renderOption('goals', opt))}
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <p className="text-lg font-semibold mb-4">Which state are you shopping in?</p>
-                  <select
-                    className="w-full border border-gray-300 rounded p-2 focus:ring-yellow-500"
-                    value={formData.state}
-                    onChange={e => handleChange('state', e.target.value)}
-                  >
-                    <option value="">Select option</option>
-                    {states.map(state => (
-                      <option key={state} value={state}>{state}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="p-6">
-                  <p className="text-lg font-semibold mb-4">How is this property used?</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    {['Primary Residence', 'Secondary Home', 'Investment Property'].map(opt => renderOption('occupancy', opt))}
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <p className="text-lg font-semibold mb-4">Current mortgage balance?</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {['Below 100K','100K - 174K','175K - 249K','250K - 349K','350K - 549K','550K - 999K','1M+'].map(opt => renderOption('mortgageBalance', opt))}
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <p className="text-lg font-semibold mb-4">Estimated value of your property?</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {['Below 100K','100K - 174K','175K - 249K','250K - 349K','350K - 549K','550K - 999K','1M+'].map(opt => renderOption('propertyValue', opt))}
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <p className="text-lg font-semibold mb-4">Estimated credit score?</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {['740+', '700 - 739', '660 - 699', '600 - 659', 'Below 600'].map(opt => renderOption('creditScore', opt))}
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <p className="text-lg font-semibold mb-4">How long do you plan on keeping the home?</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {['Under a year', '1–2', '3–5', '6–9', '10+'].map(opt => renderOption('retentionDuration', opt))}
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <p className="text-lg font-semibold mb-4">Language preference</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {languageOptions.map(lang => renderOption('preferredLanguage', lang.label, lang.label, lang.icon))}
-                  </div>
-                </div>
-
-                <div className="p-6 space-y-4">
-                  <p className="text-lg font-semibold mb-4">Contact Info</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" placeholder="First Name" className="w-full border rounded p-2" value={formData.firstName} onChange={e => handleChange('firstName', e.target.value)} />
-                    <input type="text" placeholder="Last Name" className="w-full border rounded p-2" value={formData.lastName} onChange={e => handleChange('lastName', e.target.value)} />
-                  </div>
-                  <input type="email" placeholder="Email" className="w-full border rounded p-2" value={formData.email} onChange={e => handleChange('email', e.target.value)} />
-                  <input type="tel" placeholder="Phone Number" className="w-full border rounded p-2" value={formData.phone} onChange={e => handleChange('phone', e.target.value)} />
-                  <label className="flex items-start gap-2 text-sm text-gray-600">
-                    <input type="checkbox" checked={formData.consent} onChange={e => handleChange('consent', e.target.checked)} />
-                    I agree to receive communications per the privacy policy.
-                  </label>
-                </div>
-
-                <div className="p-6">
-                  <button type="submit" className="bg-yellow-600 text-white w-full py-3 rounded font-bold hover:bg-yellow-700">Submit</button>
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">Are you a first time home-buyer?</p>
+                <div className="grid grid-cols-2 gap-4">
+                  {(['Yes', 'No'] as const).map(opt => renderOption('firstTimeBuyer', opt, opt, yesNoIcons[opt]))}
                 </div>
               </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">Will this be your...</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {['Primary Residence', 'Secondary Home', 'Investment Property'].map(opt => renderOption('residencyType', opt))}
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">What type of property are you looking at?</p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {['Single Family', 'Multi Family', 'Condominium', 'Townhouse'].map(opt => renderOption('propertyType', opt))}
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-2">How much is the house?</p>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-500">$</span>
+                  <input
+                    type="text"
+                    value={formData.homePrice}
+                    onChange={e => handleChange('homePrice', e.target.value)}
+                    className="w-full border border-gray-300 rounded pl-7 pr-3 py-2 focus:outline-none"
+                    placeholder="100,000"
+                  />
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-2">How much money are you putting down?</p>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-500">$</span>
+                  <input
+                    type="text"
+                    value={formData.downPayment}
+                    onChange={e => handleChange('downPayment', e.target.value)}
+                    className="w-full border border-gray-300 rounded pl-7 pr-3 py-2 focus:outline-none"
+                    placeholder="20,000"
+                  />
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">Estimated credit score?</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {['740+', '700 - 739', '660 - 699', '600 - 659', 'Below 600'].map(opt => renderOption('creditScore', opt))}
+                </div>
+              </div>
+
+              <div className="p-6 space-y-4">
+                <p className="text-lg font-semibold">Email</p>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={e => handleChange('email', e.target.value)}
+                  placeholder="ExampleEmail@gmail.com"
+                  required
+                  className="w-full border rounded p-2"
+                />
+              </div>
+
+              <div className="p-6">
+                <button
+                  type="submit"
+                  className="w-full bg-yellow-600 text-white py-3 rounded-lg font-bold hover:bg-yellow-700"
+                >
+                  Submit
+                </button>
+              </div>
             </div>
-          ) : (
-            <div className="bg-white p-6 rounded-xl shadow border space-y-4 text-center">
-              <h2 className="text-2xl font-bold">Thank you!</h2>
-              <p className="text-gray-700">We’ve received your information and will contact you shortly.</p>
-            </div>
-          )}
+          </div>
         </form>
       </main>
       <Footer />
@@ -191,4 +190,4 @@ const Refinance: React.FC = () => {
   );
 };
 
-export default Refinance;
+export default RatesPage;
