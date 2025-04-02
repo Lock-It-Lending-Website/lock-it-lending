@@ -7,17 +7,13 @@ import emailjs from 'emailjs-com';
 
 import {
   Home,
-  UserX,
   UserCheck,
-  MapPin,
   FileText,
   BadgeCheck,
   Building2,
   Goal,
   Languages,
   MessageCircleQuestion,
-  ShieldCheck,
-  ShieldOff
 } from 'lucide-react';
 
 const Purchase: React.FC = () => {
@@ -52,11 +48,6 @@ const Purchase: React.FC = () => {
     { label: 'Other', icon: <MessageCircleQuestion /> }
   ];
 
-  const yesNoIcons = {
-    Yes: <ShieldCheck />,
-    No: <ShieldOff />
-  };
-  
   const [submitted, setSubmitted] = useState(false);
   type FormDataKey = keyof typeof formData;
 
