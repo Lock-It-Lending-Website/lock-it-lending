@@ -13,6 +13,7 @@
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "emailjs-com": "^3.2.0",
+    "framer-motion": "^12.6.3",
     "lucide-react": "^0.485.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -56,6 +57,7 @@
   "main": "index.js",
   "devDependencies": {
     "@eslint/js": "^9.23.0",
+    "@tailwindcss/typography": "^0.5.16",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
     "autoprefixer": "^10.4.21",

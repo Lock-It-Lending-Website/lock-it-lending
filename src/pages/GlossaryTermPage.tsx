@@ -6,7 +6,7 @@ import { glossaryData } from '../data/glossaryData';
 
 export default function GlossaryTermPage() {
   const { slug } = useParams<{ slug: string }>();
-  const termData = glossaryData.find((term) => term.slug === slug);
+  const termData = glossaryData.find(term => term.slug === slug);
 
   if (!termData) {
     return (
@@ -14,7 +14,9 @@ export default function GlossaryTermPage() {
         <Header />
         <main className="max-w-4xl mx-auto px-4 py-20 text-center">
           <h1 className="text-3xl font-bold text-red-600">Term not found</h1>
-          <p className="mt-4 text-gray-600">Please return to the glossary and select a valid term.</p>
+          <p className="mt-4 text-gray-600">
+            Please return to the glossary and select a valid term.
+          </p>
         </main>
         <Footer />
       </div>
@@ -27,9 +29,13 @@ export default function GlossaryTermPage() {
       <main className="max-w-5xl mx-auto px-4 py-16">
         {/* Breadcrumbs */}
         <div className="text-sm text-[#D6A849] font-medium mb-4 space-x-1">
-          <a href="/" className="hover:underline">Home</a>
+          <a href="/" className="hover:underline">
+            Home
+          </a>
           <span>{'>'}</span>
-          <a href="/glossary" className="hover:underline">Glossary</a>
+          <a href="/glossary" className="hover:underline">
+            Glossary
+          </a>
           <span>{'>'}</span>
           <span className="text-black">{termData.term}</span>
         </div>

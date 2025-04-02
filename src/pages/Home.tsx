@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
+import { motion } from 'framer-motion';
 
 const Home: React.FC = () => {
   return (
@@ -32,6 +33,54 @@ const Home: React.FC = () => {
             </>
           }
         />
+
+        {/* Neighborhood Section */}
+        <section className="py-24 bg-[#f7fbfd] px-4">
+          <div className="max-w-7xl mx-auto text-center">
+            <h2 className="text-4xl font-extrabold mb-4">See What’s New in the Neighborhood</h2>
+            <p className="text-lg text-gray-600 mb-10 font-semibold">
+              Learn about products, events, and many other great offering from Lock It Lending
+            </p>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: 'School Ratings',
+                  description: 'Find top-rated schools in your area.',
+                  image: `${process.env.PUBLIC_URL}/Be-Aware-of-Predatory-Lending-Practices.jpg`,
+                },
+                {
+                  title: 'Home Listings',
+                  description: 'Browse homes currently for sale nearby.',
+                  image: `${process.env.PUBLIC_URL}/What-are2-1Temporar-Rate-Buydowns.png`,
+                },
+                {
+                  title: 'Local Amenities',
+                  description: 'Explore parks, shops, and more around you.',
+                  image: `${process.env.PUBLIC_URL}/Making-Homeownership-More-Accessible.png`,
+                },
+              ].map((card, index) => (
+                <motion.div
+                  key={index}
+                  className="relative overflow-hidden rounded-xl shadow-lg group"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                >
+                  <img
+                    src={card.image}
+                    alt={card.title}
+                    className="w-full h-60 object-cover transform group-hover:scale-105 transition duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center text-white p-6">
+                    <h3 className="text-2xl font-bold mb-2">{card.title}</h3>
+                    <p className="text-sm">{card.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Reviews Section */}
         <section className="bg-gray-50 py-24 px-4 text-center">
@@ -86,7 +135,10 @@ const Home: React.FC = () => {
               <h2 className="text-3xl font-extrabold mb-4">Want to work with Lock It Lending</h2>
               <p className="text-gray-700 mb-6">
                 If you’re either Purchasing or refinancing, have the confidence to know you are
-                working with the right team. Click Apply to sign up...
+                working with the right team. Click Apply to sign up as one of Lock It Lending’s
+                Neighbors in our Neighborhood. Whether you are in process with a loan or have
+                questions, Lock It Lending will make you feel like a neighbor by answering all your
+                financing questions.
               </p>
               <a
                 href="/"
