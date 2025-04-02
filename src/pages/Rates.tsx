@@ -4,31 +4,9 @@ import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import states from '../constants/states';
 import {
-  Home,
-  UserX,
-  UserCheck,
-  MapPin,
-  FileText,
-  BadgeCheck,
-  Building2,
-  Goal,
-  Languages,
-  MessageCircleQuestion,
   ShieldCheck,
   ShieldOff
 } from 'lucide-react';
-
-const languageOptions = [
-  { label: 'English', icon: <Languages /> },
-  { label: 'Spanish', icon: <Languages /> },
-  { label: 'Chinese', icon: <Languages /> },
-  { label: 'Korean', icon: <Languages /> },
-  { label: 'Tagalog', icon: <Languages /> },
-  { label: 'Vietnamese', icon: <Languages /> },
-  { label: 'Arabic', icon: <Languages /> },
-  { label: 'Albanian', icon: <Languages /> },
-  { label: 'Other', icon: <MessageCircleQuestion /> }
-];
 
 const yesNoIcons = {
   Yes: <ShieldCheck />,
@@ -55,7 +33,6 @@ const RatesPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
   };
 
   const renderOption = (field: FormDataKey, value: string, label?: string, icon?: React.ReactNode) => (
