@@ -9,6 +9,7 @@ import Reviews from './pages/Review';
 import Glossary from './pages/Glossary';
 import Resources from './pages/Resources';
 import Rates from './pages/Rates';
+import GlossaryTermPage from './pages/GlossaryTermPage';
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
       <Route path="/resources" element={<Resources />} />
       <Route path="/rates" element={<Rates />} />
       <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/glossary/:slug" element={<GlossaryTermPage />} />
     </Routes>
   );
 };
