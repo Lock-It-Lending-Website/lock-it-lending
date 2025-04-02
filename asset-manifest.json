@@ -1,16 +1,13 @@
 {
   "files": {
-    "main.css": "/lockit-lending/static/css/main.f855e6bc.css",
-    "main.js": "/lockit-lending/static/js/main.358333b5.js",
-    "static/js/453.144cd63a.chunk.js": "/lockit-lending/static/js/453.144cd63a.chunk.js",
-    "static/media/logo.svg": "/lockit-lending/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "main.css": "/lockit-lending/static/css/main.81f08d1f.css",
+    "main.js": "/lockit-lending/static/js/main.1d53e3d4.js",
     "index.html": "/lockit-lending/index.html",
-    "main.f855e6bc.css.map": "/lockit-lending/static/css/main.f855e6bc.css.map",
-    "main.358333b5.js.map": "/lockit-lending/static/js/main.358333b5.js.map",
-    "453.144cd63a.chunk.js.map": "/lockit-lending/static/js/453.144cd63a.chunk.js.map"
+    "main.81f08d1f.css.map": "/lockit-lending/static/css/main.81f08d1f.css.map",
+    "main.1d53e3d4.js.map": "/lockit-lending/static/js/main.1d53e3d4.js.map"
   },
   "entrypoints": [
-    "static/css/main.f855e6bc.css",
-    "static/js/main.358333b5.js"
+    "static/css/main.81f08d1f.css",
+    "static/js/main.1d53e3d4.js"
   ]
 }
