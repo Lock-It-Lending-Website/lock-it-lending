@@ -72,7 +72,7 @@ export default function ResourceArticlePage() {
         {/* Content */}
         {article.content && (
           <div
-            className="prose max-w-none text-gray-800 mt-10"
+            className="prose max-w-none mt-10 [&_h1]:text-4xl [&_h2]:text-2xl [&_h3]:text-xl"
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
         )}

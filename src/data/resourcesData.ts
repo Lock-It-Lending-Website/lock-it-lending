@@ -34,20 +34,20 @@ export const resourcesData: ResourceArticle[] = [
       '2-1 Temporary Rate Buydowns: A Win-Win for Borrowers and Sellers Navigating the world of mortgages...',
     thumbnailUrl: `${process.env.PUBLIC_URL}/What-are2-1Temporar-Rate-Buydowns.png`,
     content: `
-      	<h2>2-1 Temporary Rate Buydowns: A Win-Win for Borrowers and Sellers</h2>
+      	<h2><strong>2-1 Temporary Rate Buydowns: A Win-Win for Borrowers and Sellers</strong></h2>
         <p>Navigating the world of mortgages can sometimes feel like treading through treacherous waters. But, understanding the options available can mean the difference between a stressful journey and smooth sailing. One such avenue available is the 2-1 Temporary Rate Buydown, an innovative program designed to benefit both sellers and borrowers. Let’s break it down.</p>
         <p>&nbsp;</p>
-        <h2>What is a Temporary Rate Buydown?</h2>
+        <h2><strong>What is a Temporary Rate Buydown?</strong></h2>
         <p>A Temporary Rate Buydown is an offering that allows borrowers to lower their interest rate for the initial 12 to 36 months of their mortgage. Think of it as an introductory rate to help homeowners ease into their mortgage responsibilities.</p>
         <p>&nbsp;</p>
-        <h2>There are two primary options to fund this buydown:</h2>
+        <h2><strong>There are two primary options to fund this buydown:</strong></h2>
         <p>Seller-Paid Buydown: Here, any seller concessions can be directed to cover the upfront fee associated with the temporary rate buydown.</p>
         <p>Lender-Paid LLPA Option: This option caters to covering the buydown cost when it’s lender-financed.</p>
         <p>&nbsp;</p>
-        <h2>Who stands to benefit?</h2>
+        <h2><strong>Who stands to benefit?</strong></h2>
         <p>Borrowers who either have seller concessions at their disposal or are keen on benefiting from a reduced interest rate during the onset of their mortgage are the primary beneficiaries. Notably, the borrower needs to qualify based on the initial note rate, ensuring their ability to manage the payments once the buydown period concludes.</p>
         <p>&nbsp;</p>
-        <h2>Why Consider a Temporary Rate Buydown?</h2>
+        <h2><strong>Why Consider a Temporary Rate Buydown?</strong></h2>
         <p>Seller Advantage: It’s a remarkable tool for sellers, especially if they’re having difficulty moving a property. By offering a temporary rate buydown, sellers can make their property more enticing without tampering with the listed price. It’s particularly useful in a market scenario where interest rates are soaring.</p>
         <p>&nbsp;</p>
         <h3><strong>Untapped Potential:</strong></h3>
@@ -63,7 +63,7 @@ export const resourcesData: ResourceArticle[] = [
         <h3><strong>Smooth Transition:</strong></h3>
         <p>For those transitioning from renting to buying, the initial reduced payments make the shift more manageable. It’s a cushioned start to the homeownership journey.</p>
         <p>&nbsp;</p>
-        <h2>In conclusion:</h2>
+        <h2><strong>In conclusion:</strong></h2>
         <p>The 2-1 Temporary Rate Buydown is a mutually beneficial program that can substantially improve the homeownership experience. It’s a strategic tool in the mortgage world that, when used judiciously, can pave the way for a secure and financially sound future.</p>
   `,
   },
@@ -80,7 +80,7 @@ export const resourcesData: ResourceArticle[] = [
     content: `	<h2><strong>Conventional 1% Down: Making Homeownership More Accessible</strong></h2>
 <p>In the realm of homeownership, one of the most significant hurdles many prospective homeowners face is the initial down payment. Traditionally, saving for this lump sum can be challenging. But thanks to innovative lending programs, like the “Conventional 1% Down,” there are now alternative avenues for homeownership. Let’s delve into the details and benefits of this groundbreaking initiative.</p>
 <p>&nbsp;</p>
-<h2>Understanding the Conventional 1% Down Program</h2>
+<h2><strong>Understanding the Conventional 1% Down Program</strong></h2>
 <p>The Conventional 1% Down is a lender-paid down payment assistance grant. It’s designed to pave the way for income-qualified borrowers, making it feasible for them to place just 1% down on their new home. The lender steps in to cover an additional 2% toward the down payment, up to $4,000. This collaboration ensures that borrowers can achieve a total of 3% down, a significant reduction in the initial financial burden.</p>
 <p>&nbsp;</p>
 <h2><strong>Who Benefits?</strong></h2>
@@ -90,8 +90,7 @@ export const resourcesData: ResourceArticle[] = [
 <p>&nbsp;</p>
 <p>A Competitive Edge for Business: For those in the mortgage and real estate sectors, this program can be a game-changer. By offering the Conventional 1% Down product, businesses can stand out, offering something uniquely tailored for affordability. Real estate agents, in particular, can benefit immensely by presenting this option to potential homeowners, ensuring an edge in a competitive market.</p>
 <p>&nbsp;</p>
-<h2>In Conclusion</h2>
-<p>&nbsp;</p>
+<h2><strong>In Conclusion</strong></h2>
 <p>The journey to homeownership, for many, can seem like an insurmountable challenge. With rising property prices and the traditional barriers of hefty down payments, many feel left out of the dream of owning a home. But with initiatives like the Conventional 1% Down, the horizon looks promising. By reducing the financial strain and aligning with established homeownership guidelines, this program is not just a pathway to homeownership; it’s a testament to the industry’s commitment to inclusivity.</p>`,
   },
 ];
