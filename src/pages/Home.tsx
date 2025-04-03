@@ -44,39 +44,44 @@ const Home: React.FC = () => {
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
-                  title: 'School Ratings',
-                  description: 'Find top-rated schools in your area.',
+                  title: 'Be Aware of Predatory Lending Practices',
+                  slug: 'be-aware-of-predatory-lending-practices',
+                  description: 'Learn how to protect yourself...',
                   image: `${process.env.PUBLIC_URL}/Be-Aware-of-Predatory-Lending-Practices.jpg`,
                 },
                 {
-                  title: 'Home Listings',
-                  description: 'Browse homes currently for sale nearby.',
+                  title: 'What are 2-1 Temporary Rate Buydowns?',
+                  slug: 'what-are-2-1-temporary-rate-buydowns',
+                  description:
+                    '2-1 Temporary Rate Buydowns: A Win-Win for Borrowers and Sellers...',
                   image: `${process.env.PUBLIC_URL}/What-are2-1Temporar-Rate-Buydowns.png`,
                 },
                 {
-                  title: 'Local Amenities',
-                  description: 'Explore parks, shops, and more around you.',
+                  title: 'Conventional 1% Down: Making Homeownership More Accessible',
+                  slug: 'conventional-1-down-making-homeownership-more-accessible',
+                  description: 'Conventional 1% Down: Making Homeownership More Accessible...',
                   image: `${process.env.PUBLIC_URL}/Making-Homeownership-More-Accessible.png`,
                 },
               ].map((card, index) => (
-                <motion.div
-                  key={index}
-                  className="relative overflow-hidden rounded-xl shadow-lg group"
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                >
-                  <img
-                    src={card.image}
-                    alt={card.title}
-                    className="w-full h-60 object-cover transform group-hover:scale-105 transition duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center text-white p-6">
-                    <h3 className="text-2xl font-bold mb-2">{card.title}</h3>
-                    <p className="text-sm">{card.description}</p>
-                  </div>
-                </motion.div>
+                <Link key={index} to={`/resources/${card.slug}`} className="block">
+                  <motion.div
+                    className="relative overflow-hidden rounded-xl shadow-lg group"
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                  >
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-60 object-cover transform group-hover:scale-105 transition duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center text-white p-6">
+                      <h3 className="text-2xl font-bold mb-2 text-center">{card.title}</h3>
+                      <p className="text-sm text-center">{card.description}</p>
+                    </div>
+                  </motion.div>
+                </Link>
               ))}
             </div>
           </div>

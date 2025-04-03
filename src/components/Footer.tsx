@@ -196,7 +196,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/resources/be-aware-of-predatory-lending-practice"
+                  href="/resources/be-aware-of-predatory-lending-practices"
                   className="hover:underline"
                 >
                   Be Aware of Predatory Lending Practices

@@ -13,7 +13,7 @@ export interface ResourceArticle {
 export const resourcesData: ResourceArticle[] = [
   {
     title: 'Be Aware of Predatory Lending Practices',
-    slug: 'be-aware-of-predatory-lending-practice',
+    slug: 'be-aware-of-predatory-lending-practices',
     author: 'Hanh Dao',
     tags: ['Purchase', 'RedFind'],
     readTime: '1 min read',
