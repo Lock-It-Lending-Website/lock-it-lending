@@ -101,28 +101,62 @@ const Home: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <p className="text-gray-700 font-semibold mb-6">
-                  I’d like to thank Ann and Ella who have been involved in the process of getting me
-                  into my new home. This has been a seamless, pleasant and positive experience which
-                  I attribute to the very professional team.
-                </p>
-                <div className="border-t pt-4">
-                  <p className="font-bold text-gold">Bill</p>
-                  <p className="text-sm text-gray-500">May 11, 2024</p>
+              {[
+                {
+                  name: 'Bill',
+                  date: 'May 11, 2024',
+                  image: `${process.env.PUBLIC_URL}/bill-review.png`,
+                  text: `I’d like to thank Ann and Ella who have been involved in the process of getting me into my new home. This has been a seamless, pleasant and positive experience which I attribute to the very professional team. Thanks again for all of your help and support in answering all of my questions and getting me to closing!`,
+                },
+                {
+                  name: 'Thi',
+                  date: 'April 19, 2024',
+                  image: `${process.env.PUBLIC_URL}/thi-review.png`,
+                  text: `My husband and I are first time home buyer and we had the pleasure of working with Tiana, Lyn and Oliver. They are very professional, attentive and knowledgeable. They assisted us with many questions and explained everything in detail that made everything very easy to understand. The process went very smoothly. I would highly recommend them!! Thank you for assisting us throughout this process and for the beautiful gift on our closing day!`,
+                },
+              ].map((review, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-2xl shadow-lg flex flex-col justify-between overflow-hidden relative pb-32 px-6 pt-10 text-center min-h-[450px]"
+                >
+                  <p className="text-gray-800 font-medium text-base leading-relaxed">
+                    {review.text}
+                  </p>
+
+                  {/* Footer Curve + Profile */}
+                  <div className="absolute bottom-0 left-0 right-0">
+                    <div className="bg-gold h-[90px] w-full rounded-t-[50%] relative">
+                      {/* Avatar */}
+                      <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
+                        <img
+                          src={review.image}
+                          alt={review.name}
+                          className="w-16 h-16 rounded-full border-4 border-white object-cover"
+                        />
+                      </div>
+
+                      {/* Name + Date */}
+                      <div
+                        className="text-white text-sm font-semibold flex flex-col items-center justify-center pt-7
+          "
+                      >
+                        <div className="text-base">{review.name}</div>
+                        <div className="text-xs">{review.date}</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <p className="text-gray-700 font-semibold mb-6">
-                  My husband and I are first time home buyer and we had the pleasure of working with
-                  Tiana, Lyn and Oliver. They are very professional, attentive and knowledgeable...
-                </p>
-                <div className="border-t pt-4">
-                  <p className="font-bold text-gold">Thi</p>
-                  <p className="text-sm text-gray-500">April 19, 2024</p>
-                </div>
-              </div>
+              ))}
             </div>
+
+            <a
+              href="https://www.google.com/search?q=lock+it+lending+houston#lrd=0x8640c35d2a7a4eab:0xb5736063dbda6db6,1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold font-bold hover:underline mt-10 inline-block"
+            >
+              SEE ALL REVIEWS →
+            </a>
           </div>
         </section>
 

@@ -12,14 +12,24 @@ const yesNoIcons = {
 
 const RatesPage: React.FC = () => {
   const [formData, setFormData] = useState({
+    borrowerName: '',
     state: '',
     firstTimeBuyer: '',
     residencyType: '',
     propertyType: '',
     homePrice: '',
     downPayment: '',
+    loanAmount: '',
     creditScore: '',
     email: '',
+    buydownType: '',
+    loanType: '',
+    prepaymentPenalty: '',
+    loanPurpose: '',
+    refinancePurpose: '',
+    escrowWaiver: '',
+    loanTerm: '',
+    propertyValue: '',
   });
 
   type FormDataKey = keyof typeof formData;
@@ -70,11 +80,218 @@ const RatesPage: React.FC = () => {
             </div>
 
             <div className="divide-y divide-gray-200">
+              <div className="p-6 space-y-4">
+                <p className="text-lg font-semibold">Borrower Name *</p>
+                <input
+                  type="text"
+                  value={formData.borrowerName}
+                  onChange={e => handleChange('borrowerName', e.target.value)}
+                  placeholder="First Last Name"
+                  required
+                  className="w-full border rounded p-2"
+                />
+              </div>
+
               <div className="p-6">
-                <p className="text-lg font-semibold mb-4">Which state are you shopping in?</p>
+                <p className="text-lg font-semibold mb-4">
+                  Which type of buydown are you interested in?
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    'Buydown 1-0',
+                    'Buydown 1-0 LLPA',
+                    'Buydown 1-1',
+                    'Buydown 1-1 LLPA',
+                    'Buydown 2-1',
+                    'Buydown 2-1 LLPA',
+                    'Buydown 3-2-1',
+                    'Buydown 3-2-1 LLPA',
+                    'None',
+                  ].map(opt => renderOption('buydownType', opt))}
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">Which loan type are you applying for?</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    'Conventional',
+                    'Conventional ARM',
+                    'FHA',
+                    'FHA - ARM',
+                    'VA',
+                    'VA - ARM',
+                    'USDA',
+                    'HELOC / 2nd Mortgage',
+                  ].map(opt => renderOption('loanType', opt))}
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">Is there a prepayment penalty?</p>
+                <div className="grid grid-cols-2 gap-4">
+                  {(['Yes', 'No'] as Array<keyof typeof yesNoIcons>).map(opt =>
+                    renderOption('firstTimeBuyer', opt, opt, yesNoIcons[opt])
+                  )}
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">Are you a first time homebuyer?</p>
+                <div className="grid grid-cols-2 gap-4">
+                  {(['Yes', 'No'] as Array<keyof typeof yesNoIcons>).map(opt =>
+                    renderOption('firstTimeBuyer', opt, opt, yesNoIcons[opt])
+                  )}
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">What is the purpose of the loan? *</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    'Purchase Home',
+                    'Refinance',
+                    'Construction Purchase',
+                    'Construction Refinance',
+                  ].map(opt => renderOption('loanPurpose', opt))}
+                </div>
+              </div>
+
+              {['Refinance', 'Construction Refinance'].includes(formData.loanPurpose) && (
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-4">
+                    What is the purpose of your refinance?
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {[
+                      'Cash Out',
+                      'Rate and Term - Conventional',
+                      'Rate and Term - FHA',
+                      'Streamline',
+                    ].map(opt => renderOption('refinancePurpose', opt))}
+                  </div>
+                </div>
+              )}
+
+              {['Refinance', 'Construction Refinance'].includes(formData.loanPurpose) ? (
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-2">What is your current loan amount?</p>
+                  <input
+                    type="text"
+                    value={formData.loanAmount}
+                    onChange={e => handleChange('loanAmount', e.target.value)}
+                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    placeholder="$300,000"
+                  />
+                  <p className="text-lg font-semibold mt-4 mb-2">
+                    What is your estimated property value?
+                  </p>
+                  <input
+                    type="text"
+                    value={formData.propertyValue}
+                    onChange={e => handleChange('propertyValue', e.target.value)}
+                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    placeholder="$350,000"
+                  />
+                </div>
+              ) : (
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-2">How much is the home?</p>
+                  <input
+                    type="text"
+                    value={formData.homePrice}
+                    onChange={e => handleChange('homePrice', e.target.value)}
+                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    placeholder="$400,000"
+                  />
+                  <p className="text-lg font-semibold mt-4 mb-2">How much are you putting down?</p>
+                  <input
+                    type="text"
+                    value={formData.downPayment}
+                    onChange={e => handleChange('downPayment', e.target.value)}
+                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    placeholder="$80,000"
+                  />
+                </div>
+              )}
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">
+                  Will this be your primary residence, secondary home, or an investment property? *
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {['Primary Residence', 'Secondary Home', 'Investment Property'].map(opt =>
+                    renderOption('residencyType', opt)
+                  )}
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">Estimated credit score *</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {['740+', '700 - 739', '660 - 699', '600 - 659', 'Below 600'].map(opt =>
+                    renderOption('creditScore', opt)
+                  )}
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">What type of property is this?</p>
+                <select
+                  className="w-full border border-gray-300 rounded p-2 focus:ring-yellow-500"
+                  value={formData.propertyType}
+                  onChange={e => handleChange('propertyType', e.target.value)}
+                >
+                  <option value="">Select property type</option>
+                  {[
+                    '2-4 Unit Dwelling',
+                    'Condominium',
+                    'Modular',
+                    'Cooperative',
+                    'Planned Unit Development',
+                    'Single Family Residence',
+                    'Site Condo',
+                    'Manufactured Multi Wide',
+                    'Manufactured Single Wide',
+                    'Manufactured PUD Single Wide',
+                    'Manufactured Condo Single Wide',
+                    'Manufactured PUD Multi Wide',
+                    'Manufactured Condo Multi Wide',
+                  ].map(opt => (
+                    <option key={opt}>{opt}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">
+                  Would you like to waive any of the following from your escrow account?
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    'No Waiver',
+                    'Waive Taxes Only',
+                    'Waive Hazard Insurance Only',
+                    'Waive Taxes & Hazard Insurance',
+                  ].map(opt => renderOption('escrowWaiver', opt))}
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">What loan term are you considering?</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {['30 Years', '25 Years', '20 Years', '15 Years', '10 Years'].map(opt =>
+                    renderOption('loanTerm', opt)
+                  )}
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">Which state are you shopping in? *</p>
                 <select
                   className="w-full border border-gray-300 rounded p-2 focus:ring-yellow-500"
                   value={formData.state}
+                  required
                   onChange={e => handleChange('state', e.target.value)}
                 >
                   <option value="">Select option</option>
@@ -86,78 +303,8 @@ const RatesPage: React.FC = () => {
                 </select>
               </div>
 
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">Are you a first time home-buyer?</p>
-                <div className="grid grid-cols-2 gap-4">
-                  {(['Yes', 'No'] as Array<keyof typeof yesNoIcons>).map(opt =>
-                    renderOption('firstTimeBuyer', opt, opt, yesNoIcons[opt])
-                  )}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">Will this be your...</p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {['Primary Residence', 'Secondary Home', 'Investment Property'].map(opt =>
-                    renderOption('residencyType', opt)
-                  )}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">
-                  What type of property are you looking at?
-                </p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  {['Single Family', 'Multi Family', 'Condominium', 'Townhouse'].map(opt =>
-                    renderOption('propertyType', opt)
-                  )}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-2">How much is the house?</p>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-500">
-                    $
-                  </span>
-                  <input
-                    type="text"
-                    value={formData.homePrice}
-                    onChange={e => handleChange('homePrice', e.target.value)}
-                    className="w-full border border-gray-300 rounded pl-7 pr-3 py-2 focus:outline-none"
-                    placeholder="100,000"
-                  />
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-2">How much money are you putting down?</p>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-500">
-                    $
-                  </span>
-                  <input
-                    type="text"
-                    value={formData.downPayment}
-                    onChange={e => handleChange('downPayment', e.target.value)}
-                    className="w-full border border-gray-300 rounded pl-7 pr-3 py-2 focus:outline-none"
-                    placeholder="20,000"
-                  />
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">Estimated credit score?</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {['740+', '700 - 739', '660 - 699', '600 - 659', 'Below 600'].map(opt =>
-                    renderOption('creditScore', opt)
-                  )}
-                </div>
-              </div>
-
               <div className="p-6 space-y-4">
-                <p className="text-lg font-semibold">Email</p>
+                <p className="text-lg font-semibold">Email *</p>
                 <input
                   type="email"
                   value={formData.email}
