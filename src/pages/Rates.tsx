@@ -35,13 +35,49 @@ const RatesPage: React.FC = () => {
   type FormDataKey = keyof typeof formData;
 
   const handleChange = (field: FormDataKey, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [field]: prev[field] === value ? '' : value,
+    }));
   };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
+    const response = await fetch('http://localhost:5000/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+  
+    if (response.ok) {
+      alert('Form submitted successfully!');
+      setFormData({
+        borrowerName: '',
+        state: '',
+        firstTimeBuyer: '',
+        residencyType: '',
+        propertyType: '',
+        homePrice: '',
+        downPayment: '',
+        loanAmount: '',
+        creditScore: '',
+        email: '',
+        buydownType: '',
+        loanType: '',
+        prepaymentPenalty: '',
+        loanPurpose: '',
+        refinancePurpose: '',
+        escrowWaiver: '',
+        loanTerm: '',
+        propertyValue: '',
+      });
+    } else {
+      alert('Something went wrong. Please try again.');
+    }
   };
-
+  
+  
   const renderOption = (
     field: FormDataKey,
     value: string,
@@ -131,7 +167,7 @@ const RatesPage: React.FC = () => {
                 <p className="text-lg font-semibold mb-4">Is there a prepayment penalty?</p>
                 <div className="grid grid-cols-2 gap-4">
                   {(['Yes', 'No'] as Array<keyof typeof yesNoIcons>).map(opt =>
-                    renderOption('firstTimeBuyer', opt, opt, yesNoIcons[opt])
+                    renderOption('prepaymentPenalty', opt, opt, yesNoIcons[opt])
                   )}
                 </div>
               </div>
