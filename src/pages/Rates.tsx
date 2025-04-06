@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import states from '../constants/states';
+import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, ShieldOff } from 'lucide-react';
 
 const yesNoIcons = {
@@ -11,6 +12,7 @@ const yesNoIcons = {
 };
 
 const RatesPage: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     borrowerName: '',
     state: '',
@@ -42,8 +44,13 @@ const RatesPage: React.FC = () => {
   };
   
   const handleSubmit = async (e: React.FormEvent) => {
+    
     e.preventDefault();
-  
+    if (!formData.borrowerName || !formData.state || !formData.loanPurpose || !formData.creditScore || !formData.email) {
+      alert('Please fill out all required fields marked with *');
+      return;
+    }
+    
     const response = await fetch('http://localhost:5000/api/send-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -51,7 +58,8 @@ const RatesPage: React.FC = () => {
     });
   
     if (response.ok) {
-      alert('Form submitted successfully!');
+      // alert('Form submitted successfully!');
+      navigate('/thank-you');
       setFormData({
         borrowerName: '',
         state: '',

@@ -165,7 +165,7 @@ const Home: React.FC = () => {
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
             <div className="w-full md:w-1/2">
               <img
-                src={`${process.env.PUBLIC_URL}/Lock-It-Lending-Home1-1.jpg`}
+                src={`${process.env.PUBLIC_URL}/Lock-It-Lending-Home1.png`}
                 alt="Modern house"
                 className="w-full rounded-lg shadow-md"
               />

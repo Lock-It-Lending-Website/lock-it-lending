@@ -11,6 +11,10 @@ import Resources from './pages/Resources';
 import Rates from './pages/Rates';
 import GlossaryTermPage from './pages/GlossaryTermPage';
 import ResourcesPage from './pages/ResourcesPage';
+import ThankYou from './pages/ThankYouScreen';
+import TeamPage from './pages/TeamPage';
+import TeamMemberPage from './pages/TeamMember';
+import ApplyForm from './pages/Apply';
 
 const App: React.FC = () => {
   return (
@@ -24,9 +28,13 @@ const App: React.FC = () => {
       <Route path="/glossary" element={<Glossary />} />
       <Route path="/resources" element={<Resources />} />
       <Route path="/rates" element={<Rates />} />
+      <Route path="/team/:teamId" element={<TeamPage />} />
+      <Route path="/team-member/:slug" element={<TeamMemberPage />} />
+      <Route path="/thank-you" element={<ThankYou />} />
       <Route path="*" element={<Navigate to="/" replace />} />
       <Route path="/glossary/:slug" element={<GlossaryTermPage />} />
       <Route path="/resources/:slug" element={<ResourcesPage />} />
+      <Route path="/apply" element={<ApplyForm />} />
     </Routes>
   );
 };

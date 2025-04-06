@@ -2,9 +2,12 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
-import { teamMembers, teamGroups } from '../data/teamData';
+import { Link } from 'react-router-dom';
+import { teamMembers, teamData } from '../data/teamData';
 
 const MeetLockItLending = () => {
+  const teamList = Object.values(teamData);
+
   return (
     <div className="font-sans">
       <Header />
@@ -23,23 +26,25 @@ const MeetLockItLending = () => {
           </p>
           <div className="max-w-6xl mx-auto grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {teamMembers.map(member => (
-              <div key={member.name} className="bg-white rounded-2xl shadow-md p-6 text-center">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
-                />
-                <h3 className="text-lg font-semibold text-gray-900">{member.name}</h3>
-                <p className="text-gold font-medium text-sm">{member.title}</p>
-                <p className="text-sm text-gray-500">NMLS {member.nmls}</p>
-                <p className="text-sm text-gray-700 mt-1">{member.phone}</p>
-                <p className="text-sm text-gray-700 mb-4">{member.email}</p>
-                <div className="flex justify-center gap-4">
-                  <i className="fab fa-facebook text-gold"></i>
-                  <i className="fab fa-linkedin text-gold"></i>
-                  <i className="fab fa-instagram text-gold"></i>
+              <Link to={`/team-member/${member.slug}`} key={member.name}>
+                <div className="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-lg transition">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+                  />
+                  <h3 className="text-lg font-semibold text-gray-900">{member.name}</h3>
+                  <p className="text-gold font-medium text-sm">{member.title}</p>
+                  <p className="text-sm text-gray-500">NMLS {member.nmls}</p>
+                  <p className="text-sm text-gray-700 mt-1">{member.phone}</p>
+                  <p className="text-sm text-gray-700 mb-4">{member.email}</p>
+                  <div className="flex justify-center gap-4">
+                    <i className="fab fa-facebook text-gold"></i>
+                    <i className="fab fa-linkedin text-gold"></i>
+                    <i className="fab fa-instagram text-gold"></i>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
@@ -52,14 +57,18 @@ const MeetLockItLending = () => {
             mortgage for your dream home.
           </p>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-            {teamGroups.map(team => (
-              <div key={team.name} className="rounded-xl overflow-hidden shadow-md relative group">
+            {teamList.map(team => (
+              <Link
+                to={`/team/${team.slug}`}
+                key={team.slug}
+                className="rounded-xl overflow-hidden shadow-md relative group"
+              >
                 <img src={team.image} alt={team.name} className="w-full h-64 object-cover" />
                 <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-4">
                   <h3 className="font-bold text-lg">{team.name}</h3>
                   <p className="text-sm">Visit Team Page →</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
