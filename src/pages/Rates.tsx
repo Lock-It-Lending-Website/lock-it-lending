@@ -42,21 +42,26 @@ const RatesPage: React.FC = () => {
       [field]: prev[field] === value ? '' : value,
     }));
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
-    
     e.preventDefault();
-    if (!formData.borrowerName || !formData.state || !formData.loanPurpose || !formData.creditScore || !formData.email) {
+    if (
+      !formData.borrowerName ||
+      !formData.state ||
+      !formData.loanPurpose ||
+      !formData.creditScore ||
+      !formData.email
+    ) {
       alert('Please fill out all required fields marked with *');
       return;
     }
-    
+
     const response = await fetch('http://localhost:5000/api/send-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
-  
+
     if (response.ok) {
       // alert('Form submitted successfully!');
       navigate('/thank-you');
@@ -84,8 +89,7 @@ const RatesPage: React.FC = () => {
       alert('Something went wrong. Please try again.');
     }
   };
-  
-  
+
   const renderOption = (
     field: FormDataKey,
     value: string,

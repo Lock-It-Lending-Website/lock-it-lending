@@ -43,13 +43,42 @@ const ApplyForm = () => {
       <main className="max-w-3xl mx-auto p-8 bg-white shadow rounded mt-10">
         <h1 className="text-3xl font-bold mb-4">Apply with {officer}</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input name="fullName" placeholder="Full Name" required onChange={handleChange} className="w-full p-2 border" />
-          <input name="email" type="email" placeholder="Email" required onChange={handleChange} className="w-full p-2 border" />
-          <input name="phone" placeholder="Phone Number" required onChange={handleChange} className="w-full p-2 border" />
-          <input name="ssn" placeholder="SSN (Secure Input)" required onChange={handleChange} className="w-full p-2 border" />
-          <button type="submit" className="bg-gold text-white px-6 py-2 rounded">Submit Application</button>
+          <input
+            name="fullName"
+            placeholder="Full Name"
+            required
+            onChange={handleChange}
+            className="w-full p-2 border"
+          />
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            required
+            onChange={handleChange}
+            className="w-full p-2 border"
+          />
+          <input
+            name="phone"
+            placeholder="Phone Number"
+            required
+            onChange={handleChange}
+            className="w-full p-2 border"
+          />
+          <input
+            name="ssn"
+            placeholder="SSN (Secure Input)"
+            required
+            onChange={handleChange}
+            className="w-full p-2 border"
+          />
+          <button type="submit" className="bg-gold text-white px-6 py-2 rounded">
+            Submit Application
+          </button>
         </form>
-        <p className="text-xs text-gray-500 mt-4">Note: This form is temporary and uses encrypted email transmission (HTTPX).</p>
+        <p className="text-xs text-gray-500 mt-4">
+          Note: This form is temporary and uses encrypted email transmission (HTTPX).
+        </p>
       </main>
       <Footer />
     </div>
