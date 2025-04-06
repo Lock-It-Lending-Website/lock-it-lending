@@ -3,7 +3,7 @@ const base = `${process.env.PUBLIC_URL}`;
 export type TeamMember = {
   name: string;
   title: string;
-  nmls: string;
+  nmls?: string;
   phone: string;
   email: string;
   image: string;
@@ -113,7 +113,6 @@ export const teamData: Record<string, TeamGroup> = {
       {
         name: 'Ly Nguyen',
         title: 'Loan Officer',
-        nmls: '',
         phone: '',
         email: '',
         image: `${base}/team/Ly-Nguyen.png`,
@@ -121,7 +120,6 @@ export const teamData: Record<string, TeamGroup> = {
       {
         name: 'Lesa Luu',
         title: 'Loan Officer',
-        nmls: '',
         phone: '',
         email: '',
         image: `${base}/team/Lesa-Luu.png`,
@@ -129,7 +127,6 @@ export const teamData: Record<string, TeamGroup> = {
       {
         name: 'Tyrone Tran',
         title: 'Loan Officer',
-        nmls: '',
         phone: '',
         email: '',
         image: `${base}/team/Tyrone-Tran.png`,
@@ -191,7 +188,6 @@ export const teamMembers: TeamMember[] = [
   {
     name: 'Danielle Murray',
     title: 'Loan Processor',
-    nmls: '',
     phone: '(325) 320-7363',
     email: 'danielle@lockitlending.com',
     image: `${base}/team/Danielle-Murray.png`,
@@ -220,7 +216,6 @@ export const teamMembers: TeamMember[] = [
   {
     name: 'Alexander Hatherley',
     title: 'Loan Processor',
-    nmls: '',
     phone: '(281) 203-5459',
     email: 'alexander@lockitlending.com',
     image: `${base}/team/Alexander-Hatherley.png`,
