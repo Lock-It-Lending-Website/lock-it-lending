@@ -15,6 +15,7 @@ import ThankYou from './pages/ThankYouScreen';
 import TeamPage from './pages/TeamPage';
 import TeamMemberPage from './pages/TeamMember';
 import ApplyForm from './pages/Apply';
+import { EmailPolicy, TermsOfUse, PrivacyPolicy } from './pages/Policies';
 
 const App: React.FC = () => {
   return (
@@ -35,6 +36,9 @@ const App: React.FC = () => {
       <Route path="/glossary/:slug" element={<GlossaryTermPage />} />
       <Route path="/resources/:slug" element={<ResourcesPage />} />
       <Route path="/apply" element={<ApplyForm />} />
+      <Route path="/email-policy" element={<EmailPolicy />} />
+      <Route path="/terms-of-use" element={<TermsOfUse />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
     </Routes>
   );
 };

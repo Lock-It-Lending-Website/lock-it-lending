@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           {/* PRODUCTS */}
           <div>
-            <h3 className="font-bold text-black mb-4">PRODUCTS ↗</h3>
+            <h3 className="font-bold text-black mb-4">PRODUCTS</h3>
             <ul className="space-y-2">
               <li>
                 <a href="/purchase" className="hover:underline">
@@ -21,7 +21,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/loan-programs" className="hover:underline">
+                <a href="/purchase" className="hover:underline">
                   30 Year Fixed Rate
                 </a>
               </li>
@@ -58,7 +58,7 @@ const Footer = () => {
             <h3 className="font-bold text-black mb-4">ABOUT</h3>
             <ul className="space-y-2">
               <li>
-                <a href="/meet-the-family" className="hover:underline">
+                <a href="/meet-lock-it-lending" className="hover:underline">
                   Meet The Family
                 </a>
               </li>
@@ -118,14 +118,14 @@ const Footer = () => {
             <div className="mb-4">
               <p className="font-semibold">Lock It Lending Dallas (Team Apex)</p>
               <p>3901 W Walnut St, Garland Tx, 75042</p>
-              <p>📞 (888) 870-5625</p>
-              <p>📧 teamapex@lockitlending.com</p>
+              <p>(888) 870-5625</p>
+              <p>teamapex@lockitlending.com</p>
             </div>
             <div>
               <p className="font-semibold">Lock It Lending Houston (Team All Stars)</p>
               <p>10515 Bellaire Blvd ste Z, Houston Tx, 77042</p>
-              <p>📞 (866) 400-6789</p>
-              <p>📧 info@lockitlending.com</p>
+              <p>(866) 400-6789</p>
+              <p>info@lockitlending.com</p>
             </div>
           </div>
         </div>
@@ -134,7 +134,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {/* MORTGAGE TERMS */}
           <div>
-            <h3 className="font-bold text-black mb-4">MORTGAGE TERMS ↗</h3>
+            <h3 className="font-bold text-black mb-4">MORTGAGE TERMS</h3>
             <ul className="space-y-2">
               <li>
                 <a href="/glossary/annual-percentage-rate-apr" className="hover:underline">
@@ -176,7 +176,7 @@ const Footer = () => {
 
           {/* RESOURCES */}
           <div>
-            <h3 className="font-bold text-black mb-4">RESOURCES ↗</h3>
+            <h3 className="font-bold text-black mb-4">RESOURCES</h3>
             <ul className="space-y-2">
               <li>
                 <a

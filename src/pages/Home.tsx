@@ -183,7 +183,7 @@ const Home: React.FC = () => {
                 href="/"
                 className="inline-block bg-gold text-white px-6 py-2 rounded-full font-semibold shadow hover:opacity-90"
               >
-                Apply ↗
+                Apply
               </a>
             </div>
           </div>

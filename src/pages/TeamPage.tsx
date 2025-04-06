@@ -15,6 +15,14 @@ const TeamPage = () => {
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
+  function chunkArray<T>(arr: T[], size: number): T[][] {
+    return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
+      arr.slice(i * size, i * size + size)
+    );
+  }
+
+  const pages = chunkArray(team.members, 3);
+
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider || team.members.length < 2) return;
@@ -54,6 +62,8 @@ const TeamPage = () => {
 
   if (!team) return <div className="text-center py-10">Team not found</div>;
 
+  const totalReviews = team.slug === 'vortex' || team.slug === 'allstars' ? 516 : 225;
+
   return (
     <div className="font-sans">
       <Header />
@@ -75,16 +85,14 @@ const TeamPage = () => {
         {/* Info Section */}
         <section className="relative bg-white pt-12 pb-6 px-4 md:px-8 z-10">
           <div className="max-w-5xl mx-auto flex items-start gap-6">
-            {/* Floating Avatar to the left, vertically centered across sections */}
             <div className="relative z-30 -mt-[120px]">
               <img
                 src={team.profileImage}
                 alt={team.name}
-                className="w-36 h-36 md:w-56 md:h-56 rounded-full border-4 border-white shadow-lg object-cover"
+                className="w-36 h-36 md:w-56 md:h-56 rounded-full border-4 border-white shadow-lg object-contain bg-white p-2"
               />
             </div>
 
-            {/* Text + Apply */}
             <div className="flex flex-1 justify-between items-start">
               <div>
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{team.name}</h1>
@@ -132,7 +140,7 @@ const TeamPage = () => {
                 <div className="bg-white p-6 rounded-xl shadow">
                   <h2 className="text-2xl font-bold mb-4">About</h2>
                   <div
-                    className={`text-sm text-gray-700 leading-relaxed transition-all duration-300 ease-in-out ${showMore ? 'max-h-[800px]' : 'max-h-[160px] overflow-hidden'}`}
+                    className={`text-sm text-gray-700 leading-relaxed transition-all duration-300 ease-in-out ${showMore ? 'max-h-[160px] overflow-hidden' : 'max-h-[800px]'}`}
                   >
                     <p className="text-sm text-gray-700 whitespace-pre-line">{team.about}</p>
                   </div>
@@ -141,40 +149,50 @@ const TeamPage = () => {
                       onClick={() => setShowMore(prev => !prev)}
                       className="px-4 py-2 border rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100"
                     >
-                      {showMore ? 'Show Less ▲' : 'Show More ▼'}
+                      {showMore ? 'Show More ▼' : 'Show Less ▲'}
                     </button>
                   </div>
                 </div>
-
                 {/* Meet the Team */}
                 <div className="relative max-w-full overflow-hidden">
                   <div
                     ref={sliderRef}
-                    className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 px-4"
+                    className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 px-4 no-scrollbar"
+                    onScroll={e => {
+                      const el = e.currentTarget;
+                      const pageWidth = el.offsetWidth;
+                      const current = Math.round(el.scrollLeft / pageWidth);
+                      setCurrentPage(current);
+                    }}
                   >
-                    {team.members.map(member => (
+                    {pages.map((group, idx) => (
                       <div
-                        key={member.name}
-                        className="flex flex-col items-center w-[250px] shrink-0 snap-start"
+                        key={idx}
+                        className="flex snap-start gap-6 shrink-0 w-full justify-center"
                       >
-                        <div className="w-full rounded-t-xl bg-gold flex items-center justify-center h-[280px]">
-                          <img
-                            src={member.image}
-                            alt={member.name}
-                            className="h-full object-contain"
-                          />
-                        </div>
-                        <div className="bg-white w-full text-center p-4 rounded-b-xl shadow">
-                          <h3 className="font-bold text-lg text-gray-900">{member.name}</h3>
-                          <p className="text-sm text-gold font-medium">{member.title}</p>
-                        </div>
+                        {group.map(member => (
+                          <div
+                            key={member.name}
+                            className="flex flex-col items-center w-[250px] h-[400px] bg-white rounded-xl shadow overflow-hidden"
+                          >
+                            <div className="h-[280px] bg-gold flex items-center justify-center">
+                              <img
+                                src={member.image}
+                                alt={member.name}
+                                className="h-full object-contain"
+                              />
+                            </div>
+                            <div className="flex flex-col justify-between text-center p-4 flex-1">
+                              <h3 className="font-bold text-lg text-gray-900">{member.name}</h3>
+                              <p className="text-sm text-gold font-medium">{member.title}</p>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     ))}
                   </div>
-
-                  {/* Pagination dots */}
                   <div className="flex justify-center mt-4 space-x-2">
-                    {Array.from({ length: Math.ceil(team.members.length / 3) }).map((_, idx) => (
+                    {pages.map((_, idx) => (
                       <div
                         key={idx}
                         className={`w-3 h-3 rounded-full ${currentPage === idx ? 'bg-gold' : 'bg-gold/30'}`}
@@ -182,25 +200,40 @@ const TeamPage = () => {
                     ))}
                   </div>
                 </div>
+              </div>
 
-                {/* Review */}
-                <div className="bg-white p-6 rounded-xl shadow">
-                  <h2 className="text-2xl font-bold mb-4">Review</h2>
-                  {team.reviews?.length ? (
-                    <>
-                      <p className="text-yellow-400 mb-2">★★★★★ {team.reviews.length}</p>
-                      {team.reviews.map((review, i) => (
-                        <div key={i} className="mb-4">
-                          <p className="text-sm text-gray-700">{review.text}</p>
-                          <span className="text-xs text-gray-500">
-                            – {review.name} {review.timestamp && `(${review.timestamp})`}
-                          </span>
-                        </div>
-                      ))}
-                    </>
-                  ) : (
-                    <p className="text-sm text-gray-500">No reviews available.</p>
-                  )}
+              {/* Review */}
+              <div className="bg-white p-6 rounded-xl shadow">
+                <h2 className="text-2xl font-bold mb-2">Review</h2>
+                <div className="flex items-center gap-2 text-yellow-400 font-bold text-sm mb-1">
+                  {'★★★★★'} <span className="text-black font-semibold text-sm">{totalReviews}</span>{' '}
+                  <span className="text-[16px]"></span>
+                </div>
+                <p className="text-sm text-gray-700 mb-4">
+                  Read from our 5 star Google reviews, where our valued clients share their
+                  experiences and satisfaction with Lock It Lending – Team{' '}
+                  {team.name.split('-').pop()?.trim()}’s exceptional service.
+                </p>
+                {team.reviews?.map((review, i) => (
+                  <div key={i} className="mb-6">
+                    <p className="text-black font-bold text-sm mb-1">
+                      ★★★★★ <span className="font-semibold text-gray-900">by {review.name}</span>
+                    </p>
+                    <p className="text-sm text-gray-700 mb-1">{review.text}</p>
+                    {review.timestamp && (
+                      <p className="text-xs text-yellow-600 italic">{review.timestamp}</p>
+                    )}
+                  </div>
+                ))}
+                <div className="text-center">
+                  <a
+                    href="https://www.google.com/search?q=lock+it+lending+houston#lrd=0x8640c35d2a7a4eab:0xb5736063dbda6db6,1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gold font-semibold hover:underline text-sm"
+                  >
+                    See More Reviews →
+                  </a>
                 </div>
               </div>
             </div>
@@ -221,7 +254,12 @@ const TeamPage = () => {
                   <input type="checkbox" className="mt-1" />
                   <span>
                     By pressing “Submit” you are agreeing to receive a quote through the email
-                    provided...
+                    provided and agreeing to Swift Home Loans Inc.'s Terms of Use, Privacy
+                    Policy,Email Policy and provide consent to receive text messages for important
+                    notifications about our services, updates on upcoming meetings, and replies from
+                    your dedicated representative. Message frequency varies. Message and data rates
+                    may apply. You can opt-out at any time by replying "STOP" to any message. Reply
+                    HELP for assistance.
                   </span>
                 </label>
                 <button

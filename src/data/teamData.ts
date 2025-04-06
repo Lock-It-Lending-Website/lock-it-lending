@@ -182,6 +182,41 @@ export const teamData: Record<string, TeamGroup> = {
         email: '',
         image: `${base}/team/Tyrone-Tran.png`,
       },
+      {
+        name: 'Brandon Vo',
+        title: 'Loan Officer',
+        phone: '',
+        email: '',
+        image: `${base}/team/Brandon-Vo.png`,
+      },
+      {
+        name: 'Billy Nguyen',
+        title: 'Branch Manager',
+        phone: '',
+        email: '',
+        image: `${base}/team/Billy-Nguyen.png`,
+      },
+      {
+        name: 'Troy Ngo',
+        title: 'VP of Operations',
+        phone: '',
+        email: '',
+        image: `${base}/team/Troy-Ngo.png`,
+      },
+      {
+        name: 'Yen Nguyen',
+        title: 'Loan Officer',
+        phone: '',
+        email: '',
+        image: `${base}/team/Yen-Nguyen.png`,
+      },
+      {
+        name: 'Celine Tran',
+        title: 'Loan Officer',
+        phone: '',
+        email: '',
+        image: `${base}/team/Celine-Tran.png`,
+      },
     ],
     about: `
       At Lock It Lending, we’re not just mortgage brokers; we’re seasoned professionals with over 18 years of experience. 
