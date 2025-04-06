@@ -28,18 +28,16 @@ const TeamMemberPage = () => {
           {/* Right: Info */}
           <div className="p-8 md:p-12 flex flex-col justify-center">
             <nav className="text-sm text-gray-500 mb-2">
-              <Link to="/" className="hover:underline">
-                Home
-              </Link>{' '}
+              <Link to="/" className="hover:underline">Home</Link>{' '}
               &gt;{' '}
-              <Link to="/meet-lock-it-lending" className="hover:underline">
-                Portfolio
-              </Link>{' '}
+              <Link to="/meet-lock-it-lending" className="hover:underline">Portfolio</Link>{' '}
               &gt; {member.name}
             </nav>
             <h1 className="text-4xl font-bold text-black mb-1">{member.name}</h1>
             <p className="text-gray-600 font-semibold">{member.title}</p>
-            <p className="text-sm font-semibold mt-2 text-gray-700">NMLS #{member.nmls}</p>
+            {member.nmls && (
+              <p className="text-sm font-semibold mt-2 text-gray-700">NMLS {member.nmls}</p>
+            )}
 
             <div className="mt-4 space-y-1 text-sm text-gray-700">
               <p>📞 {member.phone}</p>
@@ -62,19 +60,23 @@ const TeamMemberPage = () => {
         </section>
 
         {/* CTA bar */}
-        <section className="bg-gold py-6 px-6 md:px-16 flex flex-col md:flex-row items-center justify-between text-white">
-          <div className="text-left">
-            <h2 className="text-xl md:text-2xl font-bold text-white">Ready to apply?</h2>
-            <p className="text-sm md:text-base font-medium mt-1 text-white">
-              Get started with <span className="font-semibold">{member.name}</span> today!
-            </p>
+        <section className="bg-gold py-12 px-6 md:px-16">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-center justify-between text-center md:text-left gap-6">
+            <div className="flex-1">
+              <h2 className="text-2xl md:text-3xl font-bold text-black mb-1">Ready to apply?</h2>
+              <p className="text-xl md:text-2xl font-bold text-white">
+                Get started with {member.name} today!
+              </p>
+            </div>
+            <div className="flex-none">
+              <Link
+                to={`/apply?applyTo=${encodeURIComponent(member.name)}`}
+                className="bg-white text-gold px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition text-base md:text-lg"
+              >
+                Apply
+              </Link>
+            </div>
           </div>
-          <Link
-            to={`/apply?applyTo=${encodeURIComponent(member.name)}`}
-            className="mt-4 md:mt-0 bg-white text-gold px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition"
-          >
-            Apply
-          </Link>
         </section>
       </main>
       <Footer />
