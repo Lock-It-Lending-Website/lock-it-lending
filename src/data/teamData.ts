@@ -16,12 +16,20 @@ export type TeamGroup = {
   name: string;
   image: string;
   hero: string;
+  heroBlur: string;
   profileImage: string;
   nmls: string;
   email: string;
   phone: string;
   address: string;
   members: TeamMember[];
+  about?: string;
+  reviews?: {
+    stars: number;
+    text: string;
+    name: string;
+    timestamp?: string;
+  }[];
 };
 
 export const teamData: Record<string, TeamGroup> = {
@@ -29,7 +37,8 @@ export const teamData: Record<string, TeamGroup> = {
     slug: 'vortex',
     name: 'Lock It Lending - Vortex',
     image: `${base}/Lock-It-Lending-Home1.png`,
-    hero: `${base}/Lock-It-Lending-Home1.jpg`,
+    hero: `${base}/Lock-It-Lending-Loan-Programs.png`,
+    heroBlur: `${base}/Lock-It-Lending-Home1.png`,
     profileImage: `${base}/team/Kenton-Wilson.png`,
     nmls: '',
     email: 'info@lockitlending.com',
@@ -61,13 +70,34 @@ export const teamData: Record<string, TeamGroup> = {
         image: `${base}/team/Henry-Do.png`,
       },
     ],
+    about: `
+    Lock It Lending Houston, a proud member of the Swift Home Loans Inc. family, is your trusted partner on the journey to homeownership. 
+    With a commitment to excellence and a passion for personalized service, we specialize in making your mortgage dreams a reality. 
+    Our team of experienced professionals, backed by cutting-edge technology and a dedication to transparency, ensures that you find the right mortgage solution tailored to your needs.
+
+    At Lock It Lending, we lock in your future with unwavering support and expertise in the world of home financing. 
+    Let us be the key to unlocking your homeownership goals. 
+    At Lock It Lending, we understand that obtaining a mortgage is not merely a transaction; it’s a significant life milestone.
+
+    That’s why we go above and beyond to provide an exceptional and personalized experience. 
+    Our team of seasoned mortgage experts possesses a deep understanding of the ever-evolving mortgage landscape, and we are equipped with the latest tools and technologies to navigate it seamlessly.
+  `,
+    reviews: [
+      {
+        stars: 5,
+        name: 'Michi T',
+        text: `I used Lock It Lending for my recent mortgage loan to purchase a townhouse. My Lending Officer was Chris Nguyen & my Loan Processor was Shanatay Blanchard. They were amazing to work with, from the correspondence to the turnaround times for when my questions needed answers; it was great! I was able to purchase my new home within a few months. I would definitely recommend this outstanding team and company. My coworkers even asked me about them and I did not hesitate to give them my recommendation! Thanks again, Lock It Lending!`,
+        timestamp: 'a week ago',
+      },
+    ],
   },
   allstars: {
     slug: 'allstars',
     name: 'Lock It Lending - All Stars',
     image: `${base}/allstars.png`,
-    hero: `${base}/team-vortex-banner.jpg`,
-    profileImage: `${base}/team/Kenton-Wilson.png`,
+    hero: `${base}/allstars-banner.png`,
+    heroBlur: `${base}/allstars-banner.png`,
+    profileImage: `${base}/team/Hanh-Dao.png`,
     nmls: '1306378',
     email: 'info@lockitlending.com',
     phone: '(866) 400-6789',
@@ -98,13 +128,34 @@ export const teamData: Record<string, TeamGroup> = {
         image: `${base}/team/Ahn-Luu.png`,
       },
     ],
+    about: `
+    Lock It Lending Houston, a proud member of the Swift Home Loans Inc. family, is your trusted partner on the journey to homeownership. 
+    With a commitment to excellence and a passion for personalized service, we specialize in making your mortgage dreams a reality. 
+    Our team of experienced professionals, backed by cutting-edge technology and a dedication to transparency, ensures that you find the right mortgage solution tailored to your needs.
+
+    At Lock It Lending, we lock in your future with unwavering support and expertise in the world of home financing. 
+    Let us be the key to unlocking your homeownership goals. 
+    At Lock It Lending, we understand that obtaining a mortgage is not merely a transaction; it’s a significant life milestone.
+
+    That’s why we go above and beyond to provide an exceptional and personalized experience. 
+    Our team of seasoned mortgage experts possesses a deep understanding of the ever-evolving mortgage landscape, and we are equipped with the latest tools and technologies to navigate it seamlessly.
+  `,
+    reviews: [
+      {
+        stars: 5,
+        name: 'Michi T',
+        text: `I used Lock It Lending for my recent mortgage loan to purchase a townhouse. My Lending Officer was Chris Nguyen & my Loan Processor was Shanatay Blanchard. They were amazing to work with, from the correspondence to the turnaround times for when my questions needed answers; it was great! I was able to purchase my new home within a few months. I would definitely recommend this outstanding team and company. My coworkers even asked me about them and I did not hesitate to give them my recommendation! Thanks again, Lock It Lending!`,
+        timestamp: 'a week ago',
+      },
+    ],
   },
   apex: {
     slug: 'apex',
     name: 'Lock It Lending - Team APEX',
     image: `${base}/apex.png`,
     hero: `${base}/Apex-banner.png`,
-    profileImage: `${base}/team/Kenton-Wilson.png`,
+    heroBlur: `${base}/Apex-banner.png`,
+    profileImage: `${base}/logo.svg`,
     nmls: '2403720',
     email: 'teamapex@lockitlending.com',
     phone: '(888) 870-5625',
@@ -130,6 +181,33 @@ export const teamData: Record<string, TeamGroup> = {
         phone: '',
         email: '',
         image: `${base}/team/Tyrone-Tran.png`,
+      },
+    ],
+    about: `
+      At Lock It Lending, we’re not just mortgage brokers; we’re seasoned professionals with over 18 years of experience. 
+      Our mission is simple yet profound: to provide excellence in every aspect of your mortgage journey.
+
+      We believe that the home buying or refinancing process should be more than just a transaction. 
+      It’s a significant life event, and we are committed to making it as smooth, stress-free, and personal as possible.
+    `,
+    reviews: [
+      {
+        stars: 5,
+        name: 'Danny Chuang',
+        text: `Hands down the best in the business! Working with Billy, Brandon, Celine, and Hanni was such a great experience. They were so patient and helpful throughout the whole process. I couldn’t ask for anyone better to guide me through the process in the purchase of my first home.`,
+        timestamp: 'a week ago',
+      },
+      {
+        stars: 5,
+        name: 'Andrew L',
+        text: `Brandon & Hanni were great and responsive. Worked hard to adapt to changing interest rates and were very effective. Excellent customer service & always available, even on weekends & after business hours.`,
+        timestamp: 'a week ago',
+      },
+      {
+        stars: 5,
+        name: 'Anna Nguyen',
+        text: `Couldn’t have asked for a better service! This was our first home and the team took the time to explain all the steps of the loan process in detail. They were available 24/7, and responded to all our questions and concerns in a timely manner. Our home buying process went so smoothly all due to their help and we could not have asked for anything better. Definitely recommend their service!!`,
+        timestamp: 'a week ago',
       },
     ],
   },

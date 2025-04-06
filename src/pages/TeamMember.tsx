@@ -28,9 +28,13 @@ const TeamMemberPage = () => {
           {/* Right: Info */}
           <div className="p-8 md:p-12 flex flex-col justify-center">
             <nav className="text-sm text-gray-500 mb-2">
-              <Link to="/" className="hover:underline">Home</Link>{' '}
+              <Link to="/" className="hover:underline">
+                Home
+              </Link>{' '}
               &gt;{' '}
-              <Link to="/meet-lock-it-lending" className="hover:underline">Portfolio</Link>{' '}
+              <Link to="/meet-lock-it-lending" className="hover:underline">
+                Portfolio
+              </Link>{' '}
               &gt; {member.name}
             </nav>
             <h1 className="text-4xl font-bold text-black mb-1">{member.name}</h1>

@@ -15,12 +15,6 @@ const TeamPage = () => {
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  function chunkArray<T>(arr: T[], size: number): T[][] {
-    return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
-      arr.slice(i * size, i * size + size)
-    );
-  }
-
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider || team.members.length < 2) return;
@@ -64,10 +58,10 @@ const TeamPage = () => {
     <div className="font-sans">
       <Header />
       <main>
-        {/* Hero Section */}
-        <section className="relative">
+        {/* Banner Section */}
+        <section className="relative h-[240px] md:h-240px] overflow-hidden">
           <img
-            src={team.hero}
+            src={team.heroBlur}
             alt="Background"
             className="absolute inset-0 w-full h-full object-cover z-0 opacity-70"
           />
@@ -76,32 +70,34 @@ const TeamPage = () => {
             alt="Foreground"
             className="relative z-10 mx-auto h-full object-contain"
           />
+        </section>
 
-          <div className="md:absolute md:top-1/2 md:-translate-y-[20%] md:left-[calc(50%-560px)] relative z-20 flex justify-center md:block mt-[-4.5rem] mb-6 md:mt-0 md:mb-0">
-            <img
-              src={team.profileImage}
-              alt={team.name}
-              className="w-36 h-36 md:w-56 md:h-56 rounded-full border-4 border-white shadow-lg object-cover"
-            />
-          </div>
+        {/* Info Section */}
+        <section className="relative bg-white pt-12 pb-6 px-4 md:px-8 z-10">
+          <div className="max-w-5xl mx-auto flex items-start gap-6">
+            {/* Floating Avatar to the left, vertically centered across sections */}
+            <div className="relative z-30 -mt-[120px]">
+              <img
+                src={team.profileImage}
+                alt={team.name}
+                className="w-36 h-36 md:w-56 md:h-56 rounded-full border-4 border-white shadow-lg object-cover"
+              />
+            </div>
 
-          <div className="relative z-10 bg-white py-6 px-4 md:px-8 mt-[-36px]">
-            <div className="max-w-5xl mx-auto flex items-center justify-between gap-6">
-              <div className="flex items-center gap-6 pl-20">
-                <div className="w-36 hidden md:block" />
-                <div>
-                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{team.name}</h1>
-                  <p className="text-sm text-gray-500">NMLS#{team.nmls}</p>
-                  <p className="text-sm mt-1 text-gray-700">
-                    <a href={`mailto:${team.email}`} className="hover:underline">
-                      {team.email}
-                    </a>{' '}
-                    • {team.phone}
-                  </p>
-                  <p className="text-sm text-gray-700">{team.address}</p>
-                </div>
+            {/* Text + Apply */}
+            <div className="flex flex-1 justify-between items-start">
+              <div>
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{team.name}</h1>
+                <p className="text-sm text-gray-500">NMLS#{team.nmls}</p>
+                <p className="text-sm mt-1 text-gray-700">
+                  <a href={`mailto:${team.email}`} className="hover:underline">
+                    {team.email}
+                  </a>{' '}
+                  • {team.phone}
+                </p>
+                <p className="text-sm text-gray-700">{team.address}</p>
               </div>
-              <div className="pr-6">
+              <div className="pr-2 pt-1">
                 <button className="bg-gold text-white font-bold px-6 py-2 rounded-full">
                   Apply
                 </button>
@@ -138,18 +134,7 @@ const TeamPage = () => {
                   <div
                     className={`text-sm text-gray-700 leading-relaxed transition-all duration-300 ease-in-out ${showMore ? 'max-h-[800px]' : 'max-h-[160px] overflow-hidden'}`}
                   >
-                    <p>
-                      Lock It Lending Houston, a proud member of the Swift Home Loans Inc. family,
-                      is your trusted partner...
-                    </p>
-                    <p>
-                      At Lock It Lending, we lock in your future with unwavering support and
-                      expertise in the world of home financing...
-                    </p>
-                    <p>
-                      That’s why we go above and beyond to provide an exceptional and personalized
-                      experience...
-                    </p>
+                    <p className="text-sm text-gray-700 whitespace-pre-line">{team.about}</p>
                   </div>
                   <div className="mt-4 flex justify-center">
                     <button
@@ -162,71 +147,61 @@ const TeamPage = () => {
                 </div>
 
                 {/* Meet the Team */}
-                <div className="bg-white p-6 rounded-xl shadow">
-                  <h2 className="text-3xl font-bold text-center mb-6">
-                    Meet {team.name.split(' - ')[1]}
-                  </h2>
-
-                  <div className="relative max-w-full overflow-hidden">
-                    <div
-                      ref={sliderRef}
-                      className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 px-4 no-scrollbar"
-                      onScroll={e => {
-                        const el = e.currentTarget;
-                        const pageWidth = el.offsetWidth;
-                        const current = Math.round(el.scrollLeft / pageWidth);
-                        setCurrentPage(current);
-                      }}
-                    >
-                      {chunkArray(team.members, 3).map((chunk, idx) => (
-                        <div
-                          key={idx}
-                          className="flex snap-start shrink-0 w-full justify-center gap-6"
-                        >
-                          {chunk.map(member => (
-                            <div
-                              key={member.name}
-                              className="w-[250px] bg-white rounded-xl shadow text-center p-6 transition-transform duration-300 hover:scale-105"
-                            >
-                              <img
-                                src={member.image}
-                                alt={member.name}
-                                className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
-                              />
-                              <h3 className="font-bold text-lg">{member.name}</h3>
-                              <p className="text-sm text-gold font-medium">{member.title}</p>
-                              <p className="text-sm text-gray-500">NMLS {member.nmls}</p>
-                              <p className="text-sm text-gray-700">{member.phone}</p>
-                              <p className="text-sm text-gray-700">{member.email}</p>
-                            </div>
-                          ))}
+                <div className="relative max-w-full overflow-hidden">
+                  <div
+                    ref={sliderRef}
+                    className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 px-4"
+                  >
+                    {team.members.map(member => (
+                      <div
+                        key={member.name}
+                        className="flex flex-col items-center w-[250px] shrink-0 snap-start"
+                      >
+                        <div className="w-full rounded-t-xl bg-gold flex items-center justify-center h-[280px]">
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            className="h-full object-contain"
+                          />
                         </div>
-                      ))}
-                    </div>
+                        <div className="bg-white w-full text-center p-4 rounded-b-xl shadow">
+                          <h3 className="font-bold text-lg text-gray-900">{member.name}</h3>
+                          <p className="text-sm text-gold font-medium">{member.title}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
 
-                    {/* Pagination dots */}
-                    <div className="flex justify-center mt-4 space-x-2">
-                      {Array.from({ length: Math.ceil(team.members.length / 3) }).map((_, idx) => (
-                        <div
-                          key={idx}
-                          className={`w-3 h-3 rounded-full ${currentPage === idx ? 'bg-gold' : 'bg-gold/30'}`}
-                        />
-                      ))}
-                    </div>
+                  {/* Pagination dots */}
+                  <div className="flex justify-center mt-4 space-x-2">
+                    {Array.from({ length: Math.ceil(team.members.length / 3) }).map((_, idx) => (
+                      <div
+                        key={idx}
+                        className={`w-3 h-3 rounded-full ${currentPage === idx ? 'bg-gold' : 'bg-gold/30'}`}
+                      />
+                    ))}
                   </div>
                 </div>
-              </div>
 
-              {/* Review */}
-              <div className="bg-white p-6 rounded-xl shadow">
-                <h2 className="text-2xl font-bold mb-4">Review</h2>
-                <p className="text-yellow-400 mb-2">★★★★★ 516</p>
-                <p className="text-sm text-gray-700">
-                  “I used Lock It Lending for my recent mortgage loan to purchase a townhouse...”
-                  <br />
-                  <span className="text-xs text-gray-500">– by Michi T, 1 week ago</span>
-                </p>
-                <button className="text-sm text-gold mt-4">See More Reviews →</button>
+                {/* Review */}
+                <div className="bg-white p-6 rounded-xl shadow">
+                  <h2 className="text-2xl font-bold mb-4">Review</h2>
+                  {team.reviews?.length ? (
+                    <>
+                      <p className="text-yellow-400 mb-2">★★★★★ {team.reviews.length}</p>
+                      {team.reviews.map((review, i) => (
+                        <div key={i} className="mb-4">
+                          <p className="text-sm text-gray-700">{review.text}</p>
+                          <span className="text-xs text-gray-500">
+                            – {review.name} {review.timestamp && `(${review.timestamp})`}
+                          </span>
+                        </div>
+                      ))}
+                    </>
+                  ) : (
+                    <p className="text-sm text-gray-500">No reviews available.</p>
+                  )}
+                </div>
               </div>
             </div>
           </section>
