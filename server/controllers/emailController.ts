@@ -16,7 +16,21 @@ export const sendEmail = async (req: Request, res: Response) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_USER,
-    subject: 'New Rate Quote Submission',
+    subject: (() => {
+      switch (data.formType) {
+        case 'purchase':
+          return 'New Purchase Form Submission';
+        case 'refinance':
+          return 'New Refinance Form Submission';
+        case 'question':
+          return 'New Customer Question Submission';
+        case 'rates':
+          return 'New Rate Quote Inquiry Submission';
+        default:
+          return 'New Form Submission';
+      }
+    })(),
+    
     html: `
       <h2>New Submission</h2>
       <ul>
@@ -31,7 +45,7 @@ export const sendEmail = async (req: Request, res: Response) => {
     await transporter.sendMail(mailOptions);
     res.status(200).json({ message: 'Email sent successfully!' });
   } catch (error) {
-    console.error('❌ Error sending email:', error);
+    console.error('Error sending email:', error);
     res.status(500).json({ error: 'Failed to send email' });
   }
 };

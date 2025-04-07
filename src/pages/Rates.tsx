@@ -35,6 +35,7 @@ const RatesPage: React.FC = () => {
   });
 
   type FormDataKey = keyof typeof formData;
+  const formWithType = { ...formData, formType: 'rates' };
 
   const handleChange = (field: FormDataKey, value: string) => {
     setFormData(prev => ({
@@ -59,7 +60,7 @@ const RatesPage: React.FC = () => {
     const response = await fetch('http://localhost:5000/api/send-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formWithType),
     });
 
     if (response.ok) {

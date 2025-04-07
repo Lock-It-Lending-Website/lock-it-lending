@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import states from '../constants/states';
-import emailjs from 'emailjs-com';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Home,
@@ -55,11 +55,11 @@ const Purchase: React.FC = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     const requiredFields: (keyof typeof formData)[] = [
       'firstTimeBuyer',
       'militaryService',
@@ -77,26 +77,57 @@ const Purchase: React.FC = () => {
       'email',
       'phone',
     ];
-
+  
     const missingFields = requiredFields.filter(
       field => formData[field] === '' || formData[field] === false
     );
-
+  
     if (missingFields.length > 0) {
       alert('Please fill out all required fields before submitting.');
       return;
     }
-
+  
     if (!formData.consent) {
       alert('Please agree to the communication policy before submitting.');
       return;
     }
-
-    emailjs
-      .sendForm('service_id', 'template_id', formRef.current!, 'user_id')
-      .then(() => setSubmitted(true))
-      .catch(err => console.error(err));
+  
+    try {
+      const response = await fetch('http://localhost:5000/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, formType: 'purchase' }),
+      });
+  
+      if (response.ok) {
+        navigate('/thank-you');
+        setFormData({
+          firstTimeBuyer: '',
+          militaryService: '',
+          processStage: '',
+          state: '',
+          propertyType: '',
+          occupancy: '',
+          purchasePrice: '',
+          downPayment: '',
+          creditScore: '',
+          hasAgent: '',
+          preferredLanguage: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          consent: false,
+        });
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      alert('Something went wrong. Please try again.');
+    }
   };
+  
 
   const renderOption = (
     field: FormDataKey,

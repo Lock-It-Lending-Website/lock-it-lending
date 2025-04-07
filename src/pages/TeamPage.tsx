@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import { teamData } from '../data/teamData';
 import Header from '../components/Header';
@@ -6,14 +6,61 @@ import Footer from '../components/Footer';
 
 const TeamPage = () => {
   const { teamId } = useParams();
+  const navigate = useNavigate();
+
   const normalizedId = (teamId || '').toLowerCase().trim();
   const team = teamData[normalizedId];
 
   const [activeTab, setActiveTab] = useState<'about' | 'contact'>('about');
   const [showMore, setShowMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  const [contactData, setContactData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    consent: false,
+  });
+
+  const handleChange = (field: string, value: string | boolean) => {
+    setContactData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const { firstName, lastName, email, phone, consent } = contactData;
+    if (!firstName || !lastName || !email || !phone || !consent) {
+      alert('Please fill out all fields and agree to the consent checkbox.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...contactData, formType: `question}` }),
+      });
+
+      if (response.ok) {
+        navigate('/thank-you');
+        setContactData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          consent: false,
+        });
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      console.error('Form submit failed:', err);
+      alert('Something went wrong. Please try again.');
+    }
+  };
 
   function chunkArray<T>(arr: T[], size: number): T[][] {
     return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
@@ -21,11 +68,11 @@ const TeamPage = () => {
     );
   }
 
-  const pages = chunkArray(team.members, 3);
+  const pages = team ? chunkArray(team.members, 3) : [];
 
   useEffect(() => {
     const slider = sliderRef.current;
-    if (!slider || team.members.length < 2) return;
+    if (!slider || team?.members.length < 2) return;
 
     let isDown = false;
     let startX: number, scrollLeft: number;
@@ -58,7 +105,7 @@ const TeamPage = () => {
       slider.removeEventListener('mouseup', handleMouseUp);
       slider.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [team.members]);
+  }, [team?.members]);
 
   if (!team) return <div className="text-center py-10">Team not found</div>;
 
@@ -68,8 +115,8 @@ const TeamPage = () => {
     <div className="font-sans">
       <Header />
       <main>
-        {/* Banner Section */}
-        <section className="relative h-[240px] md:h-240px] overflow-hidden">
+        {/* Hero */}
+        <section className="relative h-[240px] overflow-hidden">
           <img
             src={team.heroBlur}
             alt="Background"
@@ -82,8 +129,8 @@ const TeamPage = () => {
           />
         </section>
 
-        {/* Info Section */}
-        <section className="relative bg-white pt-12 pb-6 px-4 md:px-8 z-10">
+        {/* Info */}
+        <section className="bg-white pt-12 pb-6 px-4 md:px-8 z-10 relative">
           <div className="max-w-5xl mx-auto flex items-start gap-6">
             <div className="relative z-30 -mt-[120px]">
               <img
@@ -92,16 +139,12 @@ const TeamPage = () => {
                 className="w-36 h-36 md:w-56 md:h-56 rounded-full border-4 border-white shadow-lg object-contain bg-white p-2"
               />
             </div>
-
             <div className="flex flex-1 justify-between items-start">
               <div>
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{team.name}</h1>
                 <p className="text-sm text-gray-500">NMLS#{team.nmls}</p>
                 <p className="text-sm mt-1 text-gray-700">
-                  <a href={`mailto:${team.email}`} className="hover:underline">
-                    {team.email}
-                  </a>{' '}
-                  • {team.phone}
+                  <a href={`mailto:${team.email}`} className="hover:underline">{team.email}</a> • {team.phone}
                 </p>
                 <p className="text-sm text-gray-700">{team.address}</p>
               </div>
@@ -135,14 +178,14 @@ const TeamPage = () => {
         {activeTab === 'about' ? (
           <section className="bg-gray-50 py-16 px-4">
             <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+              {/* Left: About & Team */}
               <div className="col-span-2 flex flex-col gap-8">
-                {/* About */}
                 <div className="bg-white p-6 rounded-xl shadow">
                   <h2 className="text-2xl font-bold mb-4">About</h2>
                   <div
                     className={`text-sm text-gray-700 leading-relaxed transition-all duration-300 ease-in-out ${showMore ? 'max-h-[160px] overflow-hidden' : 'max-h-[800px]'}`}
                   >
-                    <p className="text-sm text-gray-700 whitespace-pre-line">{team.about}</p>
+                    <p className="whitespace-pre-line">{team.about}</p>
                   </div>
                   <div className="mt-4 flex justify-center">
                     <button
@@ -153,7 +196,8 @@ const TeamPage = () => {
                     </button>
                   </div>
                 </div>
-                {/* Meet the Team */}
+
+                {/* Team */}
                 <div className="relative max-w-full overflow-hidden">
                   <div
                     ref={sliderRef}
@@ -166,21 +210,11 @@ const TeamPage = () => {
                     }}
                   >
                     {pages.map((group, idx) => (
-                      <div
-                        key={idx}
-                        className="flex snap-start gap-6 shrink-0 w-full justify-center"
-                      >
+                      <div key={idx} className="flex snap-start gap-6 shrink-0 w-full justify-center">
                         {group.map(member => (
-                          <div
-                            key={member.name}
-                            className="flex flex-col items-center w-[250px] h-[400px] bg-white rounded-xl shadow overflow-hidden"
-                          >
+                          <div key={member.name} className="flex flex-col items-center w-[250px] h-[400px] bg-white rounded-xl shadow overflow-hidden">
                             <div className="h-[280px] bg-gold flex items-center justify-center">
-                              <img
-                                src={member.image}
-                                alt={member.name}
-                                className="h-full object-contain"
-                              />
+                              <img src={member.image} alt={member.name} className="h-full object-contain" />
                             </div>
                             <div className="flex flex-col justify-between text-center p-4 flex-1">
                               <h3 className="font-bold text-lg text-gray-900">{member.name}</h3>
@@ -202,17 +236,15 @@ const TeamPage = () => {
                 </div>
               </div>
 
-              {/* Review */}
+              {/* Right: Reviews */}
               <div className="bg-white p-6 rounded-xl shadow">
                 <h2 className="text-2xl font-bold mb-2">Review</h2>
                 <div className="flex items-center gap-2 text-yellow-400 font-bold text-sm mb-1">
-                  {'★★★★★'} <span className="text-black font-semibold text-sm">{totalReviews}</span>{' '}
-                  <span className="text-[16px]"></span>
+                  {'★★★★★'} <span className="text-black font-semibold">{totalReviews}</span>
                 </div>
                 <p className="text-sm text-gray-700 mb-4">
                   Read from our 5 star Google reviews, where our valued clients share their
-                  experiences and satisfaction with Lock It Lending – Team{' '}
-                  {team.name.split('-').pop()?.trim()}’s exceptional service.
+                  experiences and satisfaction with Lock It Lending – Team {team.name.split('-').pop()?.trim()}’s exceptional service.
                 </p>
                 {team.reviews?.map((review, i) => (
                   <div key={i} className="mb-6">
@@ -245,21 +277,44 @@ const TeamPage = () => {
               <p className="text-sm text-center text-gray-600 mb-6">
                 Let us help so you can get one step closer to getting your home
               </p>
-              <form className="space-y-4">
-                <input className="w-full p-3 border rounded-lg" placeholder="First Name" />
-                <input className="w-full p-3 border rounded-lg" placeholder="Last Name" />
-                <input className="w-full p-3 border rounded-lg" placeholder="Email" />
-                <input className="w-full p-3 border rounded-lg" placeholder="Phone Number" />
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  className="w-full p-3 border rounded-lg"
+                  placeholder="First Name"
+                  value={contactData.firstName}
+                  onChange={e => handleChange('firstName', e.target.value)}
+                />
+                <input
+                  className="w-full p-3 border rounded-lg"
+                  placeholder="Last Name"
+                  value={contactData.lastName}
+                  onChange={e => handleChange('lastName', e.target.value)}
+                />
+                <input
+                  className="w-full p-3 border rounded-lg"
+                  placeholder="Email"
+                  type="email"
+                  value={contactData.email}
+                  onChange={e => handleChange('email', e.target.value)}
+                />
+                <input
+                  className="w-full p-3 border rounded-lg"
+                  placeholder="Phone Number"
+                  type="tel"
+                  value={contactData.phone}
+                  onChange={e => handleChange('phone', e.target.value)}
+                />
                 <label className="text-xs text-gray-500 flex items-start space-x-2">
-                  <input type="checkbox" className="mt-1" />
+                  <input
+                    type="checkbox"
+                    className="mt-1"
+                    checked={contactData.consent}
+                    onChange={e => handleChange('consent', e.target.checked)}
+                  />
                   <span>
-                    By pressing “Submit” you are agreeing to receive a quote through the email
-                    provided and agreeing to Swift Home Loans Inc.'s Terms of Use, Privacy
-                    Policy,Email Policy and provide consent to receive text messages for important
-                    notifications about our services, updates on upcoming meetings, and replies from
-                    your dedicated representative. Message frequency varies. Message and data rates
-                    may apply. You can opt-out at any time by replying "STOP" to any message. Reply
-                    HELP for assistance.
+                    By pressing “Submit” you agree to receive a quote and texts per our Terms,
+                    Privacy, and Email Policy. Message frequency varies. Message/data rates may
+                    apply. Reply STOP to opt out.
                   </span>
                 </label>
                 <button

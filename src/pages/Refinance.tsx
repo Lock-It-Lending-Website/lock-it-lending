@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import states from '../constants/states';
 import { ShieldCheck, ShieldOff } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const yesNoIcons = {
   Yes: <ShieldCheck />,
@@ -28,9 +29,57 @@ const RatesPage: React.FC = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
+    const requiredFields: (keyof typeof formData)[] = [
+      'state',
+      'firstTimeBuyer',
+      'residencyType',
+      'propertyType',
+      'homePrice',
+      'downPayment',
+      'creditScore',
+      'email',
+    ];
+  
+    const missingFields = requiredFields.filter(field => formData[field] === '');
+  
+    if (missingFields.length > 0) {
+      alert('Please fill out all required fields before submitting.');
+      return;
+    }
+  
+    try {
+      const response = await fetch('http://localhost:5000/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, formType: 'refinance' }),
+      });
+  
+      if (response.ok) {
+        navigate('/thank-you');
+        setFormData({
+          state: '',
+          firstTimeBuyer: '',
+          residencyType: '',
+          propertyType: '',
+          homePrice: '',
+          downPayment: '',
+          creditScore: '',
+          email: '',
+        });
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      console.error('❌ Error:', err);
+      alert('Something went wrong. Please try again.');
+    }
   };
+  
 
   const renderOption = (
     field: FormDataKey,
