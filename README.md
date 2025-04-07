@@ -30,7 +30,7 @@ This website is a replica (and soon improvement!) of [https://lockitlending.com]
 ## Folder Structure
 
 ```
-lockit-lending/
+lock-it-lending/
 ├── public/               # Static files
 │   ├── logo.png          # Logo used in header
 │   ├── favicon.ico       # Browser tab icon
