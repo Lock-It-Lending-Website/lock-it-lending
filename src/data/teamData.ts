@@ -155,7 +155,7 @@ export const teamData: Record<string, TeamGroup> = {
     image: `${base}/apex.png`,
     hero: `${base}/Apex-banner.png`,
     heroBlur: `${base}/Apex-banner.png`,
-    profileImage: `${base}/logo.svg`,
+    profileImage: `${base}/logo.png`,
     nmls: '2403720',
     email: 'teamapex@lockitlending.com',
     phone: '(888) 870-5625',
