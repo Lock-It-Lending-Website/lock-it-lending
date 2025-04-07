@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/lock-it-lending/static/css/main.32ac4e5e.css",
-    "main.js": "/lock-it-lending/static/js/main.c45320f7.js",
+    "main.js": "/lock-it-lending/static/js/main.039e070f.js",
     "index.html": "/lock-it-lending/index.html",
     "main.32ac4e5e.css.map": "/lock-it-lending/static/css/main.32ac4e5e.css.map",
-    "main.c45320f7.js.map": "/lock-it-lending/static/js/main.c45320f7.js.map"
+    "main.039e070f.js.map": "/lock-it-lending/static/js/main.039e070f.js.map"
   },
   "entrypoints": [
     "static/css/main.32ac4e5e.css",
-    "static/js/main.c45320f7.js"
+    "static/js/main.039e070f.js"
   ]
 }
