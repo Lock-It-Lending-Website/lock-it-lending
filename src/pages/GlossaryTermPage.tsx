@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { glossaryData } from '../data/glossaryData';
@@ -29,13 +29,13 @@ export default function GlossaryTermPage() {
       <main className="max-w-5xl mx-auto px-4 py-16">
         {/* Breadcrumbs */}
         <div className="text-sm text-[#D6A849] font-medium mb-4 space-x-1">
-          <a href="/" className="hover:underline">
+          <Link to="/" className="hover:underline">
             Home
-          </a>
+          </Link>
           <span>{'>'}</span>
-          <a href="/glossary" className="hover:underline">
+          <Link to="/glossary" className="hover:underline">
             Glossary
-          </a>
+          </Link>
           <span>{'>'}</span>
           <span className="text-black">{termData.term}</span>
         </div>

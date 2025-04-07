@@ -47,9 +47,9 @@ const TeamMemberPage = () => {
               <p>📞 {member.phone}</p>
               <p>
                 ✉️{' '}
-                <a href={`mailto:${member.email}`} className="text-gold font-semibold">
+                <Link to={`mailto:${member.email}`} className="text-gold font-semibold">
                   {member.email}
-                </a>
+                </Link>
               </p>
             </div>
 

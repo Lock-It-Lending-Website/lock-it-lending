@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 const ThankYou: React.FC = () => {
   return (
@@ -41,9 +42,9 @@ const ThankYou: React.FC = () => {
         </div>
 
         <div className="mt-8 text-center">
-          <a href="/" className="inline-block text-gold font-bold hover:underline">
+          <Link to="/" className="inline-block text-gold font-bold hover:underline">
             Back to Home →
-          </a>
+          </Link>
         </div>
       </main>
       <Footer />

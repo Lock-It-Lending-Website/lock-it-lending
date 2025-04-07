@@ -149,14 +149,13 @@ const Home: React.FC = () => {
               ))}
             </div>
 
-            <a
-              href="https://www.google.com/search?q=lock+it+lending+houston#lrd=0x8640c35d2a7a4eab:0xb5736063dbda6db6,1"
+            <Link to="https://www.google.com/search?q=lock+it+lending+houston#lrd=0x8640c35d2a7a4eab:0xb5736063dbda6db6,1"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gold font-bold hover:underline mt-10 inline-block"
             >
               SEE ALL REVIEWS →
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -179,12 +178,11 @@ const Home: React.FC = () => {
                 questions, Lock It Lending will make you feel like a neighbor by answering all your
                 financing questions.
               </p>
-              <a
-                href="/"
+              <Link to="/"
                 className="inline-block bg-gold text-white px-6 py-2 rounded-full font-semibold shadow hover:opacity-90"
               >
                 Apply
-              </a>
+              </Link>
             </div>
           </div>
         </section>

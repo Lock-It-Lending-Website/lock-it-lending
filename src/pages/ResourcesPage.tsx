@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { resourcesData } from '../data/resourcesData';
@@ -29,13 +29,13 @@ export default function ResourceArticlePage() {
       <main className="max-w-5xl mx-auto px-4 py-16">
         {/* Breadcrumbs */}
         <div className="text-sm text-[#D6A849]  font-medium mb-4 space-x-1">
-          <a href="/" className="hover:underline">
+          <Link to="/" className="hover:underline">
             Home
-          </a>
+          </Link>
           <span>{'>'}</span>
-          <a href="/resources" className="hover:underline">
+          <Link to="/resources" className="hover:underline">
             Resources
-          </a>
+          </Link>
           <span>{'>'}</span>
           <span className="text-black">{article.title}</span>
         </div>

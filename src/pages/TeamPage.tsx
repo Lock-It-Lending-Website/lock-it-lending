@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import { teamData } from '../data/teamData';
 import Header from '../components/Header';
@@ -145,9 +145,9 @@ const TeamPage = () => {
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{team.name}</h1>
                 <p className="text-sm text-gray-500">NMLS#{team.nmls}</p>
                 <p className="text-sm mt-1 text-gray-700">
-                  <a href={`mailto:${team.email}`} className="hover:underline">
+                  <Link to={`mailto:${team.email}`} className="hover:underline">
                     {team.email}
-                  </a>{' '}
+                  </Link>{' '}
                   • {team.phone}
                 </p>
                 <p className="text-sm text-gray-700">{team.address}</p>
@@ -273,14 +273,13 @@ const TeamPage = () => {
                   </div>
                 ))}
                 <div className="text-center">
-                  <a
-                    href="https://www.google.com/search?q=lock+it+lending+houston#lrd=0x8640c35d2a7a4eab:0xb5736063dbda6db6,1"
+                  <Link to="https://www.google.com/search?q=lock+it+lending+houston#lrd=0x8640c35d2a7a4eab:0xb5736063dbda6db6,1"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gold font-semibold hover:underline text-sm"
                   >
                     See More Reviews →
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

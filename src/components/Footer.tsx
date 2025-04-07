@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -11,44 +12,44 @@ const Footer = () => {
             <h3 className="font-bold text-black mb-4">PRODUCTS</h3>
             <ul className="space-y-2">
               <li>
-                <a href="/purchase" className="hover:underline">
+                <Link to="/purchase" className="hover:underline">
                   Purchase
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/refinance" className="hover:underline">
+                <Link to="/refinance" className="hover:underline">
                   Refinance
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/purchase" className="hover:underline">
+                <Link to="/purchase" className="hover:underline">
                   30 Year Fixed Rate
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/loan-programs" className="hover:underline">
+                <Link to="/loan-programs" className="hover:underline">
                   FHA Loans
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/loan-programs" className="hover:underline">
+                <Link to="/loan-programs" className="hover:underline">
                   15 Year Fixed Rate
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/loan-programs" className="hover:underline">
+                <Link to="/loan-programs" className="hover:underline">
                   USDA Loans
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/loan-programs" className="hover:underline">
+                <Link to="/loan-programs" className="hover:underline">
                   VA Loans
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/loan-programs" className="hover:underline">
+                <Link to="/loan-programs" className="hover:underline">
                   Adjustable Rate
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -58,14 +59,14 @@ const Footer = () => {
             <h3 className="font-bold text-black mb-4">ABOUT</h3>
             <ul className="space-y-2">
               <li>
-                <a href="/meet-lock-it-lending" className="hover:underline">
+                <Link to="/meet-lock-it-lending" className="hover:underline">
                   Meet The Family
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/reviews" className="hover:underline">
+                <Link to="/reviews" className="hover:underline">
                   Reviews
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -75,39 +76,37 @@ const Footer = () => {
             <h3 className="font-bold text-black mb-4">LEGAL</h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="https://www.nmlsconsumeraccess.org"
+                <Link to="https://www.nmlsconsumeraccess.org"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:underline"
                 >
                   License Information
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/email-policy" className="hover:underline">
+                <Link to="/email-policy" className="hover:underline">
                   Email Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/terms-of-use" className="hover:underline">
+                <Link to="/terms-of-use" className="hover:underline">
                   Terms of Use
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/privacy-policy" className="hover:underline">
+                <Link to="/privacy-policy" className="hover:underline">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="https://www.nmlsconsumeraccess.org"
+                <Link to="https://www.nmlsconsumeraccess.org"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:underline"
                 >
                   NMLS Consumer Access
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -137,39 +136,39 @@ const Footer = () => {
             <h3 className="font-bold text-black mb-4">MORTGAGE TERMS</h3>
             <ul className="space-y-2">
               <li>
-                <a href="/glossary/annual-percentage-rate-apr" className="hover:underline">
+                <Link to="/glossary/annual-percentage-rate-apr" className="hover:underline">
                   Annual Percentage Rate (APR)
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/glossary/balancing" className="hover:underline">
+                <Link to="/glossary/balancing" className="hover:underline">
                   Balancing
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/glossary/buying-agent" className="hover:underline">
+                <Link to="/glossary/buying-agent" className="hover:underline">
                   Buying Agent
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/glossary/closing-costs" className="hover:underline">
+                <Link to="/glossary/closing-costs" className="hover:underline">
                   Closing Costs
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/glossary/collateral" className="hover:underline">
+                <Link to="/glossary/collateral" className="hover:underline">
                   Collateral
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/glossary/comparable-sales" className="hover:underline">
+                <Link to="/glossary/comparable-sales" className="hover:underline">
                   Comparable Sales
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/glossary/conforming-mortgage" className="hover:underline">
+                <Link to="/glossary/conforming-mortgage" className="hover:underline">
                   Conforming Mortgage
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -179,28 +178,25 @@ const Footer = () => {
             <h3 className="font-bold text-black mb-4">RESOURCES</h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="/resources/what-are-2-1-temporary-rate-buydowns"
+                <Link to="/resources/what-are-2-1-temporary-rate-buydowns"
                   className="hover:underline"
                 >
                   What are 2-1 Temporary Rate Buydowns?
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/resources/conventional-1-down-making-homeownership-more-accessible"
+                <Link to="/resources/conventional-1-down-making-homeownership-more-accessible"
                   className="hover:underline"
                 >
                   Conventional 1% Down: Making Homeownership More Accessible
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/resources/be-aware-of-predatory-lending-practices"
+                <Link to="/resources/be-aware-of-predatory-lending-practices"
                   className="hover:underline"
                 >
                   Be Aware of Predatory Lending Practices
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -220,27 +216,24 @@ const Footer = () => {
 
           {/* Center: Social Icons */}
           <div className="flex gap-4 text-lg text-gray-700">
-            <a
-              href="https://www.facebook.com/lockitlending"
+            <Link to="https://www.facebook.com/lockitlending"
               target="_blank"
               rel="noopener noreferrer"
             >
               <i className="fab fa-facebook-f"></i>
-            </a>
-            <a
-              href="https://www.instagram.com/lockitlending/"
+            </Link>
+            <Link to="https://www.instagram.com/lockitlending/"
               target="_blank"
               rel="noopener noreferrer"
             >
               <i className="fab fa-instagram"></i>
-            </a>
-            <a
-              href="https://www.linkedin.com/company/lockitlending/"
+            </Link>
+            <Link to="https://www.linkedin.com/company/lockitlending/"
               target="_blank"
               rel="noopener noreferrer"
             >
               <i className="fab fa-linkedin-in"></i>
-            </a>
+            </Link>
           </div>
 
           {/* Right: Copyright */}
@@ -248,14 +241,13 @@ const Footer = () => {
             © 2024 Powered by{' '}
             <span className="font-semibold text-black">Swift Home Loans Inc.</span>
             <br />
-            <a
-              href="https://www.nmlsconsumeraccess.org"
+            <Link to="https://www.nmlsconsumeraccess.org"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600"
             >
               NMLS #2075228
-            </a>
+            </Link>
           </div>
         </div>
       </div>
