@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
@@ -48,7 +48,7 @@ const Purchase: React.FC = () => {
     { label: 'Other', icon: <MessageCircleQuestion /> },
   ];
 
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted] = useState(false);
   type FormDataKey = keyof typeof formData;
 
   const handleChange = (field: FormDataKey, value: string | boolean) => {
@@ -59,7 +59,7 @@ const Purchase: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     const requiredFields: (keyof typeof formData)[] = [
       'firstTimeBuyer',
       'militaryService',
@@ -77,28 +77,28 @@ const Purchase: React.FC = () => {
       'email',
       'phone',
     ];
-  
+
     const missingFields = requiredFields.filter(
       field => formData[field] === '' || formData[field] === false
     );
-  
+
     if (missingFields.length > 0) {
       alert('Please fill out all required fields before submitting.');
       return;
     }
-  
+
     if (!formData.consent) {
       alert('Please agree to the communication policy before submitting.');
       return;
     }
-  
+
     try {
       const response = await fetch('http://localhost:5000/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, formType: 'purchase' }),
       });
-  
+
       if (response.ok) {
         navigate('/thank-you');
         setFormData({
@@ -127,7 +127,6 @@ const Purchase: React.FC = () => {
       alert('Something went wrong. Please try again.');
     }
   };
-  
 
   const renderOption = (
     field: FormDataKey,

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import { teamData } from '../data/teamData';
@@ -41,7 +42,7 @@ const TeamPage = () => {
       const response = await fetch('http://localhost:5000/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...contactData, formType: `question}` }),
+        body: JSON.stringify({ ...contactData, formType: `question` }),
       });
 
       if (response.ok) {
@@ -144,7 +145,10 @@ const TeamPage = () => {
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{team.name}</h1>
                 <p className="text-sm text-gray-500">NMLS#{team.nmls}</p>
                 <p className="text-sm mt-1 text-gray-700">
-                  <a href={`mailto:${team.email}`} className="hover:underline">{team.email}</a> • {team.phone}
+                  <a href={`mailto:${team.email}`} className="hover:underline">
+                    {team.email}
+                  </a>{' '}
+                  • {team.phone}
                 </p>
                 <p className="text-sm text-gray-700">{team.address}</p>
               </div>
@@ -210,11 +214,21 @@ const TeamPage = () => {
                     }}
                   >
                     {pages.map((group, idx) => (
-                      <div key={idx} className="flex snap-start gap-6 shrink-0 w-full justify-center">
+                      <div
+                        key={idx}
+                        className="flex snap-start gap-6 shrink-0 w-full justify-center"
+                      >
                         {group.map(member => (
-                          <div key={member.name} className="flex flex-col items-center w-[250px] h-[400px] bg-white rounded-xl shadow overflow-hidden">
+                          <div
+                            key={member.name}
+                            className="flex flex-col items-center w-[250px] h-[400px] bg-white rounded-xl shadow overflow-hidden"
+                          >
                             <div className="h-[280px] bg-gold flex items-center justify-center">
-                              <img src={member.image} alt={member.name} className="h-full object-contain" />
+                              <img
+                                src={member.image}
+                                alt={member.name}
+                                className="h-full object-contain"
+                              />
                             </div>
                             <div className="flex flex-col justify-between text-center p-4 flex-1">
                               <h3 className="font-bold text-lg text-gray-900">{member.name}</h3>
@@ -244,7 +258,8 @@ const TeamPage = () => {
                 </div>
                 <p className="text-sm text-gray-700 mb-4">
                   Read from our 5 star Google reviews, where our valued clients share their
-                  experiences and satisfaction with Lock It Lending – Team {team.name.split('-').pop()?.trim()}’s exceptional service.
+                  experiences and satisfaction with Lock It Lending – Team{' '}
+                  {team.name.split('-').pop()?.trim()}’s exceptional service.
                 </p>
                 {team.reviews?.map((review, i) => (
                   <div key={i} className="mb-6">

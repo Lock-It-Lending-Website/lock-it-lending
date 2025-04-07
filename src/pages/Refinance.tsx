@@ -33,7 +33,7 @@ const RatesPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     const requiredFields: (keyof typeof formData)[] = [
       'state',
       'firstTimeBuyer',
@@ -44,21 +44,21 @@ const RatesPage: React.FC = () => {
       'creditScore',
       'email',
     ];
-  
+
     const missingFields = requiredFields.filter(field => formData[field] === '');
-  
+
     if (missingFields.length > 0) {
       alert('Please fill out all required fields before submitting.');
       return;
     }
-  
+
     try {
       const response = await fetch('http://localhost:5000/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, formType: 'refinance' }),
       });
-  
+
       if (response.ok) {
         navigate('/thank-you');
         setFormData({
@@ -79,7 +79,6 @@ const RatesPage: React.FC = () => {
       alert('Something went wrong. Please try again.');
     }
   };
-  
 
   const renderOption = (
     field: FormDataKey,

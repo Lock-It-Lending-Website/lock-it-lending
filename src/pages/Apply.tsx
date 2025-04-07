@@ -33,7 +33,7 @@ const ApplyForm = () => {
       if (response.ok) alert('Application submitted successfully.');
       else alert('Failed to send. Please try again.');
     } catch (err: unknown) {
-      alert('Error sending application.');
+      alert(`Error sending application: ${err}`);
     }
   };
 
