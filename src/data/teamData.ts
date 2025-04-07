@@ -104,7 +104,7 @@ export const teamData: Record<string, TeamGroup> = {
     address: '10515 Bellaire Blvd, Suite Z, Houston TX 77072, USA',
     members: [
       {
-        name: 'Hanh Doa',
+        name: 'Hanh Dao',
         title: 'Loan Officer',
         nmls: '#2304364',
         phone: '(281) 203-4489',
@@ -289,7 +289,7 @@ export const teamMembers: TeamMember[] = [
     bio: 'Hi, I’m Jake Radom, and I’m thrilled to be a Senior Retail Loan Officer here at Lock It Lending. My passion is helping clients secure the best possible deals, and I find immense joy in making that happen. I’m dedicated to working hard and going the extra mile to ensure that every client gets the financial solution that’s right for them. I believe in a hands-on approach and am committed to being available around the clock to offer expert guidance and support. I know that navigating the loan process can be daunting, and I’m here to make it as smooth and rewarding as possible. Whether you’re a first-time homebuyer or looking to refinance, my goal is to provide a seamless experience and build lasting relationships based on trust and satisfaction. When you work with me, you can expect dedication, personalized service, and a commitment to your success.',
   },
   {
-    name: 'Robert Neonan',
+    name: 'Robert Noonan',
     title: 'Loan Officer',
     nmls: '#2234945',
     phone: '(325) 320-4025',
@@ -356,7 +356,7 @@ export const teamMembers: TeamMember[] = [
     bio: 'With nearly a decade of experience in the mortgage industry and a track record of leading the nation in closed loans over the past few years, I’ve recently relocated from Michigan to the Houston area with my family. This move marks an exciting new chapter for me and presents a unique opportunity to contribute to the growth and success of Lock It Lending. I’m eager to leverage my extensive expertise to support clients and help them navigate their home financing needs in the vibrant Houston market.',
   },
   {
-    name: 'Hanh Doa',
+    name: 'Hanh Dao',
     title: 'Loan Officer',
     nmls: '#2304364',
     phone: '(281) 203-4489',
@@ -364,14 +364,5 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Hanh-Dao.png`,
     slug: 'hanh-doa',
     bio: 'I’m Hanh Dao, one of the Branch Managers at Lock It Lending Houston. I am proud to say that I have been at Lock It Lending Houston since August 31, 2022. My goal is to empower every loan officer at Lock It Lending to close at least 10 loans monthly, establishing us as a household name in the mortgage industry. I love surrounding myself with positive, successful, and kind people.',
-  },
-  {
-    name: 'Brett Bridges',
-    title: 'Loan Officer',
-    nmls: '#2341386',
-    phone: '(281) 204-3474',
-    email: 'brett@lockitlending.com',
-    image: `${base}/team/Brett-Bridge.png`,
-    slug: 'brett-bridges',
   },
 ];
