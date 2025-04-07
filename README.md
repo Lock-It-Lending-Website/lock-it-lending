@@ -1,6 +1,6 @@
-# Lockit Lending Website (React + TypeScript + Tailwind)
+# Lock It Lending Website (React + TypeScript + Tailwind)
 
-Welcome to the Lockit Lending website repo! This is a modern rebuild of the original WordPress site, using React, TypeScript, and Tailwind CSS.
+Welcome to the Lock It Lending website repo! This is a modern rebuild of the original WordPress site, using React, TypeScript, and Tailwind CSS.
 
 This guide is written to help anyone — even without coding experience — get started, run, and update the project step-by-step.
 
