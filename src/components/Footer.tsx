@@ -76,7 +76,8 @@ const Footer = () => {
             <h3 className="font-bold text-black mb-4">LEGAL</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="https://www.nmlsconsumeraccess.org"
+                <Link
+                  to="https://www.nmlsconsumeraccess.org"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:underline"
@@ -100,7 +101,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="https://www.nmlsconsumeraccess.org"
+                <Link
+                  to="https://www.nmlsconsumeraccess.org"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:underline"
@@ -178,21 +180,24 @@ const Footer = () => {
             <h3 className="font-bold text-black mb-4">RESOURCES</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/resources/what-are-2-1-temporary-rate-buydowns"
+                <Link
+                  to="/resources/what-are-2-1-temporary-rate-buydowns"
                   className="hover:underline"
                 >
                   What are 2-1 Temporary Rate Buydowns?
                 </Link>
               </li>
               <li>
-                <Link to="/resources/conventional-1-down-making-homeownership-more-accessible"
+                <Link
+                  to="/resources/conventional-1-down-making-homeownership-more-accessible"
                   className="hover:underline"
                 >
                   Conventional 1% Down: Making Homeownership More Accessible
                 </Link>
               </li>
               <li>
-                <Link to="/resources/be-aware-of-predatory-lending-practices"
+                <Link
+                  to="/resources/be-aware-of-predatory-lending-practices"
                   className="hover:underline"
                 >
                   Be Aware of Predatory Lending Practices
@@ -216,19 +221,22 @@ const Footer = () => {
 
           {/* Center: Social Icons */}
           <div className="flex gap-4 text-lg text-gray-700">
-            <Link to="https://www.facebook.com/lockitlending"
+            <Link
+              to="https://www.facebook.com/lockitlending"
               target="_blank"
               rel="noopener noreferrer"
             >
               <i className="fab fa-facebook-f"></i>
             </Link>
-            <Link to="https://www.instagram.com/lockitlending/"
+            <Link
+              to="https://www.instagram.com/lockitlending/"
               target="_blank"
               rel="noopener noreferrer"
             >
               <i className="fab fa-instagram"></i>
             </Link>
-            <Link to="https://www.linkedin.com/company/lockitlending/"
+            <Link
+              to="https://www.linkedin.com/company/lockitlending/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -241,7 +249,8 @@ const Footer = () => {
             © 2024 Powered by{' '}
             <span className="font-semibold text-black">Swift Home Loans Inc.</span>
             <br />
-            <Link to="https://www.nmlsconsumeraccess.org"
+            <Link
+              to="https://www.nmlsconsumeraccess.org"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600"

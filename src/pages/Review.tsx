@@ -71,7 +71,8 @@ export default function Reviews() {
         </section>
 
         <div className="text-center pb-16 mt-20">
-          <Link to="https://www.google.com/search?q=lock+it+lending+houston#lrd=0x8640c35d2a7a4eab:0xb5736063dbda6db6,1"
+          <Link
+            to="https://www.google.com/search?q=lock+it+lending+houston#lrd=0x8640c35d2a7a4eab:0xb5736063dbda6db6,1"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gold font-bold text-lg hover:underline"
