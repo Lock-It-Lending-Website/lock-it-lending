@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
@@ -20,6 +21,54 @@ function Accordion({ title, content }: { title: string; content: string }) {
 }
 
 export default function LoanPrograms() {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    consent: false,
+  });
+
+  const handleChange = (field: string, value: string | boolean) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const { firstName, lastName, email, phone, consent } = formData;
+    if (!firstName || !lastName || !email || !phone || !consent) {
+      alert('Please fill out all fields and agree to the consent checkbox.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, formType: 'question' }),
+      });
+
+      if (response.ok) {
+        navigate('/thank-you');
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          consent: false,
+        });
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('❌ Error submitting form:', error);
+      alert('Something went wrong. Please try again.');
+    }
+  };
+
   return (
     <div className="font-sans">
       <Header />
@@ -75,23 +124,47 @@ export default function LoanPrograms() {
               <p className="text-center text-gray-600 mb-6">
                 Let us help so that you can get one step closer to getting your home
               </p>
-              <form className="space-y-4">
-                <input placeholder="First Name" className="w-full p-3 border rounded" />
-                <input placeholder="Last Name" className="w-full p-3 border rounded" />
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  placeholder="First Name"
+                  className="w-full p-3 border rounded"
+                  value={formData.firstName}
+                  onChange={e => handleChange('firstName', e.target.value)}
+                />
+                <input
+                  placeholder="Last Name"
+                  className="w-full p-3 border rounded"
+                  value={formData.lastName}
+                  onChange={e => handleChange('lastName', e.target.value)}
+                />
                 <input
                   placeholder="lilwebsite@lockitlending.com"
                   className="w-full p-3 border rounded"
+                  type="email"
+                  value={formData.email}
+                  onChange={e => handleChange('email', e.target.value)}
                 />
-                <input placeholder="(866) 400-6789" className="w-full p-3 border rounded" />
-                <div className="text-sm text-gray-600">
-                  <input type="checkbox" className="mr-2" />
-                  By pressing &quot;Submit&quot; you are agreeing to receive a quote through the
-                  email provided and agreeing to Swift Home Loans Inc.&apos;s Terms of Use, Privacy
-                  Policy,Email Policy and provide consent to receive text messages for important
-                  notifications about our services, updates on upcoming meetings, and replies from
-                  your dedicated representative. Message frequency varies. Message and data rates
-                  may apply. You can opt-out at any time by replying &quot;STOP&quot; to any
-                  message. Reply HELP for assistance.
+                <input
+                  placeholder="(866) 400-6789"
+                  className="w-full p-3 border rounded"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={e => handleChange('phone', e.target.value)}
+                />
+                <div className="text-sm text-gray-600 flex gap-2 items-start">
+                  <input
+                    type="checkbox"
+                    className="mt-1"
+                    checked={formData.consent}
+                    onChange={e => handleChange('consent', e.target.checked)}
+                  />
+                  <p>
+                    By pressing <strong>&quot;Submit&quot;</strong> you are agreeing to receive a
+                    quote through the email provided and agreeing to Swift Home Loans Inc.&apos;s
+                    Terms of Use, Privacy Policy, Email Policy, and provide consent to receive text
+                    messages for important notifications. Message frequency varies. Message and data
+                    rates may apply. You can opt-out at any time by replying &quot;STOP&quot;.
+                  </p>
                 </div>
                 <button
                   type="submit"

@@ -3,14 +3,12 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import states from '../constants/states';
-import {
-  ShieldCheck,
-  ShieldOff
-} from 'lucide-react';
+import { ShieldCheck, ShieldOff } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const yesNoIcons = {
   Yes: <ShieldCheck />,
-  No: <ShieldOff />
+  No: <ShieldOff />,
 };
 
 const RatesPage: React.FC = () => {
@@ -31,11 +29,63 @@ const RatesPage: React.FC = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const requiredFields: (keyof typeof formData)[] = [
+      'state',
+      'firstTimeBuyer',
+      'residencyType',
+      'propertyType',
+      'homePrice',
+      'downPayment',
+      'creditScore',
+      'email',
+    ];
+
+    const missingFields = requiredFields.filter(field => formData[field] === '');
+
+    if (missingFields.length > 0) {
+      alert('Please fill out all required fields before submitting.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, formType: 'refinance' }),
+      });
+
+      if (response.ok) {
+        navigate('/thank-you');
+        setFormData({
+          state: '',
+          firstTimeBuyer: '',
+          residencyType: '',
+          propertyType: '',
+          homePrice: '',
+          downPayment: '',
+          creditScore: '',
+          email: '',
+        });
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      console.error('❌ Error:', err);
+      alert('Something went wrong. Please try again.');
+    }
   };
 
-  const renderOption = (field: FormDataKey, value: string, label?: string, icon?: React.ReactNode) => (
+  const renderOption = (
+    field: FormDataKey,
+    value: string,
+    label?: string,
+    icon?: React.ReactNode
+  ) => (
     <button
       key={value}
       type="button"
@@ -63,7 +113,8 @@ const RatesPage: React.FC = () => {
             <div className="p-8 border-b border-yellow-500">
               <h2 className="text-3xl font-extrabold text-gray-800">Refinance Form</h2>
               <p className="text-sm text-gray-500 mt-2">
-                Just answer a few quick questions below, and we’ll match you with your best refinancing options.
+                Just answer a few quick questions below, and we’ll match you with your best
+                refinancing options.
               </p>
             </div>
 
@@ -77,7 +128,9 @@ const RatesPage: React.FC = () => {
                 >
                   <option value="">Select option</option>
                   {states.map(state => (
-                    <option key={state} value={state}>{state}</option>
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -85,28 +138,38 @@ const RatesPage: React.FC = () => {
               <div className="p-6">
                 <p className="text-lg font-semibold mb-4">Are you a first time home-buyer?</p>
                 <div className="grid grid-cols-2 gap-4">
-                  {(['Yes', 'No'] as const).map(opt => renderOption('firstTimeBuyer', opt, opt, yesNoIcons[opt]))}
+                  {(['Yes', 'No'] as const).map(opt =>
+                    renderOption('firstTimeBuyer', opt, opt, yesNoIcons[opt])
+                  )}
                 </div>
               </div>
 
               <div className="p-6">
                 <p className="text-lg font-semibold mb-4">Will this be your...</p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {['Primary Residence', 'Secondary Home', 'Investment Property'].map(opt => renderOption('residencyType', opt))}
+                  {['Primary Residence', 'Secondary Home', 'Investment Property'].map(opt =>
+                    renderOption('residencyType', opt)
+                  )}
                 </div>
               </div>
 
               <div className="p-6">
-                <p className="text-lg font-semibold mb-4">What type of property are you looking at?</p>
+                <p className="text-lg font-semibold mb-4">
+                  What type of property are you looking at?
+                </p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  {['Single Family', 'Multi Family', 'Condominium', 'Townhouse'].map(opt => renderOption('propertyType', opt))}
+                  {['Single Family', 'Multi Family', 'Condominium', 'Townhouse'].map(opt =>
+                    renderOption('propertyType', opt)
+                  )}
                 </div>
               </div>
 
               <div className="p-6">
                 <p className="text-lg font-semibold mb-2">How much is the house?</p>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-500">$</span>
+                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-500">
+                    $
+                  </span>
                   <input
                     type="text"
                     value={formData.homePrice}
@@ -120,7 +183,9 @@ const RatesPage: React.FC = () => {
               <div className="p-6">
                 <p className="text-lg font-semibold mb-2">How much money are you putting down?</p>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-500">$</span>
+                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-500">
+                    $
+                  </span>
                   <input
                     type="text"
                     value={formData.downPayment}
@@ -134,7 +199,9 @@ const RatesPage: React.FC = () => {
               <div className="p-6">
                 <p className="text-lg font-semibold mb-4">Estimated credit score?</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {['740+', '700 - 739', '660 - 699', '600 - 659', 'Below 600'].map(opt => renderOption('creditScore', opt))}
+                  {['740+', '700 - 739', '660 - 699', '600 - 659', 'Below 600'].map(opt =>
+                    renderOption('creditScore', opt)
+                  )}
                 </div>
               </div>
 

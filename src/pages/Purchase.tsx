@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import states from '../constants/states';
-import emailjs from 'emailjs-com';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Home,
@@ -45,19 +45,19 @@ const Purchase: React.FC = () => {
     { label: 'Vietnamese', icon: <Languages /> },
     { label: 'Arabic', icon: <Languages /> },
     { label: 'Albanian', icon: <Languages /> },
-    { label: 'Other', icon: <MessageCircleQuestion /> }
+    { label: 'Other', icon: <MessageCircleQuestion /> },
   ];
 
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted] = useState(false);
   type FormDataKey = keyof typeof formData;
 
   const handleChange = (field: FormDataKey, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const requiredFields: (keyof typeof formData)[] = [
@@ -77,29 +77,63 @@ const Purchase: React.FC = () => {
       'email',
       'phone',
     ];
-  
+
     const missingFields = requiredFields.filter(
       field => formData[field] === '' || formData[field] === false
     );
-  
+
     if (missingFields.length > 0) {
       alert('Please fill out all required fields before submitting.');
       return;
     }
-  
+
     if (!formData.consent) {
       alert('Please agree to the communication policy before submitting.');
       return;
     }
-  
-    emailjs
-      .sendForm('service_id', 'template_id', formRef.current!, 'user_id')
-      .then(() => setSubmitted(true))
-      .catch(err => console.error(err));
-  };
-  
 
-  const renderOption = (field: FormDataKey, value: string, label?: string, icon?: React.ReactNode) => (
+    try {
+      const response = await fetch('http://localhost:5000/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, formType: 'purchase' }),
+      });
+
+      if (response.ok) {
+        navigate('/thank-you');
+        setFormData({
+          firstTimeBuyer: '',
+          militaryService: '',
+          processStage: '',
+          state: '',
+          propertyType: '',
+          occupancy: '',
+          purchasePrice: '',
+          downPayment: '',
+          creditScore: '',
+          hasAgent: '',
+          preferredLanguage: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          consent: false,
+        });
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      alert('Something went wrong. Please try again.');
+    }
+  };
+
+  const renderOption = (
+    field: FormDataKey,
+    value: string,
+    label?: string,
+    icon?: React.ReactNode
+  ) => (
     <button
       key={value}
       type="button"
@@ -127,7 +161,9 @@ const Purchase: React.FC = () => {
             <div className="bg-white rounded-xl shadow-md border border-gray-300">
               <div className="p-8 border-b border-yellow-500">
                 <h2 className="text-2xl font-bold text-gray-800">Purchase Qualification Form</h2>
-                <p className="text-sm text-gray-500 mt-1">Fill out the information below so our loan experts can assist you better.</p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Fill out the information below so our loan experts can assist you better.
+                </p>
               </div>
 
               <div className="divide-y divide-gray-200">
@@ -151,9 +187,24 @@ const Purchase: React.FC = () => {
                   <p className="text-lg font-semibold mb-4">Where are you in the process?</p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     {renderOption('processStage', 'Just Researching', 'Just Researching', <Goal />)}
-                    {renderOption('processStage', 'Buying In 2-6 Months', 'Buying In 2-6 Months', <Home />)}
-                    {renderOption('processStage', 'Offer Pending / Found Property', 'Offer Pending / Found Property', <FileText />)}
-                    {renderOption('processStage', 'Signed Purchase Agreement', 'Signed Purchase Agreement', <FileText />)}
+                    {renderOption(
+                      'processStage',
+                      'Buying In 2-6 Months',
+                      'Buying In 2-6 Months',
+                      <Home />
+                    )}
+                    {renderOption(
+                      'processStage',
+                      'Offer Pending / Found Property',
+                      'Offer Pending / Found Property',
+                      <FileText />
+                    )}
+                    {renderOption(
+                      'processStage',
+                      'Signed Purchase Agreement',
+                      'Signed Purchase Agreement',
+                      <FileText />
+                    )}
                   </div>
                 </div>
 
@@ -166,7 +217,9 @@ const Purchase: React.FC = () => {
                   >
                     <option value="">Select option</option>
                     {states.map(state => (
-                      <option key={state} value={state}>{state}</option>
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -194,27 +247,43 @@ const Purchase: React.FC = () => {
                   <p className="text-lg font-semibold">What is the estimated purchase price?</p>
                   <div className="relative">
                     <span className="absolute left-3 top-2.5 text-gray-500">$</span>
-                    <input type="number" className="w-full border rounded p-2 pl-7" value={formData.purchasePrice} onChange={e => handleChange('purchasePrice', e.target.value)} />
+                    <input
+                      type="number"
+                      className="w-full border rounded p-2 pl-7"
+                      value={formData.purchasePrice}
+                      onChange={e => handleChange('purchasePrice', e.target.value)}
+                    />
                   </div>
                 </div>
 
                 <div className="p-6 space-y-4">
-                  <p className="text-lg font-semibold">Funds available for down payment, closing costs?</p>
+                  <p className="text-lg font-semibold">
+                    Funds available for down payment, closing costs?
+                  </p>
                   <div className="relative">
                     <span className="absolute left-3 top-2.5 text-gray-500">$</span>
-                    <input type="number" className="w-full border rounded p-2 pl-7" value={formData.downPayment} onChange={e => handleChange('downPayment', e.target.value)} />
+                    <input
+                      type="number"
+                      className="w-full border rounded p-2 pl-7"
+                      value={formData.downPayment}
+                      onChange={e => handleChange('downPayment', e.target.value)}
+                    />
                   </div>
                 </div>
 
                 <div className="p-6">
                   <p className="text-lg font-semibold mb-4">Estimated credit score?</p>
                   <div className="grid grid-cols-3 gap-4">
-                    {['740+', '700 - 739', '660 - 699', '600 - 659', 'Below 600'].map(opt => renderOption('creditScore', opt))}
+                    {['740+', '700 - 739', '660 - 699', '600 - 659', 'Below 600'].map(opt =>
+                      renderOption('creditScore', opt)
+                    )}
                   </div>
                 </div>
 
                 <div className="p-6">
-                  <p className="text-lg font-semibold mb-4">Are you working with a real estate agent?</p>
+                  <p className="text-lg font-semibold mb-4">
+                    Are you working with a real estate agent?
+                  </p>
                   <div className="grid grid-cols-2 gap-4">
                     {renderOption('hasAgent', 'Yes', 'Yes', <UserCheck />)}
                     {renderOption('hasAgent', 'No', 'No', <UserCheck />)}
@@ -224,31 +293,71 @@ const Purchase: React.FC = () => {
                 <div className="p-6">
                   <p className="text-lg font-semibold mb-4">Preferred Language</p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {languageOptions.map(lang => renderOption('preferredLanguage', lang.label, lang.label, lang.icon))}
+                    {languageOptions.map(lang =>
+                      renderOption('preferredLanguage', lang.label, lang.label, lang.icon)
+                    )}
                   </div>
                 </div>
 
                 <div className="p-6 space-y-4">
                   <h2 className="text-xl font-bold">Contact Information</h2>
-                  <p className="text-sm text-gray-600">A loan officer will reach out to you shortly.</p>
-                  <input type="text" placeholder="First Name" className="w-full border rounded p-2" value={formData.firstName} onChange={e => handleChange('firstName', e.target.value)} />
-                  <input type="text" placeholder="Last Name" className="w-full border rounded p-2" value={formData.lastName} onChange={e => handleChange('lastName', e.target.value)} />
-                  <input type="email" placeholder="Email" className="w-full border rounded p-2" value={formData.email} onChange={e => handleChange('email', e.target.value)} />
-                  <input type="tel" placeholder="(555) 555-5555" className="w-full border rounded p-2" value={formData.phone} onChange={e => handleChange('phone', e.target.value)} />
+                  <p className="text-sm text-gray-600">
+                    A loan officer will reach out to you shortly.
+                  </p>
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    className="w-full border rounded p-2"
+                    value={formData.firstName}
+                    onChange={e => handleChange('firstName', e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    className="w-full border rounded p-2"
+                    value={formData.lastName}
+                    onChange={e => handleChange('lastName', e.target.value)}
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className="w-full border rounded p-2"
+                    value={formData.email}
+                    onChange={e => handleChange('email', e.target.value)}
+                  />
+                  <input
+                    type="tel"
+                    placeholder="(555) 555-5555"
+                    className="w-full border rounded p-2"
+                    value={formData.phone}
+                    onChange={e => handleChange('phone', e.target.value)}
+                  />
                   <div className="flex items-start gap-2">
-                    <input type="checkbox" checked={formData.consent} onChange={e => handleChange('consent', e.target.checked)} />
+                    <input
+                      type="checkbox"
+                      checked={formData.consent}
+                      onChange={e => handleChange('consent', e.target.checked)}
+                    />
                     <p className="text-xs text-gray-600">
-                      By pressing <strong>“Submit”</strong> you agree to receive phone calls, SMS messages, and more in accordance with our policies.
+                      By pressing <strong>“Submit”</strong> you agree to receive phone calls, SMS
+                      messages, and more in accordance with our policies.
                     </p>
                   </div>
-                  <button type="submit" className="bg-yellow-600 text-white rounded-full px-6 py-2 hover:bg-yellow-700 mt-2">SUBMIT</button>
+                  <button
+                    type="submit"
+                    className="bg-yellow-600 text-white rounded-full px-6 py-2 hover:bg-yellow-700 mt-2"
+                  >
+                    SUBMIT
+                  </button>
                 </div>
               </div>
             </div>
           ) : (
             <div className="bg-white p-6 rounded-xl shadow border space-y-4 text-center">
               <h2 className="text-2xl font-bold">Thank you!</h2>
-              <p className="text-gray-700">We’ve received your information and will contact you shortly.</p>
+              <p className="text-gray-700">
+                We’ve received your information and will contact you shortly.
+              </p>
             </div>
           )}
         </form>

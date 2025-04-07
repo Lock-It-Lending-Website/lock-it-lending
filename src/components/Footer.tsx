@@ -8,16 +8,48 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           {/* PRODUCTS */}
           <div>
-            <h3 className="font-bold text-black mb-4">PRODUCTS ↗</h3>
+            <h3 className="font-bold text-black mb-4">PRODUCTS</h3>
             <ul className="space-y-2">
-              <li>Purchase</li>
-              <li>Refinance</li>
-              <li>30 Year Fixed Rate</li>
-              <li>FHA Loans</li>
-              <li>15 Year Fixed Rate</li>
-              <li>USDA Loans</li>
-              <li>VA Loans</li>
-              <li>Adjustable Rate</li>
+              <li>
+                <a href="/purchase" className="hover:underline">
+                  Purchase
+                </a>
+              </li>
+              <li>
+                <a href="/refinance" className="hover:underline">
+                  Refinance
+                </a>
+              </li>
+              <li>
+                <a href="/purchase" className="hover:underline">
+                  30 Year Fixed Rate
+                </a>
+              </li>
+              <li>
+                <a href="/loan-programs" className="hover:underline">
+                  FHA Loans
+                </a>
+              </li>
+              <li>
+                <a href="/loan-programs" className="hover:underline">
+                  15 Year Fixed Rate
+                </a>
+              </li>
+              <li>
+                <a href="/loan-programs" className="hover:underline">
+                  USDA Loans
+                </a>
+              </li>
+              <li>
+                <a href="/loan-programs" className="hover:underline">
+                  VA Loans
+                </a>
+              </li>
+              <li>
+                <a href="/loan-programs" className="hover:underline">
+                  Adjustable Rate
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -25,8 +57,16 @@ const Footer = () => {
           <div>
             <h3 className="font-bold text-black mb-4">ABOUT</h3>
             <ul className="space-y-2">
-              <li>Meet The Family</li>
-              <li>Reviews</li>
+              <li>
+                <a href="/meet-lock-it-lending" className="hover:underline">
+                  Meet The Family
+                </a>
+              </li>
+              <li>
+                <a href="/reviews" className="hover:underline">
+                  Reviews
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -34,11 +74,41 @@ const Footer = () => {
           <div>
             <h3 className="font-bold text-black mb-4">LEGAL</h3>
             <ul className="space-y-2">
-              <li>License Information</li>
-              <li>Email Policy</li>
-              <li>Terms of Use</li>
-              <li>Privacy Policy</li>
-              <li>NMLS Consumer Access</li>
+              <li>
+                <a
+                  href="https://www.nmlsconsumeraccess.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  License Information
+                </a>
+              </li>
+              <li>
+                <a href="/email-policy" className="hover:underline">
+                  Email Policy
+                </a>
+              </li>
+              <li>
+                <a href="/terms-of-use" className="hover:underline">
+                  Terms of Use
+                </a>
+              </li>
+              <li>
+                <a href="/privacy-policy" className="hover:underline">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.nmlsconsumeraccess.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  NMLS Consumer Access
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -48,14 +118,14 @@ const Footer = () => {
             <div className="mb-4">
               <p className="font-semibold">Lock It Lending Dallas (Team Apex)</p>
               <p>3901 W Walnut St, Garland Tx, 75042</p>
-              <p>📞 (888) 870-5625</p>
-              <p>📧 teamapex@lockitlending.com</p>
+              <p>(888) 870-5625</p>
+              <p>teamapex@lockitlending.com</p>
             </div>
             <div>
               <p className="font-semibold">Lock It Lending Houston (Team All Stars)</p>
               <p>10515 Bellaire Blvd ste Z, Houston Tx, 77042</p>
-              <p>📞 (866) 400-6789</p>
-              <p>📧 info@lockitlending.com</p>
+              <p>(866) 400-6789</p>
+              <p>info@lockitlending.com</p>
             </div>
           </div>
         </div>
@@ -64,25 +134,74 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {/* MORTGAGE TERMS */}
           <div>
-            <h3 className="font-bold text-black mb-4">MORTGAGE TERMS ↗</h3>
+            <h3 className="font-bold text-black mb-4">MORTGAGE TERMS</h3>
             <ul className="space-y-2">
-              <li>Annual Percentage Rate (APR)</li>
-              <li>Balancing</li>
-              <li>Buying Agent</li>
-              <li>Closing Costs</li>
-              <li>Collateral</li>
-              <li>Comparable Sales</li>
-              <li>Conforming Mortgage</li>
+              <li>
+                <a href="/glossary/annual-percentage-rate-apr" className="hover:underline">
+                  Annual Percentage Rate (APR)
+                </a>
+              </li>
+              <li>
+                <a href="/glossary/balancing" className="hover:underline">
+                  Balancing
+                </a>
+              </li>
+              <li>
+                <a href="/glossary/buying-agent" className="hover:underline">
+                  Buying Agent
+                </a>
+              </li>
+              <li>
+                <a href="/glossary/closing-costs" className="hover:underline">
+                  Closing Costs
+                </a>
+              </li>
+              <li>
+                <a href="/glossary/collateral" className="hover:underline">
+                  Collateral
+                </a>
+              </li>
+              <li>
+                <a href="/glossary/comparable-sales" className="hover:underline">
+                  Comparable Sales
+                </a>
+              </li>
+              <li>
+                <a href="/glossary/conforming-mortgage" className="hover:underline">
+                  Conforming Mortgage
+                </a>
+              </li>
             </ul>
           </div>
 
           {/* RESOURCES */}
           <div>
-            <h3 className="font-bold text-black mb-4">RESOURCES ↗</h3>
+            <h3 className="font-bold text-black mb-4">RESOURCES</h3>
             <ul className="space-y-2">
-              <li>What are 2-1 Temporary Rate Buydowns?</li>
-              <li>Conventional 1% Down: Making Homeownership More Accessible</li>
-              <li>Be Aware of Predatory Lending Practices</li>
+              <li>
+                <a
+                  href="/resources/what-are-2-1-temporary-rate-buydowns"
+                  className="hover:underline"
+                >
+                  What are 2-1 Temporary Rate Buydowns?
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/resources/conventional-1-down-making-homeownership-more-accessible"
+                  className="hover:underline"
+                >
+                  Conventional 1% Down: Making Homeownership More Accessible
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/resources/be-aware-of-predatory-lending-practices"
+                  className="hover:underline"
+                >
+                  Be Aware of Predatory Lending Practices
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -101,13 +220,25 @@ const Footer = () => {
 
           {/* Center: Social Icons */}
           <div className="flex gap-4 text-lg text-gray-700">
-            <a href="/">
+            <a
+              href="https://www.facebook.com/lockitlending"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <i className="fab fa-facebook-f"></i>
             </a>
-            <a href="/">
+            <a
+              href="https://www.instagram.com/lockitlending/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <i className="fab fa-instagram"></i>
             </a>
-            <a href="/">
+            <a
+              href="https://www.linkedin.com/company/lockitlending/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <i className="fab fa-linkedin-in"></i>
             </a>
           </div>
@@ -117,7 +248,12 @@ const Footer = () => {
             © 2024 Powered by{' '}
             <span className="font-semibold text-black">Swift Home Loans Inc.</span>
             <br />
-            <a href="/" className="text-blue-600">
+            <a
+              href="https://www.nmlsconsumeraccess.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600"
+            >
               NMLS #2075228
             </a>
           </div>

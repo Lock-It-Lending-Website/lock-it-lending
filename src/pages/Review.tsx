@@ -5,80 +5,80 @@ import HeroSection from '../components/HeroSection';
 
 const reviews = [
   {
+    name: 'David',
+    date: 'May 15, 2024',
+    image: `${process.env.PUBLIC_URL}/david-review.png`,
+    text: 'If I could give them 10 stars, I would! I initially started my loan process with another provider, but their slow communication and a high rate of 7.5% were major drawbacks. I then switched to Lock it Lending, and it was a fantastic decision. Ms. Hanh, Ms. Emily, Kaden, and Ella were extremely professional and supportive throughout the process. They not only expedited the loan closure but also secured a $6,000 grant for me and a lower rate of 6.6%. I am thoroughly impressed and will definitely recommend Lock it Lending to anyone in need of loan services.',
+  },
+  {
+    name: 'Nick',
+    date: 'May 14, 2024',
+    image: `${process.env.PUBLIC_URL}/nick-review.png`,
+    text: 'We recently worked with Thomas Stubblefield and Winter Huynh as our loan officer, and we couldn’t have been more satisfied with the experience. They was incredibly helpful, responsive, and knowledgeable throughout the entire loan process. They took the time to explain everything clearly, ensuring that I felt confident and informed every step of the way. They both are was proactive in addressing any concerns and worked tirelessly to secure the best possible terms for my loan. We highly recommend Lock It Lending to anyone in need of financing. Thank you both for your excellent work and exceptional service! We are really really appreciate it!',
+  },
+  {
     name: 'Bill',
     date: 'May 11, 2024',
-    text: `I’d like to thank Ann and Ella who have been involved in the process of getting me into my new home. This has been a seamless, pleasant and positive experience which I attribute to the very professional team.`,
+    image: `${process.env.PUBLIC_URL}/bill-review.png`,
+    text: 'I’d like to thank Ann and Ella who have been involved in the process of getting me into my new home. This has been a seamless, pleasant and positive experience which I attribute to the very professional team. Thanks again for all of your help and support in answering all of my question and getting me to closing!',
   },
   {
     name: 'Thi',
     date: 'April 19, 2024',
-    text: `My husband and I are first time home buyers and we had the pleasure of working with Tiana, Lyn and Oliver. They are very professional, attentive and knowledgeable...`,
+    image: `${process.env.PUBLIC_URL}/thi-review.png`,
+    text: 'My husband and I are first time home buyer and we had the pleasure of working with Tiana, Lyn and Oliver. They are very professional, attentive and knowledgeable. They assisted us with many questions that we have and explained everything in details that made everything very easy to understand. The process went very smoothly. I would highly recommend them!! Thank you for assisting us throughout this process and for the beautiful gift on our closing day!',
   },
   {
-    name: 'Kelly',
-    date: 'March 4, 2024',
-    text: `The whole process was smooth and fast. Lock It Lending made my refinance experience incredibly easy and stress-free.`,
+    name: 'Quoc',
+    date: 'April 13, 2024',
+    image: `${process.env.PUBLIC_URL}/quoc-review.png`,
+    text: 'I had the privilege of working with Mrs Lyn and Ella who facilitated my first home purchase through a loan, and I couldn’t be more satisfied with the experience. From the initial consultation to the final closing, Mrs Lyn and Ella demonstrated exceptional professionalism, expertise, and support. They patiently guided me through the loan process, ensuring I understood every step along the way. Thanks to them diligent efforts and dedication, I secured the financing I needed to purchase my dream home. I highly recommend Mrs Lyn and Ella to anyone seeking loan assistance. Thank you for making my home-buying journey a seamless and successful one!',
   },
 ];
 
 export default function Reviews() {
   return (
-    <div className="font-sans">
+    <div className="font-sans bg-[#f7f9fb]">
       <Header />
       <main>
         <HeroSection
-          title="Voices of Satisfaction:"
-          highlight="Comprehensive Customer Reviews"
+          title="Customer Reviews"
+          highlight="Voices of Satisfaction"
           description="Real Reviews from Real Customers: Hear What Our Clients Are Saying About Lock It Lending."
           image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Reviews.png`}
         />
 
-        <section className="bg-white py-12 px-4 text-center">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex justify-center items-center gap-2 mb-4">
-              <span className="text-2xl">⭐⭐⭐⭐⭐</span>
-              <span className="text-lg font-bold text-gray-800">911 Google Reviews</span>
-            </div>
-            <p className="text-gray-600 font-medium mb-8">
-              We&apos;re proud to have earned the trust of hundreds of homeowners. Here&apos;s what
-              a few had to say:
-            </p>
-
-            <div className="grid gap-6">
-              {reviews.map(review => (
-                <div
-                  key={review.name + review.date}
-                  className="bg-gray-50 border border-gray-200 p-6 rounded-xl shadow-sm text-left"
-                >
-                  <div className="mb-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      className="w-6 h-6 text-gold mb-2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M7.17 6.998c-1.13 0-2.17.57-2.94 1.48A4.932 4.932 0 0 0 3 11.498c0 1.36.54 2.6 1.23 3.52.68.91 1.81 1.48 2.94 1.48.72 0 1.38-.22 1.92-.59l.05-.05c-.38-.39-.7-.85-.94-1.34-.28-.56-.45-1.18-.45-1.86 0-1.62.89-3.06 2.23-3.92-.62-.56-1.44-.89-2.61-.89Zm9.66 0c-1.13 0-2.17.57-2.94 1.48a4.932 4.932 0 0 0-1.23 3.02c0 1.36.54 2.6 1.23 3.52.68.91 1.81 1.48 2.94 1.48.72 0 1.38-.22 1.92-.59l.05-.05c-.38-.39-.7-.85-.94-1.34-.28-.56-.45-1.18-.45-1.86 0-1.62.89-3.06 2.23-3.92-.62-.56-1.44-.89-2.61-.89Z" />
-                    </svg>
-                    <p className="text-gray-800 font-medium">{review.text}</p>
-                  </div>
-                  <div className="border-t pt-3">
-                    <p className="font-bold text-gold">{review.name}</p>
-                    <p className="text-sm text-gray-500">{review.date}</p>
-                  </div>
+        <section className="max-w-6xl mx-auto px-4 py-16 grid sm:grid-cols-2 lg:grid-cols-2 gap-x-20 gap-y-[120px]">
+          {reviews.map((review, idx) => (
+            <div key={idx} className="relative bg-white rounded-2xl p-6 pb-20 shadow-md">
+              <div className="absolute bottom-[-10px] left-10 w-0 h-0 border-t-[20px] border-t-white border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent" />
+              <div className="text-gold text-2xl mb-3">❝</div>
+              <p className="text-gray-700 leading-relaxed mb-6">{review.text}</p>
+              <div className="flex items-center gap-4 absolute bottom-[-80px] left-6">
+                <img
+                  src={review.image}
+                  alt={review.name}
+                  className="w-12 h-12 rounded-full object-cover border-2 border-gold"
+                />
+                <div className="flex flex-col">
+                  <p className="font-semibold text-gray-900">{review.name}</p>
+                  <p className="text-sm text-gray-500">{review.date}</p>
                 </div>
-              ))}
+              </div>
             </div>
-
-            <a
-              href="https://www.google.com/search?q=lock+it+lending+houston#lrd=0x8640c35d2a7a4eab:0xb5736063dbda6db6,1"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gold font-semibold hover:underline mt-10 inline-block"
-            >
-              SEE ALL REVIEWS →
-            </a>
-          </div>
+          ))}
         </section>
+
+        <div className="text-center pb-16 mt-20">
+          <a
+            href="https://www.google.com/search?q=lock+it+lending+houston#lrd=0x8640c35d2a7a4eab:0xb5736063dbda6db6,1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gold font-bold text-lg hover:underline"
+          >
+            SEE ALL REVIEWS ➤
+          </a>
+        </div>
       </main>
       <Footer />
     </div>
