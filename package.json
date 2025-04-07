@@ -1,5 +1,5 @@
 {
-  "name": "lockit-lending",
+  "name": "lock-it-lending",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -25,7 +25,7 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://lock-it-lending-website.github.io/lockit-lending",
+  "homepage": "https://lock-it-lending-website.github.io/lock-it-lending",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
