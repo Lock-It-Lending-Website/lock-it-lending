@@ -215,7 +215,7 @@ const Footer = () => {
               alt="BBB Accredited"
               className="h-8"
             />
-            <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="Lock It Lending" className="h-8" />
+            <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Lock It Lending" className="h-8" />
           </div>
 
           {/* Center: Social Icons */}

@@ -12,7 +12,7 @@ const Header: React.FC = () => {
         {/* Logo */}
         <a href="/">
           <img
-            src={`${process.env.PUBLIC_URL}/logo.svg`}
+            src={`${process.env.PUBLIC_URL}/logo.png`}
             alt="Lock It Lending"
             className="h-8 md:h-10 w-auto"
           />
