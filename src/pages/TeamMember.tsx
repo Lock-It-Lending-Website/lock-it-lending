@@ -10,6 +10,8 @@ const TeamMemberPage = () => {
 
   if (!member) return <div>Team member not found.</div>;
 
+  const applyLink = member.applyLink || `/apply?applyTo=${encodeURIComponent(member.name)}`;
+
   return (
     <>
       <Header />
@@ -73,12 +75,14 @@ const TeamMemberPage = () => {
               </p>
             </div>
             <div className="flex-none">
-              <Link
-                to={`/apply?applyTo=${encodeURIComponent(member.name)}`}
-                className="bg-white text-gold px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition text-base md:text-lg"
-              >
-                Apply
-              </Link>
+            <a
+              href={String(applyLink)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-gold px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition text-base md:text-lg"
+            >
+              Apply
+            </a>
             </div>
           </div>
         </section>

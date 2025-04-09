@@ -5,45 +5,43 @@ import { Link } from 'react-router-dom';
 
 const ThankYou: React.FC = () => {
   return (
-    <div className="home-page font-sans bg-gray-50 min-h-screen">
+    <div className="font-sans bg-gray-50 min-h-screen flex flex-col">
       <Header />
-      <main className="main-content py-16 px-6 max-w-4xl mx-auto">
-        <h1 className="text-4xl font-extrabold text-center text-gold mb-6">
-          Thank You for Your Submission!
-        </h1>
-        <p className="text-lg text-gray-700 mb-6 text-center">
-          At <span className="font-bold text-yellow-700">Lock It Lending</span>, we guarantee you
-          never have to worry about incorrect settlement service charges again. Our expert team will
-          review your request and provide a guaranteed written rate quote within 15 minutes.
-        </p>
+      <main className="flex-grow py-20 px-4 sm:px-6 lg:px-8">
+        <section className="max-w-3xl mx-auto text-center">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gold mb-6">
+            THANK YOU FOR SUBMITTING YOUR QUOTE!
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-800 mb-4">
+            <span role="img" aria-label="bell" className="mr-1">🔔</span>
+            <strong className="text-gray-900">Stay tuned for a confirmation call from our mortgage team!</strong>
+          </p>
+          <p className="text-base sm:text-lg text-gray-700 mb-10">
+            Once confirmed, your guaranteed written rate quote will be delivered within 1 hour.
+          </p>
+        </section>
 
-        <div className="bg-white p-6 rounded-xl shadow-md space-y-4">
-          <p>
-            Online calculators can often lead to inaccurate quotes due to user error or
-            unaccounted-for situations. This can result in delays, confusion, and refund scenarios
-            for borrowers. But with Lock It Lending, we get it right the first time.
+        <section className="bg-white p-8 rounded-2xl shadow-lg space-y-6 max-w-4xl mx-auto text-left">
+          <p className="text-base sm:text-lg text-gray-800 leading-relaxed">
+            At <span className="font-bold text-yellow-700">Lock It Lending</span>, we are committed to delivering a seamless and transparent mortgage experience. We don’t just provide a rate quote; we meticulously calculate your closing fees, recording costs, taxes, and title insurance, delivering everything to you in writing for clarity and peace of mind.
           </p>
 
-          <p>
-            We offer a better way. Once we quote it — we honor it. No games, no surprises. You’ll
-            get a complete, accurate quote based on your exact situation, all calculated and
-            reviewed by our experienced loan professionals.
+          <p className="text-lg font-semibold text-gray-900 pt-2">
+            Clear Quotes. Honest Terms. Lock It With Confidence.
           </p>
 
-          <p>
-            We don’t just quote rates. We calculate your closing fees, recording costs, taxes, and
-            title insurance — and we give it to you in writing.
+          <p className="text-base sm:text-lg text-gray-800 leading-relaxed">
+            We take pride in offering a better, more transparent service than the typical online rate calculators. Instead of leaving you guessing, we provide a clear, accurate breakdown of your full mortgage details, ensuring complete transparency from start to finish. You’ll receive everything in writing, including all associated costs — no surprises, just honest terms you can trust.
           </p>
 
-          <p className="font-semibold">
-            Why suffer through unnecessary disclosures or last-minute changes? Get it right the
-            first time with Lock It Lending.
+          <p className="text-base sm:text-lg text-gray-800 leading-relaxed">
+            We proudly serve clients across 40+ states, and we take pride in making the process smooth and stress-free. No need to fumble with online calculators or guess at numbers — we do all the work for you.
           </p>
-        </div>
+        </section>
 
-        <div className="mt-8 text-center">
-          <Link to="/" className="inline-block text-gold font-bold hover:underline">
-            Back to Home →
+        <div className="mt-12 text-center">
+          <Link to="/" className="text-gold font-bold text-lg hover:underline">
+            ← Back to Home
           </Link>
         </div>
       </main>
