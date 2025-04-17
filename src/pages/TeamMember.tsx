@@ -75,14 +75,14 @@ const TeamMemberPage = () => {
               </p>
             </div>
             <div className="flex-none">
-            <a
-              href={String(applyLink)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-gold px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition text-base md:text-lg"
-            >
-              Apply
-            </a>
+              <a
+                href={String(applyLink)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-gold px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition text-base md:text-lg"
+              >
+                Apply
+              </a>
             </div>
           </div>
         </section>

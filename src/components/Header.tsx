@@ -63,13 +63,27 @@ const Header: React.FC = () => {
       {/* Mobile nav */}
       {menuOpen && (
         <div className="md:hidden px-6 pb-6 space-y-4 font-bold text-gray-700 text-sm">
-          <Link to="/purchase" className="block">Purchase</Link>
-          <Link to="/refinance" className="block">Refinance</Link>
-          <Link to="/loan-programs" className="block">Loan Programs</Link>
-          <Link to="/meet-lock-it-lending" className="block">Meet Lock It Lending</Link>
-          <Link to="/reviews" className="block">Reviews</Link>
-          <Link to="/glossary" className="block">Mortgage Terms</Link>
-          <Link to="/resources" className="block">Resources</Link>
+          <Link to="/purchase" className="block">
+            Purchase
+          </Link>
+          <Link to="/refinance" className="block">
+            Refinance
+          </Link>
+          <Link to="/loan-programs" className="block">
+            Loan Programs
+          </Link>
+          <Link to="/meet-lock-it-lending" className="block">
+            Meet Lock It Lending
+          </Link>
+          <Link to="/reviews" className="block">
+            Reviews
+          </Link>
+          <Link to="/glossary" className="block">
+            Mortgage Terms
+          </Link>
+          <Link to="/resources" className="block">
+            Resources
+          </Link>
           <Link
             to="/rates"
             className="block bg-gold text-white px-6 py-2 rounded-full text-center mt-2"
