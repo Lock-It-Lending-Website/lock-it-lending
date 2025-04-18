@@ -150,103 +150,103 @@ export const teamData: Record<string, TeamGroup> = {
       },
     ],
   },
-  apex: {
-    slug: 'apex',
-    name: 'Lock It Lending - Team APEX',
-    image: `${base}/apex.png`,
-    hero: `${base}/Apex-banner.png`,
-    heroBlur: `${base}/Apex-banner.png`,
-    profileImage: `${base}/logo.png`,
-    nmls: '2403720',
-    email: 'teamapex@lockitlending.com',
-    phone: '(888) 870-5625',
-    address: '3901 West Walnut Street, Garland TX 75042, USA',
-    members: [
-      {
-        name: 'Ly Nguyen',
-        title: 'Loan Officer',
-        phone: '',
-        email: '',
-        image: `${base}/team/Ly-Nguyen.png`,
-      },
-      {
-        name: 'Lesa Luu',
-        title: 'Loan Officer',
-        phone: '',
-        email: '',
-        image: `${base}/team/Lesa-Luu.png`,
-      },
-      {
-        name: 'Tyrone Tran',
-        title: 'Loan Officer',
-        phone: '',
-        email: '',
-        image: `${base}/team/Tyrone-Tran.png`,
-      },
-      {
-        name: 'Brandon Vo',
-        title: 'Loan Officer',
-        phone: '',
-        email: '',
-        image: `${base}/team/Brandon-Vo.png`,
-      },
-      {
-        name: 'Billy Nguyen',
-        title: 'Branch Manager',
-        phone: '',
-        email: '',
-        image: `${base}/team/Billy-Nguyen.png`,
-      },
-      {
-        name: 'Troy Ngo',
-        title: 'VP of Operations',
-        phone: '',
-        email: '',
-        image: `${base}/team/Troy-Ngo.png`,
-      },
-      {
-        name: 'Yen Nguyen',
-        title: 'Loan Officer',
-        phone: '',
-        email: '',
-        image: `${base}/team/Yen-Nguyen.png`,
-      },
-      {
-        name: 'Celine Tran',
-        title: 'Loan Officer',
-        phone: '',
-        email: '',
-        image: `${base}/team/Celine-Tran.png`,
-      },
-    ],
-    about: `
-      At Lock It Lending, we’re not just mortgage brokers; we’re seasoned professionals with over 18 years of experience. 
-      Our mission is simple yet profound: to provide excellence in every aspect of your mortgage journey.
+  // apex: {
+  //   slug: 'apex',
+  //   name: 'Lock It Lending - Team APEX',
+  //   image: `${base}/apex.png`,
+  //   hero: `${base}/Apex-banner.png`,
+  //   heroBlur: `${base}/Apex-banner.png`,
+  //   profileImage: `${base}/logo.png`,
+  //   nmls: '2403720',
+  //   email: 'teamapex@lockitlending.com',
+  //   phone: '(888) 870-5625',
+  //   address: '3901 West Walnut Street, Garland TX 75042, USA',
+  //   members: [
+  //     {
+  //       name: 'Ly Nguyen',
+  //       title: 'Loan Officer',
+  //       phone: '',
+  //       email: '',
+  //       image: `${base}/team/Ly-Nguyen.png`,
+  //     },
+  //     {
+  //       name: 'Lesa Luu',
+  //       title: 'Loan Officer',
+  //       phone: '',
+  //       email: '',
+  //       image: `${base}/team/Lesa-Luu.png`,
+  //     },
+  //     {
+  //       name: 'Tyrone Tran',
+  //       title: 'Loan Officer',
+  //       phone: '',
+  //       email: '',
+  //       image: `${base}/team/Tyrone-Tran.png`,
+  //     },
+  //     {
+  //       name: 'Brandon Vo',
+  //       title: 'Loan Officer',
+  //       phone: '',
+  //       email: '',
+  //       image: `${base}/team/Brandon-Vo.png`,
+  //     },
+  //     {
+  //       name: 'Billy Nguyen',
+  //       title: 'Branch Manager',
+  //       phone: '',
+  //       email: '',
+  //       image: `${base}/team/Billy-Nguyen.png`,
+  //     },
+  //     {
+  //       name: 'Troy Ngo',
+  //       title: 'VP of Operations',
+  //       phone: '',
+  //       email: '',
+  //       image: `${base}/team/Troy-Ngo.png`,
+  //     },
+  //     {
+  //       name: 'Yen Nguyen',
+  //       title: 'Loan Officer',
+  //       phone: '',
+  //       email: '',
+  //       image: `${base}/team/Yen-Nguyen.png`,
+  //     },
+  //     {
+  //       name: 'Celine Tran',
+  //       title: 'Loan Officer',
+  //       phone: '',
+  //       email: '',
+  //       image: `${base}/team/Celine-Tran.png`,
+  //     },
+  //   ],
+  //   about: `
+  //     At Lock It Lending, we’re not just mortgage brokers; we’re seasoned professionals with over 18 years of experience. 
+  //     Our mission is simple yet profound: to provide excellence in every aspect of your mortgage journey.
 
-      We believe that the home buying or refinancing process should be more than just a transaction. 
-      It’s a significant life event, and we are committed to making it as smooth, stress-free, and personal as possible.
-    `,
-    reviews: [
-      {
-        stars: 5,
-        name: 'Danny Chuang',
-        text: `Hands down the best in the business! Working with Billy, Brandon, Celine, and Hanni was such a great experience. They were so patient and helpful throughout the whole process. I couldn’t ask for anyone better to guide me through the process in the purchase of my first home.`,
-        timestamp: 'a week ago',
-      },
-      {
-        stars: 5,
-        name: 'Andrew L',
-        text: `Brandon & Hanni were great and responsive. Worked hard to adapt to changing interest rates and were very effective. Excellent customer service & always available, even on weekends & after business hours.`,
-        timestamp: 'a week ago',
-      },
-      {
-        stars: 5,
-        name: 'Anna Nguyen',
-        text: `Couldn’t have asked for a better service! This was our first home and the team took the time to explain all the steps of the loan process in detail. They were available 24/7, and responded to all our questions and concerns in a timely manner. Our home buying process went so smoothly all due to their help and we could not have asked for anything better. Definitely recommend their service!!`,
-        timestamp: 'a week ago',
-      },
-    ],
-  },
+  //     We believe that the home buying or refinancing process should be more than just a transaction. 
+  //     It’s a significant life event, and we are committed to making it as smooth, stress-free, and personal as possible.
+  //   `,
+  //   reviews: [
+  //     {
+  //       stars: 5,
+  //       name: 'Danny Chuang',
+  //       text: `Hands down the best in the business! Working with Billy, Brandon, Celine, and Hanni was such a great experience. They were so patient and helpful throughout the whole process. I couldn’t ask for anyone better to guide me through the process in the purchase of my first home.`,
+  //       timestamp: 'a week ago',
+  //     },
+  //     {
+  //       stars: 5,
+  //       name: 'Andrew L',
+  //       text: `Brandon & Hanni were great and responsive. Worked hard to adapt to changing interest rates and were very effective. Excellent customer service & always available, even on weekends & after business hours.`,
+  //       timestamp: 'a week ago',
+  //     },
+  //     {
+  //       stars: 5,
+  //       name: 'Anna Nguyen',
+  //       text: `Couldn’t have asked for a better service! This was our first home and the team took the time to explain all the steps of the loan process in detail. They were available 24/7, and responded to all our questions and concerns in a timely manner. Our home buying process went so smoothly all due to their help and we could not have asked for anything better. Definitely recommend their service!!`,
+  //       timestamp: 'a week ago',
+  //     },
+  //   ],
+  // },
 };
 
 export const teamMembers: TeamMember[] = [
