@@ -23,13 +23,13 @@ export default function HeroSection({
 
   return (
     <section className="w-full h-screen bg-white overflow-hidden">
-      <div className={`flex flex-col ${layoutClass} md:flex-row h-full`}>
+      <div className={`flex flex-col ${layoutClass} md:flex-row flex-wrap h-full`}>
         <div className="w-full md:w-1/2 flex flex-col justify-center px-10 py-12 z-10">
           <div className="ml-auto text-left max-w-[650px] w-full ">
             <h1 className="text-5xl md:text-[4.75rem] leading-tight md:leading-[4.75rem] font-bold text-black mb-5 py-4">
               {title} <br/>
               <span
-                className={`whitespace-normal xl:whitespace-nowrap ${
+                className={`whitespace-normal xl:break-words ${
                   highlightColor === 'gold' ? 'text-gold' : 'text-black'
                 }`}
               >

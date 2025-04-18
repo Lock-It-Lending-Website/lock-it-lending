@@ -22,7 +22,7 @@ const Header: React.FC = () => {
         </div>
 
         {/* Center - Nav */}
-        <nav className="hidden md:flex flex-1 justify-center items-center space-x-4 font-bold text-gray-800 text-sm">
+        <nav className="hidden md:flex flex-1 justify-center items-center space-x-4 font-bold text-gray-800 text-base">
           <Link to="/purchase" className="nav-link px-4 py-1.5 rounded-full">
             <span className="nav-link-text">Purchase</span>
           </Link>
