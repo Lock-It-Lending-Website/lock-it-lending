@@ -428,7 +428,7 @@ export const teamMembers: TeamMember[] = [
     nmls: '',
     phone: '(281) 612-4306',
     email: 'ayesha@lockitlending.com',
-    image: '${base}/team/Ayesha-Khan.png',
+    image: `${base}/team/Ayesha-Khan.png`,
     slug: 'ayesha-khan',
     applyLink: '',
   },
