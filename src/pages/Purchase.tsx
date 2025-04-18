@@ -16,53 +16,109 @@ import {
 const steps = [
   {
     title: 'Pre-Approval',
-    icon: <UserCheck className="w-10 h-10 text-yellow-600" />, 
+    icon: <UserCheck className="w-10 h-10 text-yellow-600" />,
     content: (
       <>
-        Begin by scheduling a call with one of our expert Loan Officers (<a href="/meet-lockit" className="text-yellow-700 underline">Meet Our Loan Officers</a>). They'll help identify the Loan program (<a href="/loan-programs" className="text-yellow-700 underline">Explore Loan Programs</a>) that best suits your needs. At this stage, we perform a soft credit pull, ensuring your credit score remains unaffected. We meticulously prepare your application and have it reviewed by our in-house underwriter. Curious about potential loan rates and fees? <a href="/rates" className="text-yellow-700 underline">Get a personalized estimate here</a>.
+        Begin by scheduling a call with one of our expert Loan Officers (
+        <a href="/meet-lockit" className="text-yellow-700 underline">
+          Meet Our Loan Officers
+        </a>
+        ). They'll help identify the Loan program (
+        <a href="/loan-programs" className="text-yellow-700 underline">
+          Explore Loan Programs
+        </a>
+        ) that best suits your needs. At this stage, we perform a soft credit pull, ensuring your
+        credit score remains unaffected. We meticulously prepare your application and have it
+        reviewed by our in-house underwriter. Curious about potential loan rates and fees?{' '}
+        <a href="/rates" className="text-yellow-700 underline">
+          Get a personalized estimate here
+        </a>
+        .
       </>
-    )
+    ),
   },
   {
     title: 'Home Search',
-    icon: <Search className="w-10 h-10 text-yellow-600" />, 
-    content: <>Work with your real estate agent to begin searching for your dream home. If you don’t already have an agent, let us know — we’ll connect you with someone who best fits your needs. Interested in locking your rate before finding a house? It’s possible! Discuss the conditions with your Loan Officer to understand the specifics.</>
+    icon: <Search className="w-10 h-10 text-yellow-600" />,
+    content: (
+      <>
+        Work with your real estate agent to begin searching for your dream home. If you don’t
+        already have an agent, let us know — we’ll connect you with someone who best fits your
+        needs. Interested in locking your rate before finding a house? It’s possible! Discuss the
+        conditions with your Loan Officer to understand the specifics.
+      </>
+    ),
   },
   {
     title: 'Making an Offer',
     icon: <PenLine className="w-10 h-10 text-yellow-600" />,
-    content: <>Once you've found the perfect home, your real estate agent will help you prepare and submit a competitive offer.</>
+    content: (
+      <>
+        Once you've found the perfect home, your real estate agent will help you prepare and submit
+        a competitive offer.
+      </>
+    ),
   },
   {
     title: 'Offer Accepted',
     icon: <CalendarCheck2 className="w-10 h-10 text-yellow-600" />,
-    content: <>Congratulations! With an accepted offer, we proceed to submit your loan application to the lender.</>
+    content: (
+      <>
+        Congratulations! With an accepted offer, we proceed to submit your loan application to the
+        lender.
+      </>
+    ),
   },
   {
     title: 'Loan Submission & Initial Disclosures',
     icon: <FileText className="w-10 h-10 text-yellow-600" />,
-    content: <>We’ll select the most suitable lender based on your unique situation and submit your file. You’ll receive disclosures for e-signature and may be asked for additional documentation (e.g., ID).</>
+    content: (
+      <>
+        We’ll select the most suitable lender based on your unique situation and submit your file.
+        You’ll receive disclosures for e-signature and may be asked for additional documentation
+        (e.g., ID).
+      </>
+    ),
   },
   {
     title: 'Conditional Approval',
     icon: <ShieldCheck className="w-10 h-10 text-yellow-600" />,
-    content: <>The lender reviews your file and issues a conditional approval, indicating that your loan is close to finalization, pending a few additional conditions.</>
+    content: (
+      <>
+        The lender reviews your file and issues a conditional approval, indicating that your loan is
+        close to finalization, pending a few additional conditions.
+      </>
+    ),
   },
   {
     title: 'Rate Lock',
     icon: <Lock className="w-10 h-10 text-yellow-600" />,
-    content: <>We’ll monitor interest rates for you and send daily updates so you can stay informed. Once you spot the option that works best for you, we’ll guide you through locking in the most competitive rate for your loan. Locking the rate is essential to finalize your loan terms before closing.</>
+    content: (
+      <>
+        We’ll monitor interest rates for you and send daily updates so you can stay informed. Once
+        you spot the option that works best for you, we’ll guide you through locking in the most
+        competitive rate for your loan. Locking the rate is essential to finalize your loan terms
+        before closing.
+      </>
+    ),
   },
   {
     title: 'Final Approval & Clear to Close',
     icon: <ShieldCheck className="w-10 h-10 text-yellow-600" />,
-    content: <>Once all conditions are met, you'll receive final approval and the "Clear to Close"— the green light to schedule your closing.</>
+    content: (
+      <>
+        Once all conditions are met, you'll receive final approval and the "Clear to Close"— the
+        green light to schedule your closing.
+      </>
+    ),
   },
   {
     title: 'Closing Day',
     icon: <Home className="w-10 h-10 text-yellow-600" />,
-    content: <>It's time to sign the final documents and officially become a homeowner. Congratulations!</>
-  }
+    content: (
+      <>It's time to sign the final documents and officially become a homeowner. Congratulations!</>
+    ),
+  },
 ];
 
 const Purchase: React.FC = () => {
@@ -83,7 +139,10 @@ const Purchase: React.FC = () => {
             Step-by-Step Guide to Buying a Home
           </h2>
           <p className="text-xl text-gray-600 mb-10 text-left md:text-center max-w-3xl mx-auto mb-20">
-            Before diving into the housing market, ensure you're fully prepared. At Lock It Lending, we believe an informed buyer is a confident buyer. Our easy-to-follow guide walks you through the 9 essential steps of purchasing your dream home - from pre-approval to closing day.
+            Before diving into the housing market, ensure you're fully prepared. At Lock It Lending,
+            we believe an informed buyer is a confident buyer. Our easy-to-follow guide walks you
+            through the 9 essential steps of purchasing your dream home - from pre-approval to
+            closing day.
           </p>
 
           <div className="relative">
@@ -94,14 +153,22 @@ const Purchase: React.FC = () => {
                   key={index}
                   className={`relative flex flex-col md:flex-row items-start md:items-center ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'} md:gap-8`}
                 >
-                  <div className={`relative w-full md:w-1/2 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}`}>
-                    <div className={`flex items-start gap-4 ${index % 2 === 0 ? 'md:flex-row-reverse text-left' : 'md:flex-row text-left'}`}>
+                  <div
+                    className={`relative w-full md:w-1/2 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}`}
+                  >
+                    <div
+                      className={`flex items-start gap-4 ${index % 2 === 0 ? 'md:flex-row-reverse text-left' : 'md:flex-row text-left'}`}
+                    >
                       <div className="w-16 h-16 rounded-full border-2 border-yellow-600 bg-white shadow flex items-center justify-center shrink-0">
                         {step.icon}
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-1">Step {index + 1}: {step.title}</h3>
-                        <p className="text-lg text-gray-600 leading-relaxed text-left max-w-md">{step.content}</p>
+                        <h3 className="text-xl font-bold text-gray-800 mb-1">
+                          Step {index + 1}: {step.title}
+                        </h3>
+                        <p className="text-lg text-gray-600 leading-relaxed text-left max-w-md">
+                          {step.content}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -116,8 +183,8 @@ const Purchase: React.FC = () => {
             </h3>
             <p className="text-gray-600 max-w-2xl mx-auto mb-6">
               Buying a home is a major milestone, and we're here for every step. Whether it's your
-              first purchase or you're moving up, our expert loan advisors make the mortgage
-              process simple and stress-free.
+              first purchase or you're moving up, our expert loan advisors make the mortgage process
+              simple and stress-free.
             </p>
             <a
               href="/meet-lockit"

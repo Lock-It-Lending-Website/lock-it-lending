@@ -220,10 +220,10 @@ export const teamData: Record<string, TeamGroup> = {
   //     },
   //   ],
   //   about: `
-  //     At Lock It Lending, we’re not just mortgage brokers; we’re seasoned professionals with over 18 years of experience. 
+  //     At Lock It Lending, we’re not just mortgage brokers; we’re seasoned professionals with over 18 years of experience.
   //     Our mission is simple yet profound: to provide excellence in every aspect of your mortgage journey.
 
-  //     We believe that the home buying or refinancing process should be more than just a transaction. 
+  //     We believe that the home buying or refinancing process should be more than just a transaction.
   //     It’s a significant life event, and we are committed to making it as smooth, stress-free, and personal as possible.
   //   `,
   //   reviews: [
