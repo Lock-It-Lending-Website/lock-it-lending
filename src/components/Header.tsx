@@ -8,57 +8,61 @@ const Header: React.FC = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-6 flex justify-between items-center h-16 md:h-20">
-        {/* Logo */}
-        <Link to="/">
-          <img
-            src={`${process.env.PUBLIC_URL}/logo.png`}
-            alt="Lock It Lending"
-            className="h-8 md:h-10 w-auto"
-          />
-        </Link>
+    <header className="sticky top-0 z-50 bg-white shadow-md">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
+        {/* Left - Logo */}
+        <div className="shrink-0">
+          <Link to="/">
+            <img
+              src={`${process.env.PUBLIC_URL}/logo.png`}
+              alt="Lock It Lending"
+              className="h-8 md:h-10 w-auto"
+            />
+          </Link>
+        </div>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center space-x-2 font-medium text-gray-800 text-sm">
-          <Link to="/purchase" className="hover:text-gold px-4 py-1.5 rounded-full">
-            Purchase
+        {/* Center - Nav */}
+        <nav className="hidden md:flex flex-1 justify-center items-center space-x-4 font-bold text-gray-800 text-base">
+          <Link to="/purchase" className="nav-link px-4 py-1.5 rounded-full">
+            <span className="nav-link-text">Purchase</span>
           </Link>
-          <Link to="/refinance" className="hover:text-gold px-4 py-1.5 rounded-full">
-            Refinance
+          <Link to="/refinance" className="nav-link px-4 py-1.5 rounded-full">
+            <span className="nav-link-text">Refinance</span>
           </Link>
-          <Link to="/loan-programs" className="hover:text-gold px-4 py-1.5 rounded-full">
-            Loan Programs
+          <Link to="/loan-programs" className="nav-link px-4 py-1.5 rounded-full">
+            <span className="nav-link-text">Loan Programs</span>
           </Link>
-          <Link to="/meet-lock-it-lending" className="hover:text-gold px-4 py-1.5 rounded-full">
-            Meet Lock It Lending
+          <Link to="/meet-lock-it-lending" className="nav-link px-4 py-1.5 rounded-full">
+            <span className="nav-link-text">Meet Lock It Lending</span>
           </Link>
-          <Link to="/reviews" className="hover:text-gold px-4 py-1.5 rounded-full">
-            Reviews
+          <Link to="/reviews" className="nav-link px-4 py-1.5 rounded-full">
+            <span className="nav-link-text">Reviews</span>
           </Link>
-          <Link to="/glossary" className="hover:text-gold px-4 py-1.5 rounded-full">
-            Mortgage Terms
+          <Link to="/glossary" className="nav-link px-4 py-1.5 rounded-full">
+            <span className="nav-link-text">Mortgage Terms</span>
           </Link>
-          <Link to="/resources" className="hover:text-gold px-4 py-1.5 rounded-full">
-            Resources
-          </Link>
-          <Link
-            to="/rates"
-            className="ml-2 bg-gold text-white px-4 py-1.5 rounded-full font-semibold hover:opacity-90 transition"
-          >
-            Rates
+          <Link to="/resources" className="nav-link px-4 py-1.5 rounded-full">
+            <span className="nav-link-text">Resources</span>
           </Link>
         </nav>
 
-        {/* Mobile toggle button */}
-        <button className="md:hidden ml-auto" onClick={toggleMenu}>
-          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        {/* Right - Rates + Mobile Toggle */}
+        <div className="flex items-center gap-2">
+          <Link
+            to="/rates"
+            className="hidden md:inline-block bg-gold text-white px-4 py-1.5 rounded-full font-bold hover:opacity-90 transition"
+          >
+            Rates
+          </Link>
+          <button className="md:hidden" onClick={toggleMenu}>
+            {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile nav */}
       {menuOpen && (
-        <div className="md:hidden px-6 pb-6 space-y-4 font-semibold text-gray-700 text-sm">
+        <div className="md:hidden px-6 pb-6 space-y-4 font-bold text-gray-700 text-sm">
           <Link to="/purchase" className="block">
             Purchase
           </Link>

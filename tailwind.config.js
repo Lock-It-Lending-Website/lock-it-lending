@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         gold: '#CCA249',
       },
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'],
+      },
     },
   },
   plugins: [

@@ -43,8 +43,9 @@ export default function Reviews() {
       <Header />
       <main>
         <HeroSection
-          title="Customer Reviews"
-          highlight="Voices of Satisfaction"
+          title="Voices of Satisfaction:"
+          highlight="Comprehensive Customer Reviews"
+          highlightColor="gold"
           description="Real Reviews from Real Customers: Hear What Our Clients Are Saying About Lock It Lending."
           image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Reviews.png`}
         />
