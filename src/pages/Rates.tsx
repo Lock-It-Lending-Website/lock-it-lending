@@ -115,7 +115,7 @@ const RatesPage: React.FC = () => {
         <HeroSection
           title="Get your rate"
           highlight="without the call"
-          description="Answer a few questions to help us understand your needs better."
+          description="We believe everyone should be treated as if they lived next door."
           image={`${process.env.PUBLIC_URL}/form.png`}
         />
 
@@ -124,7 +124,7 @@ const RatesPage: React.FC = () => {
             <div className="p-8 border-b border-yellow-500">
               <h2 className="text-3xl font-extrabold text-gray-800"> Rate Quote Form</h2>
               <p className="text-sm text-gray-500 mt-2">
-                We believe everyone should be treated as if they lived next door.
+                Answer a few questions to help us understand your needs better.
               </p>
             </div>
 

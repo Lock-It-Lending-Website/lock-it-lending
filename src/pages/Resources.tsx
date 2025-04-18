@@ -12,6 +12,7 @@ export default function ResourcesPage() {
       <HeroSection
         title="Resources To Help"
         highlight="You"
+        highlightColor="gold"
         description="From loan programs, market updates, to everything in between– the mortgage industry has a lot of moving parts. We pride ourselves on bringing educational resources to our clients regardless of your experience or knowledge of the mortgage process."
         image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Resources.png`}
       />

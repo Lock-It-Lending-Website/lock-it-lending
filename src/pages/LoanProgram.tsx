@@ -77,6 +77,7 @@ export default function LoanPrograms() {
         <HeroSection
           title="What We"
           highlight="Offer"
+          highlightColor="gold"
           description="It is important to find the program that matches your long term and short-term goals. Our team selects from a wide array of lenders to help find the best possible solution for you and your family. Check out some of our programs below."
           image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Loan-Programs.png`}
         />
