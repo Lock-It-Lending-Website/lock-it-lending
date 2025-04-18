@@ -6,34 +6,34 @@ import HeroSection from '../components/HeroSection';
 
 const reviews = [
   {
-    name: 'David',
-    date: 'May 15, 2024',
-    image: `${process.env.PUBLIC_URL}/david-review.png`,
-    text: 'If I could give them 10 stars, I would! I initially started my loan process with another provider, but their slow communication and a high rate of 7.5% were major drawbacks. I then switched to Lock it Lending, and it was a fantastic decision. Ms. Hanh, Ms. Emily, Kaden, and Ella were extremely professional and supportive throughout the process. They not only expedited the loan closure but also secured a $6,000 grant for me and a lower rate of 6.6%. I am thoroughly impressed and will definitely recommend Lock it Lending to anyone in need of loan services.',
+    name: 'H Doan',
+    date: 'April 10, 2025',
+    image: `${process.env.PUBLIC_URL}/hdoan-review.png`,
+    text: 'I had a great experience with Lock It Lending for my mortgage. From start to finish, they took excellent care of the entire process. I worked with Lyn and Oliver, and both were amazing. Lyn helped me find the best rate, gave me daily updates on interest rates and closing costs, and even helped with price matching to make sure I got the best possible deal. Oliver guided me through all the paperwork and patiently answered every question I had. What impressed me most was that his support didn’t stop at closing—he continued to help afterward. There was an issue with the title company that had been pending for almost a month after closing. Oliver stepped in, coordinated with everyone involved, and followed through until it was resolved. That level of care and responsibility meant a lot to me. What really stood out was their outstanding customer service and responsiveness. Whether by phone or email, they always replied quickly and clearly explained everything I needed to know. I would definitely recommend Lock It Lending to my friends and family, and I’ll absolutely return to them the next time I buy a home or refinance. With their professionalism, dedication, and heart, I believe they’ll continue to grow and succeed.',
   },
   {
-    name: 'Nick',
-    date: 'May 14, 2024',
-    image: `${process.env.PUBLIC_URL}/nick-review.png`,
-    text: 'We recently worked with Thomas Stubblefield and Winter Huynh as our loan officer, and we couldn’t have been more satisfied with the experience. They was incredibly helpful, responsive, and knowledgeable throughout the entire loan process. They took the time to explain everything clearly, ensuring that I felt confident and informed every step of the way. They both are was proactive in addressing any concerns and worked tirelessly to secure the best possible terms for my loan. We highly recommend Lock It Lending to anyone in need of financing. Thank you both for your excellent work and exceptional service! We are really really appreciate it!',
+    name: 'Tracy Le',
+    date: 'April 4, 2025',
+    image: `${process.env.PUBLIC_URL}/tracy-review.png`,
+    text: 'I’m so grateful to the amazing team at Lock It Lending for helping me secure a loan for my new home! A special thank you to Lyn, Vivi, and Tina—you three were with me every step of the way and made this entire journey so much smoother than I ever imagined. From helping me fix my credit score to getting me approved by the lender, you guided me through every back-and-forth with patience, professionalism, and care. The whole process went smoothly and right on time. The team was incredibly responsive, always answering my questions no matter how small, and making sure I fully understood everything. I truly felt supported throughout the entire experience. I couldn’t have asked for a better lending team—thank you Lock It Lending for making my dream of owning a home come true!',
   },
   {
-    name: 'Bill',
-    date: 'May 11, 2024',
-    image: `${process.env.PUBLIC_URL}/bill-review.png`,
-    text: 'I’d like to thank Ann and Ella who have been involved in the process of getting me into my new home. This has been a seamless, pleasant and positive experience which I attribute to the very professional team. Thanks again for all of your help and support in answering all of my question and getting me to closing!',
+    name: 'Sandro Arrua',
+    date: 'April 8, 2025',
+    image: `${process.env.PUBLIC_URL}/sandro-review.png`,
+    text: 'Buying our first home was an incredible experience, thanks to the team at Lock It Lending. From the outset, they guided us through every step, making the entire process smoother than we had anticipated. They were always available to answer our questions, providing clear and honest information. With our rental lease nearing its end, we were on a tight schedule to close the deal, but they ensured everything was completed on time. A special thanks to Melissa, Philips, and Matt for their unwavering support. We wholeheartedly recommend Lock It Lending and their fantastic team. Thank you so much!​',
   },
   {
-    name: 'Thi',
-    date: 'April 19, 2024',
+    name: 'Sarah Michie',
+    date: 'March 19, 2025',
     image: `${process.env.PUBLIC_URL}/thi-review.png`,
-    text: 'My husband and I are first time home buyer and we had the pleasure of working with Tiana, Lyn and Oliver. They are very professional, attentive and knowledgeable. They assisted us with many questions that we have and explained everything in details that made everything very easy to understand. The process went very smoothly. I would highly recommend them!! Thank you for assisting us throughout this process and for the beautiful gift on our closing day!',
+    text: 'The team made the mortgage process incredibly smooth and stress-free! Alex, the processor, kept everything organized and on track, while Henry, the loan officer, was knowledgeable and always available to answer questions. They made the entire experience seamless from start to finish. Highly recommend!',
   },
   {
-    name: 'Quoc',
-    date: 'April 13, 2024',
-    image: `${process.env.PUBLIC_URL}/quoc-review.png`,
-    text: 'I had the privilege of working with Mrs Lyn and Ella who facilitated my first home purchase through a loan, and I couldn’t be more satisfied with the experience. From the initial consultation to the final closing, Mrs Lyn and Ella demonstrated exceptional professionalism, expertise, and support. They patiently guided me through the loan process, ensuring I understood every step along the way. Thanks to them diligent efforts and dedication, I secured the financing I needed to purchase my dream home. I highly recommend Mrs Lyn and Ella to anyone seeking loan assistance. Thank you for making my home-buying journey a seamless and successful one!',
+    name: 'Brianna Nguyen',
+    date: 'February 13, 2025',
+    image: `${process.env.PUBLIC_URL}/brianna-review.png`,
+    text: 'We had an outstanding experience with Lock It Lending! From start to finish, the process was seamless, and we truly appreciate the professionalism and dedication of everyone involved. A special thanks to Kaden, Emily, and Philip for going above and beyond to make this happen—they ensured everything was smooth and stress-free. The beautiful flowers on closing day were such a thoughtful touch and meant so much to us. We are incredibly grateful for their support and highly recommend Lock It Lending to anyone looking for a top-notch mortgage experience!',
   },
 ];
 
@@ -50,21 +50,24 @@ export default function Reviews() {
           image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Reviews.png`}
         />
 
-        <section className="max-w-6xl mx-auto px-4 py-16 grid sm:grid-cols-2 lg:grid-cols-2 gap-x-20 gap-y-[120px]">
+        <section className="max-w-[1500px] mx-auto px-8 py-20 grid sm:grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-32">
           {reviews.map((review, idx) => (
-            <div key={idx} className="relative bg-white rounded-2xl p-6 pb-20 shadow-md">
+            <div
+              key={idx}
+              className="relative w-full max-w-[720px] bg-white rounded-3xl p-10 pb-28 shadow-xl"
+            >
               <div className="absolute bottom-[-10px] left-10 w-0 h-0 border-t-[20px] border-t-white border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent" />
-              <div className="text-gold text-2xl mb-3">❝</div>
-              <p className="text-gray-700 leading-relaxed mb-6">{review.text}</p>
-              <div className="flex items-center gap-4 absolute bottom-[-80px] left-6">
+              <div className="text-gold text-4xl mb-4">❝</div>
+              <p className="text-gray-700 leading-relaxed text-xl mb-10">{review.text}</p>
+              <div className="flex items-center gap-6 absolute bottom-[-100px] left-10">
                 <img
                   src={review.image}
                   alt={review.name}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-gold"
+                  className="w-16 h-16 rounded-full object-cover border-2 border-gold"
                 />
                 <div className="flex flex-col">
-                  <p className="font-semibold text-gray-900">{review.name}</p>
-                  <p className="text-sm text-gray-500">{review.date}</p>
+                  <p className="font-semibold text-gray-900 text-xl">{review.name}</p>
+                  <p className="text-base text-gray-500">{review.date}</p>
                 </div>
               </div>
             </div>
