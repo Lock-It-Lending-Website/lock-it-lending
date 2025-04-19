@@ -20,13 +20,13 @@ const Home: React.FC = () => {
             <>
               <Link
                 to="/purchase"
-                className="bg-gold text-white font-semibold px-5 py-2 rounded-full shadow"
+                className="bg-gold text-white font-semibold text-lg px-6 py-3 rounded-full shadow"
               >
                 Purchase
               </Link>
               <Link
                 to="/refinance"
-                className="border border-gold text-gold font-semibold px-5 py-2 rounded-full shadow"
+                className="border border-gold text-gold font-semibold text-lg px-6 py-3 rounded-full shadow"
               >
                 Refinance
               </Link>
@@ -35,13 +35,13 @@ const Home: React.FC = () => {
         />
 
         {/* Neighborhood Section */}
-        <section className="py-24 bg-[#f7fbfd] px-4">
+        <section className="py-28 bg-[#f7fbfd] px-8">
           <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-4xl font-extrabold mb-4">See What’s New in the Neighborhood</h2>
-            <p className="text-lg text-gray-600 mb-10 font-semibold">
+            <h2 className="text-5xl font-extrabold mb-6">See What’s New in the Neighborhood</h2>
+            <p className="text-2xl text-gray-600 mb-12 font-semibold">
               Learn about products, events, and many other great offering from Lock It Lending
             </p>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-10">
               {[
                 {
                   title: 'Be Aware of Predatory Lending Practices',
@@ -52,8 +52,7 @@ const Home: React.FC = () => {
                 {
                   title: 'What are 2-1 Temporary Rate Buydowns?',
                   slug: 'what-are-2-1-temporary-rate-buydowns',
-                  description:
-                    '2-1 Temporary Rate Buydowns: A Win-Win for Borrowers and Sellers...',
+                  description: '2-1 Temporary Rate Buydowns: A Win-Win for Borrowers and Sellers...',
                   image: `${process.env.PUBLIC_URL}/What-are2-1Temporar-Rate-Buydowns.png`,
                 },
                 {
@@ -74,11 +73,11 @@ const Home: React.FC = () => {
                     <img
                       src={card.image}
                       alt={card.title}
-                      className="w-full h-60 object-cover transform group-hover:scale-105 transition duration-300"
+                      className="w-full h-64 object-cover transform group-hover:scale-105 transition duration-300"
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center text-white p-6">
                       <h3 className="text-2xl font-bold mb-2 text-center">{card.title}</h3>
-                      <p className="text-sm text-center">{card.description}</p>
+                      <p className="text-lg text-center">{card.description}</p>
                     </div>
                   </motion.div>
                 </Link>
@@ -88,19 +87,18 @@ const Home: React.FC = () => {
         </section>
 
         {/* Reviews Section */}
-        <section className="bg-gray-50 py-24 px-4 text-center">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-4xl font-extrabold mb-2">Unlocking Homeownership Happiness</h2>
-            <p className="text-lg text-gray-600 mb-6 font-semibold">
-              Learn from Our reviews how lock it lending transformed lives with tailored mortgage
-              solutions
+        <section className="bg-gray-50 py-28 px-8 text-center">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-5xl font-extrabold mb-4">Unlocking Homeownership Happiness</h2>
+            <p className="text-2xl text-gray-600 mb-8 font-semibold">
+              Learn from our reviews how Lock It Lending transformed lives with tailored mortgage solutions
             </p>
-            <div className="flex justify-center items-center gap-2 mb-8">
-              <span className="text-2xl">⭐⭐⭐⭐⭐</span>
-              <span className="text-lg font-bold">982 Google Reviews</span>
+            <div className="flex justify-center items-center gap-3 mb-10">
+              <span className="text-3xl">⭐⭐⭐⭐⭐</span>
+              <span className="text-xl font-bold">982 Google Reviews</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {[
                 {
                   name: 'Bill',
@@ -117,31 +115,28 @@ const Home: React.FC = () => {
               ].map((review, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-2xl shadow-lg flex flex-col justify-between overflow-hidden relative pb-32 px-6 pt-10 text-center min-h-[450px]"
+                  className="bg-white rounded-3xl shadow-xl flex flex-col justify-between overflow-hidden relative pb-36 px-10 pt-12 text-center min-h-[500px]"
                 >
-                  <p className="text-gray-800 font-medium text-base leading-relaxed">
+                  <p className="text-gray-800 font-medium text-lg leading-relaxed">
                     {review.text}
                   </p>
 
                   {/* Footer Curve + Profile */}
                   <div className="absolute bottom-0 left-0 right-0">
-                    <div className="bg-gold h-[90px] w-full rounded-t-[50%] relative">
+                    <div className="bg-gold h-[100px] w-full rounded-t-[50%] relative">
                       {/* Avatar */}
-                      <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
+                      <div className="absolute -top-12 left-1/2 transform -translate-x-1/2">
                         <img
                           src={review.image}
                           alt={review.name}
-                          className="w-16 h-16 rounded-full border-4 border-white object-cover"
+                          className="w-20 h-20 rounded-full border-4 border-white object-cover"
                         />
                       </div>
 
                       {/* Name + Date */}
-                      <div
-                        className="text-white text-sm font-semibold flex flex-col items-center justify-center pt-7
-          "
-                      >
-                        <div className="text-base">{review.name}</div>
-                        <div className="text-xs">{review.date}</div>
+                      <div className="text-white text-base font-semibold flex flex-col items-center justify-center pt-8">
+                        <div className="text-lg">{review.name}</div>
+                        <div className="text-sm">{review.date}</div>
                       </div>
                     </div>
                   </div>
@@ -153,7 +148,7 @@ const Home: React.FC = () => {
               to="https://www.google.com/search?q=lock+it+lending+houston#lrd=0x8640c35d2a7a4eab:0xb5736063dbda6db6,1"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gold font-bold hover:underline mt-10 inline-block"
+              className="text-gold font-bold text-lg hover:underline mt-12 inline-block"
             >
               SEE ALL REVIEWS →
             </Link>
@@ -161,8 +156,8 @@ const Home: React.FC = () => {
         </section>
 
         {/* Call To Action */}
-        <section className="bg-white py-24 px-4">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+        <section className="bg-white py-28 px-8">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="w-full md:w-1/2">
               <img
                 src={`${process.env.PUBLIC_URL}/Lock-It-Lending-Home1.png`}
@@ -170,9 +165,9 @@ const Home: React.FC = () => {
                 className="w-full rounded-lg shadow-md"
               />
             </div>
-            <div className="w-full md:w-1/2 mt-10 md:mt-0 md:pl-10 text-center md:text-left">
-              <h2 className="text-3xl font-extrabold mb-4">Want to work with Lock It Lending</h2>
-              <p className="text-gray-700 mb-6">
+            <div className="w-full md:w-1/2 md:pl-12 text-center md:text-left">
+              <h2 className="text-4xl font-extrabold mb-6">Want to work with Lock It Lending</h2>
+              <p className="text-xl text-gray-700 mb-8">
                 If you’re either Purchasing or refinancing, have the confidence to know you are
                 working with the right team. Click Apply to sign up as one of Lock It Lending’s
                 Neighbors in our Neighborhood. Whether you are in process with a loan or have
@@ -181,7 +176,7 @@ const Home: React.FC = () => {
               </p>
               <Link
                 to="/"
-                className="inline-block bg-gold text-white px-6 py-2 rounded-full font-semibold shadow hover:opacity-90"
+                className="inline-block bg-gold text-white text-lg px-8 py-3 rounded-full font-semibold shadow hover:opacity-90"
               >
                 Apply
               </Link>

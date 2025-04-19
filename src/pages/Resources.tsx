@@ -17,32 +17,32 @@ export default function ResourcesPage() {
         image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Resources.png`}
       />
 
-      <section className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="max-w-[1600px] mx-auto px-10 py-28 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
         {resourcesData.map(
           ({ slug, title, author, readTime, date, thumbnailUrl, excerpt, tags }) => (
             <Link
               key={slug}
               to={`/resources/${slug}`}
-              className="block bg-white shadow rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+              className="block bg-white shadow-xl rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow w-full max-w-[550px] mx-auto"
             >
-              <img src={thumbnailUrl} alt={title} className="w-full h-48 object-cover" />
-              <div className="p-4">
-                <div className="flex flex-wrap gap-2 mb-2">
+              <img src={thumbnailUrl} alt={title} className="w-full h-60 object-cover" />
+              <div className="p-6">
+                <div className="flex flex-wrap gap-3 mb-4">
                   {tags.map(tag => (
                     <span
                       key={tag}
-                      className="bg-gold text-white text-xs font-semibold px-2 py-1 rounded"
+                      className="bg-gold text-white text-sm font-semibold px-3 py-1 rounded-full"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-                <p className="text-xs text-gray-500 mb-1">
+                <p className="text-sm text-gray-500 mb-2 font-medium">
                   {author} • {readTime}
                 </p>
-                <h3 className="text-lg font-bold text-gray-900 mb-1">{title}</h3>
-                <p className="text-sm text-gray-600 line-clamp-2">{excerpt}</p>
-                <p className="text-xs text-gray-400 mt-2">{date}</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2 leading-snug">{title}</h3>
+                <p className="text-lg text-gray-700 line-clamp-2 mb-3">{excerpt}</p>
+                <p className="text-sm text-gray-400">{date}</p>
               </div>
             </Link>
           )

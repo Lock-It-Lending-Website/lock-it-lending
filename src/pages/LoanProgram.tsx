@@ -10,12 +10,12 @@ function Accordion({ title, content }: { title: string; content: string }) {
     <div className="border-b">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center py-4 font-semibold text-left"
+        className="w-full flex justify-between items-center py-5 text-xl font-semibold text-left"
       >
         {title}
-        <span>{isOpen ? '▲' : '▼'}</span>
+        <span className="text-xl">{isOpen ? '▲' : '▼'}</span>
       </button>
-      {isOpen && <p className="pb-4 text-gray-600">{content}</p>}
+      {isOpen && <p className="pb-5 text-gray-600 text-base leading-relaxed">{content}</p>}
     </div>
   );
 }
@@ -81,10 +81,11 @@ export default function LoanPrograms() {
           description="It is important to find the program that matches your long term and short-term goals. Our team selects from a wide array of lenders to help find the best possible solution for you and your family. Check out some of our programs below."
           image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Loan-Programs.png`}
         />
-        <section className="bg-gray-50 py-24 px-4">
-          <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10">
+        <section className="bg-gray-50 py-24 px-6">
+          <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
             {/* Accordion */}
-            <div className="bg-white rounded-xl shadow-md p-6">
+            <div className="bg-white rounded-2xl shadow-md p-10 w-full max-w-2xl mx-auto">
+              <h2 className="text-4xl font-bold mb-6 text-center text-gray-900">Loan Programs</h2>
               <Accordion
                 title="30 Year Fixed Rate"
                 content="Be worry free with 30 years of security. This is the most common product for our first time homebuyers and our clients refinancing. Check to see if you qualify for 3 percent down on a new home purchase."
@@ -120,39 +121,39 @@ export default function LoanPrograms() {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-2xl font-bold mb-4 text-center">Got Questions?</h2>
-              <p className="text-center text-gray-600 mb-6">
+            <div className="bg-white rounded-2xl shadow-md p-10 w-full max-w-2xl mx-auto">
+              <h2 className="text-4xl font-bold mb-6 text-center text-gray-900">Got Questions?</h2>
+              <p className="text-xl text-center text-gray-600 mb-8">
                 Let us help so that you can get one step closer to getting your home
               </p>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <input
                   placeholder="First Name"
-                  className="w-full p-3 border rounded"
+                  className="w-full p-4 border rounded text-lg"
                   value={formData.firstName}
                   onChange={e => handleChange('firstName', e.target.value)}
                 />
                 <input
                   placeholder="Last Name"
-                  className="w-full p-3 border rounded"
+                  className="w-full p-4 border rounded text-lg"
                   value={formData.lastName}
                   onChange={e => handleChange('lastName', e.target.value)}
                 />
                 <input
                   placeholder="lilwebsite@lockitlending.com"
-                  className="w-full p-3 border rounded"
+                  className="w-full p-4 border rounded text-lg"
                   type="email"
                   value={formData.email}
                   onChange={e => handleChange('email', e.target.value)}
                 />
                 <input
                   placeholder="(866) 400-6789"
-                  className="w-full p-3 border rounded"
+                  className="w-full p-4 border rounded text-lg"
                   type="tel"
                   value={formData.phone}
                   onChange={e => handleChange('phone', e.target.value)}
                 />
-                <div className="text-sm text-gray-600 flex gap-2 items-start">
+                <div className="text-sm text-gray-600 flex gap-3 items-start">
                   <input
                     type="checkbox"
                     className="mt-1"
@@ -160,16 +161,16 @@ export default function LoanPrograms() {
                     onChange={e => handleChange('consent', e.target.checked)}
                   />
                   <p>
-                    By pressing <strong>&quot;Submit&quot;</strong> you are agreeing to receive a
-                    quote through the email provided and agreeing to Swift Home Loans Inc.&apos;s
+                    By pressing <strong>"Submit"</strong> you are agreeing to receive a
+                    quote through the email provided and agreeing to Swift Home Loans Inc.'s
                     Terms of Use, Privacy Policy, Email Policy, and provide consent to receive text
                     messages for important notifications. Message frequency varies. Message and data
-                    rates may apply. You can opt-out at any time by replying &quot;STOP&quot;.
+                    rates may apply. You can opt-out at any time by replying "STOP".
                   </p>
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-gold text-white py-3 rounded font-bold hover:opacity-90"
+                  className="w-full bg-gold text-white py-4 rounded font-bold text-lg hover:opacity-90"
                 >
                   SUBMIT
                 </button>
