@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fontsource/montserrat": "^5.2.5",
+    "@splidejs/react-splide": "^0.7.12",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",

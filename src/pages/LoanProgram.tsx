@@ -85,7 +85,6 @@ export default function LoanPrograms() {
           <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
             {/* Accordion */}
             <div className="bg-white rounded-2xl shadow-md p-10 w-full max-w-2xl mx-auto">
-              <h2 className="text-4xl font-bold mb-6 text-center text-gray-900">Loan Programs</h2>
               <Accordion
                 title="30 Year Fixed Rate"
                 content="Be worry free with 30 years of security. This is the most common product for our first time homebuyers and our clients refinancing. Check to see if you qualify for 3 percent down on a new home purchase."

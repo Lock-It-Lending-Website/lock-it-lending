@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useState, useRef, useEffect } from 'react';
 import { teamData } from '../data/teamData';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
 
 const TeamPage = () => {
   const { teamId } = useParams();
@@ -13,9 +14,6 @@ const TeamPage = () => {
 
   const [activeTab, setActiveTab] = useState<'about' | 'contact'>('about');
   const [showMore, setShowMore] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
-  const sliderRef = useRef<HTMLDivElement>(null);
-  
 
   const [contactData, setContactData] = useState({
     firstName: '',
@@ -41,7 +39,7 @@ const TeamPage = () => {
       const response = await fetch('http://localhost:5000/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...contactData, formType: `question` }),
+        body: JSON.stringify({ ...contactData, formType: 'question' }),
       });
 
       if (response.ok) {
@@ -62,53 +60,9 @@ const TeamPage = () => {
     }
   };
 
-  function chunkArray<T>(arr: T[], size: number): T[][] {
-    return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
-      arr.slice(i * size, i * size + size)
-    );
+  if (!team) {
+    return <div className="text-center py-20 text-xl font-semibold">Team not found</div>;
   }
-
-  
-  const pages = team ? chunkArray(team.members, 3) : [];
-
-  useEffect(() => {
-    const slider = sliderRef.current;
-    if (!slider || team?.members.length < 2) return;
-
-    let isDown = false;
-    let startX: number, scrollLeft: number;
-
-    const handleMouseDown = (e: MouseEvent) => {
-      isDown = true;
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    };
-
-    const handleMouseLeave = () => (isDown = false);
-    const handleMouseUp = () => (isDown = false);
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      slider.scrollLeft = scrollLeft - walk;
-    };
-
-    slider.addEventListener('mousedown', handleMouseDown);
-    slider.addEventListener('mouseleave', handleMouseLeave);
-    slider.addEventListener('mouseup', handleMouseUp);
-    slider.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      slider.removeEventListener('mousedown', handleMouseDown);
-      slider.removeEventListener('mouseleave', handleMouseLeave);
-      slider.removeEventListener('mouseup', handleMouseUp);
-      slider.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, [team?.members]);
-
-  if (!team) return <div className="text-center py-20 text-xl font-semibold">Team not found</div>;
 
   const totalReviews = team.slug === 'vortex' || team.slug === 'allstars' ? 516 : 225;
 
@@ -156,7 +110,7 @@ const TeamPage = () => {
                 <p className="text-base mt-1">{team.address}</p>
               </div>
               <div className="md:pt-2">
-                <button className="bg-gold hover:bg-yellow-500 text-white font-bold px-6 py-3 rounded-full text-lg shadow-md ">
+                <button className="bg-gold hover:bg-yellow-500 text-white font-bold px-6 py-3 rounded-full text-lg shadow-md">
                   Apply
                 </button>
               </div>
@@ -169,19 +123,26 @@ const TeamPage = () => {
           <div className="inline-flex space-x-12">
             <button
               onClick={() => setActiveTab('about')}
-              className={`pb-3 ${activeTab === 'about' ? 'border-b-4 border-gold text-gold font-bold' : 'text-gray-500 hover:text-gray-700'}`}
+              className={`pb-3 ${activeTab === 'about'
+                ? 'border-b-4 border-gold text-gold font-bold'
+                : 'text-gray-500 hover:text-gray-700'
+                }`}
             >
               About
             </button>
             <button
               onClick={() => setActiveTab('contact')}
-              className={`pb-3 ${activeTab === 'contact' ? 'border-b-4 border-gold text-gold font-bold' : 'text-gray-500 hover:text-gray-700'}`}
+              className={`pb-3 ${activeTab === 'contact'
+                ? 'border-b-4 border-gold text-gold font-bold'
+                : 'text-gray-500 hover:text-gray-700'
+                }`}
             >
               Contact
             </button>
           </div>
         </section>
 
+        {/* About Tab */}
         {activeTab === 'about' ? (
           <section className="bg-gray-50 py-16 px-6">
             <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -190,7 +151,8 @@ const TeamPage = () => {
                 <div className="bg-white p-8 rounded-xl shadow-lg">
                   <h2 className="text-3xl font-bold mb-4 text-gray-900">About</h2>
                   <div
-                    className={`text-lg text-gray-700 leading-relaxed transition-all duration-300 ${showMore ? 'max-h-[160px] overflow-hidden' : 'max-h-[1000px]'}`}
+                    className={`text-lg text-gray-700 leading-relaxed transition-all duration-300 ${showMore ? 'max-h-[160px] overflow-hidden' : 'max-h-[1000px]'
+                      }`}
                   >
                     <p className="whitespace-pre-line">{team.about}</p>
                   </div>
@@ -204,52 +166,42 @@ const TeamPage = () => {
                   </div>
                 </div>
 
-                {/* Slider */}
+                {/* Splide Slider */}
                 <div className="bg-white p-8 rounded-xl shadow-lg">
-                  <div
-                    ref={sliderRef}
-                    className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 no-scrollbar"
-                    onScroll={e => {
-                      const el = e.currentTarget;
-                      const pageWidth = el.offsetWidth;
-                      const current = Math.round(el.scrollLeft / pageWidth);
-                      setCurrentPage(current);
+                  <h2 className="text-3xl font-bold mb-10 text-gray-900">Meet {team.name}</h2>
+                  <Splide
+                    options={{
+                      type: 'loop',
+                      perPage: 3,
+                      perMove: 1,
+                      gap: '1rem',
+                      pagination: true,
+                      arrows: true,
+                      breakpoints: {
+                        1024: { perPage: 2 },
+                        640: { perPage: 1 },
+                      },
                     }}
+                    aria-label="Team Members"
                   >
-                    {pages.map((group, idx) => (
-                      <div
-                        key={idx}
-                        className="flex snap-start gap-10 shrink-0 min-w-full justify-center px-4 pb-4"
-                      >
-                        {group.map(member => (
-                          <div
-                            key={member.name}
-                            className="flex flex-col items-center w-[260px] h-[420px] bg-white rounded-xl shadow-[10px_10px_10px_-5px_rgba(0,0,0,0.15)] transition-transform"
-                          >
-                            <div className="w-full h-[300px] rounded-t-xl overflow-hidden bg-gray-100">
-                              <img
-                                src={member.image}
-                                alt={member.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                            <div className="p-4 text-center flex flex-col justify-center h-[140px]">
-                              <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
-                              <p className="text-gold font-semibold">{member.title}</p>
-                            </div>
+                    {team?.members.map((member, idx) => (
+                      <SplideSlide key={idx}>
+                        <div className="flex flex-col items-center w-full max-w-[280px] mx-auto h-[420px] bg-white rounded-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] overflow-hidden">
+                          <div className="w-full h-[300px] bg-gray-100">
+                            <img
+                              src={member.image}
+                              alt={member.name}
+                              className="w-full h-full object-cover"
+                            />
                           </div>
-                        ))}
-                      </div>
+                          <div className="p-4 text-center">
+                            <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
+                            <p className="text-gold font-semibold">{member.title}</p>
+                          </div>
+                        </div>
+                      </SplideSlide>
                     ))}
-                  </div>
-                  <div className="flex justify-center mt-4 space-x-3">
-                    {pages.map((_, idx) => (
-                      <div
-                        key={idx}
-                        className={`w-4 h-4 rounded-full ${currentPage === idx ? 'bg-gold' : 'bg-gold/30'}`}
-                      />
-                    ))}
-                  </div>
+                  </Splide>
                 </div>
               </div>
 
