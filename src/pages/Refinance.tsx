@@ -145,7 +145,7 @@ const RatesPage: React.FC = () => {
               </div>
 
               <div className="p-6">
-                <p className="text-lg font-semibold mb-4">How's this property used?</p>
+                <p className="text-lg font-semibold mb-4">How &apos;s this property used?</p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {['Primary Residence', 'Secondary Home', 'Investment Property'].map(opt =>
                     renderOption('residencyType', opt)

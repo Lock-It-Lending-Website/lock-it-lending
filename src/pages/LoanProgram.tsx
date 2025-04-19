@@ -160,11 +160,11 @@ export default function LoanPrograms() {
                     onChange={e => handleChange('consent', e.target.checked)}
                   />
                   <p>
-                    By pressing <strong>"Submit"</strong> you are agreeing to receive a quote
-                    through the email provided and agreeing to Swift Home Loans Inc.'s Terms of Use,
+                    By pressing <strong>&quot;Submit&quot;</strong> you are agreeing to receive a quote
+                    through the email provided and agreeing to Swift Home Loans Inc. &apos;s Terms of Use,
                     Privacy Policy, Email Policy, and provide consent to receive text messages for
                     important notifications. Message frequency varies. Message and data rates may
-                    apply. You can opt-out at any time by replying "STOP".
+                    apply. You can opt-out at any time by replying &quot;STOP&quot;.
                   </p>
                 </div>
                 <button
