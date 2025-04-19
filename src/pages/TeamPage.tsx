@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { teamData } from '../data/teamData';
+import { teamGroups, teamMembers } from '../data/teamData';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
@@ -10,8 +10,8 @@ const TeamPage = () => {
   const { teamId } = useParams();
   const navigate = useNavigate();
   const normalizedId = (teamId || '').toLowerCase().trim();
-  const team = teamData[normalizedId];
-
+  const team = teamGroups[normalizedId as keyof typeof teamGroups];
+  const members = teamMembers.filter(m => m.team === normalizedId);
   const [activeTab, setActiveTab] = useState<'about' | 'contact'>('about');
   const [showMore, setShowMore] = useState(true);
 
@@ -123,19 +123,21 @@ const TeamPage = () => {
           <div className="inline-flex space-x-12">
             <button
               onClick={() => setActiveTab('about')}
-              className={`pb-3 ${activeTab === 'about'
-                ? 'border-b-4 border-gold text-gold font-bold'
-                : 'text-gray-500 hover:text-gray-700'
-                }`}
+              className={`pb-3 ${
+                activeTab === 'about'
+                  ? 'border-b-4 border-gold text-gold font-bold'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
             >
               About
             </button>
             <button
               onClick={() => setActiveTab('contact')}
-              className={`pb-3 ${activeTab === 'contact'
-                ? 'border-b-4 border-gold text-gold font-bold'
-                : 'text-gray-500 hover:text-gray-700'
-                }`}
+              className={`pb-3 ${
+                activeTab === 'contact'
+                  ? 'border-b-4 border-gold text-gold font-bold'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
             >
               Contact
             </button>
@@ -151,8 +153,9 @@ const TeamPage = () => {
                 <div className="bg-white p-8 rounded-xl shadow-lg">
                   <h2 className="text-3xl font-bold mb-4 text-gray-900">About</h2>
                   <div
-                    className={`text-lg text-gray-700 leading-relaxed transition-all duration-300 ${showMore ? 'max-h-[160px] overflow-hidden' : 'max-h-[1000px]'
-                      }`}
+                    className={`text-lg text-gray-700 leading-relaxed transition-all duration-300 ${
+                      showMore ? 'max-h-[160px] overflow-hidden' : 'max-h-[1000px]'
+                    }`}
                   >
                     <p className="whitespace-pre-line">{team.about}</p>
                   </div>
@@ -184,7 +187,7 @@ const TeamPage = () => {
                     }}
                     aria-label="Team Members"
                   >
-                    {team?.members.map((member, idx) => (
+                    {members.map((member, idx) => (
                       <SplideSlide key={idx} className="pb-4">
                         <div className="flex flex-col items-center w-full max-w-[280px] mx-auto h-[420px] bg-white rounded-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] overflow-hidden">
                           <div className="w-full h-[300px] bg-gray-100">

@@ -3,10 +3,10 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
-import { teamMembers, teamData } from '../data/teamData';
+import { teamMembers, teamGroups } from '../data/teamData';
 
 const MeetLockItLending = () => {
-  const teamList = Object.values(teamData);
+  const teamList = Object.values(teamGroups);
 
   return (
     <div className="font-sans">
@@ -57,7 +57,7 @@ const MeetLockItLending = () => {
           </p>
           <div className="max-w-7xl mx-auto grid gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
             {teamMembers.map(member => (
-              <Link to={`/team-member/${member.slug}`} key={member.name}>
+              <Link to={`/team-member/${member.slug}`} key={member.slug}>
                 <div className="w-full max-w-md mx-auto rounded-3xl shadow-xl border border-gray-300 p-10 text-center hover:shadow-2xl transition-all flex flex-col justify-start min-h-[300px] bg-[#f7fbfd]">
                   <img
                     src={member.image}
