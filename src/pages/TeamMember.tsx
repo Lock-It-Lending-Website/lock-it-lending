@@ -15,49 +15,57 @@ const TeamMemberPage = () => {
   return (
     <>
       <Header />
-      <main className="bg-gray-50">
+      <main className="bg-[#f7fbfd]">
         {/* Top: Hero layout */}
-        <section className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2">
-          {/* Left: Image on gold bg */}
-          <div className="p-6 md:p-12 flex items-center justify-center">
+        <section className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 py-28 px-6 md:px-20 gap-16">
+          {/* Left: Profile Image */}
+          <div className="flex items-center justify-center">
             <img
               src={member.image}
               alt={member.name}
-              className="w-full max-w-md object-cover rounded-xl shadow-md"
+              className="w-full max-w-[600px] object-cover rounded-[2rem] shadow-2xl border border-gray-200"
             />
           </div>
 
-          {/* Right: Info */}
-          <div className="p-8 md:p-12 flex flex-col justify-center">
-            <nav className="text-sm text-gray-500 mb-2">
-              <Link to="/" className="hover:underline">
+          {/* Right: Info Text */}
+          <div className="flex flex-col justify-center text-left">
+            <nav className="text-xl text-gray-500 mb-6 font-bold">
+              <Link to="/" className="hover:underline text-gold">
                 Home
               </Link>{' '}
               &gt;{' '}
               <Link to="/meet-lock-it-lending" className="hover:underline">
-                Portfolio
+                Meet The Team
               </Link>{' '}
               &gt; {member.name}
             </nav>
-            <h1 className="text-4xl font-bold text-black mb-1">{member.name}</h1>
-            <p className="text-gray-600 font-semibold">{member.title}</p>
+
+            <h1 className="text-6xl font-bold text-gray-900 leading-tight mb-3">{member.name}</h1>
+            <p className="text-2xl text-gray-500 font-bold mb-2 tracking-wide">{member.title}</p>
             {member.nmls && (
-              <p className="text-sm font-semibold mt-2 text-gray-700">NMLS {member.nmls}</p>
+              <p className="text-xl font-bold text-gray-600 mb-4">NMLS {member.nmls}</p>
             )}
 
-            <div className="mt-4 space-y-1 text-sm text-gray-700">
-              <p>📞 {member.phone}</p>
-              <p>
-                ✉️{' '}
-                <Link to={`mailto:${member.email}`} className="text-gold font-semibold">
+            <div className="text-lg text-gray-700 space-y-2 mb-6">
+              <p className="flex items-center gap-2">
+                <span className="text-gold">📞</span>
+                <span className="text-gold font-medium">{member.phone}</span>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="text-gold">✉️</span>
+                <a href={`mailto:${member.email}`} className="text-gold font-semibold">
                   {member.email}
-                </Link>
+                </a>
               </p>
             </div>
 
-            <p className="mt-6 text-gray-800 leading-relaxed">{member.bio}</p>
+            {member.bio && (
+              <p className="text-xl text-gray-800 leading-relaxed whitespace-pre-line">
+                {member.bio}
+              </p>
+            )}
 
-            <div className="flex gap-4 mt-6 text-gold text-xl">
+            <div className="flex gap-6 mt-8 text-gold text-2xl">
               <i className="fab fa-facebook"></i>
               <i className="fab fa-linkedin"></i>
               <i className="fab fa-instagram"></i>
@@ -65,21 +73,21 @@ const TeamMemberPage = () => {
           </div>
         </section>
 
-        {/* CTA bar */}
-        <section className="bg-gold py-12 px-6 md:px-16">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-center justify-between text-center md:text-left gap-6">
-            <div className="flex-1">
-              <h2 className="text-2xl md:text-3xl font-bold text-black mb-1">Ready to apply?</h2>
-              <p className="text-xl md:text-2xl font-bold text-white">
+        {/* CTA Bar */}
+        <section className="bg-gold py-20 px-6 md:px-16">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex-1 text-center md:text-left">
+              <h2 className="text-4xl md:text-4xl font-bold text-black mb-2">Ready to apply?</h2>
+              <p className="text-4xl md:text-4xl text-white font-bold">
                 Get started with {member.name} today!
               </p>
             </div>
-            <div className="flex-none">
+            <div>
               <a
                 href={String(applyLink)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-gold px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition text-base md:text-lg"
+                className="bg-white text-gold px-10 py-4 rounded-full font-semibold hover:bg-gray-100 transition text-lg shadow-lg"
               >
                 Apply
               </a>

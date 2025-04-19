@@ -45,8 +45,8 @@ const steps = [
       <>
         Work with your real estate agent to begin searching for your dream home. If you don&apos;t
         already have an agent, let us know — we&apos;ll connect you with someone who best fits your
-        needs. Interested in locking your rate before finding a house? It&apos;s possible! Discuss the
-        conditions with your Loan Officer to understand the specifics.
+        needs. Interested in locking your rate before finding a house? It&apos;s possible! Discuss
+        the conditions with your Loan Officer to understand the specifics.
       </>
     ),
   },
@@ -55,8 +55,8 @@ const steps = [
     icon: <PenLine className="w-10 h-10 text-yellow-600" />,
     content: (
       <>
-        Once you&apos;ve found the perfect home, your real estate agent will help you prepare and submit
-        a competitive offer.
+        Once you&apos;ve found the perfect home, your real estate agent will help you prepare and
+        submit a competitive offer.
       </>
     ),
   },
@@ -108,8 +108,8 @@ const steps = [
     icon: <ShieldCheck className="w-10 h-10 text-yellow-600" />,
     content: (
       <>
-        Once all conditions are met, you&apos;ll receive final approval and the &quot;Clear to Close&quot;— the
-        green light to schedule your closing.
+        Once all conditions are met, you&apos;ll receive final approval and the &quot;Clear to
+        Close&quot;— the green light to schedule your closing.
       </>
     ),
   },
@@ -117,7 +117,10 @@ const steps = [
     title: 'Closing Day',
     icon: <Home className="w-10 h-10 text-yellow-600" />,
     content: (
-      <>It&apos;s time to sign the final documents and officially become a homeowner. Congratulations!</>
+      <>
+        It&apos;s time to sign the final documents and officially become a homeowner.
+        Congratulations!
+      </>
     ),
   },
 ];
@@ -140,10 +143,10 @@ const Purchase: React.FC = () => {
             Step-by-Step Guide to Buying a Home
           </h2>
           <p className="text-xl text-gray-600 mb-10 text-left md:text-center max-w-3xl mx-auto mb-20">
-            Before diving into the housing market, ensure you&apos;re fully prepared. At Lock It Lending,
-            we believe an informed buyer is a confident buyer. Our easy-to-follow guide walks you
-            through the 9 essential steps of purchasing your dream home - from pre-approval to
-            closing day.
+            Before diving into the housing market, ensure you&apos;re fully prepared. At Lock It
+            Lending, we believe an informed buyer is a confident buyer. Our easy-to-follow guide
+            walks you through the 9 essential steps of purchasing your dream home - from
+            pre-approval to closing day.
           </p>
 
           <div className="relative">
@@ -183,11 +186,12 @@ const Purchase: React.FC = () => {
               Let Lock It Lending Be Your Guide
             </h3>
             <p className="text-gray-600 max-w-2xl mx-auto mb-6">
-              Buying a home is a major milestone, and we&apos;re here for every step. Whether it&apos;s your
-              first purchase or you&apos;re moving up, our expert loan advisors make the mortgage process
-              simple and stress-free.
+              Buying a home is a major milestone, and we&apos;re here for every step. Whether
+              it&apos;s your first purchase or you&apos;re moving up, our expert loan advisors make
+              the mortgage process simple and stress-free.
             </p>
-            <Link to="/meet-lock-it-lending"
+            <Link
+              to="/meet-lock-it-lending"
               className="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-3 rounded-full transition"
             >
               Ready to Get Started?
