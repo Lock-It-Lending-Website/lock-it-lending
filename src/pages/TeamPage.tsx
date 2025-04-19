@@ -64,7 +64,7 @@ const TeamPage = () => {
     return <div className="text-center py-20 text-xl font-semibold">Team not found</div>;
   }
 
-  const totalReviews = team.slug === 'vortex' || team.slug === 'allstars' ? 516 : 225;
+  const totalReviews = 982;
 
   return (
     <div className="font-sans text-[17px] leading-relaxed text-gray-800">
@@ -185,7 +185,7 @@ const TeamPage = () => {
                     aria-label="Team Members"
                   >
                     {team?.members.map((member, idx) => (
-                      <SplideSlide key={idx}>
+                      <SplideSlide key={idx} className="pb-4">
                         <div className="flex flex-col items-center w-full max-w-[280px] mx-auto h-[420px] bg-white rounded-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] overflow-hidden">
                           <div className="w-full h-[300px] bg-gray-100">
                             <img
