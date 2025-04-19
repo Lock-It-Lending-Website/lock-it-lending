@@ -52,7 +52,8 @@ const Home: React.FC = () => {
                 {
                   title: 'What are 2-1 Temporary Rate Buydowns?',
                   slug: 'what-are-2-1-temporary-rate-buydowns',
-                  description: '2-1 Temporary Rate Buydowns: A Win-Win for Borrowers and Sellers...',
+                  description:
+                    '2-1 Temporary Rate Buydowns: A Win-Win for Borrowers and Sellers...',
                   image: `${process.env.PUBLIC_URL}/What-are2-1Temporar-Rate-Buydowns.png`,
                 },
                 {
@@ -91,7 +92,8 @@ const Home: React.FC = () => {
           <div className="max-w-6xl mx-auto">
             <h2 className="text-5xl font-extrabold mb-4">Unlocking Homeownership Happiness</h2>
             <p className="text-2xl text-gray-600 mb-8 font-semibold">
-              Learn from our reviews how Lock It Lending transformed lives with tailored mortgage solutions
+              Learn from our reviews how Lock It Lending transformed lives with tailored mortgage
+              solutions
             </p>
             <div className="flex justify-center items-center gap-3 mb-10">
               <span className="text-3xl">⭐⭐⭐⭐⭐</span>
@@ -117,9 +119,7 @@ const Home: React.FC = () => {
                   key={index}
                   className="bg-white rounded-3xl shadow-xl flex flex-col justify-between overflow-hidden relative pb-36 px-10 pt-12 text-center min-h-[500px]"
                 >
-                  <p className="text-gray-800 font-medium text-lg leading-relaxed">
-                    {review.text}
-                  </p>
+                  <p className="text-gray-800 font-medium text-lg leading-relaxed">{review.text}</p>
 
                   {/* Footer Curve + Profile */}
                   <div className="absolute bottom-0 left-0 right-0">
