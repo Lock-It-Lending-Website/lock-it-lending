@@ -116,7 +116,7 @@ const RatesPage: React.FC = () => {
           title="Get your rate"
           highlight="without the call"
           description="We believe everyone should be treated as if they lived next door."
-          image={`${process.env.PUBLIC_URL}/form.png`}
+          image={`${process.env.PUBLIC_URL}/rates2.png`}
         />
 
         <form onSubmit={handleSubmit} className="max-w-5xl mx-auto mt-10 px-6 pb-20">
@@ -124,6 +124,13 @@ const RatesPage: React.FC = () => {
             <div className="p-8 border-b border-yellow-500">
               <h2 className="text-3xl font-extrabold text-gray-800"> Rate Quote Form</h2>
               <p className="text-sm text-gray-500 mt-2">
+                To ensure accuracy, a team member will contact you shortly to confirm your information. 
+                Once confirmed, we’ll provide your personalized and guaranteed written quote <strong>within 1 hour</strong>, 
+                including a detailed breakdown of loan costs, closing fees, taxes, and title insurance — tailored specifically to your situation.
+                <br />
+                We don’t believe in generic online calculators — we deliver clear, accurate, and fully transparent estimates, 
+                so you know exactly what to expect from start to finish.
+                <br />
                 Answer a few questions to help us understand your needs better.
               </p>
             </div>

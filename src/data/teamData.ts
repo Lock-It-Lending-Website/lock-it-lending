@@ -32,7 +32,8 @@ export const teamGroups: Record<TeamSlug, TeamGroup> = {
     profileImage: `${base}/team/Kenton-Wilson.png`,
     email: 'info@lockitlending.com',
     phone: '(866) 400-6789',
-    address: '10515 Bellaire Blvd, Suite Z, Houston TX 77072, USA',
+    address: '11111 Richmond Ave, Suite 250, Houston TX 77082, USA',
+    nmls: '2075228',
     about: `Lock It Lending Houston, a proud member of the Swift Home Loans Inc. family, is your trusted partner on the journey to homeownership.
 With a commitment to excellence and a passion for personalized service, we specialize in making your mortgage dreams a reality.
 Our team of experienced professionals, backed by cutting-edge technology and a dedication to transparency, ensures that you find the right mortgage solution tailored to your needs.
@@ -46,9 +47,14 @@ Our team of seasoned mortgage experts possesses a deep understanding of the ever
     reviews: [
       {
         stars: 5,
-        name: 'Michi T',
-        text: `I used Lock It Lending for my recent mortgage loan to purchase a townhouse. My Lending Officer was Chris Nguyen & my Loan Processor was Shanatay Blanchard. They were amazing to work with, from the correspondence to the turnaround times for when my questions needed answers; it was great! I was able to purchase my new home within a few months. I would definitely recommend this outstanding team and company. My coworkers even asked me about them and I did not hesitate to give them my recommendation! Thanks again, Lock It Lending!`,
-        timestamp: 'a week ago',
+        name: 'D Hayden',
+        text: `Absolutely Fantastic!!!
+      ●Rate, ●Service, ●Professionalism ●Perseverance.
+      I cannot sing the praises of Lock It Lending enough, especially of Luke Robers and Ayesha Khan!
+      I had six mortgage lenders pitching for my business, and I let all of them compete with one another, until Lock It Lending was the last man standing. Their competitors just could not match their offer (and not for the want of trying)!
+      Luke, the young, gentle giant, was with me for 6 whole months, through offers, rejections, more offers, acceptance - followed by hiccups, all the way to the very end, He always made himself available, be it to answer questions or revise his offer based on the market. He was there even after passing the baton on to the very capable and charming Ayesh - who does not take 'no' for an answer, and gets the job done!
+      I HIGHLY, HIGHLY RECOMMEND them!!!`,
+        timestamp: 'just now',
       },
     ],
   },
@@ -56,12 +62,12 @@ Our team of seasoned mortgage experts possesses a deep understanding of the ever
     slug: 'allstars',
     name: 'Lock It Lending - All Stars',
     image: `${base}/allstars.png`,
-    hero: `${base}/allstars-banner.png`,
-    heroBlur: `${base}/allstars-banner.png`,
+    hero: `${base}/allstars-banner1.jpg`,
+    heroBlur: `${base}/allstars-banner1.jpg`,
     profileImage: `${base}/team/Hanh-Dao.png`,
     email: 'info@lockitlending.com',
     phone: '(866) 400-6789',
-    address: '10515 Bellaire Blvd, Suite Z, Houston TX 77072, USA',
+    address: '11111 Richmond Ave, Suite 250, Houston TX 77082, USA',
     nmls: '1306378',
     about: `Lock It Lending Houston, a proud member of the Swift Home Loans Inc. family, is your trusted partner on the journey to homeownership.
 With a commitment to excellence and a passion for personalized service, we specialize in making your mortgage dreams a reality.
@@ -76,8 +82,14 @@ Our team of seasoned mortgage experts possesses a deep understanding of the ever
     reviews: [
       {
         stars: 5,
-        name: 'Michi T',
-        text: `I used Lock It Lending for my recent mortgage loan to purchase a townhouse. My Lending Officer was Chris Nguyen & my Loan Processor was Shanatay Blanchard. They were amazing to work with, from the correspondence to the turnaround times for when my questions needed answers; it was great! I was able to purchase my new home within a few months. I would definitely recommend this outstanding team and company. My coworkers even asked me about them and I did not hesitate to give them my recommendation! Thanks again, Lock It Lending!`,
+        name: 'james hulsey',
+        text: `We recently worked with Lock it Lending to secure a mortgage for our new home in South Carolina, and we couldn’t be more satisfied with the experience. As a bilingual couple, it was incredibly important for us to have someone who could help us navigate the often confusing mortgage process in both English and Vietnamese. Lock it Lending went above and beyond to make sure we felt comfortable and understood every step of the way.
+
+        A huge thank you to Phillips Nguyen, who was an absolute pleasure to work with. He was always available to answer our questions, no matter how many we had, and he made sure to explain everything in detail, especially for my wife, who felt much more confident with his support. Phillips' professionalism and patience made all the difference for us.
+
+        We’d also like to express our appreciation to Hanh Dao, who kept us updated daily on mortgage and refinance rates. Her timely and consistent communication ensured we were always in the loop and helped us lock in the best rate possible.
+
+        Overall, the team at Lock it Lending made our home-buying experience seamless and stress-free. Their bilingual services, helpful advice, and ongoing support exceeded our expectations. We highly recommend them to anyone in need of mortgage services, especially if you're looking for a team that truly cares about meeting the unique needs of their clients.`,
         timestamp: 'a week ago',
       },
     ],
@@ -151,19 +163,19 @@ export const teamMembers: TeamMember[] = [
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=6c1e8c03-c9b4-40d8-abf4-d772f108cccf',
   },
-  {
-    name: 'Melissa Tubau',
-    title: 'Loan Advisor',
-    nmls: '#2353523',
-    phone: '(281) 582-1291',
-    email: 'melissa@lockitlending.com',
-    image: `${base}/team/Melissa-Tubau.png`,
-    slug: 'melissa-tubau',
-    team: 'allstars',
-    bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=64c56264-823a-482b-af56-b36605713368',
-  },
+  // {
+  //   name: 'Melissa Tubau',
+  //   title: 'Loan Advisor',
+  //   nmls: '#2353523',
+  //   phone: '(281) 582-1291',
+  //   email: 'melissa@lockitlending.com',
+  //   image: `${base}/team/Melissa-Tubau.png`,
+  //   slug: 'melissa-tubau',
+  //   team: 'allstars',
+  //   bio: '',
+  //   applyLink:
+  //     'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=64c56264-823a-482b-af56-b36605713368',
+  // },
   {
     name: 'Hanh Dao',
     title: 'Branch Manager',
@@ -207,7 +219,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: 'Jake Radom',
-    title: 'Retail Loan Officer',
+    title: 'Senior Loan Officer',
     nmls: '#2359662',
     phone: '(325) 335-0420',
     email: 'jacob.ra@lockitlending.com',
