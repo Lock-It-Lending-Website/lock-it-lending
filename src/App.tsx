@@ -39,6 +39,7 @@ const App: React.FC = () => {
       <Route path="/email-policy" element={<EmailPolicy />} />
       <Route path="/terms-of-use" element={<TermsOfUse />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/resources/career" element={<CareerPage />} />
     </Routes>
   );
 };
