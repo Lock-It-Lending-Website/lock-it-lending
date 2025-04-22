@@ -14,9 +14,9 @@ const Header: React.FC = () => {
         <div className="shrink-0">
           <Link to="/">
             <img
-              src={`${process.env.PUBLIC_URL}/logo.png`}
+              src={`${process.env.PUBLIC_URL}/logo.svg`}
               alt="Lock It Lending"
-              className="h-8 md:h-10 w-auto"
+              className="h-12 md:h-13 w-auto"
             />
           </Link>
         </div>
