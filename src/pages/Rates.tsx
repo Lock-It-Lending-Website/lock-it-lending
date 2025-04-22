@@ -16,6 +16,7 @@ const RatesPage: React.FC = () => {
   const [formData, setFormData] = useState({
     borrowerName: '',
     state: '',
+    zipcode: '',
     firstTimeBuyer: '',
     residencyType: '',
     propertyType: '',
@@ -24,6 +25,7 @@ const RatesPage: React.FC = () => {
     loanAmount: '',
     creditScore: '',
     email: '',
+    phoneNumber: '',
     buydownType: '',
     loanType: '',
     prepaymentPenalty: '',
@@ -32,6 +34,8 @@ const RatesPage: React.FC = () => {
     escrowWaiver: '',
     loanTerm: '',
     propertyValue: '',
+    income: '',
+    note: ''
   });
 
   type FormDataKey = keyof typeof formData;
@@ -51,7 +55,9 @@ const RatesPage: React.FC = () => {
       !formData.state ||
       !formData.loanPurpose ||
       !formData.creditScore ||
-      !formData.email
+      !formData.email ||
+      !formData.income ||
+      !formData.phoneNumber
     ) {
       alert('Please fill out all required fields marked with *');
       return;
@@ -69,6 +75,7 @@ const RatesPage: React.FC = () => {
       setFormData({
         borrowerName: '',
         state: '',
+        zipcode: '',
         firstTimeBuyer: '',
         residencyType: '',
         propertyType: '',
@@ -77,6 +84,7 @@ const RatesPage: React.FC = () => {
         loanAmount: '',
         creditScore: '',
         email: '',
+        phoneNumber: '',
         buydownType: '',
         loanType: '',
         prepaymentPenalty: '',
@@ -85,6 +93,8 @@ const RatesPage: React.FC = () => {
         escrowWaiver: '',
         loanTerm: '',
         propertyValue: '',
+        income: '',
+        note: ''
       });
     } else {
       alert('Something went wrong. Please try again.');
@@ -112,12 +122,12 @@ const RatesPage: React.FC = () => {
     <div className="home-page font-sans bg-gray-50 min-h-screen">
       <Header />
       <main className="main-content">
-        <HeroSection
+        {/* <HeroSection
           title="Get your rate"
           highlight="without the call"
           description="We believe everyone should be treated as if they lived next door."
           image={`${process.env.PUBLIC_URL}/rates2.png`}
-        />
+        /> */}
 
         <form onSubmit={handleSubmit} className="max-w-5xl mx-auto mt-10 px-6 pb-20">
           <div className="bg-white rounded-xl shadow-md border border-gray-300">
@@ -125,7 +135,7 @@ const RatesPage: React.FC = () => {
               <h2 className="text-3xl font-extrabold text-gray-800"> Rate Quote Form</h2>
               <p className="text-sm text-gray-500 mt-2">
                 To ensure accuracy, a team member will contact you shortly to confirm your information. 
-                Once confirmed, we’ll provide your personalized and guaranteed written quote <strong>within 1 hour</strong>, 
+                Once confirmed, we’ll provide your personalized and guaranteed written quote <strong>within 1 business hour</strong>, 
                 including a detailed breakdown of loan costs, closing fees, taxes, and title insurance — tailored specifically to your situation.
                 <br />
                 We don’t believe in generic online calculators — we deliver clear, accurate, and fully transparent estimates, 
@@ -142,7 +152,7 @@ const RatesPage: React.FC = () => {
                   type="text"
                   value={formData.borrowerName}
                   onChange={e => handleChange('borrowerName', e.target.value)}
-                  placeholder="First Last Name"
+                  placeholder="Full Name"
                   required
                   className="w-full border rounded p-2"
                 />
@@ -154,14 +164,14 @@ const RatesPage: React.FC = () => {
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {[
-                    'Buydown 1-0',
-                    'Buydown 1-0 LLPA',
-                    'Buydown 1-1',
-                    'Buydown 1-1 LLPA',
-                    'Buydown 2-1',
-                    'Buydown 2-1 LLPA',
-                    'Buydown 3-2-1',
-                    'Buydown 3-2-1 LLPA',
+                    'Seller Paid 1-0 Buydown',
+                    'Lender Paid 1-0 Buydown',
+                    'Seller Paid 1-1 Buydown',
+                    'Lender Paid 1-1 Buydown',
+                    'Seller Paid 2-1 Buydown',
+                    'Lender Paid 2-1 Buydown',
+                    'Seller Paid 3-2-1 Buydown',
+                    'Lender Paid 3-2-1 Buydown',
                     'None',
                   ].map(opt => renderOption('buydownType', opt))}
                 </div>
@@ -179,18 +189,19 @@ const RatesPage: React.FC = () => {
                     'VA - ARM',
                     'USDA',
                     'HELOC / 2nd Mortgage',
+                    'NON QM - No income check',
                   ].map(opt => renderOption('loanType', opt))}
                 </div>
               </div>
 
-              <div className="p-6">
+              {/* <div className="p-6">
                 <p className="text-lg font-semibold mb-4">Is there a prepayment penalty?</p>
                 <div className="grid grid-cols-2 gap-4">
                   {(['Yes', 'No'] as Array<keyof typeof yesNoIcons>).map(opt =>
                     renderOption('prepaymentPenalty', opt, opt, yesNoIcons[opt])
                   )}
                 </div>
-              </div>
+              </div> */}
 
               <div className="p-6">
                 <p className="text-lg font-semibold mb-4">Are you a first time homebuyer?</p>
@@ -200,6 +211,21 @@ const RatesPage: React.FC = () => {
                   )}
                 </div>
               </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">
+                  What is your annual income? *
+                </p>
+                <input
+                  type="text"
+                  value={formData.income}
+                  onChange={e => handleChange('income', e.target.value)}
+                  placeholder="Enter your annual income"
+                  required
+                  className="w-full border border-gray-300 rounded px-3 py-2"
+                />
+              </div>
+
 
               <div className="p-6">
                 <p className="text-lg font-semibold mb-4">What is the purpose of the loan? *</p>
@@ -359,6 +385,17 @@ const RatesPage: React.FC = () => {
                 </select>
               </div>
 
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">What is your ZIP code?</p>
+                <input
+                  type="text"
+                  value={formData.zipcode}
+                  onChange={e => handleChange('zipcode', e.target.value)}
+                  placeholder="Enter your ZIP code"
+                  className="w-full border border-gray-300 rounded px-3 py-2"
+                />
+              </div>
+
               <div className="p-6 space-y-4">
                 <p className="text-lg font-semibold">Email *</p>
                 <input
@@ -368,6 +405,28 @@ const RatesPage: React.FC = () => {
                   placeholder="ExampleEmail@gmail.com"
                   required
                   className="w-full border rounded p-2"
+                />
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">Phone Number *</p>
+                <input
+                  type="tel"
+                  value={formData.phoneNumber}
+                  onChange={e => handleChange('phoneNumber', e.target.value)}
+                  placeholder="Enter your phone number"
+                  required
+                  className="w-full border border-gray-300 rounded px-3 py-2"
+                />
+              </div>
+
+              <div className="p-6">
+                <p className="text-lg font-semibold mb-4">Note (Optional)</p>
+                <textarea
+                  value={formData.note}
+                  onChange={e => handleChange('note', e.target.value)}
+                  placeholder="Add any additional information or questions here"
+                  className="w-full border border-gray-300 rounded px-3 py-2 h-24 resize-none"
                 />
               </div>
 

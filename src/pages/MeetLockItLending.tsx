@@ -7,6 +7,13 @@ import { teamMembers, teamGroups } from '../data/teamData';
 
 const MeetLockItLending = () => {
   const teamList = Object.values(teamGroups);
+  
+  // Sort team members by last name in reverse alphabetical order
+  const sortedTeamMembers = [...teamMembers].sort((a,b) => {
+    const lastNameA = a.name.split(' ').slice(-1)[0].toLowerCase();
+    const lastNameB = b.name.split(' ').slice(-1)[0].toLowerCase();
+    return lastNameB.localeCompare(lastNameA);
+  });
 
   return (
     <div className="font-sans">
@@ -19,7 +26,7 @@ const MeetLockItLending = () => {
           description="Get to Know the Skilled Individuals Who Make Locking in Your Mortgage Simple, Fast, and Hassle-Free."
           image={`${process.env.PUBLIC_URL}/LIL-Meet-The-Family-2024.png`}
         />
-        <section className="bg-[#f7fbfd] py-24 px-8">
+        {/* <section className="bg-[#f7fbfd] py-24 px-8">
           <h2 className="text-6xl font-bold text-center mb-10">Our Teams</h2>
           <p className="text-center text-gray-600 text-2xl max-w-4xl mx-auto mb-16">
             Lock It Lending has several branches across the country to help you with your mortgage
@@ -48,7 +55,7 @@ const MeetLockItLending = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         <section className="bg-[#f7fbfd] py-24 px-8">
           <h2 className="text-6xl font-bold text-center mb-10">Meet The Team</h2>
@@ -56,7 +63,7 @@ const MeetLockItLending = () => {
             Meet the individuals who make Lock It Lending possible
           </p>
           <div className="max-w-7xl mx-auto grid gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
-            {teamMembers.map(member => (
+            {sortedTeamMembers.map(member => (
               <Link to={`/team-member/${member.slug}`} key={member.slug}>
                 <div className="w-full max-w-md mx-auto rounded-3xl shadow-xl border border-gray-300 p-10 text-center hover:shadow-2xl transition-all flex flex-col justify-start min-h-[300px] bg-[#f7fbfd]">
                   <img
