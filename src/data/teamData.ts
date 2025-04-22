@@ -292,7 +292,7 @@ export const teamMembers: TeamMember[] = [
   {
     name: 'Aron Padierna',
     title: 'Loan Officer Assistant',
-    email: 'aron.p@swifthomeloans.com',
+    email: 'aron.p@lockitlending.com',
     phone: '(281) 666-2913',
     image: `${base}/team/Aron-Padierna.png`,
     slug: 'aron-padierna',
