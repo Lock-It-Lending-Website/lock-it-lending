@@ -3,10 +3,9 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
-import { teamMembers, teamGroups } from '../data/teamData';
+import { teamMembers } from '../data/teamData';
 
 const MeetLockItLending = () => {
-  const teamList = Object.values(teamGroups);
   
   // Sort team members by last name in reverse alphabetical order
   const sortedTeamMembers = [...teamMembers].sort((a,b) => {

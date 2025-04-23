@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import HeroSection from '../components/HeroSection';
 import states from '../constants/states';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, ShieldOff } from 'lucide-react';
