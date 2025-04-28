@@ -64,7 +64,7 @@ const TeamPage = () => {
     return <div className="text-center py-20 text-xl font-semibold">Team not found</div>;
   }
 
-  const totalReviews = 982;
+  const totalReviews = "1000+";
 
   return (
     <div className="font-sans text-[17px] leading-relaxed text-gray-800">
