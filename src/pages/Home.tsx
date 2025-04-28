@@ -148,7 +148,7 @@ const Home: React.FC = () => {
             </p>
             <div className="flex justify-center items-center gap-3 mb-10">
               <span className="text-3xl">⭐⭐⭐⭐⭐</span>
-              <span className="text-xl font-bold">982 Google Reviews</span>
+              <span className="text-xl font-bold">1000+ Google Reviews</span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
