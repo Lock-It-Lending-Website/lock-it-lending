@@ -6,9 +6,8 @@ import { Link } from 'react-router-dom';
 import { teamMembers } from '../data/teamData';
 
 const MeetLockItLending = () => {
-  
   // Sort team members by last name in reverse alphabetical order
-  const sortedTeamMembers = [...teamMembers].sort((a,b) => {
+  const sortedTeamMembers = [...teamMembers].sort((a, b) => {
     const lastNameA = a.name.split(' ').slice(-1)[0].toLowerCase();
     const lastNameB = b.name.split(' ').slice(-1)[0].toLowerCase();
     return lastNameB.localeCompare(lastNameA);
@@ -64,17 +63,28 @@ const MeetLockItLending = () => {
           <div className="max-w-7xl mx-auto grid gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
             {sortedTeamMembers.map(member => (
               <Link to={`/team-member/${member.slug}`} key={member.slug}>
-                <div className="w-full max-w-md mx-auto rounded-3xl shadow-xl border border-gray-300 p-10 text-center hover:shadow-2xl transition-all flex flex-col justify-start min-h-[300px] bg-[#f7fbfd]">
+                <div className="w-full max-w-md mx-auto rounded-3xl shadow-xl border border-gray-300 p-10 text-center hover:shadow-2xl transition-all flex flex-col items-center h-[450px]">
+                  {/* Avatar */}
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-40 h-40 sm:w-44 sm:h-44 rounded-full mx-auto mb-6 object-cover"
+                    className="w-40 h-40 sm:w-44 sm:h-44 rounded-full object-cover mb-6"
                   />
+
+                  {/* Name */}
                   <h3 className="text-2xl font-semibold text-gray-900 mb-1">{member.name}</h3>
-                  <p className="text-gold font-semibold text-lg">{member.title}</p>
-                  {member.nmls && <p className="text-md text-gray-500 mt-1">NMLS {member.nmls}</p>}
-                  <p className="text-md text-gray-700 mt-2">{member.phone}</p>
-                  <p className="text-md text-gray-700 mb-5">{member.email}</p>
+
+                  {/* Title */}
+                  <p className="text-gold font-semibold text-lg mb-2">{member.title}</p>
+
+                  {/* Contact Info */}
+                  <div className="flex flex-col gap-1 text-gray-600 text-md mb-6 flex-1 justify-center">
+                    {member.nmls && <p className="text-gray-500">NMLS {member.nmls}</p>}
+                    {member.phone && <p>{member.phone}</p>}
+                    {member.email && <p className="break-words">{member.email}</p>}
+                  </div>
+
+                  {/* Social Icons */}
                   <div className="flex justify-center gap-6 text-2xl">
                     <i className="fab fa-facebook text-gold"></i>
                     <i className="fab fa-linkedin text-gold"></i>
