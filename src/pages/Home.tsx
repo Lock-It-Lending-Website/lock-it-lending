@@ -1,9 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const ads = [
+  {
+    title: 'Conventional 1% Down: Making Homeownership More Accessible',
+    slug: 'conventional-1-down-making-homeownership-more-accessible',
+    description: 'Conventional 1% Down: Making Homeownership More Accessible...',
+    image: `${process.env.PUBLIC_URL}/Making-Homeownership-More-Accessible.png`,
+  },
+  {
+    title: 'Lock Your Rate Today!',
+    slug: 'lock-your-rate-today',
+    description: 'Protect yourself against rising rates with our rate lock programs...',
+    image: `${process.env.PUBLIC_URL}/lock-your-rate.png`,
+  },
+  {
+    title: 'FHA Loan Benefits You Need to Know',
+    slug: 'fha-loan-benefits',
+    description: 'Discover why FHA loans are a great choice for first-time buyers...',
+    image: `${process.env.PUBLIC_URL}/fha-loan-benefits.png`,
+  },
+];
+
+const AdRotator: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(prevIndex => (prevIndex + 1) % ads.length);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentAd = ads[currentIndex];
+
+  return (
+    <section className="block">
+      <div className="relative overflow-hidden rounded-xl shadow-lg h-64">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentAd.slug}
+            src={currentAd.image}
+            alt=""
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.6 }}
+            className="absolute inset-0 w-full h-64 object-cover"
+          />
+        </AnimatePresence>
+      </div>
+    </section>
+  );
+};
 
 const Home: React.FC = () => {
   return (
@@ -39,9 +92,11 @@ const Home: React.FC = () => {
           <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-5xl font-extrabold mb-6">See What’s New in the Neighborhood</h2>
             <p className="text-2xl text-gray-600 mb-12 font-semibold">
-              Learn about products, events, and many other great offering from Lock It Lending
+              Learn about products, events, and many other great offerings from Lock It Lending
             </p>
+
             <div className="grid md:grid-cols-3 gap-10">
+              {/* First two static cards */}
               {[
                 {
                   title: 'Be Aware of Predatory Lending Practices',
@@ -55,12 +110,6 @@ const Home: React.FC = () => {
                   description:
                     '2-1 Temporary Rate Buydowns: A Win-Win for Borrowers and Sellers...',
                   image: `${process.env.PUBLIC_URL}/What-are2-1Temporar-Rate-Buydowns.png`,
-                },
-                {
-                  title: 'Conventional 1% Down: Making Homeownership More Accessible',
-                  slug: 'conventional-1-down-making-homeownership-more-accessible',
-                  description: 'Conventional 1% Down: Making Homeownership More Accessible...',
-                  image: `${process.env.PUBLIC_URL}/Making-Homeownership-More-Accessible.png`,
                 },
               ].map((card, index) => (
                 <Link key={index} to={`/resources/${card.slug}`} className="block">
@@ -83,10 +132,12 @@ const Home: React.FC = () => {
                   </motion.div>
                 </Link>
               ))}
+
+              {/* Animated Ad */}
+              <AdRotator />
             </div>
           </div>
         </section>
-
         {/* Reviews Section */}
         <section className="bg-gray-50 py-28 px-8 text-center">
           <div className="max-w-6xl mx-auto">

@@ -20,9 +20,15 @@ const steps = [
     icon: <UserCheck className="w-10 h-10 text-yellow-600" />,
     content: (
       <>
-        Begin by scheduling a call with one of our expert <Link to="/meet-lock-it-lending" className="text-yellow-700 underline">Loan Officers</Link>
-        . They&apos;ll help identify the <Link to="/loan-programs" className="text-yellow-700 underline">Loan Programs</Link> that best suits your needs. 
-        At this stage, we perform a soft credit pull, ensuring your
+        Begin by scheduling a call with one of our expert{' '}
+        <Link to="/meet-lock-it-lending" className="text-yellow-700 underline">
+          Loan Officers
+        </Link>
+        . They&apos;ll help identify the{' '}
+        <Link to="/loan-programs" className="text-yellow-700 underline">
+          Loan Programs
+        </Link>{' '}
+        that best suits your needs. At this stage, we perform a soft credit pull, ensuring your
         credit score remains unaffected. We meticulously prepare your application and have it
         reviewed by our in-house underwriter. Curious about potential loan rates and fees?{' '}
         <Link to="/rates" className="text-yellow-700 underline">

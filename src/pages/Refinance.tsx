@@ -113,12 +113,14 @@ const RatesPage: React.FC = () => {
             <div className="p-8 border-b border-yellow-500">
               <h2 className="text-3xl font-extrabold text-gray-800">Refinance Form</h2>
               <p className="text-sm text-gray-500 mt-2">
-                To ensure accuracy, a team member will contact you shortly to confirm your information. 
-                Once confirmed, we’ll provide your personalized and guaranteed written quote <strong>within 1 hour</strong>, 
-                including a detailed breakdown of loan costs, closing fees, taxes, and title insurance — tailored specifically to your situation.
+                To ensure accuracy, a team member will contact you shortly to confirm your
+                information. Once confirmed, we’ll provide your personalized and guaranteed written
+                quote <strong>within 1 hour</strong>, including a detailed breakdown of loan costs,
+                closing fees, taxes, and title insurance — tailored specifically to your situation.
                 <br />
-                We don’t believe in generic online calculators — we deliver clear, accurate, and fully transparent estimates, 
-                so you know exactly what to expect from start to finish.
+                We don’t believe in generic online calculators — we deliver clear, accurate, and
+                fully transparent estimates, so you know exactly what to expect from start to
+                finish.
                 <br />
                 Just answer a few quick questions below, and we’ll match you with your best
                 refinancing options.

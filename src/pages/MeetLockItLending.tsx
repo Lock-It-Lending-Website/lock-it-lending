@@ -6,9 +6,8 @@ import { Link } from 'react-router-dom';
 import { teamMembers } from '../data/teamData';
 
 const MeetLockItLending = () => {
-  
   // Sort team members by last name in reverse alphabetical order
-  const sortedTeamMembers = [...teamMembers].sort((a,b) => {
+  const sortedTeamMembers = [...teamMembers].sort((a, b) => {
     const lastNameA = a.name.split(' ').slice(-1)[0].toLowerCase();
     const lastNameB = b.name.split(' ').slice(-1)[0].toLowerCase();
     return lastNameB.localeCompare(lastNameA);

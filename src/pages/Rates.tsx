@@ -34,7 +34,7 @@ const RatesPage: React.FC = () => {
     loanTerm: '',
     propertyValue: '',
     income: '',
-    note: ''
+    note: '',
   });
 
   type FormDataKey = keyof typeof formData;
@@ -93,7 +93,7 @@ const RatesPage: React.FC = () => {
         loanTerm: '',
         propertyValue: '',
         income: '',
-        note: ''
+        note: '',
       });
     } else {
       alert('Something went wrong. Please try again.');
@@ -133,12 +133,15 @@ const RatesPage: React.FC = () => {
             <div className="p-8 border-b border-yellow-500">
               <h2 className="text-3xl font-extrabold text-gray-800"> Rate Quote Form</h2>
               <p className="text-sm text-gray-500 mt-2">
-                To ensure accuracy, a team member will contact you shortly to confirm your information. 
-                Once confirmed, we’ll provide your personalized and guaranteed written quote <strong>within 1 business hour</strong>, 
-                including a detailed breakdown of loan costs, closing fees, taxes, and title insurance — tailored specifically to your situation.
+                To ensure accuracy, a team member will contact you shortly to confirm your
+                information. Once confirmed, we’ll provide your personalized and guaranteed written
+                quote <strong>within 1 business hour</strong>, including a detailed breakdown of
+                loan costs, closing fees, taxes, and title insurance — tailored specifically to your
+                situation.
                 <br />
-                We don’t believe in generic online calculators — we deliver clear, accurate, and fully transparent estimates, 
-                so you know exactly what to expect from start to finish.
+                We don’t believe in generic online calculators — we deliver clear, accurate, and
+                fully transparent estimates, so you know exactly what to expect from start to
+                finish.
                 <br />
                 Answer a few questions to help us understand your needs better.
               </p>
@@ -212,9 +215,7 @@ const RatesPage: React.FC = () => {
               </div>
 
               <div className="p-6">
-                <p className="text-lg font-semibold mb-4">
-                  What is your annual income? *
-                </p>
+                <p className="text-lg font-semibold mb-4">What is your annual income? *</p>
                 <input
                   type="text"
                   value={formData.income}
@@ -224,7 +225,6 @@ const RatesPage: React.FC = () => {
                   className="w-full border border-gray-300 rounded px-3 py-2"
                 />
               </div>
-
 
               <div className="p-6">
                 <p className="text-lg font-semibold mb-4">What is the purpose of the loan? *</p>
