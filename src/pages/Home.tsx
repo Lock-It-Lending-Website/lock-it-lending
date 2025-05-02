@@ -6,24 +6,18 @@ import HeroSection from '../components/HeroSection';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ads = [
-  {
-    title: 'Conventional 1% Down: Making Homeownership More Accessible',
-    slug: 'conventional-1-down-making-homeownership-more-accessible',
-    description: 'Conventional 1% Down: Making Homeownership More Accessible...',
-    image: `${process.env.PUBLIC_URL}/Making-Homeownership-More-Accessible.png`,
-  },
-  {
-    title: 'Lock Your Rate Today!',
-    slug: 'lock-your-rate-today',
-    description: 'Protect yourself against rising rates with our rate lock programs...',
-    image: `${process.env.PUBLIC_URL}/lock-your-rate.png`,
-  },
-  {
-    title: 'FHA Loan Benefits You Need to Know',
-    slug: 'fha-loan-benefits',
-    description: 'Discover why FHA loans are a great choice for first-time buyers...',
-    image: `${process.env.PUBLIC_URL}/fha-loan-benefits.png`,
-  },
+  `${process.env.PUBLIC_URL}/closing/2024-10-04.webp`,
+  `${process.env.PUBLIC_URL}/closing/314897428_126237133569021_8560092186124881211_n.webp`,
+  `${process.env.PUBLIC_URL}/closing/unnamed (1).webp`,
+  `${process.env.PUBLIC_URL}/closing/unnamed (2).webp`,
+  `${process.env.PUBLIC_URL}/closing/unnamed (3).webp`,
+  `${process.env.PUBLIC_URL}/closing/unnamed (4).webp`,
+  `${process.env.PUBLIC_URL}/closing/unnamed (5).jpg`,
+  `${process.env.PUBLIC_URL}/closing/unnamed (5).webp`,
+  `${process.env.PUBLIC_URL}/closing/unnamed (6).webp`,
+  `${process.env.PUBLIC_URL}/closing/unnamed (7).webp`,
+  `${process.env.PUBLIC_URL}/closing/unnamed (8).webp`,
+  `${process.env.PUBLIC_URL}/closing/unnamed.webp`,
 ];
 
 const AdRotator: React.FC = () => {
@@ -31,20 +25,20 @@ const AdRotator: React.FC = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex(prevIndex => (prevIndex + 1) % ads.length);
-    }, 10000);
+      setCurrentIndex(prev => (prev + 1) % ads.length);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  const currentAd = ads[currentIndex];
+  const currentImage = ads[currentIndex];
 
   return (
     <section className="block">
       <div className="relative overflow-hidden rounded-xl shadow-lg h-64">
         <AnimatePresence mode="wait">
           <motion.img
-            key={currentAd.slug}
-            src={currentAd.image}
+            key={currentImage}
+            src={currentImage}
             alt=""
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -57,6 +51,7 @@ const AdRotator: React.FC = () => {
     </section>
   );
 };
+
 
 const Home: React.FC = () => {
   return (
