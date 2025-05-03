@@ -219,7 +219,7 @@ const Footer = () => {
                 className="h-10"
               />
               <img
-                src={`${process.env.PUBLIC_URL}/logo.png`}
+                src={`${process.env.PUBLIC_URL}/logo.svg`}
                 alt="Lock It Lending"
                 className="h-10"
               />
