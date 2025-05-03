@@ -5,12 +5,10 @@ export const sendEmail = async (req: Request, res: Response) => {
   const data = req.body as Record<string, string>;
 
   const transporter = nodemailer.createTransport({
-    host: 'smtp.office365.com',
-    port: 587,
-    secure: false,
+    service: 'gmail',
     auth: {
-      user: process.env.OUTLOOK_USER!,
-      pass: process.env.OUTLOOK_PASS!,
+      user: process.env.EMAIL_USER!,
+      pass: process.env.EMAIL_PASS!,
     },
   });
 
@@ -40,8 +38,8 @@ export const sendEmail = async (req: Request, res: Response) => {
     .join('\n');
 
   const mailOptions = {
-    from: `"Lock It Lending Form" <${process.env.OUTLOOK_USER}>`,
-    to: process.env.OUTLOOK_RECEIVER || process.env.OUTLOOK_USER,
+    from: `"Lock It Lending Form" <${process.env.EMAIL_USER}>`,
+    to: process.env.GMAIL_RECEIVER || process.env.EMAIL_USER,
     subject,
     text: plainText,
     html: htmlContent,
