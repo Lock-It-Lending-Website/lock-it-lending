@@ -68,6 +68,7 @@ const RatesPage: React.FC = () => {
       body: JSON.stringify(formWithType),
     });
 
+    console.log('Form data:', formWithType); // Log the form data being sent  
     if (response.ok) {
       // alert('Form submitted successfully!');
       navigate('/thank-you');

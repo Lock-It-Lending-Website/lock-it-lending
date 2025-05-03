@@ -5,14 +5,15 @@ export const sendEmail = async (req: Request, res: Response) => {
   const data = req.body;
 
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.office365.com',
+    port: 587,
+    secure: false,
     auth: {
-      user: process.env.EMAIL_USER || 'USER MISSING',
-      pass: process.env.EMAIL_PASS || 'PASS MISSING',
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     }
-    
   });
-
+  
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_USER,
