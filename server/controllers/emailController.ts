@@ -1,17 +1,10 @@
-import nodemailer from 'nodemailer';
-import sgTransport from 'nodemailer-sendgrid-transport';
+import sgMail from '@sendgrid/mail';
 import { Request, Response } from 'express';
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 export const sendEmail = async (req: Request, res: Response) => {
   const data = req.body as Record<string, string>;
-
-  const transporter = nodemailer.createTransport(
-    sgTransport({
-      auth: {
-        api_key: process.env.SENDGRID_API_KEY!,
-      },
-    })
-  );
 
   const subjectMap: Record<string, string> = {
     purchase: 'New Purchase Form Submission',
@@ -35,22 +28,25 @@ export const sendEmail = async (req: Request, res: Response) => {
     .map(([key, val]) => `${key}: ${val}`)
     .join('\n');
 
-  const mailOptions = {
-    from: `"Lock It Lending Form" <${process.env.FROM_EMAIL}>`,
-    to: process.env.GMAIL_RECEIVER || process.env.FROM_EMAIL,
+  const msg = {
+    to: process.env.GMAIL_RECEIVER || process.env.FROM_EMAIL!,
+    from: {
+      name: 'Lock It Lending Form',
+      email: process.env.FROM_EMAIL!,
+    },
     subject,
     text: plainText,
     html: htmlContent,
   };
 
   try {
-    await transporter.sendMail(mailOptions);
+    await sgMail.send(msg);
     res.status(200).json({ message: 'Email sent successfully!' });
   } catch (error: any) {
-    console.error('❌ EMAIL SEND ERROR:', error?.response || error);
+    console.error('❌ EMAIL SEND ERROR:', error?.response?.body || error);
     res.status(500).json({
       error: 'Failed to send email',
-      detail: error?.response || error?.message || error,
+      detail: error?.response?.body || error?.message || error,
     });
   }
 };
