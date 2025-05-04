@@ -1,16 +1,18 @@
 import nodemailer from 'nodemailer';
+import sgTransport from 'nodemailer-sendgrid-transport';
 import { Request, Response } from 'express';
 
 export const sendEmail = async (req: Request, res: Response) => {
+  console.log('📨 sendEmail controller triggered');
   const data = req.body as Record<string, string>;
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER!,
-      pass: process.env.EMAIL_PASS!,
-    },
-  });
+  const transporter = nodemailer.createTransport(
+    sgTransport({
+      auth: {
+        api_key: process.env.SENDGRID_API_KEY!,
+      },
+    })
+  );
 
   const subjectMap: Record<string, string> = {
     purchase: 'New Purchase Form Submission',
@@ -38,8 +40,8 @@ export const sendEmail = async (req: Request, res: Response) => {
     .join('\n');
 
   const mailOptions = {
-    from: `"Lock It Lending Form" <${process.env.EMAIL_USER}>`,
-    to: process.env.GMAIL_RECEIVER || process.env.EMAIL_USER,
+    from: `"Lock It Lending Form" <${process.env.FROM_EMAIL}>`,
+    to: process.env.GMAIL_RECEIVER || process.env.FROM_EMAIL,
     subject,
     text: plainText,
     html: htmlContent,
