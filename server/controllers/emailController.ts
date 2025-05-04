@@ -1,18 +1,17 @@
 import nodemailer from 'nodemailer';
-import sgTransport from 'nodemailer-sendgrid-transport';
 import { Request, Response } from 'express';
 
 export const sendEmail = async (req: Request, res: Response) => {
   console.log('📨 sendEmail controller triggered');
   const data = req.body as Record<string, string>;
 
-  const transporter = nodemailer.createTransport(
-    sgTransport({
-      auth: {
-        api_key: process.env.SENDGRID_API_KEY!,
-      },
-    })
-  );
+  const transporter = nodemailer.createTransport({
+    service: 'SendGrid',
+    auth: {
+      user: 'apikey',
+      pass: process.env.SENDGRID_API_KEY!,
+    },
+  });
 
   const subjectMap: Record<string, string> = {
     purchase: 'New Purchase Form Submission',
