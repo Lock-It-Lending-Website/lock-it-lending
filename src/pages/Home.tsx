@@ -52,7 +52,6 @@ const AdRotator: React.FC = () => {
   );
 };
 
-
 const Home: React.FC = () => {
   return (
     <div className="home-page font-sans">

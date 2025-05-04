@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import states from '../constants/states';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, ShieldOff } from 'lucide-react';
+import { NumericFormat, PatternFormat } from 'react-number-format';
 
 const yesNoIcons = {
   Yes: <ShieldCheck />,
@@ -278,20 +279,24 @@ const RatesPage: React.FC = () => {
               ) : (
                 <div className="p-6">
                   <p className="text-lg font-semibold mb-2">How much is the home?</p>
-                  <input
-                    type="text"
+                  <NumericFormat
                     value={formData.homePrice}
-                    onChange={e => handleChange('homePrice', e.target.value)}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    onValueChange={values => handleChange('homePrice', values.value)}
+                    thousandSeparator
+                    prefix="$"
+                    allowNegative={false}
                     placeholder="$400,000"
+                    className="w-full border border-gray-300 rounded px-3 py-2"
                   />
                   <p className="text-lg font-semibold mt-4 mb-2">How much are you putting down?</p>
-                  <input
-                    type="text"
+                  <NumericFormat
                     value={formData.downPayment}
-                    onChange={e => handleChange('downPayment', e.target.value)}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    onValueChange={values => handleChange('downPayment', values.value)}
+                    thousandSeparator
+                    prefix="$"
+                    allowNegative={false}
                     placeholder="$80,000"
+                    className="w-full border border-gray-300 rounded px-3 py-2"
                   />
                 </div>
               )}
@@ -409,11 +414,12 @@ const RatesPage: React.FC = () => {
 
               <div className="p-6">
                 <p className="text-lg font-semibold mb-4">Phone Number *</p>
-                <input
-                  type="tel"
+                <PatternFormat
+                  format="(###) ###-####"
+                  mask="_"
                   value={formData.phoneNumber}
-                  onChange={e => handleChange('phoneNumber', e.target.value)}
-                  placeholder="Enter your phone number"
+                  onValueChange={values => handleChange('phoneNumber', values.value)}
+                  placeholder="(123) 456-7890"
                   required
                   className="w-full border border-gray-300 rounded px-3 py-2"
                 />
