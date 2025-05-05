@@ -214,13 +214,12 @@ const Home: React.FC = () => {
               <h2 className="text-4xl font-extrabold mb-6">Want to work with Lock It Lending</h2>
               <p className="text-xl text-gray-700 mb-8">
                 If you’re either Purchasing or refinancing, have the confidence to know you are
-                working with the right team. Click Apply to sign up as one of Lock It Lending’s
-                Neighbors in our Neighborhood. Whether you are in process with a loan or have
+                working with the right team. Click Apply to sign up. Whether you are in process with a loan or have
                 questions, Lock It Lending will make you feel like a neighbor by answering all your
                 financing questions.
               </p>
               <Link
-                to="/"
+                to="https://prod.lendingpad.com/swift-home-loans/pos#/?loid=a97facd8-45ae-4919-9ff1-c4a8d9743f7e"
                 className="inline-block bg-gold text-white text-lg px-8 py-3 rounded-full font-semibold shadow hover:opacity-90"
               >
                 Apply
