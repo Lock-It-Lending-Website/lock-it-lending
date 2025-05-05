@@ -6,19 +6,18 @@ import HeroSection from '../components/HeroSection';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ads = [
-  `${process.env.PUBLIC_URL}/closing/2024-10-04.webp`,
-  `${process.env.PUBLIC_URL}/closing/314897428_126237133569021_8560092186124881211_n.webp`,
-  `${process.env.PUBLIC_URL}/closing/unnamed (1).webp`,
-  `${process.env.PUBLIC_URL}/closing/unnamed (2).webp`,
-  `${process.env.PUBLIC_URL}/closing/unnamed (3).webp`,
-  `${process.env.PUBLIC_URL}/closing/unnamed (4).webp`,
-  `${process.env.PUBLIC_URL}/closing/unnamed (5).jpg`,
-  `${process.env.PUBLIC_URL}/closing/unnamed (5).webp`,
-  `${process.env.PUBLIC_URL}/closing/unnamed (6).webp`,
-  `${process.env.PUBLIC_URL}/closing/unnamed (7).webp`,
-  `${process.env.PUBLIC_URL}/closing/unnamed (8).webp`,
-  `${process.env.PUBLIC_URL}/closing/unnamed.webp`,
+  `${process.env.PUBLIC_URL}/closing/028rjsi3.jpg`,
+  `${process.env.PUBLIC_URL}/closing/Amir Hamrang (1).jpg`,
+  `${process.env.PUBLIC_URL}/closing/Bob Van.jpg`,
+  `${process.env.PUBLIC_URL}/closing/David Howland.jpg`,
+  `${process.env.PUBLIC_URL}/closing/Edjola Xhaferi.jpg`,
+  `${process.env.PUBLIC_URL}/closing/Enerolisa Angamarca.jpg`,
+  `${process.env.PUBLIC_URL}/closing/Jessie Lopez.jpg`,
+  `${process.env.PUBLIC_URL}/closing/Megan lemons.jpg`,
+  `${process.env.PUBLIC_URL}/closing/Quynh My Luong.jpg`,
+  `${process.env.PUBLIC_URL}/closing/Screenshot 2024-09-19 105059.jpg`,
 ];
+
 
 const AdRotator: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -44,7 +43,7 @@ const AdRotator: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.6 }}
-            className="absolute inset-0 w-full h-64 object-cover"
+            className="absolute inset-0 w-full h-64 object-cover object-top"
           />
         </AnimatePresence>
       </div>
