@@ -4,38 +4,64 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 
-const reviews = [
+const allReviews = [
   {
-    name: 'H Doan',
-    date: 'April 10, 2025',
-    image: `${process.env.PUBLIC_URL}/hdoan-review.png`,
-    text: 'I had a great experience with Lock It Lending for my mortgage. From start to finish, they took excellent care of the entire process. I worked with Lyn and Oliver, and both were amazing. Lyn helped me find the best rate, gave me daily updates on interest rates and closing costs, and even helped with price matching to make sure I got the best possible deal. Oliver guided me through all the paperwork and patiently answered every question I had. What impressed me most was that his support didn’t stop at closing—he continued to help afterward. There was an issue with the title company that had been pending for almost a month after closing. Oliver stepped in, coordinated with everyone involved, and followed through until it was resolved. That level of care and responsibility meant a lot to me. What really stood out was their outstanding customer service and responsiveness. Whether by phone or email, they always replied quickly and clearly explained everything I needed to know. I would definitely recommend Lock It Lending to my friends and family, and I’ll absolutely return to them the next time I buy a home or refinance. With their professionalism, dedication, and heart, I believe they’ll continue to grow and succeed.',
+    name: "D Hayden",
+    date: "21st April 2025",
+    image: "/default-avatar.png",
+    text: "Absolutely Fantastic!!! • Rate, •Service, •Professionalism •Perseverance. I cannot sing the praises of Lock It Lending enough, especially of Luke Robers and Ayesha Khan! I had six mortgage lenders pitching for my business, and I let all of them compete with one another, until Lock It Lending was the last man standing. Their competitors just could not match their offer (and not for the want of trying)! Luke, the young, gentle giant, was with me for 6 whole months, through offers, rejections, more offers, acceptance - followed by hiccups, all the way to the very end, He always made himself available, be it to answer questions or revise his offer based on the market. He was there even after passing the baton on to the very capable and charming Ayesh - who does not take 'no' for an answer, and gets the job done! I HIGHLY, HIGHLY RECOMMEND them!!!"
   },
   {
-    name: 'Tracy Le',
-    date: 'April 4, 2025',
-    image: `${process.env.PUBLIC_URL}/tracy-review.png`,
-    text: 'I’m so grateful to the amazing team at Lock It Lending for helping me secure a loan for my new home! A special thank you to Lyn, Vivi, and Tina—you three were with me every step of the way and made this entire journey so much smoother than I ever imagined. From helping me fix my credit score to getting me approved by the lender, you guided me through every back-and-forth with patience, professionalism, and care. The whole process went smoothly and right on time. The team was incredibly responsive, always answering my questions no matter how small, and making sure I fully understood everything. I truly felt supported throughout the entire experience. I couldn’t have asked for a better lending team—thank you Lock It Lending for making my dream of owning a home come true!',
+    name: "Malcolm Gaines",
+    date: "2nd May 2025",
+    image: "/default-avatar.png",
+    text: "Words can't explain how hard they work to get me in my home when no one else could do it they did they deserve a 10"
   },
   {
-    name: 'Sandro Arrua',
-    date: 'April 8, 2025',
-    image: `${process.env.PUBLIC_URL}/sandro-review.png`,
-    text: 'Buying our first home was an incredible experience, thanks to the team at Lock It Lending. From the outset, they guided us through every step, making the entire process smoother than we had anticipated. They were always available to answer our questions, providing clear and honest information. With our rental lease nearing its end, we were on a tight schedule to close the deal, but they ensured everything was completed on time. A special thanks to Melissa, Philips, and Matt for their unwavering support. We wholeheartedly recommend Lock It Lending and their fantastic team. Thank you so much!​',
+    name: "MAURICIO VALDES",
+    date: "28th April 2025",
+    image: "/default-avatar.png",
+    text: "Although I represented the seller in this transaction, I was extremely impressed with the buyer's lender. They were efficient, responsive, and kept the process moving smoothly from start to finish. Communication was clear and timely, which made for a stress-free experience on all sides. It's always a pleasure to work with professionals who understand the importance of teamwork in a successful closing. Highly recommend!"
   },
   {
-    name: 'Sarah Michie',
-    date: 'March 19, 2025',
-    image: `${process.env.PUBLIC_URL}/thi-review.png`,
-    text: 'The team made the mortgage process incredibly smooth and stress-free! Alex, the processor, kept everything organized and on track, while Henry, the loan officer, was knowledgeable and always available to answer questions. They made the entire experience seamless from start to finish. Highly recommend!',
+    name: "Ana Rodriguez",
+    date: "15th April 2025",
+    image: "/default-avatar.png",
+    text: "Working with Lock-it Lending was an absolute pleasure! From start to finish, the entire team Kent & Ayesha was incredibly helpful, kind, and professional. They made what could have been a stressful process feel smooth and easy. What really stood out to me was how communicative they were—always quick to respond, super informative, and happy to answer any questions I had along the way. I never felt out of the loop, and they went above and beyond to make sure I understood every step. If you're looking for a lending company that truly cares about its clients and delivers top-notch service, I highly recommend Lock-it Lending."
   },
   {
-    name: 'Brianna Nguyen',
-    date: 'February 13, 2025',
-    image: `${process.env.PUBLIC_URL}/brianna-review.png`,
-    text: 'We had an outstanding experience with Lock It Lending! From start to finish, the process was seamless, and we truly appreciate the professionalism and dedication of everyone involved. A special thanks to Kaden, Emily, and Philip for going above and beyond to make this happen—they ensured everything was smooth and stress-free. The beautiful flowers on closing day were such a thoughtful touch and meant so much to us. We are incredibly grateful for their support and highly recommend Lock It Lending to anyone looking for a top-notch mortgage experience!',
+    name: "Amy Dolma",
+    date: "29th April 2025",
+    image: "/default-avatar.png",
+    text: "Kevin did an extraordinary job guiding me through the loan process! He patiently broke down the calculations, answered all of my questions, and used his expertise to secure the best possible rate. I felt confident and supported every step of the way. A big thank you as well to Philip for his support as part of the team. I highly recommend Kevin if you're looking for a knowledgeable and dedicated loan officer who truly goes above and beyond!"
   },
+  {
+    name: "Megan lemons",
+    date: "30th April 2025",
+    image: "/default-avatar.png",
+    text: "Ayesha was my loan processor and I was beyond impressed and pleased with her work. She made me feel calm and comfortable through this whole process. I truly don't know how I would have gone through this without her! She worked so hard for us and never left us hanging. Even during a stressful situation of buying a house Ayesha made it stress-free for us! Thank you so much Lock it Lending!"
+  },
+  {
+    name: "Yensi Gutiérrez",
+    date: "5th May 2025",
+    image: "/default-avatar.png",
+    text: "Nuestra experiencia con Lock It Lending fue maravillosa gracias a su profesionalismo y dedicación todo fluyó de una manera increíble. Mi familia y yo nos sentimos muy felices de haber compartido esta maravillosa experiencia con tan excelente equipo. Mis felicitaciones por su gran trabajo."
+  }
 ];
+
+function getShuffledReviews(seed: number) {
+  const shuffled = [...allReviews];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = seed % (i + 1);
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    seed = (seed * 16807) % 2147483647;
+  }
+  return shuffled.slice(0, 5);
+}
+
+const now = new Date();
+const seed = Math.floor(now.getTime() / 1000);
+const reviews = getShuffledReviews(seed);
 
 export default function Reviews() {
   return (
