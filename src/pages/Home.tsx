@@ -4,6 +4,10 @@ import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getShuffledReviews } from '../data/reviewData';
+
+const seed = Math.floor(new Date().getTime() / (1000 * 60 * 60 * 6));
+const homepageReviews = getShuffledReviews(seed, 2);
 
 const ads = [
   `${process.env.PUBLIC_URL}/closing/028rjsi3.jpg`,
@@ -17,7 +21,6 @@ const ads = [
   `${process.env.PUBLIC_URL}/closing/Quynh My Luong.jpg`,
   `${process.env.PUBLIC_URL}/closing/Screenshot 2024-09-19 105059.jpg`,
 ];
-
 
 const AdRotator: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -89,7 +92,6 @@ const Home: React.FC = () => {
             </p>
 
             <div className="grid md:grid-cols-3 gap-10">
-              {/* First two static cards */}
               {[
                 {
                   title: 'Be Aware of Predatory Lending Practices',
@@ -126,11 +128,11 @@ const Home: React.FC = () => {
                 </Link>
               ))}
 
-              {/* Animated Ad */}
               <AdRotator />
             </div>
           </div>
         </section>
+
         {/* Reviews Section */}
         <section className="bg-gray-50 py-28 px-8 text-center">
           <div className="max-w-6xl mx-auto">
@@ -145,30 +147,14 @@ const Home: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {[
-                {
-                  name: 'Bill',
-                  date: 'May 11, 2024',
-                  image: `${process.env.PUBLIC_URL}/bill-review.png`,
-                  text: `I’d like to thank Ann and Ella who have been involved in the process of getting me into my new home. This has been a seamless, pleasant and positive experience which I attribute to the very professional team. Thanks again for all of your help and support in answering all of my questions and getting me to closing!`,
-                },
-                {
-                  name: 'Thi',
-                  date: 'April 19, 2024',
-                  image: `${process.env.PUBLIC_URL}/thi-review.png`,
-                  text: `My husband and I are first time home buyer and we had the pleasure of working with Tiana, Lyn and Oliver. They are very professional, attentive and knowledgeable. They assisted us with many questions and explained everything in detail that made everything very easy to understand. The process went very smoothly. I would highly recommend them!! Thank you for assisting us throughout this process and for the beautiful gift on our closing day!`,
-                },
-              ].map((review, index) => (
+              {homepageReviews.map((review, index) => (
                 <div
                   key={index}
                   className="bg-white rounded-3xl shadow-xl flex flex-col justify-between overflow-hidden relative pb-36 px-10 pt-12 text-center min-h-[500px]"
                 >
                   <p className="text-gray-800 font-medium text-lg leading-relaxed">{review.text}</p>
-
-                  {/* Footer Curve + Profile */}
                   <div className="absolute bottom-0 left-0 right-0">
                     <div className="bg-gold h-[100px] w-full rounded-t-[50%] relative">
-                      {/* Avatar */}
                       <div className="absolute -top-12 left-1/2 transform -translate-x-1/2">
                         <img
                           src={review.image}
@@ -176,8 +162,6 @@ const Home: React.FC = () => {
                           className="w-20 h-20 rounded-full border-4 border-white object-cover"
                         />
                       </div>
-
-                      {/* Name + Date */}
                       <div className="text-white text-base font-semibold flex flex-col items-center justify-center pt-8">
                         <div className="text-lg">{review.name}</div>
                         <div className="text-sm">{review.date}</div>
@@ -213,9 +197,9 @@ const Home: React.FC = () => {
               <h2 className="text-4xl font-extrabold mb-6">Want to work with Lock It Lending</h2>
               <p className="text-xl text-gray-700 mb-8">
                 If you’re either Purchasing or refinancing, have the confidence to know you are
-                working with the right team. Click Apply to sign up. Whether you are in process with a loan or have
-                questions, Lock It Lending will make you feel like a neighbor by answering all your
-                financing questions.
+                working with the right team. Click Apply to sign up. Whether you are in process with
+                a loan or have questions, Lock It Lending will make you feel like a neighbor by
+                answering all your financing questions.
               </p>
               <Link
                 to="https://prod.lendingpad.com/swift-home-loans/pos#/?loid=a97facd8-45ae-4919-9ff1-c4a8d9743f7e"
