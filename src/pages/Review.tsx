@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
-import { allReviews, getShuffledReviews } from '../data/reviewData';
+import { getShuffledReviews } from '../data/reviewData';
 
 const now = new Date();
 const seed = Math.floor(now.getTime() / (1000 * 60 * 60 * 6));
