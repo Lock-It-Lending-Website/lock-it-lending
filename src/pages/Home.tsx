@@ -86,7 +86,7 @@ const Home: React.FC = () => {
         {/* Neighborhood Section */}
         <section className="py-28 bg-[#f7fbfd] px-8">
           <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-5xl font-extrabold mb-6">See What’s New in the Neighborhood</h2>
+            <h2 className="text-5xl font-extrabold mb-6">Updates That Move You—Literally 🏡</h2>
             <p className="text-2xl text-gray-600 mb-12 font-semibold">
               Learn about products, events, and many other great offerings from Lock It Lending
             </p>

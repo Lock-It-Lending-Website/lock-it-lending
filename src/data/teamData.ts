@@ -218,16 +218,6 @@ export const teamMembers: TeamMember[] = [
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=bbe37d90-9957-4ef3-9163-40e27c6cad5c',
   },
   {
-    name: 'Pete Garcia',
-    title: 'Talent Acquisition Recruiter',
-    phone: '(346) 540-4514',
-    email: 'pete.g@lockitlending.com',
-    image: `${base}/team/Pete-Garcia.jpg`,
-    slug: 'pete-garcia',
-    team: 'vortex',
-    bio: '',
-  },
-  {
     name: 'Jake Radom',
     title: 'Senior Loan Officer',
     nmls: '#2359662',
