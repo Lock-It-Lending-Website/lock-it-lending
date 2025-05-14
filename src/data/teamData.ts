@@ -187,7 +187,7 @@ export const teamMembers: TeamMember[] = [
     team: 'allstars',
     bio: '',
     applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=a97facd8-45ae-4919-9ff1-c4a8d9743f7e',
+      'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
   },
 
   // Vortex

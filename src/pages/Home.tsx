@@ -202,7 +202,7 @@ const Home: React.FC = () => {
                 answering all your financing questions.
               </p>
               <Link
-                to="https://prod.lendingpad.com/swift-home-loans/pos#/?loid=a97facd8-45ae-4919-9ff1-c4a8d9743f7e"
+                to="https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending"
                 className="inline-block bg-gold text-white text-lg px-8 py-3 rounded-full font-semibold shadow hover:opacity-90"
               >
                 Apply
