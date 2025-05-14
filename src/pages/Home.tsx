@@ -64,7 +64,7 @@ const Home: React.FC = () => {
           title="Welcome to"
           highlight="Lock It Lending"
           description="Rate the #1 mortgage broker in TX with the most top producing Loan Officers"
-          image={`${process.env.PUBLIC_URL}/banner-952x952px.jpg`}
+          image={`${process.env.PUBLIC_URL}/homepagehero.jpg`}
           buttons={
             <>
               <Link
