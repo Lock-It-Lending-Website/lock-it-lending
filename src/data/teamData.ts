@@ -189,7 +189,30 @@ export const teamMembers: TeamMember[] = [
     applyLink:
       'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
   },
-
+  {
+    name: 'Annie Tran',
+    title: 'Loan Officer Assistant',
+    nmls: '',
+    phone: '(254) 454-4303',
+    email: 'annie@lockitlending.com',
+    image: `${base}/team/Annie-Tran.png`,
+    slug: 'annie-tran',
+    team: 'allstars',
+    bio: '',
+    applyLink:
+      'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
+  },
+  {
+      name: 'Hien Le',
+      title: 'Loan Officer Assistant',
+      email: 'hien.le@lockitlending.com',
+      phone: '(361) 321-1355',
+      image: `${base}/team/Hien-Le.jpg`,
+      slug: 'hien-le',
+      team: 'allstars',
+      applyLink:
+      'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
+    },
   // Vortex
   {
     name: 'Robert Noonan',
@@ -281,10 +304,23 @@ export const teamMembers: TeamMember[] = [
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=e20d6238-080d-4051-8dcc-d4a826ebbddb',
   },
   {
+    name: 'Claudia Lopez',
+    title: 'Loan Officer',
+    nmls: '#2687598',
+    phone: '(281) 694-5773',
+    email: 'claudia.l@lockitlending.com',
+    image: `${base}/team/Claudia-Lopez.jpg`,
+    slug: 'claudia-lopez',
+    team: 'vortex',
+    bio: '',
+    applyLink:
+      '',
+  },
+  {
     name: 'Laura Hidalgo',
     title: 'Talent Acquistion and Marketing Specialist',
     email: 'laura.h@lockitlending.com',
-    phone: '(832) 916-4537',
+    phone: '(346) 463-0888',
     image: `${base}/team/Laura-Hidalgo.png`,
     slug: 'laura-hidalgo',
     team: 'vortex',
@@ -299,12 +335,49 @@ export const teamMembers: TeamMember[] = [
     team: 'vortex',
   },
   {
+    name: 'Aftab Bhagat',
+    title: 'Loan Officer Assistant',
+    email: 'aftab.b@lockitlending.com',
+    phone: '(361) 306-4592',
+    image: `${base}/team/Aftab-Bhagat.jpg`,
+    slug: 'aftab-bhagat',
+    team: 'vortex',
+  },
+ 
+  {
     name: 'Ayesha Khan',
     title: 'Loan Processor',
     email: 'ayesha@lockitlending.com',
     phone: '(281) 612-4306',
     image: `${base}/team/Ayesha-Khan.jpg`,
     slug: 'ayesha-khan',
+    team: 'vortex',
+  },
+  {
+    name: 'Maricruz Maldonado',
+    title: 'Loan Processor',
+    email: 'mary.m@lockitlending.com',
+    phone: '(281) 524-2420',
+    image: `${base}/team/Maricruz-Maldonado.jpg`,
+    slug: 'maricruz-maldonado',
+    team: 'vortex',
+  },
+  {
+    name: 'Danielle Murray',
+    title: 'Processor Assist',
+    email: 'danielle@lockitlending.com',
+    phone: '(432) 535-3788',
+    image: `${base}/team/Danielle-Murray.jpg`,
+    slug: 'danielle-murray',
+    team: 'vortex',
+  },
+  {
+    name: 'Sarah Ornelas',
+    title: 'Recruiter and Loan Officer Assistant',
+    email: 'sarah.o@lockitlending.com',
+    phone: '(832) 916-4537',
+    image: `${base}/team/Sarah-Ornelas.jpeg`,
+    slug: 'sarah-ornelas',
     team: 'vortex',
   },
 ];
