@@ -68,7 +68,7 @@ const MeetLockItLending = () => {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-40 h-40 sm:w-44 sm:h-44 rounded-full object-cover mb-6"
+                    className="w-40 h-40 sm:w-44 sm:h-44 rounded-full object-cover mb-6 object-top"
                   />
 
                   {/* Name */}
