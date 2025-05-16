@@ -5,6 +5,7 @@ import states from '../constants/states';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, ShieldOff } from 'lucide-react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
+import { FaSpinner } from 'react-icons/fa';
 
 const yesNoIcons = {
   Yes: <ShieldCheck />,
@@ -13,6 +14,7 @@ const yesNoIcons = {
 
 const RatesPage: React.FC = () => {
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     borrowerName: '',
     state: '',
@@ -50,6 +52,7 @@ const RatesPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (
       !formData.borrowerName ||
       !formData.state ||
@@ -63,41 +66,49 @@ const RatesPage: React.FC = () => {
       return;
     }
 
-    const response = await fetch('https://lock-it-lending.onrender.com/api/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formWithType),
-    });
+    setIsSubmitting(true);
 
-    if (response.ok) {
-      // alert('Form submitted successfully!');
-      navigate('/thank-you');
-      setFormData({
-        borrowerName: '',
-        state: '',
-        zipcode: '',
-        firstTimeBuyer: '',
-        residencyType: '',
-        propertyType: '',
-        homePrice: '',
-        downPayment: '',
-        loanAmount: '',
-        creditScore: '',
-        email: '',
-        phoneNumber: '',
-        buydownType: '',
-        loanType: '',
-        prepaymentPenalty: '',
-        loanPurpose: '',
-        refinancePurpose: '',
-        escrowWaiver: '',
-        loanTerm: '',
-        propertyValue: '',
-        income: '',
-        note: '',
+    try {
+      const response = await fetch('https://lock-it-lending.onrender.com/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formWithType),
       });
-    } else {
-      alert('Something went wrong. Please try again.');
+
+      if (response.ok) {
+        navigate('/thank-you');
+        setFormData({
+          borrowerName: '',
+          state: '',
+          zipcode: '',
+          firstTimeBuyer: '',
+          residencyType: '',
+          propertyType: '',
+          homePrice: '',
+          downPayment: '',
+          loanAmount: '',
+          creditScore: '',
+          email: '',
+          phoneNumber: '',
+          buydownType: '',
+          loanType: '',
+          prepaymentPenalty: '',
+          loanPurpose: '',
+          refinancePurpose: '',
+          escrowWaiver: '',
+          loanTerm: '',
+          propertyValue: '',
+          income: '',
+          note: '',
+        });
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      alert('Network error. Please try again.');
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -438,9 +449,21 @@ const RatesPage: React.FC = () => {
               <div className="p-6">
                 <button
                   type="submit"
-                  className="w-full bg-yellow-600 text-white py-3 rounded-lg font-bold hover:bg-yellow-700"
+                  disabled={isSubmitting}
+                  className={`w-full py-3 rounded-lg font-bold ${
+                    isSubmitting
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-yellow-600 hover:bg-yellow-700 text-white'
+                  }`}
                 >
-                  Submit
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <FaSpinner className="animate-spin" />
+                      Submitting...
+                    </span>
+                  ) : (
+                    'Submit'
+                  )}
                 </button>
               </div>
             </div>
