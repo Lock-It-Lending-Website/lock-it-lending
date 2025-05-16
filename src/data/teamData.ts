@@ -186,8 +186,7 @@ export const teamMembers: TeamMember[] = [
     slug: 'hanh-dao',
     team: 'allstars',
     bio: '',
-    applyLink:
-      'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
+    applyLink: 'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
   },
   {
     name: 'Annie Tran',
