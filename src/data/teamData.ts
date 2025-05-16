@@ -207,7 +207,7 @@ export const teamMembers: TeamMember[] = [
       title: 'Loan Officer Assistant',
       email: 'hien.le@lockitlending.com',
       phone: '(361) 321-1355',
-      image: `${base}/team/Hien-Le.jpg`,
+      image: `${base}/team/Hien-Le.jpeg`,
       slug: 'hien-le',
       team: 'allstars',
       applyLink:
