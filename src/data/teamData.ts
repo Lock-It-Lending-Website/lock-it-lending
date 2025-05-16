@@ -187,7 +187,7 @@ export const teamMembers: TeamMember[] = [
     team: 'allstars',
     bio: '',
     applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=a97facd8-45ae-4919-9ff1-c4a8d9743f7e',
+      'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
   },
 
   // Vortex
@@ -216,16 +216,6 @@ export const teamMembers: TeamMember[] = [
     bio: '',
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=bbe37d90-9957-4ef3-9163-40e27c6cad5c',
-  },
-  {
-    name: 'Pete Garcia',
-    title: 'Talent Acquisition Recruiter',
-    phone: '(346) 540-4514',
-    email: 'pete.g@lockitlending.com',
-    image: `${base}/team/Pete-Garcia.jpg`,
-    slug: 'pete-garcia',
-    team: 'vortex',
-    bio: '',
   },
   {
     name: 'Jake Radom',

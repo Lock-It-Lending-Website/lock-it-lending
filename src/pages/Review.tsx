@@ -30,7 +30,8 @@ export default function Reviews() {
             >
               <div className="absolute bottom-[-10px] left-10 w-0 h-0 border-t-[20px] border-t-white border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent" />
               <div className="text-gold text-4xl mb-4">❝</div>
-              <p className="text-gray-700 leading-relaxed text-xl mb-10">{review.text}</p>
+              <p className="text-gray-700 leading-relaxed text-xl mb-10">{review.text} </p>
+              <div className="absolute bottom-4 right-4 text-gold text-4xl">❞</div>
               <div className="flex items-center gap-6 absolute bottom-[-100px] left-10">
                 <img
                   src={review.image}

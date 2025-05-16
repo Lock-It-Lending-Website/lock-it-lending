@@ -64,7 +64,7 @@ const Home: React.FC = () => {
           title="Welcome to"
           highlight="Lock It Lending"
           description="Rate the #1 mortgage broker in TX with the most top producing Loan Officers"
-          image={`${process.env.PUBLIC_URL}/banner-952x952px.jpg`}
+          image={`${process.env.PUBLIC_URL}/homepagehero.jpg`}
           buttons={
             <>
               <Link
@@ -86,7 +86,7 @@ const Home: React.FC = () => {
         {/* Neighborhood Section */}
         <section className="py-28 bg-[#f7fbfd] px-8">
           <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-5xl font-extrabold mb-6">See What’s New in the Neighborhood</h2>
+            <h2 className="text-5xl font-extrabold mb-6">Updates That Move You—Literally 🏡</h2>
             <p className="text-2xl text-gray-600 mb-12 font-semibold">
               Learn about products, events, and many other great offerings from Lock It Lending
             </p>
@@ -202,7 +202,7 @@ const Home: React.FC = () => {
                 answering all your financing questions.
               </p>
               <Link
-                to="https://prod.lendingpad.com/swift-home-loans/pos#/?loid=a97facd8-45ae-4919-9ff1-c4a8d9743f7e"
+                to="https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending"
                 className="inline-block bg-gold text-white text-lg px-8 py-3 rounded-full font-semibold shadow hover:opacity-90"
               >
                 Apply
