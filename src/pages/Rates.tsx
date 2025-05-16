@@ -5,7 +5,6 @@ import states from '../constants/states';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, ShieldOff } from 'lucide-react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
-import { FaSpinner } from 'react-icons/fa';
 
 const yesNoIcons = {
   Yes: <ShieldCheck />,
@@ -458,7 +457,7 @@ const RatesPage: React.FC = () => {
                 >
                   {isSubmitting ? (
                     <span className="flex items-center justify-center gap-2">
-                      <FaSpinner className="animate-spin" />
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                       Submitting...
                     </span>
                   ) : (
