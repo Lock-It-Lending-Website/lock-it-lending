@@ -143,7 +143,7 @@ export const teamMembers: TeamMember[] = [
     nmls: '#2117639',
     phone: '(832) 856-2758',
     email: 'kaden@lockitlending.com',
-    image: `${base}/team/Kaden-Nguyen.png`,
+    image: `${base}/team/Kaden-Nguyen.jpg`,
     slug: 'kaden-nguyen',
     team: 'allstars',
     bio: '',
