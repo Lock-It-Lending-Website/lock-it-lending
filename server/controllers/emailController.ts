@@ -1,4 +1,5 @@
 import sgMail from '@sendgrid/mail';
+import emailQueue from './emailQueue';
 import { Request, Response } from 'express';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
@@ -40,13 +41,14 @@ export const sendEmail = async (req: Request, res: Response) => {
   };
 
   try {
-    await sgMail.send(msg);
-    res.status(200).json({ message: 'Email sent successfully!' });
+    // Add the email-sending task to the queue
+    await emailQueue.add({ msg });
+    res.status(200).json({ message: 'Form submitted successfully! Email will be sent shortly.' });
   } catch (error: any) {
-    console.error('❌ EMAIL SEND ERROR:', error?.response?.body || error);
+    console.error('❌ Failed to queue email:', error);
     res.status(500).json({
-      error: 'Failed to send email',
-      detail: error?.response?.body || error?.message || error,
+      error: 'Failed to queue email',
+      detail: error?.message || error,
     });
   }
 };
