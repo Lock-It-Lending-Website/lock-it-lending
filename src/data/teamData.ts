@@ -194,7 +194,7 @@ export const teamMembers: TeamMember[] = [
     nmls: '',
     phone: '(254) 454-4303',
     email: 'annie@lockitlending.com',
-    image: `${base}/team/Annie-Tran.png`,
+    image: `${base}/team/Annie-Tran.jpg`,
     slug: 'annie-tran',
     team: 'allstars',
     bio: '',
@@ -342,7 +342,15 @@ export const teamMembers: TeamMember[] = [
     slug: 'aftab-bhagat',
     team: 'vortex',
   },
- 
+  {
+    name: 'Alex Hatherley',
+    title: 'Loan Processor',
+    email: 'alexander@lockitlending.com',
+    phone: '(830) 241-5459',
+    image: `${base}/team/Alex-Hatherley.png`,
+    slug: 'alex-hatherley',
+    team: 'vortex',
+  },
   {
     name: 'Ayesha Khan',
     title: 'Loan Processor',
