@@ -134,7 +134,7 @@ const Purchase: React.FC = () => {
           highlight="With Confidence"
           highlightColor="gold"
           description="Whether you are looking for your first home, your forever home, an investment property or a second home, we have all the options for you. Our client-first mentality puts the power in your hands."
-          image={`${process.env.PUBLIC_URL}/Lock-It-Lending-buy-a-home.png`}
+          image={`${process.env.PUBLIC_URL}/Lock-It-Lending-buy-a-home.jpg`}
         />
 
         <section className="relative max-w-5xl mx-auto px-4 py-6 mt-12 md:px-6 md:py-8">

@@ -79,7 +79,7 @@ export default function LoanPrograms() {
           highlight="Offer"
           highlightColor="gold"
           description="It is important to find the program that matches your long term and short-term goals. Our team selects from a wide array of lenders to help find the best possible solution for you and your family. Check out some of our programs below."
-          image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Loan-Programs.png`}
+          image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Loan-Programs.jpg`}
         />
         <section className="bg-gray-50 py-24 px-6">
           <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">

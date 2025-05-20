@@ -106,7 +106,7 @@ const RatesPage: React.FC = () => {
           highlight="Cash Out"
           highlightColor="gold"
           description="If you are wondering about your mortgage loan and if you can get a better deal, you can remove all of the uncertainty in just a few moments by getting the facts from one of our loan experts."
-          image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Refinance.png`}
+          image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Refinance.jpg`}
         />
         <form onSubmit={handleSubmit} className="max-w-5xl mx-auto mt-10 px-6 pb-20">
           <div className="bg-white rounded-xl shadow-md border border-gray-300">
