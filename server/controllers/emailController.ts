@@ -39,14 +39,9 @@ export const sendEmail = async (req: Request, res: Response) => {
     html: htmlContent,
   };
 
-  try {
-    await sgMail.send(msg);
-    res.status(200).json({ message: 'Email sent successfully!' });
-  } catch (error: any) {
-    console.error('❌ EMAIL SEND ERROR:', error?.response?.body || error);
-    res.status(500).json({
-      error: 'Failed to send email',
-      detail: error?.response?.body || error?.message || error,
-    });
-  }
+  res.status(200).json({ message: 'Form received. Sending email...' });
+
+  sgMail.send(msg).catch((error: any) => {
+    console.error('❌ EMAIL SEND ERROR (non-blocking):', error?.response?.body || error);
+  });
 };
