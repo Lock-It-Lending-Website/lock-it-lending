@@ -19,7 +19,7 @@ export default function Reviews() {
           highlight="Comprehensive Customer Reviews"
           highlightColor="gold"
           description="Real Reviews from Real Customers: Hear What Our Clients Are Saying About Lock It Lending."
-          image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Reviews.png`}
+          image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Reviews.jpg`}
         />
 
         <section className="max-w-[1500px] mx-auto px-8 py-20 grid sm:grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-32">
