@@ -66,6 +66,7 @@ const RatesPage: React.FC = () => {
 
     setIsSubmitting(true);
     localStorage.setItem('pendingRateForm', JSON.stringify(formWithType));
+    localStorage.setItem('rateFormSentOnce', 'true');
     navigate('/thank-you');
 
     fetch('https://lock-it-lending.onrender.com/api/send-email', {
@@ -76,7 +77,6 @@ const RatesPage: React.FC = () => {
       .then(res => {
         if (res.ok) {
           localStorage.removeItem('pendingRateForm');
-          console.log('✅ Email sent successfully');
         } else {
           console.error('❌ Server responded with error status');
         }
