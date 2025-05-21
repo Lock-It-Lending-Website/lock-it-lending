@@ -51,7 +51,6 @@ const RatesPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (
       !formData.borrowerName ||
       !formData.state ||
@@ -66,49 +65,28 @@ const RatesPage: React.FC = () => {
     }
 
     setIsSubmitting(true);
+    localStorage.setItem('pendingRateForm', JSON.stringify(formWithType));
+    navigate('/thank-you');
 
-    try {
-      const response = await fetch('https://lock-it-lending.onrender.com/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formWithType),
+    fetch('https://lock-it-lending.onrender.com/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formWithType),
+    })
+      .then(res => {
+        if (res.ok) {
+          localStorage.removeItem('pendingRateForm');
+          console.log('✅ Email sent successfully');
+        } else {
+          console.error('❌ Server responded with error status');
+        }
+      })
+      .catch(err => {
+        console.error('❌ Network error while sending email:', err);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
-
-      if (response.ok) {
-        navigate('/thank-you');
-        setFormData({
-          borrowerName: '',
-          state: '',
-          zipcode: '',
-          firstTimeBuyer: '',
-          residencyType: '',
-          propertyType: '',
-          homePrice: '',
-          downPayment: '',
-          loanAmount: '',
-          creditScore: '',
-          email: '',
-          phoneNumber: '',
-          buydownType: '',
-          loanType: '',
-          prepaymentPenalty: '',
-          loanPurpose: '',
-          refinancePurpose: '',
-          escrowWaiver: '',
-          loanTerm: '',
-          propertyValue: '',
-          income: '',
-          note: '',
-        });
-      } else {
-        alert('Something went wrong. Please try again.');
-      }
-    } catch (err) {
-      alert('Network error. Please try again.');
-      console.error(err);
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   const renderOption = (
@@ -121,7 +99,9 @@ const RatesPage: React.FC = () => {
       key={value}
       type="button"
       onClick={() => handleChange(field, value)}
-      className={`transition-all duration-200 px-4 py-3 rounded-xl border border-gray-300 w-full flex flex-col items-center text-center text-sm font-medium hover:border-yellow-600 hover:bg-yellow-50 ${formData[field] === value ? 'bg-yellow-100 border-yellow-600 shadow-md' : ''}`}
+      className={`transition-all duration-200 px-4 py-3 rounded-xl border border-gray-300 w-full flex flex-col items-center text-center text-sm font-medium hover:border-yellow-600 hover:bg-yellow-50 ${
+        formData[field] === value ? 'bg-yellow-100 border-yellow-600 shadow-md' : ''
+      }`}
     >
       {icon && <div className="mb-1 text-yellow-600">{icon}</div>}
       <span>{label || value}</span>
