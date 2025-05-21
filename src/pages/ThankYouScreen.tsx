@@ -1,13 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const ThankYou: React.FC = () => {
+  useEffect(() => {
+    const pendingData = localStorage.getItem('pendingRateForm');
+    const alreadySent = localStorage.getItem('rateFormSentOnce') === 'true';
+
+    if (pendingData && !alreadySent) {
+      fetch('https://lock-it-lending.onrender.com/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: pendingData,
+      })
+        .then(res => {
+          if (res.ok) {
+            localStorage.removeItem('pendingRateForm');
+            localStorage.setItem('rateFormSentOnce', 'true');
+          } else {
+            console.error('❌ Retry failed: server error');
+          }
+        })
+        .catch(err => {
+          console.error('❌ Retry failed: network issue', err);
+        });
+    }
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header />
-
       <main className="flex-grow text-gray-800 px-4 py-12 md:px-8 lg:px-24 flex flex-col items-center">
         <div className="max-w-3xl w-full text-center">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -57,7 +80,6 @@ const ThankYou: React.FC = () => {
           Back to Home →
         </Link>
       </main>
-
       <Footer />
     </div>
   );
