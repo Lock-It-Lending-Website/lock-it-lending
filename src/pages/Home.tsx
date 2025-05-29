@@ -63,7 +63,7 @@ const Home: React.FC = () => {
         <HeroSection
           title="Welcome to"
           highlight="Lock It Lending"
-          description="Rate the #1 mortgage broker in TX with the most top producing Loan Officers"
+          description="Rated the #1 mortgage broker in TX with the most top producing Loan Officers"
           image={`${process.env.PUBLIC_URL}/homepagehero.jpg`}
           buttons={
             <>
