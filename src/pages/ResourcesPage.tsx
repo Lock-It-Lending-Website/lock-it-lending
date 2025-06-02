@@ -60,8 +60,8 @@ export default function ResourceArticlePage() {
 
         {/* Date + Read Time */}
         <p className="text-sm text-gray-600 mb-6 font-medium">
-          Published on {new Date(article.date).toLocaleDateString('en-GB')} • Read Time:{' '}
-          {article.readTime}
+          Published on {new Date(`${article.date}T00:00:00`).toLocaleDateString('en-GB')} • Read
+          Time: {article.readTime}
         </p>
 
         {/* Thumbnail Image */}
