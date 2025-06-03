@@ -60,13 +60,29 @@ export default function ResourceArticlePage() {
 
         {/* Date + Read Time */}
         <p className="text-sm text-gray-600 mb-6 font-medium">
-          Published on {new Date(`${article.date}T00:00:00`).toLocaleDateString('en-GB')} • Read
-          Time: {article.readTime}
+            Published on {new Date(`${article.date}T00:00:00`).toLocaleDateString('en-GB')} • Read Time: {article.readTime}
         </p>
 
         {/* Thumbnail Image */}
         <div className="rounded-2xl overflow-hidden shadow-md mb-8">
-          <img src={article.thumbnailUrl} alt={article.title} className="w-full object-cover" />
+          {/* <img src={article.thumbnailUrl} alt={article.title} className="w-full object-cover" /> */}
+          {article.mediaType === 'video' && article.mediaUrl ? (
+          <div className="w-full h-[500px]">
+            <iframe
+              src={article.mediaUrl}
+              className="w-full h-full"
+              title={article.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        ) : (
+          <img
+            src={article.mediaUrl || article.thumbnailUrl}
+            alt={article.title}
+            className="w-full object-cover"
+          />
+        )}  
         </div>
 
         {/* Content */}

@@ -94,10 +94,10 @@ const Home: React.FC = () => {
             <div className="grid md:grid-cols-3 gap-10">
               {[
                 {
-                  title: 'Be Aware of Predatory Lending Practices',
+                  title: '5%-down-payment-assistance-program-review',
                   slug: '5%-down-payment-assistance-program-review',
-                  description: 'Learn how to protect yourself...',
-                  image: `${process.env.PUBLIC_URL}/test.jpg`,
+                  description: 'Down Payment Assistance programs help homebuyers cover...',
+                  image: `${process.env.PUBLIC_URL}/DPA-review.jpg`,
                 },
                 {
                   title: 'What are 2-1 Temporary Rate Buydowns?',
