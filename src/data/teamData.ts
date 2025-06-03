@@ -198,20 +198,18 @@ export const teamMembers: TeamMember[] = [
     slug: 'annie-tran',
     team: 'allstars',
     bio: '',
-    applyLink:
-      'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
+    applyLink: 'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
   },
   {
-      name: 'Hien Le',
-      title: 'Loan Officer Assistant',
-      email: 'hien.le@lockitlending.com',
-      phone: '(361) 321-1355',
-      image: `${base}/team/Hien-Le.jpeg`,
-      slug: 'hien-le',
-      team: 'allstars',
-      applyLink:
-      'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
-    },
+    name: 'Hien Le',
+    title: 'Loan Officer Assistant',
+    email: 'hien.le@lockitlending.com',
+    phone: '(361) 321-1355',
+    image: `${base}/team/Hien-Le.jpeg`,
+    slug: 'hien-le',
+    team: 'allstars',
+    applyLink: 'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
+  },
   // Vortex
   {
     name: 'Robert Noonan',
@@ -312,8 +310,7 @@ export const teamMembers: TeamMember[] = [
     slug: 'claudia-lopez',
     team: 'vortex',
     bio: '',
-    applyLink:
-      '',
+    applyLink: '',
   },
   {
     name: 'Laura Hidalgo',

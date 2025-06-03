@@ -83,7 +83,7 @@ const Home: React.FC = () => {
           }
         />
 
-        {/* Neighborhood Section */}
+        {/* Updates That Move You Section */}
         <section className="py-28 bg-[#f7fbfd] px-8">
           <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-5xl font-extrabold mb-6">Updates That Move You—Literally 🏡</h2>
@@ -94,10 +94,10 @@ const Home: React.FC = () => {
             <div className="grid md:grid-cols-3 gap-10">
               {[
                 {
-                  title: 'Be Aware of Predatory Lending Practices',
-                  slug: 'be-aware-of-predatory-lending-practices',
-                  description: 'Learn how to protect yourself...',
-                  image: `${process.env.PUBLIC_URL}/Be-Aware-of-Predatory-Lending-Practices.jpg`,
+                  title: '5%-down-payment-assistance-program-review',
+                  slug: '5%-down-payment-assistance-program-review',
+                  description: 'Down Payment Assistance programs help homebuyers cover...',
+                  image: `${process.env.PUBLIC_URL}/DPA-review.jpg`,
                 },
                 {
                   title: 'What are 2-1 Temporary Rate Buydowns?',
