@@ -19,13 +19,31 @@ const TeamMemberPage = () => {
         {/* Top: Hero layout */}
         <section className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 py-28 px-6 md:px-20 gap-16">
           {/* Left: Profile Image */}
-          <div className="flex items-center justify-center">
+          {/* <div className="flex items-center justify-center">
             <img
               src={member.image}
               alt={member.name}
               className="w-full max-w-[600px] object-cover rounded-[2rem] shadow-2xl border border-gray-200"
             />
+          </div> */}
+          <div className="flex items-center justify-center w-full">
+            {member.videoUrl ? (
+              <iframe
+                src={member.videoUrl}
+                title={member.name}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full max-w-[400px] h-[700px] rounded-[2rem] shadow-2xl border border-gray-200"
+              />
+            ) : (
+              <img
+                src={member.image}
+                alt={member.name}
+                className="w-full max-w-[600px] object-cover rounded-[2rem] shadow-2xl border border-gray-200"
+              />
+            )}
           </div>
+          
 
           {/* Right: Info Text */}
           <div className="flex flex-col justify-center text-left">

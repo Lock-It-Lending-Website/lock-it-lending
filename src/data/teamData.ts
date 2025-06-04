@@ -107,6 +107,7 @@ export type TeamMember = {
   team: TeamSlug;
   bio?: string;
   applyLink?: string;
+  videoUrl?: string; // Optional video URL for team members
 };
 
 export const teamMembers: TeamMember[] = [
@@ -149,6 +150,7 @@ export const teamMembers: TeamMember[] = [
     bio: '',
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=7ec8115d-b864-43df-91bf-0d5090c6d167',
+    videoUrl: 'https://www.youtube.com/embed/fAZDxq-ya58',
   },
   {
     name: 'Kevin Huynh',
@@ -162,6 +164,7 @@ export const teamMembers: TeamMember[] = [
     bio: '',
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=6c1e8c03-c9b4-40d8-abf4-d772f108cccf',
+    videoUrl: 'https://www.youtube.com/embed/YHWsOOt8Vxk',
   },
   // {
   //   name: 'Melissa Tubau',
@@ -236,6 +239,7 @@ export const teamMembers: TeamMember[] = [
     bio: '',
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=bbe37d90-9957-4ef3-9163-40e27c6cad5c',
+    videoUrl: 'https://www.youtube.com/embed/pIcVfMKGZyI',
   },
   {
     name: 'Jake Radom',
@@ -249,6 +253,7 @@ export const teamMembers: TeamMember[] = [
     bio: '',
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=a5c8ec67-1dc5-4da8-99ac-90cbca54bd6e',
+    videoUrl: 'https://www.youtube.com/embed/ZbooO2xyYzM',
   },
   {
     name: 'Luke Roberts',
@@ -260,6 +265,7 @@ export const teamMembers: TeamMember[] = [
     slug: 'luke-roberts',
     team: 'vortex',
     bio: '',
+    videoUrl: 'https://www.youtube.com/embed/FlLA9F0hSlo',
   },
   {
     name: 'Jaime Casablanca',
@@ -273,6 +279,7 @@ export const teamMembers: TeamMember[] = [
     bio: '',
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=2b9366ca-e8ed-43e7-8b5c-f8ab9c792b57',
+    videoUrl: 'https://www.youtube.com/embed/b-UXoLzbOMg',
   },
   {
     name: 'Alishan Lokhandwalla',
@@ -299,6 +306,7 @@ export const teamMembers: TeamMember[] = [
     bio: '',
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=e20d6238-080d-4051-8dcc-d4a826ebbddb',
+    videoUrl: 'https://www.youtube.com/embed/ytFRk5XO8q4',
   },
   {
     name: 'Claudia Lopez',
@@ -329,6 +337,7 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Aron-Padierna.png`,
     slug: 'aron-padierna',
     team: 'vortex',
+    videoUrl: 'https://www.youtube.com/embed/kJSh7LOiJpw',
   },
   {
     name: 'Aftab Bhagat',
