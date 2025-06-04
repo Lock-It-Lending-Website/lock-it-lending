@@ -59,9 +59,16 @@ export default function ResourceArticlePage() {
         </div>
 
         {/* Date + Read Time */}
-        <p className="text-sm text-gray-600 mb-6 font-medium">
+        {/* <p className="text-sm text-gray-600 mb-6 font-medium">
             Published on {new Date(`${article.date}T00:00:00`).toLocaleDateString('en-GB')} • Read Time: {article.readTime}
-        </p>
+        </p> */}
+        <p className="text-sm text-gray-600 mb-6 font-medium">
+  Published on {new Date(`${article.date}T00:00:00`).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })} • Read Time: {article.readTime}
+</p>
 
         {/* Thumbnail Image */}
         <div className="rounded-2xl overflow-hidden shadow-md mb-8">

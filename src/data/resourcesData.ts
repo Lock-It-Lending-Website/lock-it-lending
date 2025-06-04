@@ -19,7 +19,7 @@ export const resourcesData: ResourceArticle[] = [
     author: 'Hanh Dao',
     tags: ['Purchase', 'RedFind'],
     readTime: '15 mins read',
-    date: '2025-02-06',
+    date: '2025-06-02',
     excerpt:
       'Learn how to protect yourself from Predatory Lending from Scotsman Guide Rising Star Hanh Dao...',
     mediaType: 'video',
