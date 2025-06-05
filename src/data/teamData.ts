@@ -124,6 +124,7 @@ export const teamMembers: TeamMember[] = [
     bio: '',
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=ff2423e7-8b05-4ae6-bf35-c12e52b0f3c2',
+    videoUrl: 'https://www.youtube.com/embed/TsZf7ZCPeks',
   },
   {
     name: 'Lyn Ha',
@@ -137,6 +138,7 @@ export const teamMembers: TeamMember[] = [
     bio: '',
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=675c970e-ee12-4ddf-a8a1-f8a7a28d6803',
+    videoUrl: 'https://www.youtube.com/embed/p1ka9yrrCEc',
   },
   {
     name: 'Kaden Nguyen',
@@ -265,6 +267,7 @@ export const teamMembers: TeamMember[] = [
     slug: 'luke-roberts',
     team: 'vortex',
     bio: '',
+    applyLink: 'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lukeroberts',
     videoUrl: 'https://www.youtube.com/embed/FlLA9F0hSlo',
   },
   {
@@ -287,12 +290,13 @@ export const teamMembers: TeamMember[] = [
     nmls: '#2679262',
     phone: '(281) 694-5850',
     email: 'alishan.l@lockitlending.com',
-    image: `${base}/team/Alishan-Lokhandwalla.png`,
+    image: `${base}/team/Alishan-Lokhandwalla.jpg`,
     slug: 'alishan-lokhandwalla',
     team: 'vortex',
     bio: '',
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=344f99a0-5255-4d4e-b3bc-cbf89a9c99ca',
+    videoUrl: 'https://www.youtube.com/embed/5mX4LOAyoQA',
   },
   {
     name: 'Maria Vazquez',
