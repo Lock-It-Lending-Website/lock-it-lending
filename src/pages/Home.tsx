@@ -106,6 +106,13 @@ const Home: React.FC = () => {
                     '2-1 Temporary Rate Buydowns: A Win-Win for Borrowers and Sellers...',
                   image: `${process.env.PUBLIC_URL}/What-are2-1Temporar-Rate-Buydowns.png`,
                 },
+                {
+                  title: 'Conventional 1% Down: Making Homeownership More Accessible',
+                  slug: 'conventional-1-down-making-homeownership-more-accessible',
+                  description:
+                    'The Conventional 1% Down is a lender-paid down payment assistance..',
+                  image: `${process.env.PUBLIC_URL}/Conventional1Down.png`,
+                },
               ].map((card, index) => (
                 <Link key={index} to={`/resources/${card.slug}`} className="block">
                   <motion.div
@@ -128,7 +135,7 @@ const Home: React.FC = () => {
                 </Link>
               ))}
 
-              <AdRotator />
+              {/*<AdRotator />*/}
             </div>
           </div>
         </section>
@@ -141,6 +148,13 @@ const Home: React.FC = () => {
               Learn from our reviews how Lock It Lending transformed lives with tailored mortgage
               solutions
             </p>
+            <div className="grid md:grid-cols-3 gap-10">
+              <div className="md:col-span-3 flex justify-center py-6">
+                <div className="w-full max-w-md">
+                  <AdRotator />
+                </div>
+              </div>
+            </div>
             <div className="flex justify-center items-center gap-3 mb-10">
               <span className="text-3xl">⭐⭐⭐⭐⭐</span>
               <span className="text-xl font-bold">1000+ Google Reviews</span>

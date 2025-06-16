@@ -6,7 +6,7 @@ export interface ResourceArticle {
   readTime: string;
   date: string;
   excerpt: string;
-  mediaType?: "image" | "video";
+  mediaType?: 'image' | 'video';
   mediaUrl?: string;
   thumbnailUrl: string;
   content?: string;
@@ -152,7 +152,7 @@ export const resourcesData: ResourceArticle[] = [
     excerpt:
       'Conventional 1% Down: Making Homeownership More Accessible. In the realm of homeownership, one of the...',
     mediaType: 'image',
-    thumbnailUrl: `${process.env.PUBLIC_URL}/Making-Homeownership-More-Accessible.png`,
+    thumbnailUrl: `${process.env.PUBLIC_URL}/Conventional1Down.png`,
     content: `	<h2><strong>Conventional 1% Down: Making Homeownership More Accessible</strong></h2>
 <p>In the realm of homeownership, one of the most significant hurdles many prospective homeowners face is the initial down payment. Traditionally, saving for this lump sum can be challenging. But thanks to innovative lending programs, like the “Conventional 1% Down,” there are now alternative avenues for homeownership. Let’s delve into the details and benefits of this groundbreaking initiative.</p>
 <p>&nbsp;</p>
