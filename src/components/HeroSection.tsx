@@ -22,9 +22,9 @@ export default function HeroSection({
   const layoutClass = reverseLayout ? 'md:flex-row-reverse' : 'md:flex-row';
 
   return (
-    <section className="w-full h-screen bg-white overflow-hidden">
-      <div className={`flex flex-col ${layoutClass} md:flex-row flex-wrap h-full`}>
-        <div className="w-full md:w-1/2 flex flex-col justify-center px-10 py-12 z-10">
+    <section className="w-full min-h-screen bg-white overflow-hidden">
+      <div className={`flex flex-col ${layoutClass} md:flex-row flex-wrap`}>
+        <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 py-12">
           <div className="ml-auto text-left max-w-[650px] w-full ">
             <h1 className="text-5xl md:text-[4.75rem] leading-tight md:leading-[4.75rem] font-bold text-black mb-5 py-4">
               {title} <br />
@@ -44,8 +44,8 @@ export default function HeroSection({
             )}
           </div>
         </div>
-        <div className="w-full md:w-1/2 h-64 md:h-full">
-          <img src={image} alt="Hero visual" className="w-full h-full object-cover" />
+        <div className="w-full lg:w-1/2">
+          <img src={image} alt="Hero visual" className="w-full h-auto object-cover" />
         </div>
       </div>
     </section>

@@ -46,7 +46,7 @@ const AdRotator: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.6 }}
-            className="absolute inset-0 w-full h-64 object-cover object-top"
+            className="w-full h-auto max-h-[300px] object-cover sm:object-contain"
           />
         </AnimatePresence>
       </div>
@@ -125,7 +125,7 @@ const Home: React.FC = () => {
                     <img
                       src={card.image}
                       alt={card.title}
-                      className="w-full h-64 object-cover transform group-hover:scale-105 transition duration-300"
+                      className="w-full h-auto max-h-[300px] object-cover sm:object-contain transform group-hover:scale-105 transition duration-300"
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center text-white p-6">
                       <h3 className="text-2xl font-bold mb-2 text-center">{card.title}</h3>
