@@ -114,19 +114,19 @@ const Home: React.FC = () => {
                   image: `${process.env.PUBLIC_URL}/Conventional1Down.png`,
                 },
               ].map((card, index) => (
-                <Link key={index} to={`/resources/${card.slug}`} className="block">
+                <Link
+                  key={index}
+                  to={`/resources/${card.slug}`}
+                  className="block w-full max-w-[420px] mx-auto"
+                >
                   <motion.div
-                    className="relative overflow-hidden rounded-xl shadow-lg group w-full max-w-[400px] mx-auto"
+                    className="relative overflow-hidden rounded-xl shadow-lg group w-full aspect-[5/3]"
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: index * 0.2 }}
                   >
-                    <img
-                      src={card.image}
-                      alt={card.title}
-                      className="w-full h-full object-cover rounded-xl"
-                    />
+                    <img src={card.image} alt={card.title} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center text-white p-6">
                       <h3 className="text-2xl font-bold mb-2 text-center">{card.title}</h3>
                       <p className="text-lg text-center">{card.description}</p>
@@ -134,8 +134,6 @@ const Home: React.FC = () => {
                   </motion.div>
                 </Link>
               ))}
-
-              {/*<AdRotator />*/}
             </div>
           </div>
         </section>
