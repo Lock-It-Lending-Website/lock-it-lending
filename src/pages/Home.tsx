@@ -148,11 +148,17 @@ const Home: React.FC = () => {
               Learn from our reviews how Lock It Lending transformed lives with tailored mortgage
               solutions
             </p>
-            <div className="grid md:grid-cols-3 gap-10">
-              <div className="md:col-span-3 flex justify-center py-6">
-                <div className="w-full max-w-md">
+            <div className="grid md:grid-cols-3 gap-10 mb-12">
+              <div className="md:col-span-3 flex justify-center">
+                <motion.div
+                  className="relative overflow-hidden rounded-xl shadow-lg group"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 2.5, delay: 0.6 }}
+                >
                   <AdRotator />
-                </div>
+                </motion.div>
               </div>
             </div>
             <div className="flex justify-center items-center gap-3 mb-10">
