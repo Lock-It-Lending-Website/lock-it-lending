@@ -8,7 +8,7 @@ export interface GlossaryTerm {
 export const glossaryData: GlossaryTerm[] = [
   {
     term: 'Wholesale',
-    videoUrl: 'https://www.youtube.com/embed/OMfkEwyYlEg?feature=oembed',
+    videoUrl: '',
     explanation:
       'A wholesale mortgage lender is a bank or other lending institution that approves and funds mortgages. Though they often use independent brokers to interact with the client, these lenders approve loans themselves. This type of loan can be more beneficial for people who want an easier application process as well as low-cost rates due to their ability to fund quickly on mass scale in order to save money by not having overhead costs such as hiring individual representatives per borrower like most retail banks do.',
     slug: 'wholesale',

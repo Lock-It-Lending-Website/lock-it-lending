@@ -41,8 +41,9 @@ export default function ResourceArticlePage() {
         </div>
 
         {/* Title */}
-        <h1 className="text-5xl font-bold mb-6">{article.title}</h1>
-
+        <h1 className="font-bold mb-6 break-words text-[clamp(2rem,5vw,3rem)] leading-[1.1]">
+          {article.title}
+        </h1>
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
           <span className="bg-[#D6A849] text-white text-sm px-3 py-1 rounded-full font-semibold">
@@ -60,36 +61,39 @@ export default function ResourceArticlePage() {
 
         {/* Date + Read Time */}
         <p className="text-sm text-gray-600 mb-6 font-medium">
-          Published on {new Date(`${article.date}T00:00:00`).toLocaleDateString('en-US', {
+          Published on{' '}
+          {new Date(`${article.date}T00:00:00`).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
-            day: 'numeric'
-          })} • Read Time: {article.readTime}
+            day: 'numeric',
+          })}{' '}
+          • Read Time: {article.readTime}
         </p>
 
         {/* Thumbnail Image */}
         <div className="rounded-2xl overflow-hidden shadow-md mb-8">
           {/* <img src={article.thumbnailUrl} alt={article.title} className="w-full object-cover" /> */}
           {article.mediaType === 'video' && article.mediaUrl ? (
-          <div className="w-full h-[500px]">
-            <iframe
-              src={article.mediaUrl}
-              className="w-full h-full"
-              title={article.title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        ) : (
-          <img
-            src={article.mediaUrl || article.thumbnailUrl}
-            alt={article.title}
-            className="w-full object-cover"
-          />
-        )}  
+            <div className="w-full h-[500px]">
+              <iframe
+                src={article.mediaUrl}
+                className="w-full h-full"
+                title={article.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          ) : (
+            <img
+              src={article.mediaUrl || article.thumbnailUrl}
+              alt={article.title}
+              className="w-full object-cover"
+            />
+          )}
         </div>
 
         {/* Content */}
+
         {article.content && (
           <div
             className="prose max-w-none mt-10 [&_h1]:text-4xl [&_h2]:text-2xl [&_h3]:text-xl"

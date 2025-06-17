@@ -284,7 +284,7 @@ export const teamMembers: TeamMember[] = [
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=2b9366ca-e8ed-43e7-8b5c-f8ab9c792b57',
     videoUrl: 'https://www.youtube.com/embed/b-UXoLzbOMg',
   },
-  {
+  /*
     name: 'Alishan Lokhandwalla',
     title: 'Loan Officer',
     nmls: '#2679262',
@@ -297,7 +297,7 @@ export const teamMembers: TeamMember[] = [
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=344f99a0-5255-4d4e-b3bc-cbf89a9c99ca',
     videoUrl: 'https://www.youtube.com/embed/5mX4LOAyoQA',
-  },
+  },*/
   {
     name: 'Maria Vazquez',
     title: 'Loan Officer',
@@ -328,7 +328,7 @@ export const teamMembers: TeamMember[] = [
     name: 'Laura Hidalgo',
     title: 'Talent Acquistion and Marketing Specialist',
     email: 'laura.h@lockitlending.com',
-    phone: '(346) 463-0888',
+    phone: '(346) 589-8657',
     image: `${base}/team/Laura-Hidalgo.png`,
     slug: 'laura-hidalgo',
     team: 'vortex',

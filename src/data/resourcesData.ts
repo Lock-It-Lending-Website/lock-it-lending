@@ -153,7 +153,7 @@ export const resourcesData: ResourceArticle[] = [
       'Conventional 1% Down: Making Homeownership More Accessible. In the realm of homeownership, one of the...',
     mediaType: 'image',
     thumbnailUrl: `${process.env.PUBLIC_URL}/Conventional1Down.png`,
-    content: `	<h2><strong>Conventional 1% Down: Making Homeownership More Accessible</strong></h2>
+    content: `<h2><strong>Conventional 1% Down: Making Homeownership More Accessible</strong></h2>
 <p>In the realm of homeownership, one of the most significant hurdles many prospective homeowners face is the initial down payment. Traditionally, saving for this lump sum can be challenging. But thanks to innovative lending programs, like the “Conventional 1% Down,” there are now alternative avenues for homeownership. Let’s delve into the details and benefits of this groundbreaking initiative.</p>
 <p>&nbsp;</p>
 <h2><strong>Understanding the Conventional 1% Down Program</strong></h2>
@@ -161,10 +161,9 @@ export const resourcesData: ResourceArticle[] = [
 <p>&nbsp;</p>
 <h2><strong>Who Benefits?</strong></h2>
 <p>The central theme of this initiative is accessibility. Here’s a look at the advantages:</p>
-<p>Democratizing Homeownership: The program is tailored for borrowers with incomes up to 80% of the Area Median Income. This emphasis ensures that more people, especially those in middle and lower income brackets, have a realistic path to homeownership.</p>
-<p>Aligned with HomeReady and Home Possible Guidelines: These loans adhere to both the HomeReady and Home Possible guidelines. This alignment is significant as it allows borrowers to capitalize on LLPA (Loan-Level Price Adjustment) caps. The LLPA caps are particularly instrumental in underserved areas, enabling borrowers in these regions to have a fair shot at owning a home.</p>
-<p>&nbsp;</p>
-<p>A Competitive Edge for Business: For those in the mortgage and real estate sectors, this program can be a game-changer. By offering the Conventional 1% Down product, businesses can stand out, offering something uniquely tailored for affordability. Real estate agents, in particular, can benefit immensely by presenting this option to potential homeowners, ensuring an edge in a competitive market.</p>
+<p><u>Democratizing Homeownership:</u> The program is tailored for borrowers with incomes up to 80% of the Area Median Income. This emphasis ensures that more people, especially those in middle and lower income brackets, have a realistic path to homeownership.</p>
+<p><u>Aligned with HomeReady and Home Possible Guidelines:</u> These loans adhere to both the HomeReady and Home Possible guidelines. This alignment is significant as it allows borrowers to capitalize on LLPA (Loan-Level Price Adjustment) caps. The LLPA caps are particularly instrumental in underserved areas, enabling borrowers in these regions to have a fair shot at owning a home.</p>
+<p><u>A Competitive Edge for Business:</u> For those in the mortgage and real estate sectors, this program can be a game-changer. By offering the Conventional 1% Down product, businesses can stand out, offering something uniquely tailored for affordability. Real estate agents, in particular, can benefit immensely by presenting this option to potential homeowners, ensuring an edge in a competitive market.</p>
 <p>&nbsp;</p>
 <h2><strong>In Conclusion</strong></h2>
 <p>The journey to homeownership, for many, can seem like an insurmountable challenge. With rising property prices and the traditional barriers of hefty down payments, many feel left out of the dream of owning a home. But with initiatives like the Conventional 1% Down, the horizon looks promising. By reducing the financial strain and aligning with established homeownership guidelines, this program is not just a pathway to homeownership; it’s a testament to the industry’s commitment to inclusivity.</p>`,

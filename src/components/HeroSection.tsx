@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 type HeroSectionProps = {
   title: string;
@@ -8,6 +9,40 @@ type HeroSectionProps = {
   image: string;
   reverseLayout?: boolean;
   buttons?: React.ReactNode;
+};
+const ads = [
+  `${process.env.PUBLIC_URL}/top producer may size web.jpg`,
+  `${process.env.PUBLIC_URL}/fthb class size web.jpg`,
+];
+
+const AdRotator: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % ads.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentImage = ads[currentIndex];
+
+  return (
+    <div className="w-full h-full flex items-center justify-center">
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={currentImage}
+          src={currentImage}
+          alt=""
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.5 }}
+          className="w-full h-full object-cover"
+        />
+      </AnimatePresence>
+    </div>
+  );
 };
 
 export default function HeroSection({
@@ -44,9 +79,19 @@ export default function HeroSection({
             )}
           </div>
         </div>
-        <div className="w-full lg:w-1/2">
-          <img src={image} alt="Hero visual" className="w-full h-auto object-cover" />
+        <div className="flex flex-1 h-full items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="w-full h-full"
+          >
+            <AdRotator />
+          </motion.div>
         </div>
+        {/*<div className="w-full lg:w-1/2">
+          <img src={image} alt="Hero visual" className="w-full h-auto object-cover" />
+        </div>*/}
       </div>
     </section>
   );
