@@ -46,7 +46,7 @@ const AdRotator: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.6 }}
-            className="w-full h-auto max-h-[300px] object-cover sm:object-contain"
+            className="w-full h-full object-cover rounded-xl"
           />
         </AnimatePresence>
       </div>
@@ -116,7 +116,7 @@ const Home: React.FC = () => {
               ].map((card, index) => (
                 <Link key={index} to={`/resources/${card.slug}`} className="block">
                   <motion.div
-                    className="relative overflow-hidden rounded-xl shadow-lg group"
+                    className="relative overflow-hidden rounded-xl shadow-lg group w-full max-w-[400px] mx-auto"
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -125,7 +125,7 @@ const Home: React.FC = () => {
                     <img
                       src={card.image}
                       alt={card.title}
-                      className="w-full h-auto max-h-[300px] object-cover sm:object-contain transform group-hover:scale-105 transition duration-300"
+                      className="w-full h-full object-cover rounded-xl"
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center text-white p-6">
                       <h3 className="text-2xl font-bold mb-2 text-center">{card.title}</h3>
@@ -141,9 +141,11 @@ const Home: React.FC = () => {
         </section>
 
         {/* Reviews Section */}
-        <section className="bg-gray-50 py-28 px-8 text-center">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-5xl font-extrabold mb-4">Unlocking Homeownership Happiness</h2>
+        <section className="bg-gray-50 px-4 sm:px-6 md:px-8 pt-20 pb-28 text-center">
+          <div className="max-w-7xl mx-auto w-full">
+            <h2 className="w-full font-extrabold mb-6 leading-tight break-words text-[clamp(1.75rem,6vw,3.25rem)] max-w-full mx-auto">
+              Unlocking Homeownership Happiness
+            </h2>
             <p className="text-2xl text-gray-600 mb-8 font-semibold">
               Learn from our reviews how Lock It Lending transformed lives with tailored mortgage
               solutions
@@ -151,13 +153,15 @@ const Home: React.FC = () => {
             <div className="grid md:grid-cols-3 gap-10 mb-12">
               <div className="md:col-span-3 flex justify-center">
                 <motion.div
-                  className="relative overflow-hidden rounded-xl shadow-lg group"
+                  className="relative overflow-hidden rounded-xl shadow-lg group w-full max-w-[400px]"
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 2.5, delay: 0.6 }}
                 >
-                  <AdRotator />
+                  <div className="w-full h-auto max-h-[300px] object-cover sm:object-contain">
+                    <AdRotator />
+                  </div>
                 </motion.div>
               </div>
             </div>
