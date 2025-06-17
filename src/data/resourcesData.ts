@@ -143,8 +143,8 @@ export const resourcesData: ResourceArticle[] = [
   `,
   },
   {
-    title: 'Conventional 1% Down: Making Homeownership More Accessible',
-    slug: 'conventional-1-down-making-homeownership-more-accessible',
+    title: "Unlock Homeownership with Lock It Lending's 1% Down Program",
+    slug: 'Unlock-Homeownership-with-Lock-It-Lendings-1-percent-Down-Program',
     author: 'admin',
     tags: ['1%', 'Purchase', 'Rates'],
     readTime: '2 min read',
@@ -154,10 +154,12 @@ export const resourcesData: ResourceArticle[] = [
     mediaType: 'image',
     thumbnailUrl: `${process.env.PUBLIC_URL}/Conventional1Down.png`,
     content: `<h2><strong>Conventional 1% Down: Making Homeownership More Accessible</strong></h2>
-<p>In the realm of homeownership, one of the most significant hurdles many prospective homeowners face is the initial down payment. Traditionally, saving for this lump sum can be challenging. But thanks to innovative lending programs, like the “Conventional 1% Down,” there are now alternative avenues for homeownership. Let’s delve into the details and benefits of this groundbreaking initiative.</p>
+<p>At Lock It Lending, we’re passionate about making homeownership accessible. That’s why we’re proud to offer an incredible opportunity for eligible buyers: the 1% Down Program. This program allows qualified homebuyers to put just 1% down, with lender contributing an additional 2% (up to $7,000) helping you secure a 3% total down payment toward your dream home. </p>
 <p>&nbsp;</p>
-<h2><strong>Understanding the Conventional 1% Down Program</strong></h2>
-<p>The Conventional 1% Down is a lender-paid down payment assistance grant. It’s designed to pave the way for income-qualified borrowers, making it feasible for them to place just 1% down on their new home. The lender steps in to cover an additional 2% toward the down payment, up to $4,000. This collaboration ensures that borrowers can achieve a total of 3% down, a significant reduction in the initial financial burden.</p>
+<p>Whether you’re a first-time buyer or someone looking for an affordable path to owning a home, our 1% Down Program is designed to help you save money and move in sooner.</p>
+<p>&nbsp;</p>
+<h2><strong>What is the 1% Down Payment Assistance Program? </strong></h2>
+<p>The 1% Down Program by Lock It Lending provides eligible homebuyers with a unique opportunity to put just 1% down on their new home. But that's not all, we cover an additional 2% <strong>up to $7,000</strong>, bringing the total down payment to 3%. This program is perfect for those who want to save money for other expenses like furniture, move-in costs, or unexpected fees. </p>
 <p>&nbsp;</p>
 <h2><strong>Who Benefits?</strong></h2>
 <p>The central theme of this initiative is accessibility. Here’s a look at the advantages:</p>
@@ -165,7 +167,19 @@ export const resourcesData: ResourceArticle[] = [
 <p><u>Aligned with HomeReady and Home Possible Guidelines:</u> These loans adhere to both the HomeReady and Home Possible guidelines. This alignment is significant as it allows borrowers to capitalize on LLPA (Loan-Level Price Adjustment) caps. The LLPA caps are particularly instrumental in underserved areas, enabling borrowers in these regions to have a fair shot at owning a home.</p>
 <p><u>A Competitive Edge for Business:</u> For those in the mortgage and real estate sectors, this program can be a game-changer. By offering the Conventional 1% Down product, businesses can stand out, offering something uniquely tailored for affordability. Real estate agents, in particular, can benefit immensely by presenting this option to potential homeowners, ensuring an edge in a competitive market.</p>
 <p>&nbsp;</p>
-<h2><strong>In Conclusion</strong></h2>
-<p>The journey to homeownership, for many, can seem like an insurmountable challenge. With rising property prices and the traditional barriers of hefty down payments, many feel left out of the dream of owning a home. But with initiatives like the Conventional 1% Down, the horizon looks promising. By reducing the financial strain and aligning with established homeownership guidelines, this program is not just a pathway to homeownership; it’s a testament to the industry’s commitment to inclusivity.</p>`,
+<h2><strong>Eligibility Guidelines</strong></h2>
+<p>To qualify for this incredible program, you must meet the following criteria:</p>
+<p><strong>Income:</strong> Your income should be at or below 80% of the Area Median Income (AMI).<br><strong>Purchase Type:</strong> This program is for purchase transactions only.<br><strong>Loan-to-Value (LTV):</strong> The loan must have a 97% LTV; UWM will cover the lesser of 2% or up to $7,000 of the total 3% down payment.<br><strong>Credit Score:</strong> A minimum FICO score of 620 is required.<br><strong>Down Payment:</strong> The borrower is responsible for paying 1% of the down payment (or the remaining down payment needed if 2% exceeds $7,000).<br><strong>Loan Limits:</strong> The program is available up to conforming loan limits.<br><strong>Eligibility Check:</strong> Use LPA or DU to determine eligibility.<br><strong>Program Guidelines:</strong> The program follows Home Possible® and HomeReady® guidelines.</p>
+<p>&nbsp;</p>
+<h2><strong>Why Choose Lock It Lending's 1% Down Program?</strong></h2>
+<h3><strong>Affordable Homeownership</strong></h3>
+<p>With the 1% Down Program, you can own a home with a significantly lower upfront cost. This makes homeownership more accessible and affordable, allowing you to keep more money in your pocket for other essential expenses.</p>
+<h3><strong>Financial Flexibility</strong></h3>
+<p>By covering a substantial portion of the down payment, we give you the financial flexibility to focus on other important aspects of your move, such as furnishing your new home or covering moving expenses.</p>
+<h3><strong>Expert Support</strong></h3>
+<p>Our team at Lock It Lending is dedicated to guiding you through the homebuying process. We ensure that you understand every step and feel confident in your decision to become a homeowner.</p>
+<p>&nbsp;</p>
+<h2><strong>Take the First Step Towards Homeownership</strong></h2>
+<p>Don’t let the down payment be a barrier to your homeownership dreams. Contact Lock It Lending today to learn more about our 1% Down Program and how we can help you achieve your goal of owning a home. Our expert team is here to support you every step of the way. </p>`,
   },
 ];

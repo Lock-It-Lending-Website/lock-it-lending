@@ -65,6 +65,7 @@ const Home: React.FC = () => {
           highlight="Lock It Lending"
           description="Rated the #1 mortgage broker in TX with the most top producing Loan Officers"
           image={`${process.env.PUBLIC_URL}/homepagehero.jpg`}
+          showAdRotator={true}
           buttons={
             <>
               <Link
@@ -107,8 +108,8 @@ const Home: React.FC = () => {
                   image: `${process.env.PUBLIC_URL}/What-are2-1Temporar-Rate-Buydowns.png`,
                 },
                 {
-                  title: 'Conventional 1% Down: Making Homeownership More Accessible',
-                  slug: 'conventional-1-down-making-homeownership-more-accessible',
+                  title: "Unlock Homeownership with Lock It Lending's 1% Down Program",
+                  slug: 'Unlock-Homeownership-with-Lock-It-Lendings-1-percent-Down-Program',
                   description:
                     'The Conventional 1% Down is a lender-paid down payment assistance..',
                   image: `${process.env.PUBLIC_URL}/Conventional1Down.png`,

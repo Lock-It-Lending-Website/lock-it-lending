@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 type HeroSectionProps = {
@@ -9,16 +9,18 @@ type HeroSectionProps = {
   image: string;
   reverseLayout?: boolean;
   buttons?: React.ReactNode;
+  showAdRotator?: boolean;
 };
+
 const ads = [
   `${process.env.PUBLIC_URL}/top producer may size web.jpg`,
   `${process.env.PUBLIC_URL}/fthb class size web.jpg`,
 ];
 
 const AdRotator: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % ads.length);
     }, 6000);
@@ -28,16 +30,16 @@ const AdRotator: React.FC = () => {
   const currentImage = ads[currentIndex];
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="relative overflow-hidden h-full w-full">
       <AnimatePresence mode="wait">
         <motion.img
           key={currentImage}
           src={currentImage}
           alt=""
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.5 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -30 }}
+          transition={{ duration: 0.6 }}
           className="w-full h-full object-cover"
         />
       </AnimatePresence>
@@ -53,6 +55,7 @@ export default function HeroSection({
   highlightColor = 'black',
   reverseLayout = false,
   buttons,
+  showAdRotator = false,
 }: HeroSectionProps) {
   const layoutClass = reverseLayout ? 'md:flex-row-reverse' : 'md:flex-row';
 
@@ -79,19 +82,14 @@ export default function HeroSection({
             )}
           </div>
         </div>
-        <div className="flex flex-1 h-full items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="w-full h-full"
-          >
+
+        <div className="w-full lg:w-1/2 min-h-[300px] sm:min-h-[400px] md:min-h-[500px] relative">
+          {showAdRotator ? (
             <AdRotator />
-          </motion.div>
+          ) : (
+            <img src={image} alt="Hero visual" className="w-full h-full object-cover" />
+          )}
         </div>
-        {/*<div className="w-full lg:w-1/2">
-          <img src={image} alt="Hero visual" className="w-full h-auto object-cover" />
-        </div>*/}
       </div>
     </section>
   );
