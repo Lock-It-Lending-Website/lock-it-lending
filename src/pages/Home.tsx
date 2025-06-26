@@ -15,16 +15,17 @@ const seed = Math.floor(new Date().getTime() / (1000 * 60 * 60 * 6));
 const homepageReviews = getShuffledReviews(seed, 2);
 
 const ads = [
-  `${process.env.PUBLIC_URL}/closing/028rjsi3.jpg`,
-  `${process.env.PUBLIC_URL}/closing/Amir Hamrang (1).jpg`,
-  `${process.env.PUBLIC_URL}/closing/Bob Van.jpg`,
-  `${process.env.PUBLIC_URL}/closing/David Howland.jpg`,
-  `${process.env.PUBLIC_URL}/closing/Edjola Xhaferi.jpg`,
-  `${process.env.PUBLIC_URL}/closing/Enerolisa Angamarca.jpg`,
-  `${process.env.PUBLIC_URL}/closing/Jessie Lopez.jpg`,
-  `${process.env.PUBLIC_URL}/closing/Megan lemons.jpg`,
-  `${process.env.PUBLIC_URL}/closing/Quynh My Luong.jpg`,
-  `${process.env.PUBLIC_URL}/closing/Screenshot 2024-09-19 105059.jpg`,
+  `${process.env.PUBLIC_URL}/closing/Abel Restituyo.png`,
+  `${process.env.PUBLIC_URL}/closing/Brian Barton.jpg`,
+  `${process.env.PUBLIC_URL}/closing/DEWAYNE THOMAS.jpg`,
+  `${process.env.PUBLIC_URL}/closing/Francisco Escamilla.jpg`,
+  `${process.env.PUBLIC_URL}/closing/Heredia Sarria.png`,
+  `${process.env.PUBLIC_URL}/closing/image (16) (1).jpg`,
+  `${process.env.PUBLIC_URL}/closing/Quang Phan.png`,
+  `${process.env.PUBLIC_URL}/closing/SK Asad al Mamun.jpg`,
+  `${process.env.PUBLIC_URL}/closing/Tri Huu Huynh.jpg`,
+  `${process.env.PUBLIC_URL}/closing/UCHENNA JMBUBA.jpg`,
+  `${process.env.PUBLIC_URL}/closing/WILLIAM BOYD SWEARINGEN.jpg`,
 ];
 
 const AdRotator: React.FC = () => {
@@ -51,7 +52,7 @@ const AdRotator: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.6 }}
-            className="w-full h-full object-cover rounded-xl"
+            className="w-full h-full object-cover rounded-xl object-[center_25%]"
           />
         </AnimatePresence>
       </div>
