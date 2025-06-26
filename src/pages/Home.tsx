@@ -6,6 +6,11 @@ import HeroSection from '../components/HeroSection';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getShuffledReviews } from '../data/reviewData';
 
+declare global {
+  interface Window {
+    FB: any;
+  }
+}
 const seed = Math.floor(new Date().getTime() / (1000 * 60 * 60 * 6));
 const homepageReviews = getShuffledReviews(seed, 2);
 
@@ -55,6 +60,18 @@ const AdRotator: React.FC = () => {
 };
 
 const Home: React.FC = () => {
+  useEffect(() => {
+    if (!window.FB) {
+      const script = document.createElement('script');
+      script.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    } else {
+      window.FB.XFBML.parse();
+    }
+  }, []);
+
   return (
     <div className="home-page font-sans">
       <Header />
@@ -83,9 +100,34 @@ const Home: React.FC = () => {
             </>
           }
         />
+        {/* Live From Lock it Lending Section*/}
+        <section className="py-28 bg-[#f7fbfd] px-8">
+          <div className="max-w-7xl mx-auto text-center">
+            <h2 className="text-5xl font-extrabold mb-6">Live From Lock it Lending</h2>
+            <p className="text-2xl text-gray-600 mb-12 font-semibold">
+              Live Monthly Homebuyer Class — Learn How to Buy With 0% Down & Up to $50K Assistance
+            </p>
+            <div className="flex justify-center">
+              <iframe
+                src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Flockitlendingstars%2Fvideos%2F1189526786227691%2F&width=300"
+                width="320"
+                height="500"
+                style={{
+                  border: 'none',
+                  overflow: 'hidden',
+                  margin: '0 auto',
+                  display: 'block',
+                }}
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+                title="Facebook Vertical Video"
+              ></iframe>
+            </div>
+          </div>
+        </section>
 
         {/* Updates That Move You Section */}
-        <section className="py-28 bg-[#f7fbfd] px-8">
+        <section className="py-27 bg-[#f7fbfd] px-8">
           <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-5xl font-extrabold mb-6">Updates That Move You—Literally 🏡</h2>
             <p className="text-2xl text-gray-600 mb-12 font-semibold">
