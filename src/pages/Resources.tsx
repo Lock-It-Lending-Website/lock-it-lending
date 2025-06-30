@@ -25,7 +25,7 @@ export default function ResourcesPage() {
               to={`/resources/${slug}`}
               className="block bg-white shadow-xl rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow w-full max-w-[550px] mx-auto"
             >
-              <img src={thumbnailUrl} alt={title} className="w-full h-60 object-cover" />
+              <img src={thumbnailUrl} alt={title} className="w-full h-55 object-cover" />
               <div className="p-6">
                 <div className="flex flex-wrap gap-3 mb-4">
                   {tags.map(tag => (

@@ -30,7 +30,7 @@ const AdRotator: React.FC = () => {
   const currentImage = ads[currentIndex];
 
   return (
-    <div className="relative overflow-hidden h-full w-full">
+    <div className="relative overflow-hidden w-full">
       <AnimatePresence mode="wait">
         <motion.img
           key={currentImage}
@@ -60,11 +60,11 @@ export default function HeroSection({
   const layoutClass = reverseLayout ? 'md:flex-row-reverse' : 'md:flex-row';
 
   return (
-    <section className="w-full min-h-screen bg-white overflow-hidden">
-      <div className={`flex flex-col ${layoutClass} md:flex-row flex-wrap`}>
+    <section className="w-full bg-white overflow-hidden">
+      <div className={`flex flex-col ${layoutClass} md:flex-row flex-wrap min-h-[500px]`}>
         <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 py-12">
           <div className="ml-auto text-left max-w-[650px] w-full ">
-            <h1 className="text-5xl md:text-[4.75rem] leading-tight md:leading-[4.75rem] font-bold text-black mb-5 py-4">
+            <h1 className="text-4xl md:text-[4.75rem] leading-tight md:leading-[4.75rem] font-bold text-black mb-5 py-4">
               {title} <br />
               <span
                 className={`whitespace-normal xl:break-words ${
@@ -83,7 +83,7 @@ export default function HeroSection({
           </div>
         </div>
 
-        <div className="w-full lg:w-1/2 min-h-[300px] sm:min-h-[400px] md:min-h-[500px] relative">
+        <div className="w-full lg:w-1/2 sm:min-h-[400px] md:min-h-[500px] relative">
           {showAdRotator ? (
             <AdRotator />
           ) : (

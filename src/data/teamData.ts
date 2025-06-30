@@ -380,15 +380,6 @@ export const teamMembers: TeamMember[] = [
     team: 'vortex',
   },
   {
-    name: 'Danielle Murray',
-    title: 'Processor Assist',
-    email: 'danielle@lockitlending.com',
-    phone: '(432) 535-3788',
-    image: `${base}/team/Danielle-Murray.jpg`,
-    slug: 'danielle-murray',
-    team: 'vortex',
-  },
-  {
     name: 'Sarah Ornelas',
     title: 'Recruiter and Loan Officer Assistant',
     email: 'sarah.o@lockitlending.com',

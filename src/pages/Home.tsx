@@ -16,6 +16,7 @@ const homepageReviews = getShuffledReviews(seed, 2);
 
 const ads = [
   `${process.env.PUBLIC_URL}/closing/Abel Restituyo.png`,
+  `${process.env.PUBLIC_URL}/closing/image (1).png`,
   `${process.env.PUBLIC_URL}/closing/Brian Barton.jpg`,
   `${process.env.PUBLIC_URL}/closing/DEWAYNE THOMAS.jpg`,
   `${process.env.PUBLIC_URL}/closing/Francisco Escamilla.jpg`,
@@ -168,7 +169,7 @@ const Home: React.FC = () => {
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                    transition={{ duration: 0.6, delay: index * 0.5 }}
                   >
                     <img
                       src={card.image}
