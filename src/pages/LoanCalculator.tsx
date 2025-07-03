@@ -503,7 +503,7 @@ const LoanCalculator: React.FC = () => {
           {/* RIGHT: Chart shown only in affordability mode */}
           {loanType === 'affordability' && (
             <div className="bg-white p-5 rounded shadow w-full">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-center break-words whitespace-normal leading-snug">
+              <h2 className="text-2xl font-bold mb-6 text-center break-words whitespace-normal leading-snug">
                 Total Monthly Debt:
                 <br />
                 <span className="inline-block">
