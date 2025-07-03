@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Purchase from './pages/Purchase';
+import LoanCalculator from './pages/LoanCalculator';
 import Refinance from './pages/Refinance';
 import LoanPrograms from './pages/LoanProgram';
 import MeetLockItLending from './pages/MeetLockItLending';
@@ -16,12 +17,14 @@ import TeamPage from './pages/TeamPage';
 import TeamMemberPage from './pages/TeamMember';
 import ApplyForm from './pages/Apply';
 import { EmailPolicy, TermsOfUse, PrivacyPolicy } from './pages/Policies';
+import { Calculator } from 'lucide-react';
 
 const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/purchase" element={<Purchase />} />
+      <Route path="/loancalculator" element={<LoanCalculator />} />
       <Route path="/refinance" element={<Refinance />} />
       <Route path="/loan-programs" element={<LoanPrograms />} />
       <Route path="/meet-lock-it-lending" element={<MeetLockItLending />} />
