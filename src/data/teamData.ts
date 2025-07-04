@@ -388,4 +388,14 @@ export const teamMembers: TeamMember[] = [
     slug: 'sarah-ornelas',
     team: 'vortex',
   },
+  {
+    name: 'Tran Thai',
+    title: 'Junior Loan Officer',
+    nmls: '#2703377',
+    email: 'tran.t@lockitlending.com',
+    phone: '(903) 420-3608',
+    image: `${base}/team/Tran-Thai.jpg`,
+    slug: 'Tran-Thai',
+    team: 'vortex',
+  },
 ];
