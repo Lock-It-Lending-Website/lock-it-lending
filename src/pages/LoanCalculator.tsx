@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
+// PMI Calculations for the monthly mortgage
 export type CreditScoreRange =
   | '620-639'
   | '640-659'
@@ -34,6 +37,7 @@ const getPmiRate = (ltv: number, creditScoreRange: CreditScoreRange) => {
   return scoreRates[creditScoreRange][bracket];
 };
 
+// Declaring variables
 const LoanCalculator: React.FC = () => {
   const [purchasePrice, setPurchasePrice] = useState<string>('250000');
   const [downPayment, setDownPayment] = useState<string>('50000');
@@ -43,12 +47,20 @@ const LoanCalculator: React.FC = () => {
   const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('2.7');
   const [insuranceAnnual, setInsuranceAnnual] = useState<string>('1600'); // annual insurance
   const [hoaAnnual, setHOAAnnual] = useState<string>('350'); // annual HOA
-  const [monthlyincome, setMonthlyIncome] = useState<string>('0');
-  const [monthlydebt, setMonthlydebt] = useState<string>('0');
-  const [mortgageinsurance, setMortgageInsurance] = useState<string>('0');
+  const [monthlyIncome, setMonthlyIncome] = useState<string>('');
+  const [monthlyStudentdebt, setMonthlyStudentdebt] = useState<string>('');
+  const [monthlyAutodebt, setMonthlyAutodebt] = useState<string>('');
+  const [monthlyCreditcarddebt, setMonthlyCredit] = useState<string>('');
+  const [affordabilityInfo, setAfordabilityInfo] = useState<string>('');
+  const [mortgageInsurance, setMortgageInsurance] = useState<string>('0');
   const [creditScoreRange, setCreditScoreRange] = useState<string>('760+');
 
+  // States
   const [lastEdited, setLastEdited] = useState<'dollars' | 'percent' | null>(null);
+  const [showInfo, setShowAffordabilityInfo] = useState(false);
+  //const [showStudentInfo, setShowStudentInfo] = useState(false);
+  //const [showAutoInfo, setShowAutoInfo] = useState(false);
+  //const [showCreditInfo, setCreditInfo] = useState(false);
 
   // Parsers
   const purchasePriceNumber = parseFloat(purchasePrice) || 0;
@@ -59,18 +71,19 @@ const LoanCalculator: React.FC = () => {
   const parsedPropertyTaxPercent = parseFloat(propertyTaxPercent) || 0;
   const insuranceAnnualNumber = parseFloat(insuranceAnnual) || 0;
   const hoaAnnualNumber = parseFloat(hoaAnnual) || 0;
-  const monthlyDebtNumber = parseFloat(monthlydebt) || 0;
-  const mortgageInsNumber = parseFloat(mortgageinsurance) || 0;
-  const monthlyIncomeNumber = parseFloat(monthlyincome) || 0;
+  const mortgageInsNumber = parseFloat(mortgageInsurance) || 0;
+  const monthlyIncomeNumber = parseFloat(monthlyIncome) || 0;
+  const monthlyAuto = parseFloat(monthlyAutodebt) || 0;
+  const monthlyStudent = parseFloat(monthlyStudentdebt) || 0;
+  const monthlyCreditCard = parseFloat(monthlyCreditcarddebt) || 0;
 
   // Formatting for forms
-
   const formatNumberWithCommas = (value: string) => {
-    const number = value.replace(/,/g, ''); // Remove commas
+    const number = value.replace(/,/g, '');
     if (!number) return '';
     return parseFloat(number).toLocaleString();
   };
-
+  // Saves the state of the interest rate
   useEffect(() => {
     const purchasePriceNumber = parseFloat(purchasePrice) || 0;
     const propertyTaxDollarsNumber = parseFloat(propertyTaxDollars) || 0;
@@ -95,7 +108,6 @@ const LoanCalculator: React.FC = () => {
       }
     }
   }, [propertyTaxPercent, purchasePrice, lastEdited]);
-  const [loanType, setLoanType] = useState<'mortgage' | 'affordability'>('mortgage');
 
   // Calculations
   // Years × 12 months = 360
@@ -111,7 +123,7 @@ const LoanCalculator: React.FC = () => {
   } else if (loanAmount > 0 && monthlyInterestRate === 0) {
     monthlyPrincipalAndInterest = loanAmount / totalPayments;
   }
-
+  // Yearly property tax
   const annualPropertyTax =
     propertyTaxDollarsNumber > 0
       ? propertyTaxDollarsNumber
@@ -144,7 +156,8 @@ const LoanCalculator: React.FC = () => {
 
   // DTI calculations
   // Sum up your mortgage payment + other debts
-  const totalMonthlyDebt = totalMonthlyPayment + monthlyDebtNumber;
+  // To add total monthly payments of principal + auto + student loans + creditcard
+  const totalMonthlyDebt = totalMonthlyPayment + monthlyStudent + monthlyAuto + monthlyCreditCard;
 
   // Calculate the DTI
   const totalDTI = monthlyIncomeNumber > 0 ? (totalMonthlyDebt / monthlyIncomeNumber) * 100 : 0;
@@ -160,7 +173,7 @@ const LoanCalculator: React.FC = () => {
     { name: 'Taxes', value: monthlyPropertyTax },
     { name: 'Insurance', value: monthlyHomeInsurance },
     { name: 'HOA', value: monthlyHOAFees },
-    { name: 'Mortgage Insurance', value: monthlyMortgageInsurance },
+    { name: 'PMI', value: monthlyMortgageInsurance },
   ].filter(item => item.value > 0); // remove zero-value items
 
   return (
@@ -173,412 +186,442 @@ const LoanCalculator: React.FC = () => {
           description="Estimate your monthly mortgage payments based on your purchase price, down payment, interest, and more."
           image="/loancalculator.jpg"
         />
-
-        <section className="max-w-7xl mx-auto p-10 pt-20 pb=30 grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* LEFT: Input Form */}
-          <div className="bg-white p-5 rounded shadow space-y-4">
-            <h2 className="text-2xl font-bold mb-4">
-              {loanType === 'mortgage' ? 'Loan Calculator' : 'Affordability Calculator'}
-            </h2>
-
-            {/* Loan Type Buttons */}
-            <div className="flex gap-4 mb-4">
-              <button
-                type="button"
-                onClick={() => setLoanType('mortgage')}
-                className={`px-4 py-2 rounded font-medium ${
-                  loanType === 'mortgage' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'
-                }`}
-              >
-                Mortgage
-              </button>
-              <button
-                type="button"
-                onClick={() => setLoanType('affordability')}
-                className={`px-4 py-2 rounded font-medium ${
-                  loanType === 'affordability' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'
-                }`}
-              >
-                Affordability
-              </button>
-            </div>
-
-            {loanType === 'mortgage' && (
-              <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <label className="block">
-                    Purchase Price:
-                    <div className="relative mt-1">
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                        $
-                      </span>
-                      <input
-                        type="text"
-                        value={purchasePrice ? formatNumberWithCommas(purchasePrice) : ''}
-                        onChange={e => {
-                          const raw = e.target.value.replace(/,/g, '');
-                          if (/^\d*$/.test(raw) || raw === '') {
-                            setPurchasePrice(raw);
-                          }
-                        }}
-                        className="pl-8 w-full border p-2 rounded"
-                        placeholder="0"
-                      />
-                    </div>
-                  </label>
-
-                  <label className="block">
-                    Down Payment:
-                    <div className="relative mt-1">
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                        $
-                      </span>
-                      <input
-                        type="text"
-                        value={downPayment ? formatNumberWithCommas(downPayment) : ''}
-                        onChange={e => {
-                          const raw = e.target.value.replace(/,/g, '');
-                          if (/^\d*$/.test(raw) || raw === '') {
-                            setDownPayment(raw);
-                          }
-                        }}
-                        className="pl-8 w-full border p-2 rounded"
-                        placeholder="0"
-                      />
-                    </div>
-                  </label>
-                </div>
-
-                <p className="text-sm text-gray-600">
-                  <strong>Loan Amount:</strong> ${loanAmount.toLocaleString()}
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <label className="block">
-                    Interest Rate:
-                    <div className="relative mt-1">
-                      <input
-                        type="text"
-                        value={interestRate}
-                        onChange={e => {
-                          const raw = e.target.value;
-                          if (/^\d*\.?\d*$/.test(raw) || raw === '') {
-                            setInterestRate(raw);
-                          }
-                        }}
-                        className="pr-8 w-full border p-2 rounded"
-                        placeholder="0"
-                      />
-                      <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
-                        %
-                      </span>
-                    </div>
-                  </label>
-
-                  <label className="block">
-                    Loan Term:
-                    <select
-                      value={termYears}
-                      onChange={e => setTermYears(Number(e.target.value))}
-                      className="mt-1 w-full border p-2 rounded"
-                    >
-                      <option value={15}>15 Years</option>
-                      <option value={30}>30 Years</option>
-                    </select>
-                  </label>
-                </div>
-
-                <label className="block">
-                  Yearly Property Tax:
-                  <div className="flex gap-4 mt-1">
-                    <div className="relative flex-1">
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                        $
-                      </span>
-                      <input
-                        type="text"
-                        value={propertyTaxDollars ? formatNumberWithCommas(propertyTaxDollars) : ''}
-                        onChange={e => {
-                          const raw = e.target.value.replace(/,/g, '');
-                          if (/^\d*$/.test(raw) || raw === '') {
-                            setPropertyTaxDollars(raw);
-                            setLastEdited('dollars');
-                          }
-                        }}
-                        className="pl-8 w-full border p-2 rounded"
-                        placeholder="0"
-                      />
-                    </div>
-
-                    <p>or</p>
-
-                    <div className="relative w-32">
-                      <input
-                        type="text"
-                        value={propertyTaxPercent}
-                        onChange={e => {
-                          const raw = e.target.value;
-                          if (/^\d*\.?\d*$/.test(raw) || raw === '') {
-                            setPropertyTaxPercent(raw);
-                            setLastEdited('percent');
-                          }
-                        }}
-                        className="pr-8 w-full border p-2 rounded"
-                        placeholder="%"
-                      />
-                      <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
-                        %
-                      </span>
-                    </div>
-                  </div>
-                </label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <label className="block">
-                    Yearly Homeowner&apos;s Insurance:
-                    <div className="relative mt-1">
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                        $
-                      </span>
-                      <input
-                        type="text"
-                        value={formatNumberWithCommas(insuranceAnnual)}
-                        onChange={e => {
-                          const raw = e.target.value.replace(/,/g, '');
-                          if (/^\d*$/.test(raw) || raw === '') {
-                            setInsuranceAnnual(raw);
-                          }
-                        }}
-                        className="pl-8 w-full border p-2 rounded"
-                        placeholder="0"
-                      />
-                    </div>
-                  </label>
-
-                  <label className="block">
-                    Yearly HOA Dues:
-                    <div className="relative mt-1">
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                        $
-                      </span>
-                      <input
-                        type="text"
-                        value={formatNumberWithCommas(hoaAnnual)}
-                        onChange={e => {
-                          const raw = e.target.value.replace(/,/g, '');
-                          if (/^\d*$/.test(raw) || raw === '') {
-                            setHOAAnnual(raw);
-                          }
-                        }}
-                        className="pl-8 w-full border p-2 rounded"
-                        placeholder="0"
-                      />
-                    </div>
-                  </label>
-                </div>
-              </>
-            )}
-
-            {loanType === 'affordability' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <label className="block">
-                  Monthly Income:
-                  <div className="relative mt-1">
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                      $
-                    </span>
-                    <input
-                      type="text"
-                      value={formatNumberWithCommas(monthlyincome)}
-                      onChange={e => {
-                        const raw = e.target.value.replace(/,/g, '');
-                        if (/^\d*$/.test(raw) || raw === '') {
-                          setMonthlyIncome(raw);
-                        }
-                      }}
-                      className="pl-8 w-full border p-2 rounded"
-                      placeholder="0"
-                    />
-                  </div>
-                </label>
-                <label className="block">
-                  Monthly Debts:
-                  <div className="relative mt-1">
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                      $
-                    </span>
-                    <input
-                      type="text"
-                      value={formatNumberWithCommas(monthlydebt)}
-                      onChange={e => {
-                        const raw = e.target.value.replace(/,/g, '');
-                        if (/^\d*$/.test(raw) || raw === '') {
-                          setMonthlydebt(raw);
-                        }
-                      }}
-                      className="pl-8 w-full border p-2 rounded"
-                      placeholder="0"
-                    />
-                  </div>
-                </label>
-
-                <label className="block">
-                  Credit Score:
-                  <select
-                    value={creditScoreRange}
-                    onChange={e => setCreditScoreRange(e.target.value)}
-                    className="mt-1 w-full border p-2 rounded"
-                  >
-                    <option value="620-639">620-639</option>
-                    <option value="640-659">640-659</option>
-                    <option value="660-679">660-679</option>
-                    <option value="680-699">680-699</option>
-                    <option value="700-719">700-719</option>
-                    <option value="720-739">720-739</option>
-                    <option value="740-759">740-759</option>
-                    <option value="760+">760+</option>
-                  </select>
-                </label>
-
-                <label className="block">
-                  Mortgage Insurance:
+        {/*User input*/}
+        <section className="max-w-7xl mx-auto p-6 pt-10 pb-20 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold mb-4 pt-8">Loan Information</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <label className="block">
+                Purchase Price:
+                <div className="relative mt-1">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                    $
+                  </span>
                   <input
                     type="text"
-                    value={`$${monthlyMortgageInsurance.toFixed(2)}`} // insert your calculated value here
-                    readOnly
-                    className="mt-1 w-full border p-2 rounded bg-gray-100 text-gray-700 cursor-not-allowed"
-                    placeholder="Automatically calculated"
+                    value={purchasePrice ? formatNumberWithCommas(purchasePrice) : ''}
+                    onChange={e => {
+                      const raw = e.target.value.replace(/,/g, '');
+                      if (/^\d*$/.test(raw) || raw === '') setPurchasePrice(raw);
+                    }}
+                    className="pl-8 w-full border p-2 rounded"
+                    placeholder="0"
                   />
-                </label>
+                </div>
+              </label>
+
+              <label className="block">
+                Down Payment:
+                <div className="flex items-center mt-1 border rounded overflow-hidden">
+                  {/* Dollar Input */}
+                  <div className="relative flex-1">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                      $
+                    </span>
+                    <input
+                      type="text"
+                      value={downPayment ? formatNumberWithCommas(downPayment) : ''}
+                      onChange={e => {
+                        const raw = e.target.value.replace(/,/g, '');
+                        if (/^\d*$/.test(raw) || raw === '') {
+                          setDownPayment(raw);
+                          setLastEdited('dollars');
+                        }
+                      }}
+                      className="pl-8 w-full border p-2 rounded"
+                      placeholder="0"
+                    />
+                  </div>
+
+                  {/* Vertical Divider */}
+                  <div className="h-full w-px bg-gray-500"></div>
+
+                  {/* Percentage Input */}
+                  <div className="relative w-24">
+                    <input
+                      type="text"
+                      value={downPayment}
+                      onChange={e => {
+                        const raw = e.target.value;
+                        if (/^\d*\.?\d*$/.test(raw) || raw === '') {
+                          setDownPayment(raw);
+                          setLastEdited('percent');
+                        }
+                      }}
+                      className="pr-8 w-full border-none p-2"
+                      placeholder="0"
+                    />
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
+                      %
+                    </span>
+                  </div>
+                </div>
+              </label>
+            </div>
+
+            <p className="text-sm text-gray-600">
+              <strong>Loan Amount:</strong> ${loanAmount.toLocaleString()}
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <label className="block">
+                Interest Rate:
+                <div className="relative mt-1">
+                  <input
+                    type="text"
+                    value={interestRate}
+                    onChange={e => {
+                      const raw = e.target.value;
+                      if (/^\d*\.?\d*$/.test(raw) || raw === '') setInterestRate(raw);
+                    }}
+                    className="pr-8 w-full border p-2 rounded"
+                    placeholder="0"
+                  />
+                  <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
+                    %
+                  </span>
+                </div>
+              </label>
+
+              <label className="block">
+                Loan Term:
+                <select
+                  value={termYears}
+                  onChange={e => setTermYears(Number(e.target.value))}
+                  className="mt-1 w-full border p-2 rounded"
+                >
+                  <option value={15}>15 Years</option>
+                  <option value={30}>30 Years</option>
+                </select>
+              </label>
+            </div>
+
+            <label className="block">
+              Yearly Property Tax:
+              <div className="flex gap-4 mt-1">
+                <div className="relative flex-1">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                    $
+                  </span>
+                  <input
+                    type="text"
+                    value={propertyTaxDollars ? formatNumberWithCommas(propertyTaxDollars) : ''}
+                    onChange={e => {
+                      const raw = e.target.value.replace(/,/g, '');
+                      if (/^\d*$/.test(raw) || raw === '') {
+                        setPropertyTaxDollars(raw);
+                        setLastEdited('dollars');
+                      }
+                    }}
+                    className="pl-8 w-full border p-2 rounded"
+                    placeholder="0"
+                  />
+                </div>
+
+                <p>or</p>
+
+                <div className="relative w-32">
+                  <input
+                    type="text"
+                    value={propertyTaxPercent}
+                    onChange={e => {
+                      const raw = e.target.value;
+                      if (/^\d*\.?\d*$/.test(raw) || raw === '') {
+                        setPropertyTaxPercent(raw);
+                        setLastEdited('percent');
+                      }
+                    }}
+                    className="pr-8 w-full border p-2 rounded"
+                    placeholder="%"
+                  />
+                  <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
+                    %
+                  </span>
+                </div>
               </div>
-            )}
+            </label>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <label className="block">
+                Yearly Homeowner&apos;s Insurance:
+                <div className="relative mt-1">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                    $
+                  </span>
+                  <input
+                    type="text"
+                    value={formatNumberWithCommas(insuranceAnnual)}
+                    onChange={e => {
+                      const raw = e.target.value.replace(/,/g, '');
+                      if (/^\d*$/.test(raw) || raw === '') setInsuranceAnnual(raw);
+                    }}
+                    className="pl-8 w-full border p-2 rounded"
+                    placeholder="0"
+                  />
+                </div>
+              </label>
+
+              <label className="block">
+                Yearly HOA Dues:
+                <div className="relative mt-1">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                    $
+                  </span>
+                  <input
+                    type="text"
+                    value={formatNumberWithCommas(hoaAnnual)}
+                    onChange={e => {
+                      const raw = e.target.value.replace(/,/g, '');
+                      if (/^\d*$/.test(raw) || raw === '') setHOAAnnual(raw);
+                    }}
+                    className="pl-8 w-full border p-2 rounded"
+                    placeholder="0"
+                  />
+                </div>
+              </label>
+            </div>
+            <div className="flex items-center gap-2 mb-4 pt-8">
+              <h2 className="text-2xl font-bold mb-4">Affordability</h2>
+              <button
+                type="button"
+                className="text-blue-500 hover:text-blue-700"
+                onClick={() => setShowAffordabilityInfo(!showInfo)}
+                aria-label="Toggle Affordability Info"
+              >
+                <FontAwesomeIcon icon={faCircleInfo} className="w-5 h-5" />
+              </button>
+              {showInfo && (
+                <p className="text-sm text-gray-600 mt-2">
+                  Please enter the <strong>monthly payment amounts</strong> for your debts, not the
+                  total balances.
+                  <br />
+                  <br />
+                  <strong>Examples:</strong>
+                  <br />• Student Loan: If you pay $350 monthly, enter <strong>350</strong>.<br />•
+                  Auto Loan: If your balance is $35,000 and monthly payment is $500, enter{' '}
+                  <strong>500</strong>.<br />• Credit Cards: If your minimum payment is $35 (even if
+                  you pay $500), enter <strong>35</strong>.
+                </p>
+              )}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <label className="block pd-3">
+                Monthly Student Loan Debt:
+                <div className="relative mt-1">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                    $
+                  </span>
+                  <input
+                    type="text"
+                    value={formatNumberWithCommas(monthlyStudentdebt)}
+                    onChange={e => {
+                      const raw = e.target.value.replace(/,/g, '');
+                      if (/^\d*$/.test(raw) || raw === '') setMonthlyStudentdebt(raw);
+                    }}
+                    className="pl-8 w-full border p-2 rounded"
+                    placeholder="0"
+                  />
+                </div>
+              </label>
+
+              <label className="block">
+                Monthly Auto Debt:
+                <div className="relative mt-1">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                    $
+                  </span>
+                  <input
+                    type="text"
+                    value={formatNumberWithCommas(monthlyAutodebt)}
+                    onChange={e => {
+                      const raw = e.target.value.replace(/,/g, '');
+                      if (/^\d*$/.test(raw) || raw === '') setMonthlyAutodebt(raw);
+                    }}
+                    className="pl-8 w-full border p-2 rounded"
+                    placeholder="0"
+                  />
+                </div>
+              </label>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <label className="block">
+                Monthly Credit Card Debt:
+                <div className="relative mt-1">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                    $
+                  </span>
+                  <input
+                    type="text"
+                    value={formatNumberWithCommas(monthlyCreditcarddebt)}
+                    onChange={e => {
+                      const raw = e.target.value.replace(/,/g, '');
+                      if (/^\d*$/.test(raw) || raw === '') setMonthlyCredit(raw);
+                    }}
+                    className="pl-8 w-full border p-2 rounded"
+                    placeholder="0"
+                  />
+                </div>
+              </label>
+              <label className="block">
+                Monthly Income:
+                <div className="relative mt-1">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                    $
+                  </span>
+                  <input
+                    type="text"
+                    value={formatNumberWithCommas(monthlyIncome)}
+                    onChange={e => {
+                      const raw = e.target.value.replace(/,/g, '');
+                      if (/^\d*$/.test(raw) || raw === '') setMonthlyIncome(raw);
+                    }}
+                    className="pl-8 w-full border p-2 rounded"
+                    placeholder="0"
+                  />
+                </div>
+              </label>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <label className="block">
+                Credit Score:
+                <select
+                  value={creditScoreRange}
+                  onChange={e => setCreditScoreRange(e.target.value)}
+                  className="mt-1 w-full border p-2 rounded"
+                >
+                  <option value="620-639">620-639</option>
+                  <option value="640-659">640-659</option>
+                  <option value="660-679">660-679</option>
+                  <option value="680-699">680-699</option>
+                  <option value="700-719">700-719</option>
+                  <option value="720-739">720-739</option>
+                  <option value="740-759">740-759</option>
+                  <option value="760+">760+</option>
+                </select>
+              </label>
+
+              <label className="block">
+                Private Mortgage Insurance (PMI):
+                <input
+                  type="text"
+                  value={`$${monthlyMortgageInsurance.toFixed(2)}`}
+                  readOnly
+                  className="mt-1 w-full border p-2 rounded bg-gray-100 text-gray-700 cursor-not-allowed"
+                  placeholder="Automatically calculated"
+                />
+              </label>
+            </div>
           </div>
 
-          {/* RIGHT: Pie Chart shown only in mortgage mode */}
-          {loanType === 'mortgage' && (
-            <div className="bg-white p-5 rounded shadow w-full p-5">
-              <h2 className="text-2xl font-bold mb-6 text-center">
-                Total Monthly Payment: ${totalMonthly}
-              </h2>
+          {/* The right side*/}
+          <div className="bg-white p-5 rounded shadow w-full">
+            <h2 className="text-2x1 mb-6 text-center">Total Monthly Payment: </h2>
+            <h1 className="text-5xl font-bold text-center">${totalMonthly}</h1>
+            <div className="w-full flex flex-col md:flex-row md:justify-center md:items-center gap-8 pb-8">
+              {/* Chart */}
+              <div className="w-full md:w-1/2 flex justify-center">
+                <ResponsiveContainer width="100%" height={350}>
+                  <PieChart margin={{ top: 20, right: 40, bottom: 20, left: 20 }}>
+                    <Pie
+                      dataKey="value"
+                      data={pieData}
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={80}
+                      label={({ percent }) => `${((percent ?? 0) * 100).toFixed(1)}%`}
+                    >
+                      {pieData.map((_, index) => (
+                        <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      formatter={(value: number, name: string) => [`$${value.toFixed(2)}`, name]}
+                      labelFormatter={() => ''}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                {/* Pie Chart */}
-                <div className="w-full flex justify-center">
-                  <ResponsiveContainer width="100%" height={350}>
-                    <PieChart margin={{ top: 20, right: 40, bottom: 20, left: 20 }}>
-                      <Pie
-                        dataKey="value"
-                        data={pieData}
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        label={({ percent }) => `${((percent ?? 0) * 100).toFixed(1)}%`}
-                      >
-                        {pieData.map((_, index) => (
-                          <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip
-                        formatter={(value: number, name: string) => [`$${value.toFixed(2)}`, name]}
-                        labelFormatter={() => ''}
-                      />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-
-                <div className="flex flex-col justify-center space-y-3">
-                  {pieData.map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <div
-                        className="w-4 h-4 rounded"
-                        style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                      />
-                      <span className="font-medium">{item.name}:</span>
-                      <span>${item.value.toFixed(2)}</span>
-                    </div>
-                  ))}
-                </div>
+              {/* Color Keys */}
+              <div className="w-full md:w-1/2 flex flex-col justify-center space-y-3">
+                {pieData.map((item, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    <div
+                      className="w-4 h-4 rounded"
+                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                    />
+                    <span className="font-medium">{item.name}:</span>
+                    <span>${item.value.toFixed(2)}</span>
+                  </div>
+                ))}
               </div>
             </div>
-          )}
-          {/* RIGHT: Chart shown only in affordability mode */}
-          {loanType === 'affordability' && (
-            <div className="bg-white p-5 rounded shadow w-full">
-              <h2 className="text-2xl font-bold mb-6 text-center break-words whitespace-normal leading-snug">
-                Total Monthly Debt:
-                <br />
-                <span className="inline-block">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+              {/*<div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+                <p className="text-xs sm:text-sm mb-1 sm:mb-2">Monthly Mortgage Payment (PITIA)</p>
+                <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
                   $
-                  {totalMonthlyDebt.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </span>
-              </h2>
+                  <span className="inline-block">
+                    {totalMonthlyMortgageCost.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </p>
+              </div>*/}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
-                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Monthly Mortgage Payment</p>
-                  <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                    $
-                    <span className="inline-block">
-                      {totalMonthlyPayment.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </span>
-                  </p>
-                </div>
+              <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+                <p className="text-xs sm:text-sm mb-1 sm:mb-2">Loan Amount</p>
+                <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
+                  $
+                  <span className="inline-block">
+                    {loanAmount.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </p>
+              </div>
 
-                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
-                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Loan Amount</p>
-                  <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                    $
-                    <span className="inline-block">
-                      {loanAmount.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </span>
-                  </p>
-                </div>
+              <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+                <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Monthly Income Needed</p>
+                <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
+                  $
+                  <span className="inline-block">
+                    {totalIncomeNeeded.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </p>
+              </div>
 
-                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
-                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Monthly Income Needed</p>
-                  <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                    $
-                    <span className="inline-block">
-                      {totalIncomeNeeded.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </span>
-                  </p>
-                </div>
+              <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+                <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Yearly Income Needed</p>
+                <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
+                  $
+                  <span className="inline-block">
+                    {annualIncomeNeeded.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </p>
+              </div>
 
-                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
-                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Yearly Income Needed</p>
-                  <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                    $
-                    <span className="inline-block">
-                      {annualIncomeNeeded.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </span>
-                  </p>
-                </div>
-
-                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
-                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Debt to Income Ratio</p>
-                  <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                    <span className="inline-block">{totalDTI.toFixed(2)}%</span>
-                  </p>
-                </div>
+              <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+                <p className="text-xs sm:text-sm mb-1 sm:mb-2">Debt to Income Ratio</p>
+                <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
+                  <span className="inline-block">{totalDTI.toFixed(2)}%</span>
+                </p>
               </div>
             </div>
-          )}
-
-          <div className="relative mt-1 p-4">
+          </div>
+          {/* Disclaimer for compliance*/}
+          <div className="relative mt-1 ">
             <p className="text-xs text-gray-500">
               This calculator is provided by Lock it Lending for educational and informational
               purposes only. It does not constitute financial advice, nor does it represent any loan
