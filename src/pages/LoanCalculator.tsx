@@ -41,6 +41,7 @@ const getPmiRate = (ltv: number, creditScoreRange: CreditScoreRange) => {
 const LoanCalculator: React.FC = () => {
   const [purchasePrice, setPurchasePrice] = useState<string>('250000');
   const [downPayment, setDownPayment] = useState<string>('50000');
+  const [downPaymentPercent, setDownPaymentPercent] = useState<string>('20');
   const [interestRate, setInterestRate] = useState<string>('7.25');
   const [termYears, setTermYears] = useState(30);
   const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('6750');
@@ -58,6 +59,9 @@ const LoanCalculator: React.FC = () => {
   // States
   const [lastEdited, setLastEdited] = useState<'dollars' | 'percent' | null>(null);
   const [showInfo, setShowAffordabilityInfo] = useState(false);
+  const [lastEditedDownPayment, setLastEditedDownPayment] = useState<'dollars' | 'percent' | null>(
+    null
+  );
   //const [showStudentInfo, setShowStudentInfo] = useState(false);
   //const [showAutoInfo, setShowAutoInfo] = useState(false);
   //const [showCreditInfo, setCreditInfo] = useState(false);
@@ -108,6 +112,31 @@ const LoanCalculator: React.FC = () => {
       }
     }
   }, [propertyTaxPercent, purchasePrice, lastEdited]);
+
+  useEffect(() => {
+    const purchasePriceNumber = parseFloat(purchasePrice) || 0;
+    const downPaymentNumber = parseFloat(downPayment) || 0;
+
+    if (lastEditedDownPayment === 'dollars' && purchasePriceNumber > 0) {
+      const percent = (downPaymentNumber / purchasePriceNumber) * 100;
+      setDownPaymentPercent(percent.toFixed(2)); // percent stays a string
+    }
+  }, [downPayment, purchasePrice, lastEditedDownPayment]);
+
+  useEffect(() => {
+    const purchasePriceNumber = parseFloat(purchasePrice) || 0;
+
+    if (lastEditedDownPayment === 'percent' && purchasePriceNumber > 0) {
+      const isValid = /^\d*\.?\d*$/.test(downPaymentPercent);
+      if (isValid) {
+        const parsedPercent = parseFloat(downPaymentPercent);
+        if (!isNaN(parsedPercent)) {
+          const dollars = (purchasePriceNumber * parsedPercent) / 100;
+          setDownPayment(Math.round(dollars).toString()); // convert result back to string
+        }
+      }
+    }
+  }, [downPaymentPercent, purchasePrice, lastEditedDownPayment]);
 
   // Calculations
   // Years × 12 months = 360
@@ -225,7 +254,7 @@ const LoanCalculator: React.FC = () => {
                         const raw = e.target.value.replace(/,/g, '');
                         if (/^\d*$/.test(raw) || raw === '') {
                           setDownPayment(raw);
-                          setLastEdited('dollars');
+                          setLastEditedDownPayment('dollars');
                         }
                       }}
                       className="pl-8 w-full border p-2 rounded"
@@ -240,12 +269,12 @@ const LoanCalculator: React.FC = () => {
                   <div className="relative w-24">
                     <input
                       type="text"
-                      value={downPayment}
+                      value={downPaymentPercent}
                       onChange={e => {
                         const raw = e.target.value;
                         if (/^\d*\.?\d*$/.test(raw) || raw === '') {
-                          setDownPayment(raw);
-                          setLastEdited('percent');
+                          setDownPaymentPercent(raw);
+                          setLastEditedDownPayment('percent');
                         }
                       }}
                       className="pr-8 w-full border-none p-2"
@@ -296,51 +325,6 @@ const LoanCalculator: React.FC = () => {
               </label>
             </div>
 
-            <label className="block">
-              Yearly Property Tax:
-              <div className="flex gap-4 mt-1">
-                <div className="relative flex-1">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                    $
-                  </span>
-                  <input
-                    type="text"
-                    value={propertyTaxDollars ? formatNumberWithCommas(propertyTaxDollars) : ''}
-                    onChange={e => {
-                      const raw = e.target.value.replace(/,/g, '');
-                      if (/^\d*$/.test(raw) || raw === '') {
-                        setPropertyTaxDollars(raw);
-                        setLastEdited('dollars');
-                      }
-                    }}
-                    className="pl-8 w-full border p-2 rounded"
-                    placeholder="0"
-                  />
-                </div>
-
-                <p>or</p>
-
-                <div className="relative w-32">
-                  <input
-                    type="text"
-                    value={propertyTaxPercent}
-                    onChange={e => {
-                      const raw = e.target.value;
-                      if (/^\d*\.?\d*$/.test(raw) || raw === '') {
-                        setPropertyTaxPercent(raw);
-                        setLastEdited('percent');
-                      }
-                    }}
-                    className="pr-8 w-full border p-2 rounded"
-                    placeholder="%"
-                  />
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
-                    %
-                  </span>
-                </div>
-              </div>
-            </label>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <label className="block">
                 Yearly Homeowner&apos;s Insurance:
@@ -358,6 +342,54 @@ const LoanCalculator: React.FC = () => {
                     className="pl-8 w-full border p-2 rounded"
                     placeholder="0"
                   />
+                </div>
+              </label>
+
+              <label className="block">
+                Yearly Property Tax:
+                <div className="flex items-center mt-1 border rounded overflow-hidden">
+                  {/* Dollar Input */}
+                  <div className="relative flex-1">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                      $
+                    </span>
+                    <input
+                      type="text"
+                      value={propertyTaxDollars ? formatNumberWithCommas(propertyTaxDollars) : ''}
+                      onChange={e => {
+                        const raw = e.target.value.replace(/,/g, '');
+                        if (/^\d*$/.test(raw) || raw === '') {
+                          setPropertyTaxDollars(raw);
+                          setLastEdited('dollars');
+                        }
+                      }}
+                      className="pl-8 w-full border p-2 rounded"
+                      placeholder="0"
+                    />
+                  </div>
+
+                  {/* Vertical Divider */}
+                  <div className="h-full w-px bg-gray-500"></div>
+
+                  {/* Percentage Input */}
+                  <div className="relative w-24">
+                    <input
+                      type="text"
+                      value={propertyTaxPercent}
+                      onChange={e => {
+                        const raw = e.target.value;
+                        if (/^\d*\.?\d*$/.test(raw) || raw === '') {
+                          setPropertyTaxPercent(raw);
+                          setLastEdited('percent');
+                        }
+                      }}
+                      className="pr-8 w-full border-none p-2"
+                      placeholder="0"
+                    />
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
+                      %
+                    </span>
+                  </div>
                 </div>
               </label>
 
@@ -518,7 +550,9 @@ const LoanCalculator: React.FC = () => {
           {/* The right side*/}
           <div className="bg-white p-5 rounded shadow w-full">
             <h2 className="text-2x1 mb-6 text-center">Total Monthly Payment: </h2>
-            <h1 className="text-5xl font-bold text-center">${totalMonthly}</h1>
+            <h1 className="text-5xl font-bold text-center">
+              ${formatNumberWithCommas(totalMonthly)}
+            </h1>
             <div className="w-full flex flex-col md:flex-row md:justify-center md:items-center gap-8 pb-8">
               {/* Chart */}
               <div className="w-full md:w-1/2 flex justify-center">
@@ -553,7 +587,7 @@ const LoanCalculator: React.FC = () => {
                       style={{ backgroundColor: COLORS[index % COLORS.length] }}
                     />
                     <span className="font-medium">{item.name}:</span>
-                    <span>${item.value.toFixed(2)}</span>
+                    <span>${formatNumberWithCommas(item.value.toFixed(2).toString())}</span>
                   </div>
                 ))}
               </div>
