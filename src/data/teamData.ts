@@ -371,15 +371,6 @@ export const teamMembers: TeamMember[] = [
     team: 'vortex',
   },
   {
-    name: 'Maricruz Maldonado',
-    title: 'Loan Processor',
-    email: 'mary.m@lockitlending.com',
-    phone: '(281) 524-2420',
-    image: `${base}/team/Maricruz-Maldonado.jpg`,
-    slug: 'maricruz-maldonado',
-    team: 'vortex',
-  },
-  {
     name: 'Sarah Ornelas',
     title: 'Recruiter and Loan Officer Assistant',
     email: 'sarah.o@lockitlending.com',

@@ -207,394 +207,399 @@ const LoanCalculator: React.FC = () => {
 
   return (
     <>
-      <Header />
-      <main className="bg-gray-50 min-h-screen">
-        <HeroSection
-          title="Loan Calculator"
-          highlight="PITIA Breakdown"
-          description="Estimate your monthly mortgage payments based on your purchase price, down payment, interest, and more."
-          image="/loancalculator.jpg"
-        />
-        {/*User input*/}
-        <section className="max-w-7xl mx-auto p-6 pt-10 pb-20 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-4 pt-8">Loan Information</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <label className="block">
-                Purchase Price:
-                <div className="relative mt-1">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                    $
-                  </span>
-                  <input
-                    type="text"
-                    value={purchasePrice ? formatNumberWithCommas(purchasePrice) : ''}
-                    onChange={e => {
-                      const raw = e.target.value.replace(/,/g, '');
-                      if (/^\d*$/.test(raw) || raw === '') setPurchasePrice(raw);
-                    }}
-                    className="pl-8 w-full border p-2 rounded"
-                    placeholder="0"
-                  />
-                </div>
-              </label>
+      <div className="font-sans">
+        <Header />
+        <main className="bg-gray-50 min-h-screen">
+          <HeroSection
+            title="Loan Calculator"
+            highlight="PITIA Breakdown"
+            highlightColor="gold"
+            description="Estimate your monthly mortgage payments based on your purchase price, down payment, interest, and more."
+            image="/loancalculator.jpg"
+          />
 
-              <label className="block">
-                Down Payment:
-                <div className="flex items-center mt-1 border rounded overflow-hidden">
-                  {/* Dollar Input */}
-                  <div className="relative flex-1">
+          {/*User input*/}
+          <section className="max-w-7xl mx-auto p-6 pt-10 pb-20 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold mb-4 pt-8">Loan Information</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="block">
+                  Purchase Price:
+                  <div className="relative mt-1">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
                       $
                     </span>
                     <input
                       type="text"
-                      value={downPayment ? formatNumberWithCommas(downPayment) : ''}
+                      value={purchasePrice ? formatNumberWithCommas(purchasePrice) : ''}
                       onChange={e => {
                         const raw = e.target.value.replace(/,/g, '');
-                        if (/^\d*$/.test(raw) || raw === '') {
-                          setDownPayment(raw);
-                          setLastEditedDownPayment('dollars');
-                        }
+                        if (/^\d*$/.test(raw) || raw === '') setPurchasePrice(raw);
                       }}
                       className="pl-8 w-full border p-2 rounded"
                       placeholder="0"
                     />
                   </div>
+                </label>
 
-                  {/* Vertical Divider */}
-                  <div className="h-full w-px bg-gray-500"></div>
+                <label className="block">
+                  Down Payment:
+                  <div className="flex items-center mt-1 border rounded overflow-hidden">
+                    {/* Dollar Input */}
+                    <div className="relative flex-1">
+                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                        $
+                      </span>
+                      <input
+                        type="text"
+                        value={downPayment ? formatNumberWithCommas(downPayment) : ''}
+                        onChange={e => {
+                          const raw = e.target.value.replace(/,/g, '');
+                          if (/^\d*$/.test(raw) || raw === '') {
+                            setDownPayment(raw);
+                            setLastEditedDownPayment('dollars');
+                          }
+                        }}
+                        className="pl-8 w-full border p-2 rounded"
+                        placeholder="0"
+                      />
+                    </div>
 
-                  {/* Percentage Input */}
-                  <div className="relative w-24">
+                    {/* Vertical Divider */}
+                    <div className="h-full w-px bg-gray-500"></div>
+
+                    {/* Percentage Input */}
+                    <div className="relative w-24">
+                      <input
+                        type="text"
+                        value={downPaymentPercent}
+                        onChange={e => {
+                          const raw = e.target.value;
+                          if (/^\d*\.?\d*$/.test(raw) || raw === '') {
+                            setDownPaymentPercent(raw);
+                            setLastEditedDownPayment('percent');
+                          }
+                        }}
+                        className="pr-8 w-full border-none p-2"
+                        placeholder="0"
+                      />
+                      <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
+                        %
+                      </span>
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <p className="text-sm text-gray-600">
+                <strong>Loan Amount:</strong> ${loanAmount.toLocaleString()}
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="block">
+                  Interest Rate:
+                  <div className="relative mt-1">
                     <input
                       type="text"
-                      value={downPaymentPercent}
+                      value={interestRate}
                       onChange={e => {
                         const raw = e.target.value;
-                        if (/^\d*\.?\d*$/.test(raw) || raw === '') {
-                          setDownPaymentPercent(raw);
-                          setLastEditedDownPayment('percent');
-                        }
+                        if (/^\d*\.?\d*$/.test(raw) || raw === '') setInterestRate(raw);
                       }}
-                      className="pr-8 w-full border-none p-2"
+                      className="pr-8 w-full border p-2 rounded"
                       placeholder="0"
                     />
                     <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
                       %
                     </span>
                   </div>
-                </div>
-              </label>
-            </div>
+                </label>
 
-            <p className="text-sm text-gray-600">
-              <strong>Loan Amount:</strong> ${loanAmount.toLocaleString()}
-            </p>
+                <label className="block">
+                  Loan Term:
+                  <select
+                    value={termYears}
+                    onChange={e => setTermYears(Number(e.target.value))}
+                    className="mt-1 w-full border p-2 rounded"
+                  >
+                    <option value={15}>15 Years</option>
+                    <option value={30}>30 Years</option>
+                  </select>
+                </label>
+              </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <label className="block">
-                Interest Rate:
-                <div className="relative mt-1">
-                  <input
-                    type="text"
-                    value={interestRate}
-                    onChange={e => {
-                      const raw = e.target.value;
-                      if (/^\d*\.?\d*$/.test(raw) || raw === '') setInterestRate(raw);
-                    }}
-                    className="pr-8 w-full border p-2 rounded"
-                    placeholder="0"
-                  />
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
-                    %
-                  </span>
-                </div>
-              </label>
-
-              <label className="block">
-                Loan Term:
-                <select
-                  value={termYears}
-                  onChange={e => setTermYears(Number(e.target.value))}
-                  className="mt-1 w-full border p-2 rounded"
-                >
-                  <option value={15}>15 Years</option>
-                  <option value={30}>30 Years</option>
-                </select>
-              </label>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <label className="block">
-                Yearly Homeowner&apos;s Insurance:
-                <div className="relative mt-1">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                    $
-                  </span>
-                  <input
-                    type="text"
-                    value={formatNumberWithCommas(insuranceAnnual)}
-                    onChange={e => {
-                      const raw = e.target.value.replace(/,/g, '');
-                      if (/^\d*$/.test(raw) || raw === '') setInsuranceAnnual(raw);
-                    }}
-                    className="pl-8 w-full border p-2 rounded"
-                    placeholder="0"
-                  />
-                </div>
-              </label>
-
-              <label className="block">
-                Yearly Property Tax:
-                <div className="flex items-center mt-1 border rounded overflow-hidden">
-                  {/* Dollar Input */}
-                  <div className="relative flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="block">
+                  Yearly Homeowner&apos;s Insurance:
+                  <div className="relative mt-1">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
                       $
                     </span>
                     <input
                       type="text"
-                      value={propertyTaxDollars ? formatNumberWithCommas(propertyTaxDollars) : ''}
+                      value={formatNumberWithCommas(insuranceAnnual)}
                       onChange={e => {
                         const raw = e.target.value.replace(/,/g, '');
-                        if (/^\d*$/.test(raw) || raw === '') {
-                          setPropertyTaxDollars(raw);
-                          setLastEdited('dollars');
-                        }
+                        if (/^\d*$/.test(raw) || raw === '') setInsuranceAnnual(raw);
                       }}
                       className="pl-8 w-full border p-2 rounded"
                       placeholder="0"
                     />
                   </div>
+                </label>
 
-                  {/* Vertical Divider */}
-                  <div className="h-full w-px bg-gray-500"></div>
+                <label className="block">
+                  Yearly Property Tax:
+                  <div className="flex items-center mt-1 border rounded overflow-hidden">
+                    {/* Dollar Input */}
+                    <div className="relative flex-1">
+                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                        $
+                      </span>
+                      <input
+                        type="text"
+                        value={propertyTaxDollars ? formatNumberWithCommas(propertyTaxDollars) : ''}
+                        onChange={e => {
+                          const raw = e.target.value.replace(/,/g, '');
+                          if (/^\d*$/.test(raw) || raw === '') {
+                            setPropertyTaxDollars(raw);
+                            setLastEdited('dollars');
+                          }
+                        }}
+                        className="pl-8 w-full border p-2 rounded"
+                        placeholder="0"
+                      />
+                    </div>
 
-                  {/* Percentage Input */}
-                  <div className="relative w-24">
+                    {/* Vertical Divider */}
+                    <div className="h-full w-px bg-gray-500"></div>
+
+                    {/* Percentage Input */}
+                    <div className="relative w-24">
+                      <input
+                        type="text"
+                        value={propertyTaxPercent}
+                        onChange={e => {
+                          const raw = e.target.value;
+                          if (/^\d*\.?\d*$/.test(raw) || raw === '') {
+                            setPropertyTaxPercent(raw);
+                            setLastEdited('percent');
+                          }
+                        }}
+                        className="pr-8 w-full border-none p-2"
+                        placeholder="0"
+                      />
+                      <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
+                        %
+                      </span>
+                    </div>
+                  </div>
+                </label>
+
+                <label className="block">
+                  Yearly HOA Dues:
+                  <div className="relative mt-1">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                      $
+                    </span>
                     <input
                       type="text"
-                      value={propertyTaxPercent}
+                      value={formatNumberWithCommas(hoaAnnual)}
                       onChange={e => {
-                        const raw = e.target.value;
-                        if (/^\d*\.?\d*$/.test(raw) || raw === '') {
-                          setPropertyTaxPercent(raw);
-                          setLastEdited('percent');
-                        }
+                        const raw = e.target.value.replace(/,/g, '');
+                        if (/^\d*$/.test(raw) || raw === '') setHOAAnnual(raw);
                       }}
-                      className="pr-8 w-full border-none p-2"
+                      className="pl-8 w-full border p-2 rounded"
                       placeholder="0"
                     />
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
-                      %
-                    </span>
                   </div>
-                </div>
-              </label>
-
-              <label className="block">
-                Yearly HOA Dues:
-                <div className="relative mt-1">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                    $
-                  </span>
-                  <input
-                    type="text"
-                    value={formatNumberWithCommas(hoaAnnual)}
-                    onChange={e => {
-                      const raw = e.target.value.replace(/,/g, '');
-                      if (/^\d*$/.test(raw) || raw === '') setHOAAnnual(raw);
-                    }}
-                    className="pl-8 w-full border p-2 rounded"
-                    placeholder="0"
-                  />
-                </div>
-              </label>
-            </div>
-            <div className="flex items-center gap-2 mb-4 pt-8">
-              <h2 className="text-2xl font-bold mb-4">Affordability</h2>
-              <button
-                type="button"
-                className="text-blue-500 hover:text-blue-700"
-                onClick={() => setShowAffordabilityInfo(!showInfo)}
-                aria-label="Toggle Affordability Info"
-              >
-                <FontAwesomeIcon icon={faCircleInfo} className="w-5 h-5" />
-              </button>
-              {showInfo && (
-                <p className="text-sm text-gray-600 mt-2">
-                  Please enter the <strong>monthly payment amounts</strong> for your debts, not the
-                  total balances.
-                  <br />
-                  <br />
-                  <strong>Examples:</strong>
-                  <br />• Student Loan: If you pay $350 monthly, enter <strong>350</strong>.<br />•
-                  Auto Loan: If your balance is $35,000 and monthly payment is $500, enter{' '}
-                  <strong>500</strong>.<br />• Credit Cards: If your minimum payment is $35 (even if
-                  you pay $500), enter <strong>35</strong>.
-                </p>
-              )}
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <label className="block pd-3">
-                Monthly Student Loan Debt:
-                <div className="relative mt-1">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                    $
-                  </span>
-                  <input
-                    type="text"
-                    value={formatNumberWithCommas(monthlyStudentdebt)}
-                    onChange={e => {
-                      const raw = e.target.value.replace(/,/g, '');
-                      if (/^\d*$/.test(raw) || raw === '') setMonthlyStudentdebt(raw);
-                    }}
-                    className="pl-8 w-full border p-2 rounded"
-                    placeholder="0"
-                  />
-                </div>
-              </label>
-
-              <label className="block">
-                Monthly Auto Debt:
-                <div className="relative mt-1">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                    $
-                  </span>
-                  <input
-                    type="text"
-                    value={formatNumberWithCommas(monthlyAutodebt)}
-                    onChange={e => {
-                      const raw = e.target.value.replace(/,/g, '');
-                      if (/^\d*$/.test(raw) || raw === '') setMonthlyAutodebt(raw);
-                    }}
-                    className="pl-8 w-full border p-2 rounded"
-                    placeholder="0"
-                  />
-                </div>
-              </label>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <label className="block">
-                Monthly Credit Card Debt:
-                <div className="relative mt-1">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                    $
-                  </span>
-                  <input
-                    type="text"
-                    value={formatNumberWithCommas(monthlyCreditcarddebt)}
-                    onChange={e => {
-                      const raw = e.target.value.replace(/,/g, '');
-                      if (/^\d*$/.test(raw) || raw === '') setMonthlyCredit(raw);
-                    }}
-                    className="pl-8 w-full border p-2 rounded"
-                    placeholder="0"
-                  />
-                </div>
-              </label>
-              <label className="block">
-                Monthly Income:
-                <div className="relative mt-1">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                    $
-                  </span>
-                  <input
-                    type="text"
-                    value={formatNumberWithCommas(monthlyIncome)}
-                    onChange={e => {
-                      const raw = e.target.value.replace(/,/g, '');
-                      if (/^\d*$/.test(raw) || raw === '') setMonthlyIncome(raw);
-                    }}
-                    className="pl-8 w-full border p-2 rounded"
-                    placeholder="0"
-                  />
-                </div>
-              </label>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <label className="block">
-                Credit Score:
-                <select
-                  value={creditScoreRange}
-                  onChange={e => setCreditScoreRange(e.target.value)}
-                  className="mt-1 w-full border p-2 rounded"
+                </label>
+              </div>
+              <div className="flex items-center gap-2 mb-4 pt-8">
+                <h2 className="text-2xl font-bold mb-4">Affordability</h2>
+                <button
+                  type="button"
+                  className="text-blue-500 hover:text-blue-700"
+                  onClick={() => setShowAffordabilityInfo(!showInfo)}
+                  aria-label="Toggle Affordability Info"
                 >
-                  <option value="620-639">620-639</option>
-                  <option value="640-659">640-659</option>
-                  <option value="660-679">660-679</option>
-                  <option value="680-699">680-699</option>
-                  <option value="700-719">700-719</option>
-                  <option value="720-739">720-739</option>
-                  <option value="740-759">740-759</option>
-                  <option value="760+">760+</option>
-                </select>
-              </label>
-
-              <label className="block">
-                Private Mortgage Insurance (PMI):
-                <input
-                  type="text"
-                  value={`$${monthlyMortgageInsurance.toFixed(2)}`}
-                  readOnly
-                  className="mt-1 w-full border p-2 rounded bg-gray-100 text-gray-700 cursor-not-allowed"
-                  placeholder="Automatically calculated"
-                />
-              </label>
-            </div>
-          </div>
-
-          {/* The right side*/}
-          <div className="bg-white p-5 rounded shadow w-full">
-            <h2 className="text-2x1 mb-6 text-center">Total Monthly Payment: </h2>
-            <h1 className="text-5xl font-bold text-center">
-              ${formatNumberWithCommas(totalMonthly)}
-            </h1>
-            <div className="w-full flex flex-col md:flex-row md:justify-center md:items-center gap-8 pb-8">
-              {/* Chart */}
-              <div className="w-full md:w-1/2 flex justify-center">
-                <ResponsiveContainer width="100%" height={350}>
-                  <PieChart margin={{ top: 20, right: 40, bottom: 20, left: 20 }}>
-                    <Pie
-                      dataKey="value"
-                      data={pieData}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={80}
-                      label={({ percent }) => `${((percent ?? 0) * 100).toFixed(1)}%`}
-                    >
-                      {pieData.map((_, index) => (
-                        <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip
-                      formatter={(value: number, name: string) => [`$${value.toFixed(2)}`, name]}
-                      labelFormatter={() => ''}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
+                  <FontAwesomeIcon icon={faCircleInfo} className="w-5 h-5" />
+                </button>
+                {showInfo && (
+                  <p className="text-sm text-gray-600 mt-2">
+                    Please enter the <strong>monthly payment amounts</strong> for your debts, not
+                    the total balances.
+                    <br />
+                    <br />
+                    <strong>Examples:</strong>
+                    <br />• Student Loan: If you pay $350 monthly, enter <strong>350</strong>.<br />
+                    • Auto Loan: If your balance is $35,000 and monthly payment is $500, enter{' '}
+                    <strong>500</strong>.<br />• Credit Cards: If your minimum payment is $35 (even
+                    if you pay $500), enter <strong>35</strong>.
+                  </p>
+                )}
               </div>
-
-              {/* Color Keys */}
-              <div className="w-full md:w-1/2 flex flex-col justify-center space-y-3">
-                {pieData.map((item, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div
-                      className="w-4 h-4 rounded"
-                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="block pd-3">
+                  Monthly Student Loan Debt:
+                  <div className="relative mt-1">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                      $
+                    </span>
+                    <input
+                      type="text"
+                      value={formatNumberWithCommas(monthlyStudentdebt)}
+                      onChange={e => {
+                        const raw = e.target.value.replace(/,/g, '');
+                        if (/^\d*$/.test(raw) || raw === '') setMonthlyStudentdebt(raw);
+                      }}
+                      className="pl-8 w-full border p-2 rounded"
+                      placeholder="0"
                     />
-                    <span className="font-medium">{item.name}:</span>
-                    <span>${formatNumberWithCommas(item.value.toFixed(2).toString())}</span>
                   </div>
-                ))}
+                </label>
+
+                <label className="block">
+                  Monthly Auto Debt:
+                  <div className="relative mt-1">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                      $
+                    </span>
+                    <input
+                      type="text"
+                      value={formatNumberWithCommas(monthlyAutodebt)}
+                      onChange={e => {
+                        const raw = e.target.value.replace(/,/g, '');
+                        if (/^\d*$/.test(raw) || raw === '') setMonthlyAutodebt(raw);
+                      }}
+                      className="pl-8 w-full border p-2 rounded"
+                      placeholder="0"
+                    />
+                  </div>
+                </label>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="block">
+                  Monthly Credit Card Debt:
+                  <div className="relative mt-1">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                      $
+                    </span>
+                    <input
+                      type="text"
+                      value={formatNumberWithCommas(monthlyCreditcarddebt)}
+                      onChange={e => {
+                        const raw = e.target.value.replace(/,/g, '');
+                        if (/^\d*$/.test(raw) || raw === '') setMonthlyCredit(raw);
+                      }}
+                      className="pl-8 w-full border p-2 rounded"
+                      placeholder="0"
+                    />
+                  </div>
+                </label>
+                <label className="block">
+                  Monthly Income:
+                  <div className="relative mt-1">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                      $
+                    </span>
+                    <input
+                      type="text"
+                      value={formatNumberWithCommas(monthlyIncome)}
+                      onChange={e => {
+                        const raw = e.target.value.replace(/,/g, '');
+                        if (/^\d*$/.test(raw) || raw === '') setMonthlyIncome(raw);
+                      }}
+                      className="pl-8 w-full border p-2 rounded"
+                      placeholder="0"
+                    />
+                  </div>
+                </label>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="block">
+                  Credit Score:
+                  <select
+                    value={creditScoreRange}
+                    onChange={e => setCreditScoreRange(e.target.value)}
+                    className="mt-1 w-full border p-2 rounded"
+                  >
+                    <option value="620-639">620-639</option>
+                    <option value="640-659">640-659</option>
+                    <option value="660-679">660-679</option>
+                    <option value="680-699">680-699</option>
+                    <option value="700-719">700-719</option>
+                    <option value="720-739">720-739</option>
+                    <option value="740-759">740-759</option>
+                    <option value="760+">760+</option>
+                  </select>
+                </label>
+
+                <label className="block">
+                  Private Mortgage Insurance (PMI):
+                  <input
+                    type="text"
+                    value={`$${monthlyMortgageInsurance.toFixed(2)}`}
+                    readOnly
+                    className="mt-1 w-full border p-2 rounded bg-gray-100 text-gray-700 cursor-not-allowed"
+                    placeholder="Automatically calculated"
+                  />
+                </label>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-              {/*<div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+            {/* The right side*/}
+            <div className="bg-white p-5 rounded shadow w-full">
+              <h2 className="text-2xl mb-6 text-center">Total Monthly Payment: </h2>
+              <h1 className="text-5xl font-bold text-center">
+                ${formatNumberWithCommas(totalMonthly)}
+              </h1>
+              <div className="w-full flex flex-col items-center gap-8 pb-8 max-w-full sm:max-w-[500px] md:max-w-[600px]">
+                {/* Chart */}
+                <div className="w-full flex flex-col items-center space-y-4">
+                  <ResponsiveContainer width="100%" height={350}>
+                    <PieChart margin={{ top: 20, right: 40, bottom: 20, left: 20 }}>
+                      <Pie
+                        dataKey="value"
+                        data={pieData}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={80}
+                        label={({ percent }) => `${((percent ?? 0) * 100).toFixed(1)}%`}
+                      >
+                        {pieData.map((_, index) => (
+                          <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        formatter={(value: number, name: string) => [`$${value.toFixed(2)}`, name]}
+                        labelFormatter={() => ''}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Color Keys */}
+                <div className="w-full flex flex-col justify-center items-center space-y-4 pb-8">
+                  {pieData.map((item, index) => (
+                    <div key={index} className="flex justify-between gap-3 w-64">
+                      <div className="flex items-center gap-2 min-w-[160px] justify-start">
+                        <div
+                          className="w-4 h-4 rounded"
+                          style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                        />
+                        <span className="font-medium">{item.name}:</span>
+                        <span>${formatNumberWithCommas(item.value.toFixed(2).toString())}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                {/*<div className="bg-blue-500 text-white rounded-lg p-4 text-center">
                 <p className="text-xs sm:text-sm mb-1 sm:mb-2">Monthly Mortgage Payment (PITIA)</p>
                 <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
                   $
@@ -607,67 +612,69 @@ const LoanCalculator: React.FC = () => {
                 </p>
               </div>*/}
 
-              <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
-                <p className="text-xs sm:text-sm mb-1 sm:mb-2">Loan Amount</p>
-                <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                  $
-                  <span className="inline-block">
-                    {loanAmount.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </span>
-                </p>
-              </div>
+                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Loan Amount</p>
+                  <p className="sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
+                    $
+                    <span className="inline-block">
+                      {loanAmount.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </span>
+                  </p>
+                </div>
 
-              <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
-                <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Monthly Income Needed</p>
-                <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                  $
-                  <span className="inline-block">
-                    {totalIncomeNeeded.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </span>
-                </p>
-              </div>
+                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Monthly Income Needed</p>
+                  <p className="sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
+                    $
+                    <span className="inline-block">
+                      {totalIncomeNeeded.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </span>
+                  </p>
+                </div>
 
-              <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
-                <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Yearly Income Needed</p>
-                <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                  $
-                  <span className="inline-block">
-                    {annualIncomeNeeded.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </span>
-                </p>
-              </div>
+                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Yearly Income Needed</p>
+                  <p className="sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
+                    $
+                    <span className="inline-block">
+                      {annualIncomeNeeded.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </span>
+                  </p>
+                </div>
 
-              <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
-                <p className="text-xs sm:text-sm mb-1 sm:mb-2">Debt to Income Ratio</p>
-                <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                  <span className="inline-block">{totalDTI.toFixed(2)}%</span>
-                </p>
+                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Debt to Income Ratio</p>
+                  <p className="sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
+                    <span className="inline-block">{totalDTI.toFixed(2)}%</span>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-          {/* Disclaimer for compliance*/}
-          <div className="relative mt-1 ">
-            <p className="text-xs text-gray-500">
-              This calculator is provided by Lock it Lending for educational and informational
-              purposes only. It does not constitute financial advice, nor does it represent any loan
-              offer or guarantee of loan terms. The calculations are estimates based solely on the
-              information you enter and may not reflect actual mortgage rates, terms, or payments.
-              Your actual loan eligibility, interest rates, and terms will vary depending on your
-              financial profile and the lender’s criteria. For personalized advice and accurate loan
-              information, please consult a licensed mortgage professional.
-            </p>
-          </div>
-        </section>
-      </main>
+            {/* Disclaimer for compliance*/}
+            <div className="relative mt-1 ">
+              <p className="text-xs text-gray-500">
+                This calculator is provided by Lock it Lending for educational and informational
+                purposes only. It does not constitute financial advice, nor does it represent any
+                loan offer or guarantee of loan terms. The calculations are estimates based solely
+                on the information you enter and may not reflect actual mortgage rates, terms, or
+                payments. Your actual loan eligibility, interest rates, and terms will vary
+                depending on your financial profile and the lender’s criteria. For personalized
+                advice and accurate loan information, please consult a licensed mortgage
+                professional.
+              </p>
+            </div>
+          </section>
+        </main>
+      </div>
       <Footer />
     </>
   );
