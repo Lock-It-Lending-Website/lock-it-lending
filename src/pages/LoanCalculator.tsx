@@ -221,7 +221,7 @@ const LoanCalculator: React.FC = () => {
           {/*User input*/}
           <section className="max-w-7xl mx-auto p-6 pt-10 pb-20 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold mb-4 pt-8">Loan Information</h2>
+              <h2 className="text-2xl font-bold mb-4 pt-8 pb-4">Loan Information</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <label className="block">
                   Purchase Price:
