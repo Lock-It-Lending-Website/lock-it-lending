@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
@@ -48,7 +48,7 @@ const SocialOutreach = () => {
                 <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
                   <div className="col-span-2 md:col-span-3 row-span-2">
                     <img
-                      src="/Lock it Cares/kerrville1.jpg"
+                      src={`${process.env.PUBLIC_URL}/lock-it-cares/kerrville1.jpg`}
                       alt="Large image 1"
                       className="w-full h-full object-cover rounded-lg shadow"
                     />
@@ -56,15 +56,15 @@ const SocialOutreach = () => {
 
                   <div className="col-span-2 md:col-span-3 row-span-2">
                     <img
-                      src="/Lock it Cares/kerrville2.jpg"
+                      src={`${process.env.PUBLIC_URL}/lock-it-cares/kerrville2.jpg`}
                       alt="Large image 2"
                       className="w-full h-full object-cover rounded-lg shadow"
                     />
                   </div>
                   {[
-                    '/Lock it Cares/kerrville3.jpg',
-                    '/Lock it Cares/kerrville4.jpg',
-                    '/Lock it Cares/kerrville5.jpg',
+                    '/lock-it-cares/kerrville3.jpg',
+                    '/lock-it-cares/kerrville4.jpg',
+                    '/lock-it-cares/kerrville5.jpg',
                   ].map((src, index) => (
                     <div key={index} className="col-span-1 md:col-span-2">
                       <img

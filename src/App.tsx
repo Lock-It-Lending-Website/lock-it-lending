@@ -17,6 +17,7 @@ import TeamPage from './pages/TeamPage';
 import TeamMemberPage from './pages/TeamMember';
 import ApplyForm from './pages/Apply';
 import SocialOutreachPage from './pages/SocialOutreach';
+import CareersPage from './pages/Careers';
 import { EmailPolicy, TermsOfUse, PrivacyPolicy } from './pages/Policies';
 import { Calculator } from 'lucide-react';
 
@@ -27,6 +28,7 @@ const App: React.FC = () => {
       <Route path="/purchase" element={<Purchase />} />
       <Route path="/loancalculator" element={<LoanCalculator />} />
       <Route path="/socialoutreach" element={<SocialOutreachPage />} />
+      <Route path="/careers" element={<CareersPage />} />
       <Route path="/refinance" element={<Refinance />} />
       <Route path="/loan-programs" element={<LoanPrograms />} />
       <Route path="/meet-lock-it-lending" element={<MeetLockItLending />} />
