@@ -47,6 +47,12 @@ const Header: React.FC = () => {
               >
                 Reviews
               </Link>
+              <Link
+                to="/socialoutreach"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100 text-sm text-center"
+              >
+                Social Outreach
+              </Link>
             </div>
           </div>
           {/*<Link to="/meet-lock-it-lending" className="nav-link px-4 py-1.5 rounded-full">

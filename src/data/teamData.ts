@@ -205,16 +205,6 @@ export const teamMembers: TeamMember[] = [
     bio: '',
     applyLink: 'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
   },
-  {
-    name: 'Hien Le',
-    title: 'Loan Officer Assistant',
-    email: 'hien.le@lockitlending.com',
-    phone: '(361) 321-1355',
-    image: `${base}/team/Hien-Le.jpeg`,
-    slug: 'hien-le',
-    team: 'allstars',
-    applyLink: 'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
-  },
   // Vortex
   {
     name: 'Robert Noonan',
@@ -407,6 +397,26 @@ export const teamMembers: TeamMember[] = [
     phone: '(346) 688-9110',
     image: `${base}/team/Charlene-White.jpg`,
     slug: 'Charlene-White',
+    team: 'vortex',
+  },
+  {
+    name: 'Ana Rodriguez',
+    title: 'Independent Loan Officer',
+    nmls: '#1705055',
+    email: 'ana.r@lockitlending.com',
+    phone: '(346) 714-5077',
+    image: `${base}/team/Ana-Rodriguez.jpg`,
+    slug: 'Ana-Rodriguez',
+    team: 'vortex',
+  },
+  {
+    name: 'Colton Edwards',
+    title: 'Retail Loan Officer',
+    nmls: '#2695963',
+    email: 'colton.e@lockitlending.com',
+    phone: '(832) 916-4537',
+    image: `${base}/team/Colton-Edwards.png`,
+    slug: 'Colton-Edwards',
     team: 'vortex',
   },
 ];

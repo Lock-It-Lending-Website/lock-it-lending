@@ -105,13 +105,20 @@ const Home: React.FC = () => {
         {/* Live From Lock it Lending Section*/}
         <section className="py-28 bg-[#f7fbfd] px-8">
           <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-5xl font-extrabold mb-6">Live From Lock it Lending</h2>
+            <h2 className="text-5xl font-extrabold mb-6">Hot program from Lock It Lending</h2>
             <p className="text-2xl text-gray-600 mb-12 font-semibold">
-              Live Monthly Homebuyer Class — Learn How to Buy With 0% Down & Up to $50K Assistance
+              1% down conventional is back!
             </p>
             <div className="flex justify-center">
-              <iframe
-                src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Flockitlendingstars%2Fvideos%2F1189526786227691%2F&width=300"
+              <div
+                className="fb-video"
+                data-href="https://www.facebook.com/reel/4026631054333887"
+                data-width="320"
+                data-allowfullscreen="true"
+              ></div>
+              {/*This is for live videos*/}
+              {/*<iframe
+                src="https://www.facebook.com/reel/4026631054333887"
                 width="320"
                 height="500"
                 style={{
@@ -123,7 +130,7 @@ const Home: React.FC = () => {
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                 allowFullScreen
                 title="Facebook Vertical Video"
-              ></iframe>
+              ></iframe>*/}
             </div>
           </div>
         </section>
