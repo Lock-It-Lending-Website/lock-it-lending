@@ -9,11 +9,11 @@ const careers = () => {
       <Header />
       <main>
         <HeroSection
-          title="Lock It Lending"
-          highlight="Community Outreach"
+          title="Careers That Make an"
+          highlight="Impact"
           highlightColor="gold"
-          description="See how Lock It Lending supports communities through disaster relief, volunteer programs, charitable giving, and social responsibility efforts across Texas and beyond."
-          image={`${process.env.PUBLIC_URL}/social-outreach-page.jpg`}
+          description="Join Lock It Lending and build a meaningful career in the mortgage industry. We're hiring professionals who are passionate about helping others, driving innovation, and growing with a purpose-driven team."
+          image={`${process.env.PUBLIC_URL}/careers-page.jpg`}
         />
       </main>
       <Footer />

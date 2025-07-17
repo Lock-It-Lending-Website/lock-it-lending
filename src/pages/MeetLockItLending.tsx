@@ -17,13 +17,13 @@ const MeetLockItLending = () => {
     <div className="font-sans">
       <Header />
       <main>
-        <HeroSection
+        {/*<HeroSection
           title="Meet The Lock It Lending"
           highlight="Family"
           highlightColor="gold"
           description="Get to Know the Skilled Individuals Who Make Locking in Your Mortgage Simple, Fast, and Hassle-Free."
-          image={`${process.env.PUBLIC_URL}/LIL-Meet-The-Family-2024.png`}
-        />
+          image={`${process.env.PUBLIC_URL}/LIL-Meet-The-Family-2024.jpg`}
+        />*/}
         {/* <section className="bg-[#f7fbfd] py-24 px-8">
           <h2 className="text-6xl font-bold text-center mb-10">Our Teams</h2>
           <p className="text-center text-gray-600 text-2xl max-w-4xl mx-auto mb-16">
@@ -58,7 +58,7 @@ const MeetLockItLending = () => {
         <section className="bg-[#f7fbfd] py-24 px-8">
           <h2 className="text-6xl font-bold text-center mb-10">Meet The Team</h2>
           <p className="text-center text-gray-600 text-2xl max-w-3xl mx-auto mb-16">
-            Meet the individuals who make Lock It Lending possible
+            Get to Know the skilled individuals who make Lock It Lending possible
           </p>
           <div className="max-w-7xl mx-auto grid gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
             {sortedTeamMembers.map(member => (

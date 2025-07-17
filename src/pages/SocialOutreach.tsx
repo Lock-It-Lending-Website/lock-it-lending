@@ -12,7 +12,7 @@ const SocialOutreach = () => {
           title="Lock It Lending"
           highlight="Community Outreach"
           highlightColor="gold"
-          description="See how Lock It Lending supports communities through disaster relief, volunteer programs, charitable giving, and social responsibility efforts across Texas and beyond."
+          description="See how Lock It Lending supports communities through disaster relief, charitable giving, and social responsibility efforts across Texas and beyond."
           image={`${process.env.PUBLIC_URL}/social-outreach-page.jpg`}
         />
         <section className="py-24 px-6 pb-4">
