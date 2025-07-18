@@ -260,20 +260,6 @@ export const teamMembers: TeamMember[] = [
     applyLink: 'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lukeroberts',
     videoUrl: 'https://www.youtube.com/embed/FlLA9F0hSlo',
   },
-  {
-    name: 'Jaime Casablanca',
-    title: 'Loan Officer',
-    nmls: '#2657322',
-    phone: '(346) 474-6555',
-    email: 'jaime.c@lockitlending.com',
-    image: `${base}/team/Jaime-Casablanca.png`,
-    slug: 'jaime-casablanca',
-    team: 'vortex',
-    bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=2b9366ca-e8ed-43e7-8b5c-f8ab9c792b57',
-    videoUrl: 'https://www.youtube.com/embed/b-UXoLzbOMg',
-  },
   /*
     name: 'Alishan Lokhandwalla',
     title: 'Loan Officer',
@@ -388,6 +374,7 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Hoang-Nguyen.jpg`,
     slug: 'Hoang-Nguyen',
     team: 'vortex',
+    videoUrl: 'https://youtube.com/embed/cRdUwkT2D68',
   },
   {
     name: 'Charlene White',
