@@ -55,7 +55,7 @@ const MeetLockItLending = () => {
           </div>
         </section> */}
 
-        <section className="bg-[#f7fbfd] py-24 px-8">
+        <section className="bg-gray-50 py-24 px-8">
           <h2 className="text-6xl font-bold text-center mb-10">Meet The Team</h2>
           <p className="text-center text-gray-600 text-2xl max-w-3xl mx-auto mb-16">
             Get to Know the skilled individuals who make Lock It Lending possible

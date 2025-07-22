@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 export default function ResourcesPage() {
   return (
-    <div className="font-sans bg-[#f7fbfd]">
+    <div className="font-sans bg-gray-50">
       <Header />
       <HeroSection
         title="Resources To Help"

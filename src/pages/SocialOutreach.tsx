@@ -5,7 +5,7 @@ import HeroSection from '../components/HeroSection';
 
 const SocialOutreach = () => {
   return (
-    <div className="font-sans bg-[#f7fbfd]">
+    <div className="font-sans bg-gray-50">
       <Header />
       <main>
         <HeroSection

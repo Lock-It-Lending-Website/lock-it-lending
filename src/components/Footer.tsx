@@ -68,6 +68,16 @@ const Footer = () => {
                   Reviews
                 </Link>
               </li>
+              <li>
+                <Link to="/socialoutreach" className="hover:underline">
+                  Social Outreach
+                </Link>
+              </li>
+              <li>
+                <Link to="/careers" className="hover:underline">
+                  Careers
+                </Link>
+              </li>
             </ul>
           </div>
 

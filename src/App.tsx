@@ -2,13 +2,18 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Purchase from './pages/Purchase';
+import AffordabilityCalculator from './pages/AffordabilityCalculator';
 import LoanCalculator from './pages/LoanCalculator';
+import CalculatorsPage from './pages/CalculatorsPage';
 import Refinance from './pages/Refinance';
 import LoanPrograms from './pages/LoanProgram';
 import MeetLockItLending from './pages/MeetLockItLending';
 import Reviews from './pages/Review';
 import Glossary from './pages/Glossary';
 import Resources from './pages/Resources';
+import SocialOutreachPage from './pages/SocialOutreach';
+import Careers from './pages/Careers';
+import CareersPage from './pages/CareersPage';
 import Rates from './pages/Rates';
 import GlossaryTermPage from './pages/GlossaryTermPage';
 import ResourcesPage from './pages/ResourcesPage';
@@ -16,19 +21,19 @@ import ThankYou from './pages/ThankYouScreen';
 import TeamPage from './pages/TeamPage';
 import TeamMemberPage from './pages/TeamMember';
 import ApplyForm from './pages/Apply';
-import SocialOutreachPage from './pages/SocialOutreach';
-//import CareersPage from './pages/Careers';
 import { EmailPolicy, TermsOfUse, PrivacyPolicy } from './pages/Policies';
-import { Calculator } from 'lucide-react';
 
 const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/purchase" element={<Purchase />} />
-      <Route path="/loancalculator" element={<LoanCalculator />} />
-      <Route path="/socialoutreach" element={<SocialOutreachPage />} />
-      {/*<Route path="/careers" element={<CareersPage />} />*/}
+      <Route path="/loan-calculator" element={<LoanCalculator />} />
+      <Route path="/affordability-calculator" element={<AffordabilityCalculator />} />
+      <Route path="/calculators-page" element={<CalculatorsPage />} />
+      <Route path="/social-outreach" element={<SocialOutreachPage />} />
+      <Route path="/careers" element={<Careers />} />
+      <Route path="/careers/:slug" element={<CareersPage />} />
       <Route path="/refinance" element={<Refinance />} />
       <Route path="/loan-programs" element={<LoanPrograms />} />
       <Route path="/meet-lock-it-lending" element={<MeetLockItLending />} />

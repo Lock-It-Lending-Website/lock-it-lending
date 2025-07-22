@@ -15,7 +15,7 @@ const TeamMemberPage = () => {
   return (
     <>
       <Header />
-      <main className="bg-[#f7fbfd]">
+      <main className="bg-gray-50">
         {/* Top: Hero layout */}
         <section className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 py-28 px-6 md:px-20 gap-16">
           {/* Left: Profile Image */}
@@ -43,7 +43,6 @@ const TeamMemberPage = () => {
               />
             )}
           </div>
-          
 
           {/* Right: Info Text */}
           <div className="flex flex-col justify-center text-left">

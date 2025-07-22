@@ -396,14 +396,4 @@ export const teamMembers: TeamMember[] = [
     slug: 'Ana-Rodriguez',
     team: 'vortex',
   },
-  {
-    name: 'Colton Edwards',
-    title: 'Retail Loan Officer',
-    nmls: '#2695963',
-    email: 'colton.e@lockitlending.com',
-    phone: '(832) 916-4537',
-    image: `${base}/team/Colton-Edwards.png`,
-    slug: 'Colton-Edwards',
-    team: 'vortex',
-  },
 ];

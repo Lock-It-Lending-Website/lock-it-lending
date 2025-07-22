@@ -11,7 +11,7 @@ const reviews = getShuffledReviews(seed, 5);
 
 export default function Reviews() {
   return (
-    <div className="font-sans bg-[#f7f9fb]">
+    <div className="font-sans bg-gray-50">
       <Header />
       <main>
         <HeroSection

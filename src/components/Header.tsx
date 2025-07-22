@@ -42,13 +42,19 @@ const Header: React.FC = () => {
 
             <div className="absolute top-full left-1/2 -translate-x-1/2 w-48 bg-white text-sm border-t border-gray-200 rounded-b shadow-md hidden group-hover:flex flex-col z-50 transition-all duration-200">
               <Link
+                to="/careers"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100 text-center"
+              >
+                Careers
+              </Link>
+              <Link
                 to="/reviews"
                 className="block px-4 py-2 text-gray-800 hover:bg-gray-100 text-center"
               >
                 Reviews
               </Link>
               <Link
-                to="/socialoutreach"
+                to="/social-outreach"
                 className="block px-4 py-2 text-gray-800 hover:bg-gray-100 text-center"
               >
                 Social Outreach
@@ -58,7 +64,7 @@ const Header: React.FC = () => {
           {/*<Link to="/meet-lock-it-lending" className="nav-link px-4 py-1.5 rounded-full">
             <span className="nav-link-text">Meet Lock It Lending</span>
           </Link>*/}
-          <Link to="/loancalculator" className="nav-link px-4 py-1.5 rounded-full">
+          <Link to="/loan-calculator" className="nav-link px-4 py-1.5 rounded-full">
             <span className="nav-link-text">Loan Calculator</span>
           </Link>
           <Link to="/glossary" className="nav-link px-4 py-1.5 rounded-full">

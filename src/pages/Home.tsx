@@ -103,7 +103,7 @@ const Home: React.FC = () => {
           }
         />
         {/* Live From Lock it Lending Section*/}
-        <section className="py-28 bg-[#f7fbfd] px-8">
+        <section className="py-28 bg-gray-50 px-8">
           <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-5xl font-extrabold mb-6">Hot program from Lock It Lending</h2>
             <p className="text-2xl text-gray-600 mb-12 font-semibold">

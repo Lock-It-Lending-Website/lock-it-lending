@@ -10,7 +10,7 @@ export default function GlossaryTermPage() {
 
   if (!termData) {
     return (
-      <div className="bg-[#f9fbfc] font-sans min-h-screen">
+      <div className="bg-gray-50 font-sans min-h-screen">
         <Header />
         <main className="max-w-4xl mx-auto px-4 py-20 text-center">
           <h1 className="text-3xl font-bold text-red-600">Term not found</h1>
@@ -24,7 +24,7 @@ export default function GlossaryTermPage() {
   }
 
   return (
-    <div className="bg-[#f9fbfc] font-sans text-black min-h-screen">
+    <div className="bg-gray-50 font-sans text-black min-h-screen">
       <Header />
       <main className="max-w-5xl mx-auto px-4 py-16">
         {/* Breadcrumbs */}

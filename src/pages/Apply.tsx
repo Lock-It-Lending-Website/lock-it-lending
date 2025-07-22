@@ -40,7 +40,7 @@ const ApplyForm = () => {
   return (
     <div>
       <Header />
-      <main className="max-w-3xl mx-auto p-8 bg-white shadow rounded mt-10">
+      <main className="max-w-3xl mx-auto p-8 bg-white shadow rounded my-20">
         <h1 className="text-3xl font-bold mb-4">Apply with {officer}</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input

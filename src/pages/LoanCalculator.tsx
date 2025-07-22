@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import HeroSection from '../components/HeroSection';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
@@ -209,17 +208,9 @@ const LoanCalculator: React.FC = () => {
     <>
       <div className="font-sans">
         <Header />
-        <main className="bg-gray-50 min-h-screen">
-          <HeroSection
-            title="Loan Calculator"
-            highlight="PITIA Breakdown"
-            highlightColor="gold"
-            description="Estimate your monthly mortgage payments based on your purchase price, down payment, interest, and more."
-            image="/loancalculator.jpg"
-          />
-
+        <main className="bg-gray-50 py-24 px-6 min-h-screen">
           {/*User input*/}
-          <section className="max-w-7xl mx-auto p-6 pt-10 pb-20 grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+          <section className="max-w-7xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
               <h2 className="text-2xl font-bold mb-4">Loan Information</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
