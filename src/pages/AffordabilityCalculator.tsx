@@ -8,17 +8,46 @@ import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 // Pie chart colors
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
+// PMI Calculations for the monthly mortgage
+export type CreditScoreRange =
+  | '620-639'
+  | '640-659'
+  | '660-679'
+  | '680-699'
+  | '700-719'
+  | '720-739'
+  | '740-759'
+  | '760+';
+
+// Define score rates with LTV brackets
+const scoreRates: Record<CreditScoreRange, Record<string, number>> = {
+  '620-639': { '<85': 0.007, '85-90': 0.011, '90-95': 0.014, '>95': 0.018 },
+  '640-659': { '<85': 0.006, '85-90': 0.0095, '90-95': 0.0125, '>95': 0.0165 },
+  '660-679': { '<85': 0.0055, '85-90': 0.0085, '90-95': 0.011, '>95': 0.015 },
+  '680-699': { '<85': 0.005, '85-90': 0.0075, '90-95': 0.0095, '>95': 0.0135 },
+  '700-719': { '<85': 0.0045, '85-90': 0.0068, '90-95': 0.0085, '>95': 0.0125 },
+  '720-739': { '<85': 0.0038, '85-90': 0.006, '90-95': 0.0075, '>95': 0.0115 },
+  '740-759': { '<85': 0.0032, '85-90': 0.005, '90-95': 0.0065, '>95': 0.01 },
+  '760+': { '<85': 0.0025, '85-90': 0.004, '90-95': 0.0055, '>95': 0.009 },
+};
+
+const getPmiRate = (ltv: number, creditScoreRange: CreditScoreRange) => {
+  if (ltv <= 80) return 0;
+  const bracket = ltv <= 85 ? '<85' : ltv <= 90 ? '85-90' : ltv <= 95 ? '90-95' : '>95';
+  return scoreRates[creditScoreRange][bracket];
+};
+
 // Declaring variables and states
 const AffordabilityCalculator: React.FC = () => {
   const [purchasePrice, setPurchasePrice] = useState<string>('250000');
-  const [downPayment, setDownPayment] = useState<string>('50000');
-  const [downPaymentPercent, setDownPaymentPercent] = useState<string>('20');
+  const [downPayment, setDownPayment] = useState<string>('');
+  const [downPaymentPercent, setDownPaymentPercent] = useState<string>('');
   const [interestRate, setInterestRate] = useState<string>('7.25');
   const [termYears, setTermYears] = useState(30);
-  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('6750');
-  const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('2.7');
-  const [insuranceAnnual, setInsuranceAnnual] = useState<string>('1600'); // annual insurance
-  const [hoaAnnual, setHOAAnnual] = useState<string>('350'); // annual HOA
+  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('3000');
+  const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('1.2');
+  const [insuranceAnnual, setInsuranceAnnual] = useState<string>('1000'); // annual insurance
+  const [hoaAnnual, setHOAAnnual] = useState<string>(''); // annual HOA
   const [monthlyIncome, setMonthlyIncome] = useState<string>('');
   const [monthlyStudentdebt, setMonthlyStudentdebt] = useState<string>('');
   const [monthlyAutodebt, setMonthlyAutodebt] = useState<string>('');
@@ -26,6 +55,7 @@ const AffordabilityCalculator: React.FC = () => {
   const [creditScoreRange, setCreditScoreRange] = useState<string>('760+');
   const [lastEdited, setLastEdited] = useState<'dollars' | 'percent' | null>(null);
   const [showInfo, setShowAffordabilityInfo] = useState(false);
+  const [dtiPercent, setDtiPercent] = useState<string>('36'); // default 36 %
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [lastEditedDownPayment, setLastEditedDownPayment] = useState<'dollars' | 'percent' | null>(
     null
@@ -133,31 +163,18 @@ const AffordabilityCalculator: React.FC = () => {
 
   const ltv = purchasePriceNumber > 0 ? (loanAmount / purchasePriceNumber) * 100 : 0;
 
-  // Total monthly payment
-  const totalMonthlyPayment =
-    monthlyPrincipalAndInterest + monthlyPropertyTax + monthlyHomeInsurance + monthlyHOAFees;
-  const totalMonthly = totalMonthlyPayment.toFixed(2);
-
   // Mortgage only
   const totalMonthlyMortgageCost =
     monthlyPrincipalAndInterest + monthlyPropertyTax + monthlyHomeInsurance + monthlyHOAFees;
 
   // DTI calculations
 
-  const MAX_DTI = 0.45;
-
-  //Mortgage debts + other debts
-  const totalMonthlyDebt = totalMonthlyPayment + monthlyStudent + monthlyAuto + monthlyCreditCard;
+  const MAX_DTI = (parseFloat(dtiPercent) || 0) / 100;
 
   //Other debts
   const otherDebts = monthlyAuto + monthlyStudent + monthlyCreditCard;
 
-  // Affordability calculation
   const maxHousingBudget = monthlyIncomeNumber * MAX_DTI - otherDebts;
-
-  // Total income needed
-  const totalIncomeNeeded = totalMonthlyDebt * 2;
-  const annualIncomeNeeded = totalIncomeNeeded * 12;
 
   //     Part of PITIA that *does* vary with price: P&I + Taxes.
   //     ▸ Taxes:  P × (tax %) / 12
@@ -187,6 +204,27 @@ const AffordabilityCalculator: React.FC = () => {
   const maxLoanAmount = maxAffordableHomePrice * principalPct;
   const maxMortgagePayment = maxLoanAmount * amortFactor;
 
+  const ltvBracket = ltv < 85 ? '<85' : ltv <= 90 ? '85-90' : ltv <= 95 ? '90-95' : '>95';
+
+  const annualMI =
+    ltv > 80 ? loanAmount * scoreRates[creditScoreRange as CreditScoreRange][ltvBracket] : 0;
+
+  const monthlyMI = annualMI / 12;
+
+  const totalMonthlyPayment =
+    monthlyPrincipalAndInterest +
+    monthlyPropertyTax +
+    monthlyHomeInsurance +
+    monthlyHOAFees +
+    monthlyMI;
+
+  //Mortgage debts + other debts
+  const totalMonthlyDebt = totalMonthlyPayment + monthlyStudent + monthlyAuto + monthlyCreditCard;
+
+  // Total income needed
+  const totalIncomeNeeded = totalMonthlyDebt * 2;
+  const annualIncomeNeeded = totalIncomeNeeded * 12;
+
   // Pie chart data
   const pieData = [
     { name: 'Principal & Interest', value: monthlyPrincipalAndInterest },
@@ -197,10 +235,10 @@ const AffordabilityCalculator: React.FC = () => {
 
   return (
     <>
-      <div className="font-sans">
+      <div className="font-sans text-base">
         <Header />
         <main className="bg-gray-50 py-20 min-h-screen">
-          <h2 className="text-4xl text-center font-bold mb-10">Calculate your affordability</h2>
+          <h2 className="text-5xl text-center font-bold mb-10">Calculate your affordability</h2>
           {/*User input*/}
           <section className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-8">
             <div className="lg:col-span-2 space-y-4">
@@ -423,6 +461,25 @@ const AffordabilityCalculator: React.FC = () => {
                   </label>
 
                   <label className="block">
+                    Debt-to-Income (DTI):
+                    <div className="relative mt-1">
+                      <input
+                        type="text"
+                        value={dtiPercent}
+                        onChange={e => {
+                          const raw = e.target.value;
+                          if (/^\d*\.?\d*$/.test(raw) || raw === '') setDtiPercent(raw);
+                        }}
+                        className="pr-8 w-full border p-2 rounded"
+                        placeholder="36"
+                      />
+                      <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
+                        %
+                      </span>
+                    </div>
+                  </label>
+
+                  <label className="block">
                     Yearly Homeowner&apos;s Insurance:
                     <div className="relative mt-1">
                       <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
@@ -527,7 +584,7 @@ const AffordabilityCalculator: React.FC = () => {
             </div>
 
             {/* The right side*/}
-            <div className="lg:col-span-3 bg-white p-5 rounded shadow w-full">
+            <div className="lg:col-span-3 bg-white flex flex-col items-center mx-auto p-5 rounded shadow w-full">
               <p className="text-2xl mb-6 text-center">Max Home Purchase Price</p>
               <h1 className="text-5xl font-bold text-center">
                 $
@@ -579,20 +636,7 @@ const AffordabilityCalculator: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
-                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Loan Amount</p>
-                  <p className="sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                    $
-                    <span className="inline-block">
-                      {loanAmount.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </span>
-                  </p>
-                </div>
-
-                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+                <div className="bg-[#cca249] text-white rounded-lg p-4 text-center">
                   <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Monthly Income Needed</p>
                   <p className="sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
                     $
@@ -605,7 +649,7 @@ const AffordabilityCalculator: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="bg-blue-500 text-white rounded-lg p-4 text-center">
+                <div className="bg-[#cca249] text-white rounded-lg p-4 text-center">
                   <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Yearly Income Needed</p>
                   <p className="sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
                     $
@@ -637,8 +681,8 @@ const AffordabilityCalculator: React.FC = () => {
             </div>
           </section>
         </main>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 };

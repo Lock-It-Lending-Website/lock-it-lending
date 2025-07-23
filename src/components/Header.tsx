@@ -7,6 +7,9 @@ const Header: React.FC = () => {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
+  const [subMenuOpen, setSubMenuOpen] = useState(false);
+  const toggleSubMenu = () => setSubMenuOpen(!subMenuOpen);
+
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
@@ -64,8 +67,8 @@ const Header: React.FC = () => {
           {/*<Link to="/meet-lock-it-lending" className="nav-link px-4 py-1.5 rounded-full">
             <span className="nav-link-text">Meet Lock It Lending</span>
           </Link>*/}
-          <Link to="/loan-calculator" className="nav-link px-4 py-1.5 rounded-full">
-            <span className="nav-link-text">Loan Calculator</span>
+          <Link to="/calculators-page" className="nav-link px-4 py-1.5 rounded-full">
+            <span className="nav-link-text">Calculators</span>
           </Link>
           <Link to="/glossary" className="nav-link px-4 py-1.5 rounded-full">
             <span className="nav-link-text">Mortgage Terms</span>
@@ -101,17 +104,51 @@ const Header: React.FC = () => {
           <Link to="/loan-programs" className="block">
             Loan Programs
           </Link>
-          <Link to="/meet-lock-it-lending" className="block">
-            Meet Lock It Lending
-          </Link>
-          <Link to="/reviews" className="block">
-            Reviews
-          </Link>
-          <Link to="/socialoutreach" className="block">
-            Social Outreach
-          </Link>
-          <Link to="/loancalculator" className="block">
-            Loan Calculator
+
+          {/* Meet Lock It Lending - Link + Dropdown */}
+          <div>
+            <div className="flex items-center justify-between w-full py-1">
+              {/* Clickable Link (entire left side) */}
+              <Link to="/meet-lock-it-lending" className="flex-1">
+                Meet Lock It Lending
+              </Link>
+
+              {/* Divider + Dropdown Arrow */}
+              <div className="flex items-center gap-3">
+                <div className="w-px h-5 bg-gray-400" />
+                <button onClick={toggleSubMenu} aria-label="Toggle Submenu">
+                  <svg
+                    className={`w-4 h-4 text-[#cca249] transition-transform duration-300 ${
+                      subMenuOpen ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {subMenuOpen && (
+              <div className="ml-4 mt-2 space-y-2">
+                <Link to="/careers" className="block">
+                  Careers
+                </Link>
+                <Link to="/reviews" className="block">
+                  Reviews
+                </Link>
+                <Link to="/social-outreach" className="block">
+                  Social Outreach
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <Link to="/calculators-page" className="block">
+            Calculators
           </Link>
           <Link to="/glossary" className="block">
             Mortgage Terms

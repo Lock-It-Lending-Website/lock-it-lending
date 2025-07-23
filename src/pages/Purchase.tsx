@@ -32,7 +32,11 @@ const steps = [
         credit score remains unaffected. We meticulously prepare your application and have it
         reviewed by our in-house underwriter. Curious about potential loan rates and fees?{' '}
         <Link to="/rates" className="text-yellow-700 underline">
-          Get a personalized estimate here
+          Get a personalized rate estimate here
+        </Link>{' '}
+        and use our{' '}
+        <Link to="/calculators-page" className="text-yellow-700 underline">
+          calculators to break down the monthly cost of your new home
         </Link>
         .
       </>

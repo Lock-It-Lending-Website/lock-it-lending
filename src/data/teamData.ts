@@ -321,7 +321,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: 'Aftab Bhagat',
-    title: 'Loan Officer Assistant',
+    title: 'Recruiter',
     email: 'aftab.b@lockitlending.com',
     phone: '(361) 306-4592',
     image: `${base}/team/Aftab-Bhagat.jpg`,
@@ -344,15 +344,6 @@ export const teamMembers: TeamMember[] = [
     phone: '(281) 612-4306',
     image: `${base}/team/Ayesha-Khan.jpg`,
     slug: 'ayesha-khan',
-    team: 'vortex',
-  },
-  {
-    name: 'Sarah Ornelas',
-    title: 'Recruiter and Loan Officer Assistant',
-    email: 'sarah.o@lockitlending.com',
-    phone: '(832) 916-4537',
-    image: `${base}/team/Sarah-Ornelas.jpeg`,
-    slug: 'sarah-ornelas',
     team: 'vortex',
   },
   {

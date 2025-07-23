@@ -203,7 +203,7 @@ const Footer = () => {
         </div>
 
         {/* Second Row: 2 Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {/* MORTGAGE TERMS */}
           <div>
             <h3 className="font-bold text-black text-lg mb-4">MORTGAGE TERMS</h3>
@@ -272,6 +272,23 @@ const Footer = () => {
                   className="hover:underline"
                 >
                   Unlock Homeownership with Lock It Lending's 1% Down Program
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Calculators */}
+          <div>
+            <h3 className="font-bold text-black text-lg mb-4">CALCULATORS</h3>
+            <ul className="space-y-2 text-base">
+              <li>
+                <Link to="/loan-calculator" className="hover:underline">
+                  Mortgage Calculator
+                </Link>
+              </li>
+              <li>
+                <Link to="/affordability-calculator" className="hover:underline">
+                  Affordability Calculator
                 </Link>
               </li>
             </ul>
