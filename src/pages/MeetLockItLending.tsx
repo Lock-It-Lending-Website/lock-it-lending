@@ -83,13 +83,6 @@ const MeetLockItLending = () => {
                     {member.phone && <p>{member.phone}</p>}
                     {member.email && <p className="break-words">{member.email}</p>}
                   </div>
-
-                  {/* Social Icons */}
-                  <div className="flex justify-center gap-6 text-2xl">
-                    <i className="fab fa-facebook text-gold"></i>
-                    <i className="fab fa-linkedin text-gold"></i>
-                    <i className="fab fa-instagram text-gold"></i>
-                  </div>
                 </div>
               </Link>
             ))}
