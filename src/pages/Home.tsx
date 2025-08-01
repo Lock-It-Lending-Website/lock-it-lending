@@ -282,7 +282,7 @@ const Home: React.FC = () => {
                 answering all your financing questions.
               </p>
               <Link
-                to="https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending"
+                to="/careers"
                 className="inline-block bg-gold text-white text-lg px-8 py-3 rounded-full font-semibold shadow hover:opacity-90"
               >
                 Apply

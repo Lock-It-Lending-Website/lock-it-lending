@@ -35,12 +35,12 @@ export default function SingleCareerPage() {
         <h1 className="text-4xl font-bold text-gray-900 mb-6">{career.title}</h1>
         {/*Subtitle*/}
         <p className="text-md text-gray-700 whitespace-pre-line leading-loose">{career.subtitle}</p>
-        <Link
-          to="https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending"
+        <a
+          href="mailto:example@email.com"
           className="inline-block bg-gold text-white text-md px-8 py-3 mt-10 rounded-full font-semibold shadow hover:opacity-90"
         >
           Apply
-        </Link>
+        </a>
         <p className="text-lg font-bold text-gray-700 my-10">About Us</p>
         {/*Summary*/}
         {career.summary && (

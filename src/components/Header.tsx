@@ -7,8 +7,8 @@ const Header: React.FC = () => {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  const [subMenuOpen, setSubMenuOpen] = useState(false);
-  const toggleSubMenu = () => setSubMenuOpen(!subMenuOpen);
+  const [open, setOpen] = useState({ meet: false, calc: false });
+  const toggle = (key: 'meet' | 'calc') => setOpen(prev => ({ ...prev, [key]: !prev[key] }));
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
@@ -64,12 +64,29 @@ const Header: React.FC = () => {
               </Link>
             </div>
           </div>
-          {/*<Link to="/meet-lock-it-lending" className="nav-link px-4 py-1.5 rounded-full">
-            <span className="nav-link-text">Meet Lock It Lending</span>
-          </Link>*/}
-          <Link to="/calculators-page" className="nav-link px-4 py-1.5 rounded-full">
-            <span className="nav-link-text">Calculators</span>
-          </Link>
+          <div className="relative group flex flex-col items-center">
+            <Link
+              to="/calculators-page"
+              className="nav-link px-4 py-1.5 rounded-full font-bold text-gray-800 text-base"
+            >
+              <span className="nav-link-text">Calculators</span>
+            </Link>
+
+            <div className="absolute top-full left-1/2 -translate-x-1/2 w-48 bg-white text-sm border-t border-gray-200 rounded-b shadow-md hidden group-hover:flex flex-col z-50 transition-all duration-200">
+              <Link
+                to="/loan-calculator"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100 text-center"
+              >
+                Mortgage Calculator
+              </Link>
+              <Link
+                to="/affordability-calculator"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100 text-center"
+              >
+                Affordability Calculator
+              </Link>
+            </div>
+          </div>
           <Link to="/glossary" className="nav-link px-4 py-1.5 rounded-full">
             <span className="nav-link-text">Mortgage Terms</span>
           </Link>
@@ -108,19 +125,20 @@ const Header: React.FC = () => {
           {/* Meet Lock It Lending - Link + Dropdown */}
           <div>
             <div className="flex items-center justify-between w-full py-1">
-              {/* Clickable Link (entire left side) */}
               <Link to="/meet-lock-it-lending" className="flex-1">
                 Meet Lock It Lending
               </Link>
 
-              {/* Divider + Dropdown Arrow */}
               <div className="flex items-center gap-3">
                 <div className="w-px h-5 bg-gray-400" />
-                <button onClick={toggleSubMenu} aria-label="Toggle Submenu">
+                <button
+                  onClick={() => toggle('meet')}
+                  aria-label="Toggle Meet submenu"
+                  aria-expanded={open.meet}
+                  aria-controls="submenu-meet"
+                >
                   <svg
-                    className={`w-4 h-4 text-[#cca249] transition-transform duration-300 ${
-                      subMenuOpen ? 'rotate-180' : ''
-                    }`}
+                    className={`w-4 h-4 text-[#cca249] transition-transform duration-300 ${open.meet ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="3"
@@ -132,8 +150,8 @@ const Header: React.FC = () => {
               </div>
             </div>
 
-            {subMenuOpen && (
-              <div className="ml-4 mt-2 space-y-2">
+            {open.meet && (
+              <div id="submenu-meet" className="ml-4 mt-2 space-y-2">
                 <Link to="/careers" className="block">
                   Careers
                 </Link>
@@ -147,9 +165,44 @@ const Header: React.FC = () => {
             )}
           </div>
 
-          <Link to="/calculators-page" className="block">
-            Calculators
-          </Link>
+          {/* Calculators - Link + Dropdown */}
+          <div>
+            <div className="flex items-center justify-between w-full py-1">
+              <Link to="/loan-calculator" className="flex-1">
+                Calculators
+              </Link>
+              <div className="flex items-center gap-3">
+                <div className="w-px h-5 bg-gray-400" />
+                <button
+                  onClick={() => toggle('calc')}
+                  aria-label="Toggle Calculators submenu"
+                  aria-expanded={open.calc}
+                  aria-controls="submenu-calc"
+                >
+                  <svg
+                    className={`w-4 h-4 text-[#cca249] transition-transform duration-300 ${open.calc ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {open.calc && (
+              <div id="submenu-calc" className="ml-4 mt-2 space-y-2">
+                <Link to="/loan-calculator" className="block">
+                  Mortgage Calculator
+                </Link>
+                <Link to="/affordability-calculator" className="block">
+                  Affordability Calculator
+                </Link>
+              </div>
+            )}
+          </div>
           <Link to="/glossary" className="block">
             Mortgage Terms
           </Link>

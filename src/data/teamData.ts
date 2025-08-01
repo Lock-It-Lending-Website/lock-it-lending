@@ -208,7 +208,7 @@ export const teamMembers: TeamMember[] = [
   // Vortex
   {
     name: 'Robert Noonan',
-    title: 'Loan Officer',
+    title: 'Trainer and HR Specialist',
     nmls: '#2265817',
     phone: '(325) 308-4305',
     email: 'robert@lockitlending.com',
@@ -287,6 +287,32 @@ export const teamMembers: TeamMember[] = [
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=e20d6238-080d-4051-8dcc-d4a826ebbddb',
     videoUrl: 'https://www.youtube.com/embed/ytFRk5XO8q4',
+  },
+  {
+    name: 'Syed Tirmzi',
+    title: 'Loan Officer',
+    nmls: '#2025956',
+    phone: '(361) 306-4592',
+    email: 'syed.t@lockitlending.com',
+    image: `${base}/team/Syed Tirmzi web size.jpg`,
+    slug: 'syed-tirmzi',
+    team: 'vortex',
+    bio: '',
+    applyLink:
+      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=e20d6238-080d-4051-8dcc-d4a826ebbddb',
+  },
+  {
+    name: 'Celene Ngo',
+    title: 'Independent Loan Officer',
+    nmls: '#1053510',
+    phone: '(714) 417-4004',
+    email: 'celene.n@lockitlending.com',
+    image: `${base}/team/celene ngo web size.jpg`,
+    slug: 'celene-ngo',
+    team: 'vortex',
+    bio: '',
+    applyLink:
+      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=e20d6238-080d-4051-8dcc-d4a826ebbddb',
   },
   {
     name: 'Claudia Lopez',
