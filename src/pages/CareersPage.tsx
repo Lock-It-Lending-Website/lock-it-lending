@@ -36,7 +36,7 @@ export default function SingleCareerPage() {
         {/*Subtitle*/}
         <p className="text-md text-gray-700 whitespace-pre-line leading-loose">{career.subtitle}</p>
         <a
-          href="mailto:example@email.com"
+          href="mailto:HR@lockitlending.com"
           className="inline-block bg-gold text-white text-md px-8 py-3 mt-10 rounded-full font-semibold shadow hover:opacity-90"
         >
           Apply
