@@ -9,7 +9,7 @@ const ThankYou: React.FC = () => {
     const alreadySent = localStorage.getItem('rateFormSentOnce') === 'true';
 
     if (pendingData && !alreadySent) {
-      fetch('https://lock-it-lending.onrender.com/api/send-email', {
+      fetch('https://lock-it-lending-backend.onrender.com/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: pendingData,
