@@ -69,7 +69,7 @@ const RatesPage: React.FC = () => {
     localStorage.setItem('rateFormSentOnce', 'true');
     navigate('/thank-you');
 
-    fetch('https://lock-it-lending-nz80.onrender.com/api/send-email', {
+    fetch('https://lock-it-lending-backend.onrender.com/api/send-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formWithType),
