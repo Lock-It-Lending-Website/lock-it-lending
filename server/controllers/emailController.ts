@@ -19,7 +19,9 @@ export const sendEmail = async (req: Request, res: Response) => {
     <h2>New Form Submission</h2>
     <ul>
       ${Object.entries(data)
-        .map(([key, val]) => `<li><strong>${key}:</strong> ${String(val).replace(/\n/g, '<br>')}</li>`)
+        .map(
+          ([key, val]) => `<li><strong>${key}:</strong> ${String(val).replace(/\n/g, '<br>')}</li>`
+        )
         .join('')}
     </ul>
   `;
