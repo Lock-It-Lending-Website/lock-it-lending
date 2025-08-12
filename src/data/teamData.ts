@@ -298,8 +298,6 @@ export const teamMembers: TeamMember[] = [
     slug: 'syed-tirmzi',
     team: 'vortex',
     bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=e20d6238-080d-4051-8dcc-d4a826ebbddb',
   },
   {
     name: 'Celene Ngo',
@@ -311,8 +309,6 @@ export const teamMembers: TeamMember[] = [
     slug: 'celene-ngo',
     team: 'vortex',
     bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=e20d6238-080d-4051-8dcc-d4a826ebbddb',
   },
   {
     name: 'Claudia Lopez',

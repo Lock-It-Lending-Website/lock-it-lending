@@ -24,11 +24,14 @@ const ApplyForm = () => {
     e.preventDefault();
 
     try {
-      const response: Response = await fetch('https://lockitlending.com/api/sendSecureApp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      const response: Response = await fetch(
+        'https://lock-it-lending-backend.onrender.com/api/send-secure-app',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) alert('Application submitted successfully.');
       else alert('Failed to send. Please try again.');
@@ -77,7 +80,7 @@ const ApplyForm = () => {
           </button>
         </form>
         <p className="text-xs text-gray-500 mt-4">
-          Note: This form is temporary and uses encrypted email transmission (HTTPX).
+          Note: This form is temporary and uses encrypted email transmission (HTTPS).
         </p>
       </main>
       <Footer />
