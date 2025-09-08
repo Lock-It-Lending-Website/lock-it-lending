@@ -15,18 +15,23 @@ const seed = Math.floor(new Date().getTime() / (1000 * 60 * 60 * 6));
 const homepageReviews = getShuffledReviews(seed, 2);
 
 const ads = [
-  `${process.env.PUBLIC_URL}/closing/Abel Restituyo.png`,
-  `${process.env.PUBLIC_URL}/closing/image (1).png`,
-  `${process.env.PUBLIC_URL}/closing/Brian Barton.jpg`,
-  `${process.env.PUBLIC_URL}/closing/DEWAYNE THOMAS.jpg`,
-  `${process.env.PUBLIC_URL}/closing/Francisco Escamilla.jpg`,
-  `${process.env.PUBLIC_URL}/closing/Heredia Sarria.png`,
-  `${process.env.PUBLIC_URL}/closing/image (16) (1).jpg`,
-  `${process.env.PUBLIC_URL}/closing/Quang Phan.png`,
-  `${process.env.PUBLIC_URL}/closing/SK Asad al Mamun.jpg`,
-  `${process.env.PUBLIC_URL}/closing/Tri Huu Huynh.jpg`,
-  `${process.env.PUBLIC_URL}/closing/UCHENNA JMBUBA.jpg`,
-  `${process.env.PUBLIC_URL}/closing/WILLIAM BOYD SWEARINGEN.jpg`,
+  `${process.env.PUBLIC_URL}/closing/1.jpg`,
+  `${process.env.PUBLIC_URL}/closing/2.jpg`,
+  `${process.env.PUBLIC_URL}/closing/3.jpg`,
+  `${process.env.PUBLIC_URL}/closing/4.jpg`,
+  `${process.env.PUBLIC_URL}/closing/5.jpg`,
+  `${process.env.PUBLIC_URL}/closing/6.jpg`,
+  `${process.env.PUBLIC_URL}/closing/7.jpg`,
+  `${process.env.PUBLIC_URL}/closing/8.jpg`,
+  `${process.env.PUBLIC_URL}/closing/9.jpg`,
+  `${process.env.PUBLIC_URL}/closing/10.jpg`,
+  `${process.env.PUBLIC_URL}/closing/11.jpg`,
+  `${process.env.PUBLIC_URL}/closing/12.jpg`,
+  `${process.env.PUBLIC_URL}/closing/13.jpg`,
+  `${process.env.PUBLIC_URL}/closing/14.jpg`,
+  `${process.env.PUBLIC_URL}/closing/15.jpg`,
+  `${process.env.PUBLIC_URL}/closing/16.jpg`,
+  `${process.env.PUBLIC_URL}/closing/17.jpg`,
 ];
 
 const AdRotator: React.FC = () => {
