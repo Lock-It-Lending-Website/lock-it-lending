@@ -128,7 +128,7 @@ const Footer = () => {
             <h3 className="font-bold text-black text-lg mb-4">CONTACT US</h3>
             <div className="space-y-2 text-base">
               <p className="font-semibold">Lock It Lending Houston</p>
-              <p>10515 Bellaire Blvd Ste Z, Houston, TX 77072</p>
+              <p>11111 Richmond Ave Suite 250, Houston, TX 77082</p>
               <p>
                 <a href="tel:+18664006789" className="text-gold hover:underline">
                   (866) 400-6789

@@ -1,6 +1,7 @@
 export interface CareerOpportunity {
   title: string;
   subtitle?: string;
+  status: string;
   slug: string;
   company: string;
   location: string[];
@@ -24,6 +25,7 @@ export const careersData: CareerOpportunity[] = [
     Job Type: Full-Time (In-Person Only)
     schedule: 8 hour shift
     Compensation: Commission-Based | Estimated Annual Earnings: A minimum $36,000.00 – $350,000.00+`,
+    status: 'Ongoing',
     summary: `<p>About Lock It Lending
       Lock It Lending, powered by Swift Home Loans, is one of the fastest-growing brokerages in the country. We combine industry-leading tools with a hustle mentality and high-energy culture focused on growth and success. It's not about where you are, it's about who you're with.
       Because of our proprietary technology (for efficiency and speed), low rates due to volume, and relationships with all the top wholesale lenders in the nation, on average, each of our Loan Officers is closing 10+ loans per month.
@@ -37,8 +39,7 @@ export const careersData: CareerOpportunity[] = [
     type: 'Full-Time, In-Person',
     postedDate: '2025-07-19',
     overview: `Lock It Lending is hiring a driven and motivated Loan Officer to help clients secure fast, competitive mortgage solutions. In this in-person role, you’ll guide borrowers from application to closing, present tailored loan options, and work with our top-tier processing team to ensure smooth, compliant approvals.`,
-    responsibilities: `<p>• Develop responsive UI components using React and Tailwind CSS.</p>
-      <p>• Make 60+ high-volume outbound calls per day to leads and potential clients (5+ hours on the phone daily).</p>
+    responsibilities: `<p>• Make 60+ high-volume outbound calls per day to leads and potential clients (5+ hours on the phone daily).</p>
       <p>• Work inbound leads — we provide unlimited leads to help you succeed quickly.</p>
       <p>• No prior Loan Officer experience required — learn on the job training (no official training) with support from top-producing LOs.</p>
       <p>• Follow up persistently with potential borrowers and present competitive rates and flexible loan options.</p>
@@ -70,6 +71,7 @@ export const careersData: CareerOpportunity[] = [
     Job Type: Full-Time (In-Person Only)
     Schedule: Monday–Friday
     Compensation: A minimum $50,000 and up per year (based on experience and performance)`,
+    status: 'Temporarily paused',
     summary: `<p>Lock It Lending, powered by Swift Home Loans, is one of the fastest-growing brokerages in the country. We combine industry-leading tools with a hustle mentality and high-energy culture focused on growth and success. It's not about where you are, it's about who you're with.
     Because of our proprietary technology (for efficiency and speed), low rates due to volume, and relationships with all the top wholesale lenders in the nation, on average, each of our Loan Officers is closing 10+ loans per month.
     Thanks to our proprietary technology, our processors can process 5x faster. Everything is on the cloud, and processors are in control. On average, each of our processors is closing 12+ loans a month.

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 // Pie chart colors
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
@@ -42,7 +43,7 @@ const AffordabilityCalculator: React.FC = () => {
   const [purchasePrice, setPurchasePrice] = useState<string>('250000');
   const [downPayment, setDownPayment] = useState<string>('');
   const [downPaymentPercent, setDownPaymentPercent] = useState<string>('');
-  const [interestRate, setInterestRate] = useState<string>('7.25');
+  const [interestRate, setInterestRate] = useState<string>('6');
   const [termYears, setTermYears] = useState(30);
   const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('3000');
   const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('1.2');
@@ -55,7 +56,7 @@ const AffordabilityCalculator: React.FC = () => {
   const [creditScoreRange, setCreditScoreRange] = useState<string>('760+');
   const [lastEdited, setLastEdited] = useState<'dollars' | 'percent' | null>(null);
   const [showInfo, setShowAffordabilityInfo] = useState(false);
-  const [dtiPercent, setDtiPercent] = useState<string>('36'); // default 36 %
+  const [dtiPercent, setDtiPercent] = useState<string>('50'); // default 36 %
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [lastEditedDownPayment, setLastEditedDownPayment] = useState<'dollars' | 'percent' | null>(
     null
@@ -238,7 +239,22 @@ const AffordabilityCalculator: React.FC = () => {
       <div className="font-sans text-base">
         <Header />
         <main className="bg-gray-50 py-20 min-h-screen">
-          <h2 className="text-5xl text-center font-bold mb-10">Calculate your affordability</h2>
+          <Link
+            to="/loan-calculator"
+            className="relative block bg-[#cca249] text-white rounded-lg border-4 border-[#cca249] p-4 my-6
+                 w-64 mx-auto cursor-pointer transition-colors duration-300 hover:opacity-90 transition hover:text-white"
+            aria-label="Check your affordability"
+          >
+            <p className="text-xs sm:text-sm mb-0 text-center">Break Down Your Mortgage </p>
+
+            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                className="w-4 h-4 text-white group-hover:text-white"
+              />
+            </span>
+          </Link>
+          <h2 className="text-5xl text-center font-bold mb-10">Calculate Your Affordability </h2>
           {/*User input*/}
           <section className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-8">
             <div className="lg:col-span-2 space-y-4">
@@ -434,140 +450,120 @@ const AffordabilityCalculator: React.FC = () => {
                   </span>
                 </div>
               </label>
+              <div className="space-y-4">
+                <label className="block">
+                  Loan Term:
+                  <select
+                    value={termYears}
+                    onChange={e => setTermYears(Number(e.target.value))}
+                    className="mt-1 w-full border p-2 rounded"
+                  >
+                    <option value={15}>15 Years</option>
+                    <option value={30}>30 Years</option>
+                  </select>
+                </label>
 
-              {/*Advanced view*/}
-              <div className="flex items-center gap-2 py-5">
-                <button
-                  type="button"
-                  className="text-black font-bold hover:text-[#cca249]"
-                  onClick={() => setShowAdvanced(!showAdvanced)}
-                  aria-label="Toggle Advanced Options"
-                >
-                  Show Advanced
-                </button>
-              </div>
-              {showAdvanced && (
-                <div className="space-y-4">
-                  <label className="block">
-                    Loan Term:
-                    <select
-                      value={termYears}
-                      onChange={e => setTermYears(Number(e.target.value))}
-                      className="mt-1 w-full border p-2 rounded"
-                    >
-                      <option value={15}>15 Years</option>
-                      <option value={30}>30 Years</option>
-                    </select>
-                  </label>
+                <label className="block">
+                  Debt-to-Income (DTI):
+                  <div className="relative mt-1">
+                    <input
+                      type="text"
+                      value={dtiPercent || '50'}
+                      readOnly
+                      className="pr-8 w-full border p-2 rounded text-black cursor-not-allowed"
+                    />
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
+                      %
+                    </span>
+                  </div>
+                </label>
 
-                  <label className="block">
-                    Debt-to-Income (DTI):
-                    <div className="relative mt-1">
+                <label className="block">
+                  Yearly Homeowner&apos;s Insurance:
+                  <div className="relative mt-1">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                      $
+                    </span>
+                    <input
+                      type="text"
+                      value={formatNumberWithCommas(insuranceAnnual)}
+                      onChange={e => {
+                        const raw = e.target.value.replace(/,/g, '');
+                        if (/^\d*$/.test(raw) || raw === '') setInsuranceAnnual(raw);
+                      }}
+                      className="pl-8 w-full border p-2 rounded"
+                      placeholder="0"
+                    />
+                  </div>
+                </label>
+
+                <label className="block">
+                  Yearly Property Tax:
+                  <div className="flex items-center mt-1 border rounded overflow-hidden">
+                    {/* Dollar Input */}
+                    <div className="relative flex-1">
+                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                        $
+                      </span>
                       <input
                         type="text"
-                        value={dtiPercent}
+                        value={propertyTaxDollars ? formatNumberWithCommas(propertyTaxDollars) : ''}
+                        onChange={e => {
+                          const raw = e.target.value.replace(/,/g, '');
+                          if (/^\d*$/.test(raw) || raw === '') {
+                            setPropertyTaxDollars(raw);
+                            setLastEdited('dollars');
+                          }
+                        }}
+                        className="pl-8 w-full p-2 rounded"
+                        placeholder="0"
+                      />
+                    </div>
+
+                    {/* Vertical Divider */}
+                    <div className="h-full w-px bg-gray-500"></div>
+
+                    {/* Percentage Input */}
+                    <div className="relative w-24">
+                      <input
+                        type="text"
+                        value={propertyTaxPercent}
                         onChange={e => {
                           const raw = e.target.value;
-                          if (/^\d*\.?\d*$/.test(raw) || raw === '') setDtiPercent(raw);
+                          if (/^\d*\.?\d*$/.test(raw) || raw === '') {
+                            setPropertyTaxPercent(raw);
+                            setLastEdited('percent');
+                          }
                         }}
-                        className="pr-8 w-full border p-2 rounded"
-                        placeholder="36"
+                        className="pr-8 w-full border-none p-2"
+                        placeholder="0"
                       />
                       <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
                         %
                       </span>
                     </div>
-                  </label>
+                  </div>
+                </label>
 
-                  <label className="block">
-                    Yearly Homeowner&apos;s Insurance:
-                    <div className="relative mt-1">
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                        $
-                      </span>
-                      <input
-                        type="text"
-                        value={formatNumberWithCommas(insuranceAnnual)}
-                        onChange={e => {
-                          const raw = e.target.value.replace(/,/g, '');
-                          if (/^\d*$/.test(raw) || raw === '') setInsuranceAnnual(raw);
-                        }}
-                        className="pl-8 w-full border p-2 rounded"
-                        placeholder="0"
-                      />
-                    </div>
-                  </label>
-
-                  <label className="block">
-                    Yearly Property Tax:
-                    <div className="flex items-center mt-1 border rounded overflow-hidden">
-                      {/* Dollar Input */}
-                      <div className="relative flex-1">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                          $
-                        </span>
-                        <input
-                          type="text"
-                          value={
-                            propertyTaxDollars ? formatNumberWithCommas(propertyTaxDollars) : ''
-                          }
-                          onChange={e => {
-                            const raw = e.target.value.replace(/,/g, '');
-                            if (/^\d*$/.test(raw) || raw === '') {
-                              setPropertyTaxDollars(raw);
-                              setLastEdited('dollars');
-                            }
-                          }}
-                          className="pl-8 w-full p-2 rounded"
-                          placeholder="0"
-                        />
-                      </div>
-
-                      {/* Vertical Divider */}
-                      <div className="h-full w-px bg-gray-500"></div>
-
-                      {/* Percentage Input */}
-                      <div className="relative w-24">
-                        <input
-                          type="text"
-                          value={propertyTaxPercent}
-                          onChange={e => {
-                            const raw = e.target.value;
-                            if (/^\d*\.?\d*$/.test(raw) || raw === '') {
-                              setPropertyTaxPercent(raw);
-                              setLastEdited('percent');
-                            }
-                          }}
-                          className="pr-8 w-full border-none p-2"
-                          placeholder="0"
-                        />
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
-                          %
-                        </span>
-                      </div>
-                    </div>
-                  </label>
-
-                  <label className="block">
-                    Yearly HOA Dues:
-                    <div className="relative mt-1">
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
-                        $
-                      </span>
-                      <input
-                        type="text"
-                        value={formatNumberWithCommas(hoaAnnual)}
-                        onChange={e => {
-                          const raw = e.target.value.replace(/,/g, '');
-                          if (/^\d*$/.test(raw) || raw === '') setHOAAnnual(raw);
-                        }}
-                        className="pl-8 w-full border p-2 rounded"
-                        placeholder="0"
-                      />
-                    </div>
-                  </label>
-                </div>
-              )}
+                <label className="block">
+                  Yearly HOA Dues:
+                  <div className="relative mt-1">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
+                      $
+                    </span>
+                    <input
+                      type="text"
+                      value={formatNumberWithCommas(hoaAnnual)}
+                      onChange={e => {
+                        const raw = e.target.value.replace(/,/g, '');
+                        if (/^\d*$/.test(raw) || raw === '') setHOAAnnual(raw);
+                      }}
+                      className="pl-8 w-full border p-2 rounded"
+                      placeholder="0"
+                    />
+                  </div>
+                </label>
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/*<label className="block">

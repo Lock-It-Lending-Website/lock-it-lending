@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
@@ -215,7 +216,22 @@ const LoanCalculator: React.FC = () => {
       <div className="font-sans">
         <Header />
         <main className="bg-gray-50 py-20 min-h-screen">
-          <h2 className="text-5xl text-center font-bold mb-10">Calculate your mortgage</h2>
+          <Link
+            to="/affordability-calculator"
+            className="relative block bg-[#cca249] text-white rounded-lg border-4 border-[#cca249] p-4 my-6
+                 w-64 mx-auto cursor-pointer transition-colors duration-300 hover:opacity-90 transition hover:text-white"
+            aria-label="Check your affordability"
+          >
+            <p className="text-xs sm:text-sm mb-0 text-center">Check Your Affordability</p>
+
+            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                className="w-4 h-4 text-white group-hover:text-white"
+              />
+            </span>
+          </Link>
+          <h2 className="text-5xl text-center font-bold mb-10">Calculate Your Mortgage</h2>
           {/*User input*/}
           <section className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-8">
             <div className="lg:col-span-2 space-y-4">
@@ -504,6 +520,7 @@ const LoanCalculator: React.FC = () => {
                 </div>
               </div>
             </div>
+
             {/* Disclaimer for compliance*/}
             <div className="relative mt-1 col-span-full w-full">
               <p className="text-sm font-bold text-black mb-6">

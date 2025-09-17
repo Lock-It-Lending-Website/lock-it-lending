@@ -45,12 +45,6 @@ const Header: React.FC = () => {
 
             <div className="absolute top-full left-1/2 -translate-x-1/2 w-48 bg-white text-sm border-t border-gray-200 rounded-b shadow-md hidden group-hover:flex flex-col z-50 transition-all duration-200">
               <Link
-                to="/careers"
-                className="block px-4 py-2 text-gray-800 hover:bg-gray-100 text-center"
-              >
-                Careers
-              </Link>
-              <Link
                 to="/reviews"
                 className="block px-4 py-2 text-gray-800 hover:bg-gray-100 text-center"
               >
@@ -64,6 +58,7 @@ const Header: React.FC = () => {
               </Link>
             </div>
           </div>
+
           <div className="relative group flex flex-col items-center">
             <Link
               to="/calculators-page"
@@ -90,9 +85,19 @@ const Header: React.FC = () => {
           <Link to="/glossary" className="nav-link px-4 py-1.5 rounded-full">
             <span className="nav-link-text">Mortgage Terms</span>
           </Link>
-          <Link to="/resources" className="nav-link px-4 py-1.5 rounded-full">
-            <span className="nav-link-text">Resources</span>
-          </Link>
+          <div className="relative group flex flex-col items-center">
+            <Link to="/resources" className="nav-link px-4 py-1.5 rounded-full">
+              <span className="nav-link-text">Resources</span>
+            </Link>
+            <div className="absolute top-full left-1/2 -translate-x-1/2 w-48 bg-white text-sm border-t border-gray-200 rounded-b shadow-md hidden group-hover:flex flex-col z-50 transition-all duration-200">
+              <Link
+                to="/careers"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100 text-center"
+              >
+                Careers
+              </Link>
+            </div>
+          </div>
         </nav>
 
         {/* Right - Rates + Mobile Toggle */}
@@ -152,9 +157,6 @@ const Header: React.FC = () => {
 
             {open.meet && (
               <div id="submenu-meet" className="ml-4 mt-2 space-y-2">
-                <Link to="/careers" className="block">
-                  Careers
-                </Link>
                 <Link to="/reviews" className="block">
                   Reviews
                 </Link>
@@ -206,6 +208,8 @@ const Header: React.FC = () => {
           <Link to="/glossary" className="block">
             Mortgage Terms
           </Link>
+
+          {/* Resources - Link + Dropdown */}
           <Link to="/resources" className="block">
             Resources
           </Link>

@@ -7,7 +7,7 @@ import { getShuffledReviews } from '../data/reviewData';
 
 const now = new Date();
 const seed = Math.floor(now.getTime() / (1000 * 60 * 60 * 6));
-const reviews = getShuffledReviews(seed, 5);
+const reviews = getShuffledReviews(seed, 6);
 
 export default function Reviews() {
   return (

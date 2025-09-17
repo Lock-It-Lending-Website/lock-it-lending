@@ -58,7 +58,7 @@ const AdRotator: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.6 }}
-            className="w-full h-full object-cover rounded-xl object-[center_25%]"
+            className="w-full h-full object-cover rounded-xl object-top"
           />
         </AnimatePresence>
       </div>

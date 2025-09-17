@@ -17,7 +17,7 @@ export default function CareersPage() {
         image={`${process.env.PUBLIC_URL}/careers-page.jpg`}
       />
       <section className="max-w-[1600px] mx-auto px-10 py-28 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-        {careersData.map(({ slug, title, location, type, overview, postedDate }) => (
+        {careersData.map(({ slug, title, location, type, status, overview, postedDate }) => (
           <Link
             key={slug}
             to={`/careers/${slug}`}
@@ -29,6 +29,7 @@ export default function CareersPage() {
                 <i className="fa-solid fa-location-dot mr-2" style={{ color: '#cca249' }} />
                 {location}
               </p>
+              <p className="text-md text-gray-700 line-clamp-2 mb-3">Status: {status}</p>
               <p className="text-md text-gray-700 line-clamp-2 mb-3">{type}</p>
               <p className="text-md text-gray-700 line-clamp-2 mb-3">Posted Date: {postedDate}</p>
               <p className="text-sm text-gray-500 mb-3 font-medium">{overview}</p>
