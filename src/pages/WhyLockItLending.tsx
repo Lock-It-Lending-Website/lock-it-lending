@@ -204,7 +204,7 @@ const WhyLockItLending = () => {
             </div>
           </div>
         </section>
-        <section className="bg-gray-50 px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <section className="bg-white px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
             {/* Left: Text box */}
             <div>
@@ -273,17 +273,17 @@ const WhyLockItLending = () => {
               {/* Image card (right-aligned) */}
               <div className="rounded-xl overflow-hidden shadow-lg md:w-[68%] md:ml-auto">
                 <img
-                  src="/why-lock-it-lending/growth.jpg"
+                  src="/why-lock-it-lending/growth.png"
                   alt="Team 4"
-                  className="w-full aspect-[16/9] object-cover object-center"
+                  className="w-full h-auto object-contain"
                 />
               </div>
 
               {/* Overlay card: centered on mobile, bottom-left on md+ */}
               <div
                 className="
-          bg-[#cca249] text-white rounded-xl shadow-xl
-          p-6 md:p-8
+          bg-[#cca249] text-white rounded-xl 
+          p-6 md:p-6
           md:max-w-[560px]
           mx-auto text-center
           mt-6 sm:mt-8 md:mt-0          /* ← space ABOVE the box on mobile/tablet */

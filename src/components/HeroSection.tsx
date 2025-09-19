@@ -14,7 +14,7 @@ type HeroSectionProps = {
 
 const ads = [
   `${process.env.PUBLIC_URL}/top producer august size web.png`,
-  `${process.env.PUBLIC_URL}/fthbc.jpg`,
+  `${process.env.PUBLIC_URL}/sizeweb.jpg`,
 ];
 
 const AdRotator: React.FC = () => {

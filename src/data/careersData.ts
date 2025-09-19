@@ -9,6 +9,7 @@ export interface CareerOpportunity {
   postedDate: string;
   summary: string;
   overview: string;
+  hideResponsibilitiesTitle?: boolean;
   responsibilities?: string;
   qualifications?: string;
   benefits: string;
@@ -98,6 +99,7 @@ Resources and support designed to help Loan Officers achieve scalable, sustainab
     overview: `
     Lock It Lending is seeking experienced, self-generating Independent Loan Officers to join our growing nationwide platform. This role is designed for high-producing professionals who are ready to maximize earnings, access industry-leading technology, and expand their business with the support of one of the top mortgage brokers in the nation.
   `,
+    hideResponsibilitiesTitle: true,
     qualifications: `
 <p>• Active NMLS license</p>
 <p>• Proven history of self-generated production</p>

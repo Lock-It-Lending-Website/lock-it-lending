@@ -53,7 +53,10 @@ export default function SingleCareerPage() {
             dangerouslySetInnerHTML={{ __html: career.summary }}
           />
         )}
-        <p className="text-lg font-bold text-gray-700 my-10">What You'll Do</p>
+        {/* What You'll Do — render only if not hidden */}
+        {career.responsibilities && !career.hideResponsibilitiesTitle && (
+          <p className="text-lg font-bold text-gray-700 my-10">What You'll Do</p>
+        )}
         {career.responsibilities && (
           <div
             className="text-md text-gray-700 prose max-w-none [&_h1]:text-4xl [&_h2]:text-2xl [&_h3]:text-xl"
