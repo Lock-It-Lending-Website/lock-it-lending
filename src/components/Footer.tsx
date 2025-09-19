@@ -64,8 +64,13 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/reviews" className="hover:underline">
-                  Reviews
+                <Link to="/why-lock-it-lending" className="hover:underline">
+                  Why Lock It Lending
+                </Link>
+              </li>
+              <li>
+                <Link to="/careers" className="hover:underline">
+                  Careers
                 </Link>
               </li>
               <li>
@@ -74,8 +79,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/careers" className="hover:underline">
-                  Careers
+                <Link to="/reviews" className="hover:underline">
+                  Customer Reviews
                 </Link>
               </li>
             </ul>

@@ -161,7 +161,7 @@ const Header: React.FC = () => {
 
             {open.meet && (
               <div id="submenu-meet" className="ml-4 mt-2 space-y-2">
-                <Link to="/careers" className="block">
+                <Link to="/why-lock-it-lending" className="block">
                   Why Lock It Lending
                 </Link>
                 <Link to="/careers" className="block">
