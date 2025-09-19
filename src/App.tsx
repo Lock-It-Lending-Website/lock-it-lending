@@ -8,6 +8,7 @@ import CalculatorsPage from './pages/CalculatorsPage';
 import Refinance from './pages/Refinance';
 import LoanPrograms from './pages/LoanProgram';
 import MeetLockItLending from './pages/MeetLockItLending';
+import WhyLockItLending from './pages/WhyLockItLending';
 import Reviews from './pages/Review';
 import Glossary from './pages/Glossary';
 import Resources from './pages/Resources';
@@ -37,6 +38,7 @@ const App: React.FC = () => {
       <Route path="/refinance" element={<Refinance />} />
       <Route path="/loan-programs" element={<LoanPrograms />} />
       <Route path="/meet-lock-it-lending" element={<MeetLockItLending />} />
+      <Route path="/why-lock-it-lending" element={<WhyLockItLending />} />
       <Route path="/reviews" element={<Reviews />} />
       <Route path="/glossary" element={<Glossary />} />
       <Route path="/resources" element={<Resources />} />

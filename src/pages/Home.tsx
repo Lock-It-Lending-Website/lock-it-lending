@@ -111,32 +111,44 @@ const Home: React.FC = () => {
         <section className="py-28 bg-gray-50 px-8">
           <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-5xl font-extrabold mb-6">Hot program from Lock It Lending</h2>
-            <p className="text-2xl text-gray-600 mb-12 font-semibold">
-              1% down conventional is back!
+            <p className="text-xl text-gray-700 mb-8">
+              To lead a 2-hour training session for our attendees, we’re also excited to welcome
+              <span className="font-bold">
+                {' '}
+                Travis Spencer, real estate mindset content creator
+              </span>{' '}
+              whose YouTube channel has inspired thousands - with over 200k subscribers and millions
+              of views, and we know our audience will gain huge value from his expertise.
             </p>
-            <div className="flex justify-center">
-              <div
-                className="fb-video"
-                data-href="https://www.facebook.com/reel/4553543268205998"
-                data-width="320"
-                data-allowfullscreen="true"
-              ></div>
-              {/*This is for live videos*/}
-              {/*<iframe
-                src="https://www.facebook.com/reel/4026631054333887"
-                width="320"
-                height="500"
-                style={{
-                  border: 'none',
-                  overflow: 'hidden',
-                  margin: '0 auto',
-                  display: 'block',
-                }}
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                allowFullScreen
-                title="Facebook Vertical Video"
-              ></iframe>*/}
-            </div>
+            <h2 className="text-4xl font-bold mb-6">Session focus: </h2>
+            <ul className="list-disc list-inside text-xl text-gray-700 mb-8 space-y-2">
+              <li>Becoming comfortable in front of the camera</li>
+              <li>Crafting powerful hooks to grab attention</li>
+              <li>Editing tips to maximize engagement</li>
+            </ul>
+            <p className="text-xl text-gray-700 mb-8">
+              We’re also thrilled to welcome{' '}
+              <span className="font-bold">Allen Beydoun – Executive VP at UWM</span>, here to share
+              insider insights:
+            </p>
+            <ul className="list-disc list-inside text-xl text-gray-700 mb-8 space-y-2">
+              <li>Get to know what truly sets UWM apart</li>
+              <li>
+                Discover why top-producing brokers still choose UWM – even when they don't always
+                have the best rate. Want to know the secrets? Maybe everything you think you know
+                about UWM – like pricing and support – isn’t the full story.
+              </li>
+              <li>
+                Learn how Lock It Lending helps seasoned LOs scale from 5 to 10+ loans a month
+              </li>
+            </ul>
+            <p className="text-xl text-gray-700 mb-8">Seats are limited. Secure your spot today!</p>
+            <Link
+              to="https://www.eventbrite.com/e/where-loan-officers-go-to-level-up-tickets-1531211658289?aff=erelexpmlt"
+              className="inline-block bg-gold text-white text-lg px-8 py-3 rounded-full font-semibold shadow hover:opacity-90"
+            >
+              Register On Eventbrite
+            </Link>
           </div>
         </section>
 

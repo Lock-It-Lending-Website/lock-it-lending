@@ -29,7 +29,7 @@ const scoreRates: Record<CreditScoreRange, Record<string, number>> = {
   '700-719': { '<85': 0.0045, '85-90': 0.0068, '90-95': 0.0085, '>95': 0.0125 },
   '720-739': { '<85': 0.0038, '85-90': 0.006, '90-95': 0.0075, '>95': 0.0115 },
   '740-759': { '<85': 0.0032, '85-90': 0.005, '90-95': 0.0065, '>95': 0.01 },
-  '760+': { '<85': 0.0025, '85-90': 0.004, '90-95': 0.0055, '>95': 0.009 },
+  '760+': { '<85': 0.0025, '85-90': 0.004, '90-95': 0.0055, '>95': 0.00992 },
 };
 
 const getPmiRate = (ltv: number, creditScoreRange: CreditScoreRange) => {
@@ -134,84 +134,82 @@ const AffordabilityCalculator: React.FC = () => {
     }
   }, [downPaymentPercent, purchasePrice, lastEditedDownPayment]);
 
-  // Calculations
-  // Years × 12 months = 360
+  // ───────────── Calculations ─────────────
+
+  // Basic loan params
   const totalPayments = termYears * 12;
+  const r = monthlyInterestRate; // already APR/12
+  const pow = Math.pow(1 + r, totalPayments);
+  const amortFactor = r > 0 ? (r * pow) / (pow - 1) : 1 / totalPayments;
 
-  // Formula for fixed-rate loan amortization
-  let monthlyPrincipalAndInterest = 0;
-  if (loanAmount > 0 && monthlyInterestRate > 0) {
-    const numerator =
-      loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, totalPayments);
-    const denominator = Math.pow(1 + monthlyInterestRate, totalPayments) - 1;
-    monthlyPrincipalAndInterest = numerator / denominator;
-  } else if (loanAmount > 0 && monthlyInterestRate === 0) {
-    monthlyPrincipalAndInterest = loanAmount / totalPayments;
-  }
-  // Yearly property tax
-  const annualPropertyTax =
-    propertyTaxDollarsNumber > 0
-      ? propertyTaxDollarsNumber
-      : purchasePriceNumber * (parsedPropertyTaxPercent / 100);
-
-  // Monthly fees
-  const monthlyPropertyTax = annualPropertyTax / 12;
+  // Monthly fixed charges that do NOT scale with price
   const monthlyHomeInsurance = insuranceAnnualNumber / 12;
   const monthlyHOAFees = hoaAnnualNumber / 12;
-  const fixedCharges = monthlyHomeInsurance + monthlyHOAFees;
 
-  // Monthly mortgage insurance
-
-  const ltv = purchasePriceNumber > 0 ? (loanAmount / purchasePriceNumber) * 100 : 0;
-
-  // Mortgage only
-  const totalMonthlyMortgageCost =
-    monthlyPrincipalAndInterest + monthlyPropertyTax + monthlyHomeInsurance + monthlyHOAFees;
-
-  // DTI calculations
-
+  // Budget from DTI
   const MAX_DTI = (parseFloat(dtiPercent) || 0) / 100;
-
-  //Other debts
   const otherDebts = monthlyAuto + monthlyStudent + monthlyCreditCard;
-
   const maxHousingBudget = monthlyIncomeNumber * MAX_DTI - otherDebts;
 
-  //     Part of PITIA that *does* vary with price: P&I + Taxes.
-  //     ▸ Taxes:  P × (tax %) / 12
-  //     ▸ P&I :   classic amortization formula on the financed amount.
-  const taxRateMonthly = parsedPropertyTaxPercent / 1200; // e.g. 2.7 % ⇒ 0.00225
-  const dpPct = downPaymentPercent
-    ? parseFloat(downPaymentPercent) / 100
-    : purchasePriceNumber > 0
-      ? downPaymentNumber / purchasePriceNumber
-      : 0;
-  const principalPct = 1 - dpPct;
+  // Helper: monthly PMI from LTV & score
+  function monthlyPMI(loanAmt: number, price: number, score: CreditScoreRange) {
+    if (price <= 0 || loanAmt <= 0) return 0;
+    const ltvPct = (loanAmt / price) * 100;
+    if (ltvPct <= 80) return 0;
+    const bracket = ltvPct < 85 ? '<85' : ltvPct <= 90 ? '85-90' : ltvPct <= 95 ? '90-95' : '>95';
+    const annualRate = scoreRates[score][bracket]; // e.g., 0.0065 for 0.65%/yr
+    return (loanAmt * annualRate) / 12;
+  }
 
-  // Amortization factor (mortgage-payment multiplier per $1 loan)
-  const pow = Math.pow(1 + monthlyInterestRate, totalPayments);
-  const amortFactor =
-    monthlyInterestRate > 0 ? (monthlyInterestRate * pow) / (pow - 1) : 1 / totalPayments;
+  // Helper: monthly taxes for a given price (prefer $ amount if present)
+  function monthlyTaxesFor(price: number) {
+    const pct = (parsedPropertyTaxPercent || 0) / 100;
+    if (pct > 0) return (price * pct) / 12;
 
-  const variableCostPerDollar = principalPct * amortFactor + taxRateMonthly;
+    // Fallback to fixed $/yr only if no percent is given.
+    if (propertyTaxDollarsNumber > 0) return propertyTaxDollarsNumber / 12;
 
-  const budgetForVariable = maxHousingBudget - fixedCharges;
+    return 0;
+  }
 
-  const maxAffordableHomePrice =
-    budgetForVariable > 0 && variableCostPerDollar > 0
-      ? budgetForVariable / variableCostPerDollar
-      : 0;
+  // Binary-search the price so that: PI + tax + ins + HOA + PMI <= maxHousingBudget
+  const downPaymentDollars = downPaymentNumber || 0;
+  let lo = Math.max(downPaymentDollars + 1, 1);
+  let hi = 2_000_000; // generous cap; adjust if desired
 
-  const maxLoanAmount = maxAffordableHomePrice * principalPct;
-  const maxMortgagePayment = maxLoanAmount * amortFactor;
+  for (let i = 0; i < 50; i++) {
+    const midPrice = (lo + hi) / 2;
+    const loanAmt = Math.max(midPrice - downPaymentDollars, 0);
 
-  const ltvBracket = ltv < 85 ? '<85' : ltv <= 90 ? '85-90' : ltv <= 95 ? '90-95' : '>95';
+    const PI = loanAmt * amortFactor;
+    const tax = monthlyTaxesFor(midPrice);
+    const PMI = monthlyPMI(loanAmt, midPrice, creditScoreRange as CreditScoreRange);
+    const total = PI + tax + monthlyHomeInsurance + monthlyHOAFees + PMI;
 
-  const annualMI =
-    ltv > 80 ? loanAmount * scoreRates[creditScoreRange as CreditScoreRange][ltvBracket] : 0;
+    if (total > maxHousingBudget) {
+      hi = midPrice;
+    } else {
+      lo = midPrice;
+    }
+  }
 
-  const monthlyMI = annualMI / 12;
+  // Solved price & recomputed breakdown
+  const maxAffordableHomePrice = Math.floor(lo);
+  const loanAmountSolved = Math.max(maxAffordableHomePrice - downPaymentDollars, 0);
 
+  // Monthly components at solved price
+  const monthlyPropertyTax = monthlyTaxesFor(maxAffordableHomePrice);
+  const monthlyPrincipalAndInterest = loanAmountSolved * amortFactor;
+  const monthlyMI = monthlyPMI(
+    loanAmountSolved,
+    maxAffordableHomePrice,
+    creditScoreRange as CreditScoreRange
+  );
+
+  // LTV & bracket (at solved price)
+  const ltv = maxAffordableHomePrice > 0 ? (loanAmountSolved / maxAffordableHomePrice) * 100 : 0;
+
+  // Totals
   const totalMonthlyPayment =
     monthlyPrincipalAndInterest +
     monthlyPropertyTax +
@@ -219,12 +217,16 @@ const AffordabilityCalculator: React.FC = () => {
     monthlyHOAFees +
     monthlyMI;
 
-  //Mortgage debts + other debts
   const totalMonthlyDebt = totalMonthlyPayment + monthlyStudent + monthlyAuto + monthlyCreditCard;
 
-  // Total income needed
-  const totalIncomeNeeded = totalMonthlyDebt * 2;
+  // Income needed for this solved scenario
+  const totalIncomeNeeded = totalMonthlyDebt / MAX_DTI; // monthly gross needed to support this debt at given DTI
   const annualIncomeNeeded = totalIncomeNeeded * 12;
+
+  // (Optional) Also keep these around if you still use them elsewhere:
+  const taxRateMonthly = (parsedPropertyTaxPercent || 0) / 1200; // only used if you display it
+  const principalPct = maxAffordableHomePrice > 0 ? loanAmountSolved / maxAffordableHomePrice : 1;
+  // const variableCostPerDollar ... (no longer used because PMI requires iteration)
 
   // Pie chart data
   const pieData = [
@@ -245,7 +247,7 @@ const AffordabilityCalculator: React.FC = () => {
                  w-64 mx-auto cursor-pointer transition-colors duration-300 hover:opacity-90 transition hover:text-white"
             aria-label="Check your affordability"
           >
-            <p className="text-xs sm:text-sm mb-0 text-center">Break Down Your Mortgage </p>
+            <p className="text-xs sm:text-sm mb-0 text-center">Mortgage Breakdown </p>
 
             <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
               <FontAwesomeIcon
@@ -406,29 +408,6 @@ const AffordabilityCalculator: React.FC = () => {
                       className="pl-8 w-full p-2 rounded"
                       placeholder="0"
                     />
-                  </div>
-
-                  {/* Vertical Divider */}
-                  <div className="h-full w-px bg-gray-500"></div>
-
-                  {/* Percentage Input */}
-                  <div className="relative w-24">
-                    <input
-                      type="text"
-                      value={downPaymentPercent}
-                      onChange={e => {
-                        const raw = e.target.value;
-                        if (/^\d*\.?\d*$/.test(raw) || raw === '') {
-                          setDownPaymentPercent(raw);
-                          setLastEditedDownPayment('percent');
-                        }
-                      }}
-                      className="pr-8 w-full border-none p-2"
-                      placeholder="0"
-                    />
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
-                      %
-                    </span>
                   </div>
                 </div>
               </label>

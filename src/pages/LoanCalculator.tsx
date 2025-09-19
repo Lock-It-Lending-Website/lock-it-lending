@@ -402,7 +402,7 @@ const LoanCalculator: React.FC = () => {
 
               <label className="block">
                 Yearly HOA Dues:
-                <div className="relative mt-1">
+                <div className="relative mt-1 border rounded">
                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-black">
                     $
                   </span>

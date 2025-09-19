@@ -19,7 +19,7 @@ export interface CareerOpportunity {
 export const careersData: CareerOpportunity[] = [
   {
     company: 'Lock It Lending (Powered by Swift Home Loans)',
-    title: 'Mortgage Loan Officer- NMLS Required - Leads provided!',
+    title: 'Outbound call Loan Officer- NMLS Required - Leads provided!',
     subtitle: `Company: Lock It Lending (Powered by Swift Home Loans)
     Location: Houston, TX – Westchase Area
     Job Type: Full-Time (In-Person Only)
@@ -62,6 +62,69 @@ export const careersData: CareerOpportunity[] = [
       <p>Let’s lock in your next big opportunity.</p>
       <p>Join Lock It Lending and be part of a team driving the future of home financing. Apply now and see what we’re all about.</p>
       `,
+  },
+  {
+    company: 'Lock It Lending (Powered by Swift Home Loans)',
+    title: 'Independent Loan Officer (Self-Generated Business)',
+    subtitle: `Company: Lock It Lending (Powered by Swift Home Loans)
+Location: Remote – Nationwide
+Job Type: Independent / 1099`,
+    status: 'Ongoing',
+    summary: `
+   <p>• <strong>Competitive Compensation Structure</strong><br />
+Pay only a flat $750 administrative fee per funded loan.<br />
+Retain the remainder of your revenue to reinvest in marketing, staffing, and business growth.</p>
+
+<p>• <strong>Top Broker in the Nation</strong><br />
+Benefit from best-in-class pricing with access to all major lenders.<br />
+Competitive edge in securing favorable loan terms for your clients.</p>
+
+<p>• <strong>Proprietary Technology</strong><br />
+Access to a custom-built $4M+ CRM platform designed exclusively for Lock It Lending.<br />
+Dedicated software development team continuously enhancing tools with input from our Loan Officers.</p>
+
+<p>• <strong>Nationwide Licensing</strong><br />
+Currently licensed in over 40 states, allowing you to serve clients and grow your footprint without restriction.</p>
+
+<p>• <strong>Platform for Growth</strong><br />
+Comprehensive infrastructure built to support both individual producers and teams.<br />
+Resources and support designed to help Loan Officers achieve scalable, sustainable growth.</p>
+
+      <p>Please check our 1000 5-star reviews on Google and follow us on social media.</p>`,
+    slug: 'Independent-Loan-Officer',
+    location: ['Remote, Nationwide'],
+    type: 'Full-Time, Remote',
+    postedDate: '2025-9-18',
+    overview: `
+    Lock It Lending is seeking experienced, self-generating Independent Loan Officers to join our growing nationwide platform. This role is designed for high-producing professionals who are ready to maximize earnings, access industry-leading technology, and expand their business with the support of one of the top mortgage brokers in the nation.
+  `,
+    qualifications: `
+<p>• Active NMLS license</p>
+<p>• Proven history of self-generated production</p>
+<p>• Entrepreneurial mindset with a focus on long-term business growth</p>
+<p>• Ability to operate independently in a remote environment</p>
+  `,
+    benefits: `
+    <p><strong>Compensation Illustration</strong></p>
+    <p>To provide transparency, here is a sample breakdown of potential earnings under our flat-fee structure:</p>
+<p>• Loan Amount: $400,000<br />
+Compensation: 200 bps ($8,000)<br />
+Admin Fee: $750<br />
+<strong>Net to Loan Officer: $7,250</strong></p>
+
+<p>• Loan Amount: $600,000<br />
+Compensation: 200 bps ($12,000)<br />
+Admin Fee: $750<br />
+<strong>Net to Loan Officer: $11,250</strong></p>
+
+    <p>This model allows you to keep the majority of your revenue, giving you the flexibility to reinvest in your business and accelerate growth.</p>
+  `,
+    additionalDetail: `<p>• This is an in-person role based at our Houston, TX office (Westchase area).</p>
+      <p>• This is not a remote position</p>`,
+    content: `
+    <p><strong>Why Join Lock It Lending?</strong></p>
+    <p>At Lock It Lending, we provide more than competitive rates and technology. We offer a true platform for independent Loan Officers to thrive. By minimizing overhead and maximizing resources, we enable our partners to focus on building their business while keeping more of what they earn.</p>
+  `,
   },
   {
     company: 'Lock It Lending (Powered by Swift Home Loans)',
