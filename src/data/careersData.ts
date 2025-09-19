@@ -121,10 +121,8 @@ Admin Fee: $750<br />
 
     <p>This model allows you to keep the majority of your revenue, giving you the flexibility to reinvest in your business and accelerate growth.</p>
   `,
-    additionalDetail: `<p>• This is an in-person role based at our Houston, TX office (Westchase area).</p>
-      <p>• This is not a remote position</p>`,
+    additionalDetail: `<p>If you are ready to elevate your career and expand your business with the support of a leading mortgage platform, we invite you to connect with us today. Send us an email or schedule a call.</p>`,
     content: `
-    <p><strong>Why Join Lock It Lending?</strong></p>
     <p>At Lock It Lending, we provide more than competitive rates and technology. We offer a true platform for independent Loan Officers to thrive. By minimizing overhead and maximizing resources, we enable our partners to focus on building their business while keeping more of what they earn.</p>
   `,
   },
