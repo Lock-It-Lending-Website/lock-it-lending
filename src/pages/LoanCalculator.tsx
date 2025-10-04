@@ -40,20 +40,20 @@ const getPmiRate = (ltv: number, creditScoreRange: CreditScoreRange) => {
 // Declaring variables
 const LoanCalculator: React.FC = () => {
   const [purchasePrice, setPurchasePrice] = useState<string>('250000');
-  const [downPayment, setDownPayment] = useState<string>('50000');
-  const [downPaymentPercent, setDownPaymentPercent] = useState<string>('20');
-  const [interestRate, setInterestRate] = useState<string>('7.25');
+  const [downPayment, setDownPayment] = useState<string>('');
+  const [downPaymentPercent, setDownPaymentPercent] = useState<string>('');
+  const [interestRate, setInterestRate] = useState<string>('6');
   const [termYears, setTermYears] = useState(30);
-  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('6750');
-  const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('2.7');
-  const [insuranceAnnual, setInsuranceAnnual] = useState<string>('1600'); // annual insurance
-  const [hoaAnnual, setHOAAnnual] = useState<string>('350'); // annual HOA
+  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('');
+  const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('');
+  const [insuranceAnnual, setInsuranceAnnual] = useState<string>(''); // annual insurance
+  const [hoaAnnual, setHOAAnnual] = useState<string>(''); // annual HOA
   const [monthlyIncome, setMonthlyIncome] = useState<string>('');
   const [monthlyStudentdebt, setMonthlyStudentdebt] = useState<string>('');
   const [monthlyAutodebt, setMonthlyAutodebt] = useState<string>('');
   const [monthlyCreditcarddebt, setMonthlyCredit] = useState<string>('');
   const [affordabilityInfo, setAfordabilityInfo] = useState<string>('');
-  const [mortgageInsurance, setMortgageInsurance] = useState<string>('0');
+  const [mortgageInsurance, setMortgageInsurance] = useState<string>('');
   const [creditScoreRange, setCreditScoreRange] = useState<string>('760+');
 
   // States

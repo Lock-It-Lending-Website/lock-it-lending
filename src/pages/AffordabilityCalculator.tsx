@@ -45,11 +45,11 @@ const AffordabilityCalculator: React.FC = () => {
   const [downPaymentPercent, setDownPaymentPercent] = useState<string>('');
   const [interestRate, setInterestRate] = useState<string>('6');
   const [termYears, setTermYears] = useState(30);
-  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('3000');
+  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('');
   const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('1.2');
-  const [insuranceAnnual, setInsuranceAnnual] = useState<string>('1000'); // annual insurance
+  const [insuranceAnnual, setInsuranceAnnual] = useState<string>(''); // annual insurance
   const [hoaAnnual, setHOAAnnual] = useState<string>(''); // annual HOA
-  const [monthlyIncome, setMonthlyIncome] = useState<string>('');
+  const [monthlyIncome, setMonthlyIncome] = useState<string>('12000');
   const [monthlyStudentdebt, setMonthlyStudentdebt] = useState<string>('');
   const [monthlyAutodebt, setMonthlyAutodebt] = useState<string>('');
   const [monthlyCreditcarddebt, setMonthlyCredit] = useState<string>('');
@@ -234,6 +234,7 @@ const AffordabilityCalculator: React.FC = () => {
     { name: 'Taxes', value: monthlyPropertyTax },
     { name: 'Insurance', value: monthlyHomeInsurance },
     { name: 'HOA', value: monthlyHOAFees },
+    { name: 'PMI', value: monthlyMI },
   ].filter(item => item.value > 0); // remove zero-value items
 
   return (
