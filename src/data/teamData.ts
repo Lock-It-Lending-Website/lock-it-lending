@@ -308,16 +308,6 @@ export const teamMembers: TeamMember[] = [
     team: 'vortex',
   },
   {
-    name: 'Tran Thai',
-    title: 'Junior Loan Officer',
-    nmls: '#2703377',
-    email: 'tran.t@lockitlending.com',
-    phone: '(903) 420-3608',
-    image: `${base}/team/Tran-Thai.jpg`,
-    slug: 'Tran-Thai',
-    team: 'vortex',
-  },
-  {
     name: 'Charlene White',
     title: 'Independent Loan Officer',
     nmls: '#2246521',
@@ -325,6 +315,15 @@ export const teamMembers: TeamMember[] = [
     phone: '(346) 688-9110',
     image: `${base}/team/Charlene-White.jpg`,
     slug: 'Charlene-White',
+    team: 'vortex',
+  },
+  {
+    name: 'Melinda Mazzola',
+    title: 'Loan Processor',
+    email: 'Melinda.m@lockitlending.com',
+    phone: '(832) 639-3869',
+    image: `${base}/team/Melinda Mazzola web size.png`,
+    slug: 'Melinda-Mazzola',
     team: 'vortex',
   },
   {

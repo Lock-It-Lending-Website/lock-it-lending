@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import AmortizationSchedule from '../components/AmortizationSchedule';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
@@ -40,31 +41,25 @@ const getPmiRate = (ltv: number, creditScoreRange: CreditScoreRange) => {
 // Declaring variables
 const LoanCalculator: React.FC = () => {
   const [purchasePrice, setPurchasePrice] = useState<string>('250000');
-  const [downPayment, setDownPayment] = useState<string>('');
-  const [downPaymentPercent, setDownPaymentPercent] = useState<string>('');
-  const [interestRate, setInterestRate] = useState<string>('6');
+  const [downPayment, setDownPayment] = useState<string>('50000');
+  const [interestRate, setInterestRate] = useState<string>('7.250');
   const [termYears, setTermYears] = useState(30);
-  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('');
+  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('6750');
   const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('');
-  const [insuranceAnnual, setInsuranceAnnual] = useState<string>(''); // annual insurance
-  const [hoaAnnual, setHOAAnnual] = useState<string>(''); // annual HOA
+  const [insuranceAnnual, setInsuranceAnnual] = useState<string>('1600'); // annual insurance
+  const [hoaAnnual, setHOAAnnual] = useState<string>('350'); // annual HOA
   const [monthlyIncome, setMonthlyIncome] = useState<string>('');
   const [monthlyStudentdebt, setMonthlyStudentdebt] = useState<string>('');
   const [monthlyAutodebt, setMonthlyAutodebt] = useState<string>('');
-  const [monthlyCreditcarddebt, setMonthlyCredit] = useState<string>('');
-  const [affordabilityInfo, setAfordabilityInfo] = useState<string>('');
+  const [monthlyCreditcarddebt, setMonthlyCredit] = useState<string>('650');
   const [mortgageInsurance, setMortgageInsurance] = useState<string>('');
   const [creditScoreRange, setCreditScoreRange] = useState<string>('760+');
 
   // States
   const [lastEdited, setLastEdited] = useState<'dollars' | 'percent' | null>(null);
-  const [showInfo, setShowAffordabilityInfo] = useState(false);
   const [lastEditedDownPayment, setLastEditedDownPayment] = useState<'dollars' | 'percent' | null>(
     null
   );
-  //const [showStudentInfo, setShowStudentInfo] = useState(false);
-  //const [showAutoInfo, setShowAutoInfo] = useState(false);
-  //const [showCreditInfo, setCreditInfo] = useState(false);
 
   // Parsers
   const purchasePriceNumber = parseFloat(purchasePrice) || 0;
@@ -113,31 +108,6 @@ const LoanCalculator: React.FC = () => {
       }
     }
   }, [propertyTaxPercent, purchasePrice, lastEdited]);
-
-  useEffect(() => {
-    const purchasePriceNumber = parseFloat(purchasePrice) || 0;
-    const downPaymentNumber = parseFloat(downPayment) || 0;
-
-    if (lastEditedDownPayment === 'dollars' && purchasePriceNumber > 0) {
-      const percent = (downPaymentNumber / purchasePriceNumber) * 100;
-      setDownPaymentPercent(percent.toFixed(2)); // percent stays a string
-    }
-  }, [downPayment, purchasePrice, lastEditedDownPayment]);
-
-  useEffect(() => {
-    const purchasePriceNumber = parseFloat(purchasePrice) || 0;
-
-    if (lastEditedDownPayment === 'percent' && purchasePriceNumber > 0) {
-      const isValid = /^\d*\.?\d*$/.test(downPaymentPercent);
-      if (isValid) {
-        const parsedPercent = parseFloat(downPaymentPercent);
-        if (!isNaN(parsedPercent)) {
-          const dollars = (purchasePriceNumber * parsedPercent) / 100;
-          setDownPayment(Math.round(dollars).toString()); // convert result back to string
-        }
-      }
-    }
-  }, [downPaymentPercent, purchasePrice, lastEditedDownPayment]);
 
   // Calculations
   // Years × 12 months = 360
@@ -279,26 +249,6 @@ const LoanCalculator: React.FC = () => {
 
                   {/* Vertical Divider */}
                   <div className="h-full w-px bg-gray-500"></div>
-
-                  {/* Percentage Input */}
-                  <div className="relative w-24">
-                    <input
-                      type="text"
-                      value={downPaymentPercent}
-                      onChange={e => {
-                        const raw = e.target.value;
-                        if (/^\d*\.?\d*$/.test(raw) || raw === '') {
-                          setDownPaymentPercent(raw);
-                          setLastEditedDownPayment('percent');
-                        }
-                      }}
-                      className="pr-8 w-full border-none p-2"
-                      placeholder="0"
-                    />
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">
-                      %
-                    </span>
-                  </div>
                 </div>
               </label>
 
@@ -440,7 +390,7 @@ const LoanCalculator: React.FC = () => {
 
             {/* The right side*/}
             <div className="lg:col-span-3 bg-white flex flex-col items-center mx-auto p-5 rounded shadow w-full">
-              <h2 className="text-2xl mb-6 text-center">Total Monthly Payment: </h2>
+              <h2 className="text-2xl mb-6 text-center">Total Monthly Payment</h2>
               <h1 className="text-5xl font-bold text-center">
                 ${formatNumberWithCommas(totalMonthly)}
               </h1>
@@ -470,55 +420,35 @@ const LoanCalculator: React.FC = () => {
                 </div>
 
                 {/* Color Keys */}
-                <div className="w-full flex flex-col justify-center items-center space-y-4 pb-8">
+                <div className="w-full flex flex-col items-center space-y-3 pb-8">
                   {pieData.map((item, index) => (
-                    <div key={index} className="flex justify-between gap-3 w-64">
-                      <div className="flex items-center gap-2 min-w-[160px] justify-start">
+                    <div key={index} className="flex w-full max-w-md items-center justify-between">
+                      {/* Left: color chip + label (no wrap) */}
+                      <div className="flex items-center gap-2 whitespace-nowrap">
                         <div
                           className="w-4 h-4 rounded"
                           style={{ backgroundColor: COLORS[index % COLORS.length] }}
                         />
                         <span className="font-medium">{item.name}:</span>
-                        <span>${formatNumberWithCommas(item.value.toFixed(2).toString())}</span>
                       </div>
+
+                      {/* Right: value (no wrap, aligned right) */}
+                      <span className="whitespace-nowrap tabular-nums">
+                        ${formatNumberWithCommas(item.value.toFixed(2).toString())}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
+              <section className="max-w-7xl mx-auto px-4 mt-8">
+                <h2 className="text-2xl mb-6 text-center">Amortization Schedule</h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                {/*<div className="bg-blue-500 text-white rounded-lg p-4 text-center">
-                <p className="text-xs sm:text-sm mb-1 sm:mb-2">Monthly Mortgage Payment (PITIA)</p>
-                <p className="text-base sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                  $
-                  <span className="inline-block">
-                    {totalMonthlyMortgageCost.toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </span>
-                </p>
-              </div>*/}
-
-                <div className="bg-[#cca249] text-white rounded-lg p-4 text-center">
-                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Loan Amount</p>
-                  <p className="sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                    $
-                    <span className="inline-block">
-                      {loanAmount.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </span>
-                  </p>
-                </div>
-                <div className="bg-[#cca249] text-white rounded-lg p-4 text-center">
-                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Monthly PMI</p>
-                  <p className="sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                    $<span className="inline-block">{formattedPMI}</span>
-                  </p>
-                </div>
-              </div>
+                <AmortizationSchedule
+                  loanAmount={loanAmount}
+                  annualRatePct={parseFloat(interestRate) || 0}
+                  termYears={termYears} // 15 or 30
+                />
+              </section>
             </div>
 
             {/* Disclaimer for compliance*/}

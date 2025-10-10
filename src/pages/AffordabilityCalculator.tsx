@@ -38,18 +38,43 @@ const getPmiRate = (ltv: number, creditScoreRange: CreditScoreRange) => {
   return scoreRates[creditScoreRange][bracket];
 };
 
+// Bands for buying power
+
+type Bands = {
+  affordable: { min: number; max: number };
+  stretch: { min: number; max: number };
+  difficult: { min: number; max: number };
+};
+
+export function getBuyingPowerBands(
+  affordableMax: number, // your solved maxAffordableHomePrice
+  stretchFactor = 1.13, // +13%
+  difficultFactor = 1.26 // +26%
+): Bands {
+  const A = Math.max(0, Math.floor(affordableMax));
+
+  const stretchMax = Math.floor(A * stretchFactor);
+  const difficultMax = Math.floor(A * difficultFactor);
+
+  return {
+    affordable: { min: 0, max: A },
+    stretch: { min: A + 1, max: stretchMax },
+    difficult: { min: stretchMax + 1, max: difficultMax },
+  };
+}
+
 // Declaring variables and states
 const AffordabilityCalculator: React.FC = () => {
   const [purchasePrice, setPurchasePrice] = useState<string>('250000');
-  const [downPayment, setDownPayment] = useState<string>('');
+  const [downPayment, setDownPayment] = useState<string>('50000');
   const [downPaymentPercent, setDownPaymentPercent] = useState<string>('');
-  const [interestRate, setInterestRate] = useState<string>('6');
+  const [interestRate, setInterestRate] = useState<string>('7.250');
   const [termYears, setTermYears] = useState(30);
-  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('');
-  const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('1.2');
-  const [insuranceAnnual, setInsuranceAnnual] = useState<string>(''); // annual insurance
-  const [hoaAnnual, setHOAAnnual] = useState<string>(''); // annual HOA
-  const [monthlyIncome, setMonthlyIncome] = useState<string>('12000');
+  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('6750');
+  const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('');
+  const [insuranceAnnual, setInsuranceAnnual] = useState<string>('1600'); // annual insurance
+  const [hoaAnnual, setHOAAnnual] = useState<string>('350'); // annual HOA
+  const [monthlyIncome, setMonthlyIncome] = useState<string>('10000');
   const [monthlyStudentdebt, setMonthlyStudentdebt] = useState<string>('');
   const [monthlyAutodebt, setMonthlyAutodebt] = useState<string>('');
   const [monthlyCreditcarddebt, setMonthlyCredit] = useState<string>('');
@@ -197,6 +222,15 @@ const AffordabilityCalculator: React.FC = () => {
   const maxAffordableHomePrice = Math.floor(lo);
   const loanAmountSolved = Math.max(maxAffordableHomePrice - downPaymentDollars, 0);
 
+  //Buying power calculation
+  const { affordable, stretch, difficult } = getBuyingPowerBands(
+    maxAffordableHomePrice,
+    1.13, // tweak here if you want different bands
+    1.26
+  );
+
+  const currency0 = (n: number) => `$${n.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+
   // Monthly components at solved price
   const monthlyPropertyTax = monthlyTaxesFor(maxAffordableHomePrice);
   const monthlyPrincipalAndInterest = loanAmountSolved * amortFactor;
@@ -335,7 +369,7 @@ const AffordabilityCalculator: React.FC = () => {
                     <div className="absolute left-6 top-1/2 transform -translate-y-1/2 w-64 bg-white border border-gray-300 shadow-lg p-2 text-sm text-gray-700 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300 z-50">
                       Enter your monthly car payment amount.
                       <br></br>Example: If your balance is $35,000 and monthly payment is $500,
-                      enter <strong>500</strong>
+                      enter <strong>500</strong>.
                     </div>
                   </div>
                 </div>
@@ -561,7 +595,7 @@ const AffordabilityCalculator: React.FC = () => {
 
             {/* The right side*/}
             <div className="lg:col-span-3 bg-white flex flex-col items-center mx-auto p-5 rounded shadow w-full">
-              <p className="text-2xl mb-6 text-center">Max Home Purchase Price</p>
+              <p className="text-2xl mb-6 text-center">Your Buying Power</p>
               <h1 className="text-5xl font-bold text-center">
                 $
                 {maxAffordableHomePrice.toLocaleString(undefined, {
@@ -572,7 +606,7 @@ const AffordabilityCalculator: React.FC = () => {
               <div className="w-full flex flex-col items-center gap-8 pb-8 max-w-full sm:max-w-[500px] md:max-w-[600px]">
                 {/* Chart */}
                 <div className="w-full flex flex-col items-center space-y-4">
-                  <ResponsiveContainer width="100%" height={350}>
+                  <ResponsiveContainer width="100%" aspect={4 / 3}>
                     <PieChart margin={{ top: 20, right: 40, bottom: 20, left: 20 }}>
                       <Pie
                         dataKey="value"
@@ -595,49 +629,61 @@ const AffordabilityCalculator: React.FC = () => {
                 </div>
 
                 {/* Color Keys */}
-                <div className="w-full flex flex-col justify-center items-center space-y-4 pb-8">
+                <div className="w-full flex flex-col items-center space-y-3 pb-8">
                   {pieData.map((item, index) => (
-                    <div key={index} className="flex justify-between gap-3 w-64">
-                      <div className="flex items-center gap-2 min-w-[160px] justify-start">
+                    <div key={index} className="flex w-full max-w-md items-center justify-between">
+                      {/* Left: color chip + label (no wrap) */}
+                      <div className="flex items-center gap-2 whitespace-nowrap">
                         <div
                           className="w-4 h-4 rounded"
                           style={{ backgroundColor: COLORS[index % COLORS.length] }}
                         />
                         <span className="font-medium">{item.name}:</span>
-                        <span>${formatNumberWithCommas(item.value.toFixed(2).toString())}</span>
                       </div>
+
+                      {/* Right: value (no wrap, aligned right) */}
+                      <span className="whitespace-nowrap tabular-nums">
+                        ${formatNumberWithCommas(item.value.toFixed(2).toString())}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                <div className="bg-[#cca249] text-white rounded-lg p-4 text-center">
-                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Monthly Income Needed</p>
-                  <p className="sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                    $
-                    <span className="inline-block">
-                      {totalIncomeNeeded.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </span>
-                  </p>
+              {/*
+              <div className="w-full mt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
+                  <div className="shadow border text-white rounded-lg p-4 text-center">
+                    <div className="p-4 flex flex-col items-start">
+                      <div className="inline-flex items-center justify-center w-full py-1 rounded-full bg-green-100 text-green-800 text-xs sm:text-sm mb-1 sm:mb-2">
+                        Affordable
+                      </div>
+                      <p className="inline-flex items-center justify-center w-full py-1 text-lg font-bold text-black">
+                        {currency0(affordable.min)} - {currency0(affordable.max)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="shadow border text-white rounded-lg p-4 text-center">
+                    <div className="rounded-xl p-4 flex flex-col items-start">
+                      <div className="inline-flex items-center justify-center w-full py-1 rounded-full bg-green-300 text-green-800 text-xs sm:text-sm mb-1 sm:mb-2">
+                        Stretch
+                      </div>
+                      <p className="inline-flex items-center justify-center w-full py-1 text-lg font-bold text-black">
+                        {currency0(stretch.min)} - {currency0(stretch.max)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="shadow border text-white rounded-lg p-4 text-center">
+                    <div className="rounded-xl p-4 flex flex-col items-start">
+                      <div className="inline-flex items-center justify-center w-full py-1 rounded-full bg-green-500 text-green-800 text-xs sm:text-sm mb-1 sm:mb-2">
+                        Difficult
+                      </div>
+                      <p className="inline-flex items-center justify-center w-full py-1 text-lg font-bold text-black">
+                        {currency0(difficult.min)} - {currency0(difficult.max)}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-
-                <div className="bg-[#cca249] text-white rounded-lg p-4 text-center">
-                  <p className="text-xs sm:text-sm mb-1 sm:mb-2">Total Yearly Income Needed</p>
-                  <p className="sm:text-xl md:text-2xl font-bold break-words whitespace-normal leading-snug">
-                    $
-                    <span className="inline-block">
-                      {annualIncomeNeeded.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </span>
-                  </p>
-                </div>
-              </div>
+              </div>*/}
             </div>
             {/* Disclaimer for compliance*/}
             <div className="relative mt-1 col-span-full w-full">
