@@ -70,8 +70,8 @@ const AffordabilityCalculator: React.FC = () => {
   const [downPaymentPercent, setDownPaymentPercent] = useState<string>('');
   const [interestRate, setInterestRate] = useState<string>('7.250');
   const [termYears, setTermYears] = useState(30);
-  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('6750');
-  const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('');
+  const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('');
+  const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('2.7');
   const [insuranceAnnual, setInsuranceAnnual] = useState<string>('1600'); // annual insurance
   const [hoaAnnual, setHOAAnnual] = useState<string>('350'); // annual HOA
   const [monthlyIncome, setMonthlyIncome] = useState<string>('10000');

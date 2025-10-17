@@ -22,8 +22,7 @@ export const resourcesData: ResourceArticle[] = [
     date: '2025-06-02',
     excerpt:
       'Learn how to protect yourself from Predatory Lending from Scotsman Guide Rising Star Hanh Dao...',
-    mediaType: 'video',
-    mediaUrl: 'https://www.youtube.com/embed/aSakKrb4fE8',
+    mediaType: 'image',
     thumbnailUrl: `${process.env.PUBLIC_URL}/DPA-review.jpg`,
     content: `<p class="chakra-text css-2a5fp1">This training video details a lender's in-house down payment assistance program for FHA loans. The program offers two options: 3.5% assistance covering the down payment, or 5% assistance covering both the down payment and some closing costs. A minimum 600 credit score is required, but there's no income limit, and buyers don't need to be first-time homebuyers. The assistance can be combined with seller credits (up to 6% for FHA loans), potentially resulting in money back at closing. Two types of second liens are available: a forgivable option after 30 years of homeownership, and a repayable option over 5 or 10 years. The repayable option results in a small additional monthly payment. The video uses a case study of a buyer who received $1,065 back at closing after utilizing both down payment assistance and seller credits to cover closing costs and back taxes. The program's processing time is approximately 3-4 weeks, and borrowers must complete a homebuyer education course. While the 3.5% option is more lenient regarding repayment, both options are available depending on the borrower's needs and financial situation. The video emphasizes the importance of clear communication with clients and realtors to maximize the benefits of the program.</p>
               <h2><strong>What is a Down Payment Assistance (DPA) Program?</strong></h2>
