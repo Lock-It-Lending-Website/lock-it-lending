@@ -25,7 +25,6 @@ const ads = [
   `${process.env.PUBLIC_URL}/closing/8.jpg`,
   `${process.env.PUBLIC_URL}/closing/9.jpg`,
   `${process.env.PUBLIC_URL}/closing/10.jpg`,
-  `${process.env.PUBLIC_URL}/closing/11.jpg`,
 ];
 
 const AdRotator: React.FC = () => {
