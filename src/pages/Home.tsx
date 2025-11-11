@@ -21,7 +21,9 @@ const ads = [
   `${process.env.PUBLIC_URL}/closing/4.jpg`,
   `${process.env.PUBLIC_URL}/closing/5.jpg`,
   `${process.env.PUBLIC_URL}/closing/6.jpg`,
+  `${process.env.PUBLIC_URL}/closing/7.jpg`,
   `${process.env.PUBLIC_URL}/closing/8.jpg`,
+  `${process.env.PUBLIC_URL}/closing/9.jpg`,
   `${process.env.PUBLIC_URL}/closing/10.jpg`,
   `${process.env.PUBLIC_URL}/closing/11.jpg`,
 ];
