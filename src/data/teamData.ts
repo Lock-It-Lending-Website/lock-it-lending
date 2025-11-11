@@ -186,7 +186,7 @@ export const teamMembers: TeamMember[] = [
     nmls: '',
     phone: '(254) 454-4303',
     email: 'annie@lockitlending.com',
-    image: `${base}/team/Annie-Tran.jpg`,
+    image: `${base}/team/Annie-Tran.png`,
     slug: 'annie-tran',
     team: 'allstars',
     bio: '',

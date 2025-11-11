@@ -257,14 +257,6 @@ const Footer = () => {
             <ul className="space-y-2 text-base">
               <li>
                 <Link
-                  to="/resources/5%-down-payment-assistance-program-review"
-                  className="hover:underline"
-                >
-                  5% Down Payment Assistance Program Review
-                </Link>
-              </li>
-              <li>
-                <Link
                   to="/resources/what-are-2-1-temporary-rate-buydowns"
                   className="hover:underline"
                 >

@@ -17,21 +17,13 @@ const homepageReviews = getShuffledReviews(seed, 2);
 const ads = [
   `${process.env.PUBLIC_URL}/closing/1.jpg`,
   `${process.env.PUBLIC_URL}/closing/2.jpg`,
-  `${process.env.PUBLIC_URL}/closing/3.jpg`,
+  `${process.env.PUBLIC_URL}/closing/3.png`,
   `${process.env.PUBLIC_URL}/closing/4.jpg`,
   `${process.env.PUBLIC_URL}/closing/5.jpg`,
   `${process.env.PUBLIC_URL}/closing/6.jpg`,
-  `${process.env.PUBLIC_URL}/closing/7.jpg`,
   `${process.env.PUBLIC_URL}/closing/8.jpg`,
-  `${process.env.PUBLIC_URL}/closing/9.jpg`,
   `${process.env.PUBLIC_URL}/closing/10.jpg`,
   `${process.env.PUBLIC_URL}/closing/11.jpg`,
-  `${process.env.PUBLIC_URL}/closing/12.jpg`,
-  `${process.env.PUBLIC_URL}/closing/13.jpg`,
-  `${process.env.PUBLIC_URL}/closing/14.jpg`,
-  `${process.env.PUBLIC_URL}/closing/15.jpg`,
-  `${process.env.PUBLIC_URL}/closing/16.jpg`,
-  `${process.env.PUBLIC_URL}/closing/17.jpg`,
 ];
 
 const AdRotator: React.FC = () => {
@@ -120,14 +112,8 @@ const Home: React.FC = () => {
               Learn about products, events, and many other great offerings from Lock It Lending
             </p>
 
-            <div className="grid md:grid-cols-3 gap-10">
+            <div className="flex flex-col items-center gap-10 md:flex-row md:justify-center">
               {[
-                {
-                  title: '5%-down-payment-assistance-program-review',
-                  slug: '5%-down-payment-assistance-program-review',
-                  description: 'Down Payment Assistance programs help homebuyers cover...',
-                  image: `${process.env.PUBLIC_URL}/DPA-review.jpg`,
-                },
                 {
                   title: 'What are 2-1 Temporary Rate Buydowns?',
                   slug: 'what-are-2-1-temporary-rate-buydowns',
@@ -146,7 +132,7 @@ const Home: React.FC = () => {
                 <Link
                   key={index}
                   to={`/resources/${card.slug}`}
-                  className="block w-full max-w-[420px] mx-auto"
+                  className="block w-full max-w-[420px]"
                 >
                   <motion.div
                     className="relative overflow-hidden rounded-xl shadow-lg group w-full aspect-[5/3]"

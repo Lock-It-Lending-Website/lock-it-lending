@@ -42,7 +42,7 @@ const getPmiRate = (ltv: number, creditScoreRange: CreditScoreRange) => {
 const LoanCalculator: React.FC = () => {
   const [purchasePrice, setPurchasePrice] = useState<string>('250000');
   const [downPayment, setDownPayment] = useState<string>('50000');
-  const [interestRate, setInterestRate] = useState<string>('7.250');
+  const [interestRate, setInterestRate] = useState<string>('5.99');
   const [termYears, setTermYears] = useState(30);
   const [propertyTaxDollars, setPropertyTaxDollars] = useState<string>('6750');
   const [propertyTaxPercent, setPropertyTaxPercent] = useState<string>('');
@@ -253,7 +253,19 @@ const LoanCalculator: React.FC = () => {
               </label>
 
               <label className="block">
-                Interest Rate:
+                <div className="flex items-center gap-2">
+                  Interest Rate:
+                  <div className="relative group">
+                    <FontAwesomeIcon
+                      icon={faCircleInfo}
+                      className="w-4 h-4 text-[#cca249] hover:text-[#a7812f] cursor-pointer"
+                    />
+                    <div className="absolute left-6 top-1/2 transform -translate-y-1/2 w-64 bg-white border border-gray-300 shadow-lg p-2 text-sm text-gray-700 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300 z-50">
+                      The average conventional 30-year fixed mortgage rate today is 5.99% (APR
+                      6.125%).
+                    </div>
+                  </div>
+                </div>
                 <div className="relative mt-1">
                   <input
                     type="text"
