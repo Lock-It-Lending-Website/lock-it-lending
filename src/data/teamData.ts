@@ -236,7 +236,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: 'Maria Vazquez',
-    title: 'Loan Officer',
+    title: 'Independent Loan Officer',
     nmls: '#2661107',
     phone: '(832) 762-4052',
     email: 'maria.v@lockitlending.com',
