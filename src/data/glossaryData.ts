@@ -35,11 +35,11 @@ export const glossaryData: GlossaryTerm[] = [
     slug: 'underwriting',
   },
   {
-    term: 'Subbordination',
+    term: 'Subordination',
     videoUrl: '',
     explanation:
       'When you take out a home loan, your mortgage is assigned the first lien position while your HELOC becomes the second. With subordination, lenders rank these loans by importance and assign them to corresponding lien positions.',
-    slug: 'subbordination',
+    slug: 'subordination',
   },
   {
     term: 'Servicer',
