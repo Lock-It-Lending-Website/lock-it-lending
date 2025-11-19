@@ -271,12 +271,12 @@ export const teamMembers: TeamMember[] = [
     bio: '',
   },
   {
-    name: 'Laura Hidalgo',
-    title: 'Talent Acquistion and Marketing Specialist',
-    email: 'laura.h@lockitlending.com',
-    phone: '(346) 589-8657',
-    image: `${base}/team/Laura-Hidalgo.png`,
-    slug: 'laura-hidalgo',
+    name: 'Beatrice Fleming',
+    title: 'Loan Officer Assistant',
+    email: 'beatrice.f@lockitlending.com',
+    phone: '(901) 302-8080',
+    image: `${base}/team/Beatrice Fleming web size.jpg`,
+    slug: 'beatrice-fleming',
     team: 'vortex',
   },
   {
