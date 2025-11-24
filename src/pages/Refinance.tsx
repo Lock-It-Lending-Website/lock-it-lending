@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
+import { Helmet } from 'react-helmet-async';
 import states from '../constants/states';
 import { useNavigate } from 'react-router-dom';
 
@@ -98,172 +99,178 @@ const RatesPage: React.FC = () => {
   );
 
   return (
-    <div className="home-page font-sans bg-gray-50 min-h-screen">
-      <Header />
-      <main className="main-content">
-        <HeroSection
-          title="Rate / Term Refinancing And"
-          highlight="Cash Out"
-          highlightColor="gold"
-          description="If you are wondering about your mortgage loan and if you can get a better deal, you can remove all of the uncertainty in just a few moments by getting the facts from one of our loan experts."
-          image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Refinance.jpg`}
-        />
-        <form onSubmit={handleSubmit} className="max-w-5xl mx-auto mt-10 px-6 pb-20">
-          <div className="bg-white rounded-xl shadow-md border border-gray-300">
-            <div className="p-8 border-b border-yellow-500">
-              <h2 className="text-3xl font-extrabold text-gray-800">Refinance Form</h2>
-              <p className="text-sm text-gray-500 mt-2">
-                To ensure accuracy, a team member will contact you shortly to confirm your
-                information. Once confirmed, we’ll provide your personalized and guaranteed written
-                quote <strong>within 1 hour</strong>, including a detailed breakdown of loan costs,
-                closing fees, taxes, and title insurance — tailored specifically to your situation.
-                <br />
-                We don’t believe in generic online calculators — we deliver clear, accurate, and
-                fully transparent estimates, so you know exactly what to expect from start to
-                finish.
-                <br />
-                Just answer a few quick questions below, and we’ll match you with your best
-                refinancing options.
-              </p>
-            </div>
-
-            <div className="divide-y divide-gray-200">
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">What are your goals?</p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {['Lower my payment', 'Take cash out', 'Shorter term'].map(opt =>
-                    renderOption('goals', opt)
-                  )}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">Which state are you shopping in?</p>
-                <select
-                  className="w-full border border-gray-300 rounded p-2 focus:ring-yellow-500"
-                  value={formData.state}
-                  onChange={e => handleChange('state', e.target.value)}
-                >
-                  <option value="">Select option</option>
-                  {states.map(state => (
-                    <option key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">How &apos;s this property used?</p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {['Primary Residence', 'Secondary Home', 'Investment Property'].map(opt =>
-                    renderOption('residencyType', opt)
-                  )}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">What type of property?</p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  {['Single Family', 'Multi Family', 'Condominium', 'Townhouse'].map(opt =>
-                    renderOption('propertyType', opt)
-                  )}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">Current mortgage balance?</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {[
-                    'Below 100K',
-                    '100K – 174K',
-                    '175K – 249K',
-                    '250K – 349K',
-                    '350K – 549K',
-                    '550K – 999K',
-                    '1M+',
-                  ].map(opt => renderOption('mortgageBalance', opt))}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">Estimated value of your property?</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {[
-                    'Below 100K',
-                    '100K – 174K',
-                    '175K – 249K',
-                    '250K – 349K',
-                    '350K – 549K',
-                    '550K – 999K',
-                    '1M+',
-                  ].map(opt => renderOption('propertyValue', opt))}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">Estimated credit score?</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {['740+', '700 – 739', '660 – 699', '600 – 659', 'Below 600'].map(opt =>
-                    renderOption('creditScore', opt)
-                  )}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">
-                  How long do you plan on keeping the home?
+    <>
+      <Helmet>
+        <link rel="canonical" href="https://www.lockitlending.com/refinance" />
+      </Helmet>
+      <div className="home-page font-sans bg-gray-50 min-h-screen">
+        <Header />
+        <main className="main-content">
+          <HeroSection
+            title="Rate / Term Refinancing And"
+            highlight="Cash Out"
+            highlightColor="gold"
+            description="If you are wondering about your mortgage loan and if you can get a better deal, you can remove all of the uncertainty in just a few moments by getting the facts from one of our loan experts."
+            image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Refinance.jpg`}
+          />
+          <form onSubmit={handleSubmit} className="max-w-5xl mx-auto mt-10 px-6 pb-20">
+            <div className="bg-white rounded-xl shadow-md border border-gray-300">
+              <div className="p-8 border-b border-yellow-500">
+                <h2 className="text-3xl font-extrabold text-gray-800">Refinance Form</h2>
+                <p className="text-sm text-gray-500 mt-2">
+                  To ensure accuracy, a team member will contact you shortly to confirm your
+                  information. Once confirmed, we’ll provide your personalized and guaranteed
+                  written quote <strong>within 1 hour</strong>, including a detailed breakdown of
+                  loan costs, closing fees, taxes, and title insurance — tailored specifically to
+                  your situation.
+                  <br />
+                  We don’t believe in generic online calculators — we deliver clear, accurate, and
+                  fully transparent estimates, so you know exactly what to expect from start to
+                  finish.
+                  <br />
+                  Just answer a few quick questions below, and we’ll match you with your best
+                  refinancing options.
                 </p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {['Under a year', '1–2', '3–5', '6–9', '10+'].map(opt =>
-                    renderOption('keepYears', opt)
-                  )}
+              </div>
+
+              <div className="divide-y divide-gray-200">
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-4">What are your goals?</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {['Lower my payment', 'Take cash out', 'Shorter term'].map(opt =>
+                      renderOption('goals', opt)
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              <div className="p-6">
-                <p className="text-lg font-semibold mb-4">What is your language preference?</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {[
-                    'English',
-                    'Spanish',
-                    'Chinese',
-                    'Korean',
-                    'Tagalog',
-                    'Vietnamese',
-                    'Arabic',
-                    'Albanian',
-                    'Other',
-                  ].map(opt => renderOption('language', opt))}
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-4">Which state are you shopping in?</p>
+                  <select
+                    className="w-full border border-gray-300 rounded p-2 focus:ring-yellow-500"
+                    value={formData.state}
+                    onChange={e => handleChange('state', e.target.value)}
+                  >
+                    <option value="">Select option</option>
+                    {states.map(state => (
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              </div>
 
-              <div className="p-6 space-y-4">
-                <p className="text-lg font-semibold">Email</p>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={e => handleChange('email', e.target.value)}
-                  placeholder="ExampleEmail@gmail.com"
-                  required
-                  className="w-full border rounded p-2"
-                />
-              </div>
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-4">How &apos;s this property used?</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {['Primary Residence', 'Secondary Home', 'Investment Property'].map(opt =>
+                      renderOption('residencyType', opt)
+                    )}
+                  </div>
+                </div>
 
-              <div className="p-6">
-                <button
-                  type="submit"
-                  className="w-full bg-yellow-600 text-white py-3 rounded-lg font-bold hover:bg-yellow-700"
-                >
-                  Submit
-                </button>
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-4">What type of property?</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    {['Single Family', 'Multi Family', 'Condominium', 'Townhouse'].map(opt =>
+                      renderOption('propertyType', opt)
+                    )}
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-4">Current mortgage balance?</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {[
+                      'Below 100K',
+                      '100K – 174K',
+                      '175K – 249K',
+                      '250K – 349K',
+                      '350K – 549K',
+                      '550K – 999K',
+                      '1M+',
+                    ].map(opt => renderOption('mortgageBalance', opt))}
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-4">Estimated value of your property?</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {[
+                      'Below 100K',
+                      '100K – 174K',
+                      '175K – 249K',
+                      '250K – 349K',
+                      '350K – 549K',
+                      '550K – 999K',
+                      '1M+',
+                    ].map(opt => renderOption('propertyValue', opt))}
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-4">Estimated credit score?</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {['740+', '700 – 739', '660 – 699', '600 – 659', 'Below 600'].map(opt =>
+                      renderOption('creditScore', opt)
+                    )}
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-4">
+                    How long do you plan on keeping the home?
+                  </p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {['Under a year', '1–2', '3–5', '6–9', '10+'].map(opt =>
+                      renderOption('keepYears', opt)
+                    )}
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-4">What is your language preference?</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {[
+                      'English',
+                      'Spanish',
+                      'Chinese',
+                      'Korean',
+                      'Tagalog',
+                      'Vietnamese',
+                      'Arabic',
+                      'Albanian',
+                      'Other',
+                    ].map(opt => renderOption('language', opt))}
+                  </div>
+                </div>
+
+                <div className="p-6 space-y-4">
+                  <p className="text-lg font-semibold">Email</p>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={e => handleChange('email', e.target.value)}
+                    placeholder="ExampleEmail@gmail.com"
+                    required
+                    className="w-full border rounded p-2"
+                  />
+                </div>
+
+                <div className="p-6">
+                  <button
+                    type="submit"
+                    className="w-full bg-yellow-600 text-white py-3 rounded-lg font-bold hover:bg-yellow-700"
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </form>
-      </main>
-      <Footer />
-    </div>
+          </form>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 };
 

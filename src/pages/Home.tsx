@@ -6,6 +6,41 @@ import HeroSection from '../components/HeroSection';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getShuffledReviews } from '../data/reviewData';
 
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['Organization', 'LocalBusiness', 'FinancialService'],
+  '@id': 'https://www.lockitlending.com/#organization',
+  name: 'Lock It Lending',
+  url: 'https://www.lockitlending.com/',
+  logo: 'https://www.lockitlending.com/logo.svg',
+  image: 'https://www.lockitlending.com/breaking%20news%20size%20web.jpg',
+  description:
+    'Mortgage experts assist with homebuying and refinancing, and offer friendly support.',
+  telephone: '(866) 400-6789',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '11111 Richmond Ave. #250',
+    addressLocality: 'Houston',
+    addressRegion: 'TX',
+    postalCode: '77082',
+    addressCountry: 'US',
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '17:00',
+    },
+  ],
+  sameAs: [
+    'https://www.facebook.com/your-page',
+    'https://www.linkedin.com/company/your-company',
+    'https://www.instagram.com/your-handle',
+    // add Google Business Profile URL here if you have one
+  ],
+};
+
 declare global {
   interface Window {
     FB: any;

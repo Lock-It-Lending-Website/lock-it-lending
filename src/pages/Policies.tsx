@@ -1,10 +1,15 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import TextPage from '../components/TextPage';
 
 export const PrivacyPolicy = () => (
-  <TextPage
-    title="Privacy Policy"
-    content={`
+  <>
+    <Helmet>
+      <link rel="canonical" href="https://www.lockitlending.com/privacy-policy" />
+    </Helmet>
+    <TextPage
+      title="Privacy Policy"
+      content={`
 <h2>Protection of the Privacy of Personal Non-Public Information</h2>
 <p>Respecting and protecting customer privacy is vital to our business. By explaining our Privacy Policy to you, we trust that you will better understand how we keep our customer information private and secure while using it to serve you better. Keeping customer information secure is a top priority, and we are disclosing our policies to help you understand how we handle the personal information about you that we collect and disclose. This notice explains how you can limit our disclosing of personal information about you. The provisions of this notice will apply to former customers as well as current customers unless we state otherwise.</p>
 
@@ -52,13 +57,18 @@ export const PrivacyPolicy = () => (
 <p>&nbsp;</p>
 <p>&nbsp;</p>
     `}
-  />
+    />
+  </>
 );
 
 export const TermsOfUse = () => (
-  <TextPage
-    title="Terms of Use"
-    content={`
+  <>
+    <Helmet>
+      <link rel="canonical" href="https://www.lockitlending.com/terms-of-use" />
+    </Helmet>
+    <TextPage
+      title="Terms of Use"
+      content={`
 <p>This website is owned and operated by Swift Home Loans, 255 S Old Woodward Ave Suite 300 Birmingham, MI 48009 which is referred to below as “Swift Home Loans Inc.” or “we” or “us” or “Company” or “our.”</p>
 <h2>By use of this website, you agree that:</h2>
 <ul>
@@ -138,13 +148,18 @@ export const TermsOfUse = () => (
 <h1>&nbsp;</h1>
 <p>&nbsp;</p>
     `}
-  />
+    />
+  </>
 );
 
 export const EmailPolicy = () => (
-  <TextPage
-    title="Email Policy"
-    content={`
+  <>
+    <Helmet>
+      <link rel="canonical" href="https://www.lockitlending.com/email-policy" />
+    </Helmet>
+    <TextPage
+      title="Email Policy"
+      content={`
 
 <h2>The Swift Home Loans Inc. family</h2>
 <p>The Swift Home Loans Inc. family referred to as (the Company) is dedicated to treating our clients like they are right next door for their home financing process. A big part of that is based upon prompt and convenient communication with our clients, vendors and others. For that reason, we offer various means of communication including Email, fax, telephone, Facebook messenger, Get Response, express mail, voice mail, etc. To demonstrate our commitment to prompt and convenient communications, we have adopted the following terms and conditions, regarding Email, which are incorporated by reference into all Emails sent and received by our Team Members (i.e., our employees). Our communications with you via Email are conditioned upon your agreement to the following terms:</p>
@@ -196,5 +211,6 @@ export const EmailPolicy = () => (
 <p>&nbsp;</p>
 <p>&nbsp;</p>
     `}
-  />
+    />
+  </>
 );

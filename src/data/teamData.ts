@@ -377,13 +377,13 @@ export const teamMembers: TeamMember[] = [
     team: 'vortex',
   },
   {
-    name: 'Angel Graddy',
+    name: 'Patrick Sexton',
     title: 'Retail Loan Officer',
-    nmls: '#2322203',
-    phone: '(806) 304-1225',
-    email: 'Angel.g@lockitlending.com ',
-    image: `${base}/team/Angel-Graddy.jpg`,
-    slug: 'angel-graddy',
+    nmls: '#1700259',
+    email: 'Patrick.s@lockitlending.com',
+    phone: '(432) 535-3788',
+    image: `${base}/team/Patrick Sexton.jpg`, // rename image file accordingly
+    slug: 'Patrick-Sexton',
     team: 'vortex',
   },
 ];

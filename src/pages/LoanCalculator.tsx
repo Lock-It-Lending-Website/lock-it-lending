@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -183,6 +184,11 @@ const LoanCalculator: React.FC = () => {
 
   return (
     <>
+      <>
+        <Helmet>
+          <link rel="canonical" href="https://www.lockitlending.com/loan-calculator" />
+        </Helmet>
+      </>
       <div className="font-sans">
         <Header />
         <main className="bg-gray-50 py-20 min-h-screen">
