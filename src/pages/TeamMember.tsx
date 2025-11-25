@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Meta } from 'react-head';
 import { teamMembers } from '../data/teamData';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -14,6 +15,9 @@ const TeamMemberPage = () => {
 
   return (
     <>
+      <Meta>
+        <link rel="canonical" href={`https://www.lockitlending.com/team-member/${slug}`} />
+      </Meta>
       <Header />
       <main className="bg-gray-50">
         {/* Top: Hero layout */}

@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
-import { Helmet } from 'react-helmet-async';
+import { Meta } from 'react-head';
 import { Link } from 'react-router-dom';
 import {
   CalendarCheck2,
@@ -132,9 +132,9 @@ const steps = [
 const Purchase: React.FC = () => {
   return (
     <>
-      <Helmet>
+      <Meta>
         <link rel="canonical" href="https://www.lockitlending.com/purchase" />
-      </Helmet>
+      </Meta>
       <div className="home-page font-sans bg-gray-50 min-h-screen">
         <Header />
         <main className="main-content">

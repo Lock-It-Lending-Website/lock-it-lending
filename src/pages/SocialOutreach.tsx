@@ -2,14 +2,14 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
-import { Helmet } from 'react-helmet-async';
+import { Meta } from 'react-head';
 
 const SocialOutreach = () => {
   return (
     <>
-      <Helmet>
-        <link rel="canonical" href="https://www.lockitlending.com/reviews" />
-      </Helmet>
+      <Meta>
+        <link rel="canonical" href="http://localhost:3000/social-outreach" />
+      </Meta>
       <div className="font-sans bg-gray-50">
         <Header />
         <main>

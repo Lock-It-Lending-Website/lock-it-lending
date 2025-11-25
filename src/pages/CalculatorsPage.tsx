@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Meta } from 'react-head';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import Header from '../components/Header';
@@ -8,9 +8,9 @@ import Footer from '../components/Footer';
 export default function CalculatorsPage() {
   return (
     <>
-      <Helmet>
+      <Meta>
         <link rel="canonical" href="https://www.lockitlending.com/calculators-page" />
-      </Helmet>
+      </Meta>
       <div className="bg-gray-50 font-sans min-h-screen">
         <Header />
         <main>

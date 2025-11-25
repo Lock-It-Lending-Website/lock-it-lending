@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import states from '../constants/states';
-import { Helmet } from 'react-helmet-async';
+import { Meta } from 'react-head';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, ShieldOff } from 'lucide-react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
@@ -111,9 +111,9 @@ const RatesPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <link rel="canonical" href="https://www.lockitlending.com/purchase" />
-      </Helmet>
+      <Meta>
+        <link rel="canonical" href="https://www.lockitlending.com/rates" />
+      </Meta>
       <div className="home-page font-sans bg-gray-50 min-h-screen">
         <Header />
         <main className="main-content">

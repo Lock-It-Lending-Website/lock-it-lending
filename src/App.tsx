@@ -1,6 +1,5 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
 import Home from './pages/Home';
 import Purchase from './pages/Purchase';
 import AffordabilityCalculator from './pages/AffordabilityCalculator';
@@ -27,36 +26,34 @@ import { EmailPolicy, TermsOfUse, PrivacyPolicy } from './pages/Policies';
 
 const App: React.FC = () => {
   return (
-    <HelmetProvider>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/purchase" element={<Purchase />} />
-        <Route path="/loan-calculator" element={<LoanCalculator />} />
-        <Route path="/affordability-calculator" element={<AffordabilityCalculator />} />
-        <Route path="/calculators-page" element={<CalculatorsPage />} />
-        <Route path="/social-outreach" element={<SocialOutreachPage />} />
-        <Route path="/careers" element={<Careers />} />
-        <Route path="/careers/:slug" element={<CareersPage />} />
-        <Route path="/refinance" element={<Refinance />} />
-        <Route path="/loan-programs" element={<LoanPrograms />} />
-        <Route path="/meet-lock-it-lending" element={<MeetLockItLending />} />
-        <Route path="/why-lock-it-lending" element={<WhyLockItLending />} />
-        <Route path="/reviews" element={<Reviews />} />
-        <Route path="/glossary" element={<Glossary />} />
-        <Route path="/resources" element={<Resources />} />
-        <Route path="/rates" element={<Rates />} />
-        <Route path="/team/:teamId" element={<TeamPage />} />
-        <Route path="/team-member/:slug" element={<TeamMemberPage />} />
-        <Route path="/thank-you" element={<ThankYou />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-        <Route path="/glossary/:slug" element={<GlossaryTermPage />} />
-        <Route path="/resources/:slug" element={<ResourcesPage />} />
-        <Route path="/apply" element={<ApplyForm />} />
-        <Route path="/email-policy" element={<EmailPolicy />} />
-        <Route path="/terms-of-use" element={<TermsOfUse />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      </Routes>
-    </HelmetProvider>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/purchase" element={<Purchase />} />
+      <Route path="/loan-calculator" element={<LoanCalculator />} />
+      <Route path="/affordability-calculator" element={<AffordabilityCalculator />} />
+      <Route path="/calculators-page" element={<CalculatorsPage />} />
+      <Route path="/social-outreach" element={<SocialOutreachPage />} />
+      <Route path="/careers" element={<Careers />} />
+      <Route path="/careers/:slug" element={<CareersPage />} />
+      <Route path="/refinance" element={<Refinance />} />
+      <Route path="/loan-programs" element={<LoanPrograms />} />
+      <Route path="/meet-lock-it-lending" element={<MeetLockItLending />} />
+      <Route path="/why-lock-it-lending" element={<WhyLockItLending />} />
+      <Route path="/reviews" element={<Reviews />} />
+      <Route path="/glossary" element={<Glossary />} />
+      <Route path="/resources" element={<Resources />} />
+      <Route path="/rates" element={<Rates />} />
+      <Route path="/team/:teamId" element={<TeamPage />} />
+      <Route path="/team-member/:slug" element={<TeamMemberPage />} />
+      <Route path="/thank-you" element={<ThankYou />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/glossary/:slug" element={<GlossaryTermPage />} />
+      <Route path="/resources/:slug" element={<ResourcesPage />} />
+      <Route path="/apply" element={<ApplyForm />} />
+      <Route path="/email-policy" element={<EmailPolicy />} />
+      <Route path="/terms-of-use" element={<TermsOfUse />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+    </Routes>
   );
 };
 

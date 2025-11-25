@@ -1,12 +1,12 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Meta } from 'react-head';
 import TextPage from '../components/TextPage';
 
 export const PrivacyPolicy = () => (
   <>
-    <Helmet>
+    <Meta>
       <link rel="canonical" href="https://www.lockitlending.com/privacy-policy" />
-    </Helmet>
+    </Meta>
     <TextPage
       title="Privacy Policy"
       content={`
@@ -63,9 +63,9 @@ export const PrivacyPolicy = () => (
 
 export const TermsOfUse = () => (
   <>
-    <Helmet>
+    <Meta>
       <link rel="canonical" href="https://www.lockitlending.com/terms-of-use" />
-    </Helmet>
+    </Meta>
     <TextPage
       title="Terms of Use"
       content={`
@@ -154,9 +154,9 @@ export const TermsOfUse = () => (
 
 export const EmailPolicy = () => (
   <>
-    <Helmet>
+    <Meta>
       <link rel="canonical" href="https://www.lockitlending.com/email-policy" />
-    </Helmet>
+    </Meta>
     <TextPage
       title="Email Policy"
       content={`

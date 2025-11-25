@@ -2,8 +2,8 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { Meta } from 'react-head';
 import { teamMembers } from '../data/teamData';
 
 const MeetLockItLending = () => {
@@ -16,9 +16,9 @@ const MeetLockItLending = () => {
 
   return (
     <>
-      <Helmet>
+      <Meta>
         <link rel="canonical" href="https://www.lockitlending.com/meet-lock-it-lending" />
-      </Helmet>
+      </Meta>
       <div className="font-sans">
         <Header />
         <main>

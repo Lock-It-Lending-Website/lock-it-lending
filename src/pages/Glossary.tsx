@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { Meta } from 'react-head';
 import { ArrowRight } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import Header from '../components/Header';
@@ -10,9 +10,9 @@ import { glossaryData } from '../data/glossaryData';
 export default function GlossaryPage() {
   return (
     <>
-      <Helmet>
+      <Meta>
         <link rel="canonical" href="https://www.lockitlending.com/glossary" />
-      </Helmet>
+      </Meta>
       <div className="font-sans bg-gray-50">
         <Header />
 
