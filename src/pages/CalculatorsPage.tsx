@@ -1,5 +1,4 @@
 import React from 'react';
-import { Meta } from 'react-head';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import Header from '../components/Header';
@@ -8,9 +7,6 @@ import Footer from '../components/Footer';
 export default function CalculatorsPage() {
   return (
     <>
-      <Meta>
-        <link rel="canonical" href="https://www.lockitlending.com/calculators-page" />
-      </Meta>
       <div className="bg-gray-50 font-sans min-h-screen">
         <Header />
         <main>

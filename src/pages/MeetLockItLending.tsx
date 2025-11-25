@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { Link } from 'react-router-dom';
-import { Meta } from 'react-head';
+
 import { teamMembers } from '../data/teamData';
 
 const MeetLockItLending = () => {
@@ -16,9 +16,6 @@ const MeetLockItLending = () => {
 
   return (
     <>
-      <Meta>
-        <link rel="canonical" href="https://www.lockitlending.com/meet-lock-it-lending" />
-      </Meta>
       <div className="font-sans">
         <Header />
         <main>

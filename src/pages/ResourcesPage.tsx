@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Meta } from 'react-head';
+
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { resourcesData } from '../data/resourcesData';
@@ -12,10 +12,6 @@ export default function ResourceArticlePage() {
   if (!article) {
     return (
       <>
-        <Meta>
-          <link rel="canonical" href="https://www.lockitlending.com/resources" />
-        </Meta>
-
         <div className="bg-gray-50 font-sans min-h-screen">
           <Header />
           <main className="max-w-4xl mx-auto px-4 py-20 text-center">
@@ -34,9 +30,6 @@ export default function ResourceArticlePage() {
 
   return (
     <>
-      <Meta>
-        <link rel="canonical" href={canonicalUrl} />
-      </Meta>
       <div className="bg-[#f9fbfc] font-sans text-black min-h-screen">
         <Header />
         <main className="max-w-5xl mx-auto px-4 py-16">

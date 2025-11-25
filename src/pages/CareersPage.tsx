@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Meta } from 'react-head';
+
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { careersData } from '../data/careersData'; // Assuming this correctly imports your data
@@ -12,9 +12,6 @@ export default function SingleCareerPage() {
   if (!career) {
     return (
       <>
-        <Meta>
-          <link rel="canonical" href="https://www.lockitlending.com/careers" />
-        </Meta>
         <div className="bg-[#f9fbfc] font-sans min-h-screen">
           <Header />
           <main className="max-w-4xl mx-auto px-4 py-20 text-center">
@@ -37,9 +34,6 @@ export default function SingleCareerPage() {
 
   return (
     <>
-      <Meta>
-        <link rel="canonical" href={canonicalUrl} />
-      </Meta>
       <div className="bg-gray-50 font-sans min-h-screen">
         <Header />
         <main className="flex-grow container mx-auto px-4 py-8 max-w-7xl mx-auto pt-20 pb-20">

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
-import { Meta } from 'react-head';
+
 import states from '../constants/states';
 import { useNavigate } from 'react-router-dom';
 
@@ -100,9 +100,6 @@ const RatesPage: React.FC = () => {
 
   return (
     <>
-      <Meta>
-        <link rel="canonical" href="https://www.lockitlending.com/refinance" />
-      </Meta>
       <div className="home-page font-sans bg-gray-50 min-h-screen">
         <Header />
         <main className="main-content">

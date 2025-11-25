@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Meta } from 'react-head';
+
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
@@ -72,9 +72,6 @@ export default function LoanPrograms() {
 
   return (
     <>
-      <Meta>
-        <link rel="canonical" href="https://www.lockitlending.com/loan-calculator" />
-      </Meta>
       <div className="font-sans">
         <Header />
         <main className="bg-white">

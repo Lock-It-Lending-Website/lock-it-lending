@@ -3,15 +3,12 @@ import HeroSection from '../components/HeroSection';
 import { resourcesData } from '../data/resourcesData';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { Meta } from 'react-head';
+
 import { Link } from 'react-router-dom';
 
 export default function ResourcesPage() {
   return (
     <>
-      <Meta>
-        <link rel="canonical" href="https://www.lockitlending.com/resources" />
-      </Meta>
       <div className="font-sans bg-gray-50">
         <Header />
         <HeroSection

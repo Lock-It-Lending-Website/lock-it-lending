@@ -1,12 +1,9 @@
 import React from 'react';
-import { Meta } from 'react-head';
+
 import TextPage from '../components/TextPage';
 
 export const PrivacyPolicy = () => (
   <>
-    <Meta>
-      <link rel="canonical" href="https://www.lockitlending.com/privacy-policy" />
-    </Meta>
     <TextPage
       title="Privacy Policy"
       content={`
@@ -63,9 +60,6 @@ export const PrivacyPolicy = () => (
 
 export const TermsOfUse = () => (
   <>
-    <Meta>
-      <link rel="canonical" href="https://www.lockitlending.com/terms-of-use" />
-    </Meta>
     <TextPage
       title="Terms of Use"
       content={`
@@ -154,9 +148,6 @@ export const TermsOfUse = () => (
 
 export const EmailPolicy = () => (
   <>
-    <Meta>
-      <link rel="canonical" href="https://www.lockitlending.com/email-policy" />
-    </Meta>
     <TextPage
       title="Email Policy"
       content={`

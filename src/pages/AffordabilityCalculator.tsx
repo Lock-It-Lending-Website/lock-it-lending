@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Meta } from 'react-head';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -274,9 +273,6 @@ const AffordabilityCalculator: React.FC = () => {
 
   return (
     <>
-      <Meta>
-        <link rel="canonical" href="https://www.lockitlending.com/affordability-calculator" />
-      </Meta>
       <div className="font-sans text-base">
         <Header />
         <main className="bg-gray-50 py-20 min-h-screen">

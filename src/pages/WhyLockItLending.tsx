@@ -1,5 +1,4 @@
 import React from 'react';
-import { Meta } from 'react-head';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -8,9 +7,6 @@ import HeroSection from '../components/HeroSection';
 const WhyLockItLending = () => {
   return (
     <>
-      <Meta>
-        <link rel="canonical" href={`https://www.lockitlending.com/why-lock-it-lending`} />
-      </Meta>
       <div className="font-sans bg-gray-50">
         <Header />
         <main>

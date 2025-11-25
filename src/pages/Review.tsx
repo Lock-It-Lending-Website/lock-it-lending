@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta } from 'react-head';
+
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -13,9 +13,6 @@ const reviews = getShuffledReviews(seed, 6);
 export default function Reviews() {
   return (
     <>
-      <Meta>
-        <link rel="canonical" href="https://www.lockitlending.com/reviews" />
-      </Meta>
       <div className="font-sans bg-gray-50">
         <Header />
         <main>
