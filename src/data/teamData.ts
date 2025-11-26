@@ -281,9 +281,10 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: 'Aron Padierna',
-    title: 'Loan Officer Assistant',
+    title: 'Loan Officer',
     email: 'aron.p@lockitlending.com',
     phone: '(281) 666-2913',
+    nmls: '#2535426',
     image: `${base}/team/Aron-Padierna.png`,
     slug: 'aron-padierna',
     team: 'vortex',
@@ -303,7 +304,7 @@ export const teamMembers: TeamMember[] = [
     title: 'Junior Loan Advisor',
     email: 'gabriel.m@lockitlending.com',
     phone: '(469) 933-0878',
-    nmls: '2389416',
+    nmls: '#2389416',
     image: `${base}/team/Gabriel Melgar websize.png`,
     slug: 'gabriel-melgar',
     team: 'vortex',
@@ -374,16 +375,6 @@ export const teamMembers: TeamMember[] = [
     phone: '(248) 780-7080',
     image: `${base}/team/Jason Quick.jpg`,
     slug: 'Jason-Quick',
-    team: 'vortex',
-  },
-  {
-    name: 'Patrick Sexton',
-    title: 'Retail Loan Officer',
-    nmls: '#1700259',
-    email: 'Patrick.s@lockitlending.com',
-    phone: '(432) 535-3788',
-    image: `${base}/team/Patrick Sexton.jpg`, // rename image file accordingly
-    slug: 'Patrick-Sexton',
     team: 'vortex',
   },
 ];
