@@ -149,7 +149,7 @@ const Footer = () => {
               </p>
               <div className="flex items-center gap-4">
                 <a
-                  href="https://www.facebook.com/lockitlendingstars/"
+                  href="https://www.facebook.com/lockitlendingofficial"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-black hover:text-[#cca249] transition-colors duration-300 ease-in-out"
@@ -184,6 +184,25 @@ const Footer = () => {
                     />
                   </svg>
                 </a>
+                <a
+                  href="https://www.linkedin.com/company/lock-it-lending-all-stars"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-black hover:text-[#cca249] transition-colors duration-300 ease-in-out"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                    className="w-7 h-7 fill-current"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8A53.79 53.79 0 0 1 53.79 0a53.79 53.79 0 0 1 0 107.6zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2c-48.3 0-55.7 37.7-55.7 76.7V448h-92.6V148.9h88.9v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3c94 0 111.3 61.9 111.3 142.3V448z"
+                    />
+                  </svg>
+                </a>
+
                 <a
                   href="https://www.tiktok.com/@lockitlendinghouston"
                   target="_blank"
@@ -306,29 +325,6 @@ const Footer = () => {
                 alt="Lock It Lending"
                 className="h-10"
               />
-            </div>
-            <div className="flex gap-6 text-2xl text-gray-700">
-              <Link
-                to="https://www.facebook.com/lockitlending"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className="fab fa-facebook"></i>
-              </Link>
-              <Link
-                to="https://www.instagram.com/lockitlending/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className="fab fa-instagram"></i>
-              </Link>
-              <Link
-                to="https://www.linkedin.com/company/lockitlending/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className="fab fa-linkedin"></i>
-              </Link>
             </div>
 
             <p className="text-gray-600 text-lg">
