@@ -1,9 +1,9 @@
 import React from 'react';
+import { useCanonical } from '../hooks/useCanonical';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
-import { Link } from 'react-router-dom';
-
 import { teamMembers } from '../data/teamData';
 
 const MeetLockItLending = () => {
@@ -13,50 +13,12 @@ const MeetLockItLending = () => {
     const lastNameB = b.name.split(' ').slice(-1)[0].toLowerCase();
     return lastNameB.localeCompare(lastNameA);
   });
-
+  useCanonical('https://www.lockitlending.com/meet-lock-it-lending');
   return (
     <>
       <div className="font-sans">
         <Header />
         <main>
-          {/*<HeroSection
-          title="Meet The Lock It Lending"
-          highlight="Family"
-          highlightColor="gold"
-          description="Get to Know the Skilled Individuals Who Make Locking in Your Mortgage Simple, Fast, and Hassle-Free."
-          image={`${process.env.PUBLIC_URL}/LIL-Meet-The-Family-2024.jpg`}
-        />*/}
-          {/* <section className="bg-[#f7fbfd] py-24 px-8">
-          <h2 className="text-6xl font-bold text-center mb-10">Our Teams</h2>
-          <p className="text-center text-gray-600 text-2xl max-w-4xl mx-auto mb-16">
-            Lock It Lending has several branches across the country to help you with your mortgage
-            needs. Our experienced loan officers are ready to assist you in finding the perfect
-            mortgage for your dream home.
-          </p>
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-center gap-12">
-            {teamList.map(team => (
-              <div key={team.slug} className="flex-1">
-                <Link
-                  to={`/team/${team.slug}`}
-                  className="rounded-2xl overflow-hidden shadow-lg group relative block h-full"
-                >
-                  <img
-                    src={team.image}
-                    alt={team.name}
-                    className="w-full h-[28rem] object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 flex flex-col justify-end p-8">
-                    <h3 className="font-bold text-white text-3xl drop-shadow-md">{team.name}</h3>
-                    <p className="text-lg text-white font-semibold drop-shadow-md">
-                      Visit Team Page →
-                    </p>
-                  </div>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </section> */}
-
           <section className="bg-gray-50 py-24 px-8">
             <h2 className="text-6xl font-bold text-center mb-10">Meet The Team</h2>
             <p className="text-center text-gray-600 text-2xl max-w-3xl mx-auto mb-16">

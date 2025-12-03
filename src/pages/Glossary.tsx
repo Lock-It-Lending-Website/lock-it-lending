@@ -1,6 +1,6 @@
 import React from 'react';
+import { useCanonical } from '../hooks/useCanonical';
 import { Link } from 'react-router-dom';
-
 import { ArrowRight } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import Header from '../components/Header';
@@ -8,11 +8,11 @@ import Footer from '../components/Footer';
 import { glossaryData } from '../data/glossaryData';
 
 export default function GlossaryPage() {
+  useCanonical('https://www.lockitlending.com/glossary');
   return (
     <>
       <div className="font-sans bg-gray-50">
         <Header />
-
         <HeroSection
           title="Mortgage terms for our"
           highlight="neighbors"
@@ -20,7 +20,6 @@ export default function GlossaryPage() {
           description="We don't expect you to know everything related to mortgages, so we want to make it easier. We’ve broken down the most common terms to help you get ahead, with easy to understand definitions and videos."
           image={`${process.env.PUBLIC_URL}/Lock-It-Lending-Mortgage-term.png`}
         />
-
         <section className="flex justify-center px-8 py-24">
           <div className="bg-white shadow-md rounded-2xl w-full max-w-4xl divide-y divide-gray-200">
             {glossaryData.map(({ term, slug }) => (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useCanonical } from '../hooks/useCanonical';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
@@ -22,6 +22,7 @@ function Accordion({ title, content }: { title: string; content: string }) {
 }
 
 export default function LoanPrograms() {
+  useCanonical('https://www.lockitlending.com/loan-programs');
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({

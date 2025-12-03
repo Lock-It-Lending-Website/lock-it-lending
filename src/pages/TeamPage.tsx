@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useCanonical } from '../hooks/useCanonical';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { teamGroups, teamMembers } from '../data/teamData';
 import Header from '../components/Header';
@@ -14,6 +15,7 @@ const TeamPage = () => {
   const members = teamMembers.filter(m => m.team === normalizedId);
   const [activeTab, setActiveTab] = useState<'about' | 'contact'>('about');
   const [showMore, setShowMore] = useState(true);
+  useCanonical(`https://www.lockitlending.com/team/${teamId}`);
 
   const [contactData, setContactData] = useState({
     firstName: '',

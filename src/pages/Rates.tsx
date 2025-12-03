@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { useCanonical } from '../hooks/useCanonical';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import states from '../constants/states';
-
-import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, ShieldOff } from 'lucide-react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
 
@@ -108,6 +108,8 @@ const RatesPage: React.FC = () => {
       <span>{label || value}</span>
     </button>
   );
+
+  useCanonical('https://www.lockitlending.com/rates');
 
   return (
     <>

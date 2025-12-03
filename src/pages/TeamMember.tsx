@@ -1,6 +1,6 @@
 import React from 'react';
+import { useCanonical } from '../hooks/useCanonical';
 import { useParams, Link } from 'react-router-dom';
-
 import { teamMembers } from '../data/teamData';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -8,6 +8,7 @@ import Footer from '../components/Footer';
 const TeamMemberPage = () => {
   const { slug } = useParams();
   const member = teamMembers.find(m => m.slug === slug);
+  useCanonical(`https://www.lockitlending.com/meet-lock-it-lending/${slug}`);
 
   if (!member) return <div>Team member not found.</div>;
 

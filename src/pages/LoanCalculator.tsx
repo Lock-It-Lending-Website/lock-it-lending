@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { useCanonical } from '../hooks/useCanonical';
 import { Link } from 'react-router-dom';
-
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
@@ -41,6 +41,7 @@ const getPmiRate = (ltv: number, creditScoreRange: CreditScoreRange) => {
 
 // Declaring variables
 const LoanCalculator: React.FC = () => {
+  useCanonical('https://www.lockitlending.com/loan-calculator');
   const [purchasePrice, setPurchasePrice] = useState<string>('250000');
   const [downPayment, setDownPayment] = useState<string>('50000');
   const [interestRate, setInterestRate] = useState<string>('5.99');
