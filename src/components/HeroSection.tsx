@@ -12,7 +12,10 @@ type HeroSectionProps = {
   showAdRotator?: boolean;
 };
 
-const ads = [`${process.env.PUBLIC_URL}/breaking news size web.jpg`];
+const ads = [
+  `${process.env.PUBLIC_URL}/breaking news size web.jpg`,
+  `${process.env.PUBLIC_URL}/image (1).jpg`,
+];
 
 const AdRotator: React.FC = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
