@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getShuffledReviews } from '../data/reviewData';
+import HomepageVideoTeaser from '../components/HomepageVideoTeaser';
 
 declare global {
   interface Window {
@@ -110,14 +111,15 @@ const Home: React.FC = () => {
               </>
             }
           />
-          {/* Live From Lock it Lending Section*/}
-          <section className="py-14 bg-gray-50 px-8">
-            <div className="max-w-7xl mx-auto text-center"></div>
+
+          {/* Homepage Video Teaser */}
+          <section className="py-4 bg-white px-8">
+            <HomepageVideoTeaser />
           </section>
 
           {/* Updates That Move You Section */}
-          <section className="py-27 bg-[#f7fbfd] px-8">
-            <div className="max-w-7xl mx-auto text-center">
+          <section className="py-4 bg-[#f7fbfd] px-8">
+            <div className="max-w-7xl mx-auto text-center pt-20">
               <h2 className="text-5xl font-extrabold mb-6">Updates That Move You—Literally 🏡</h2>
               <p className="text-2xl text-gray-600 mb-12 font-semibold">
                 Learn about products, events, and many other great offerings from Lock It Lending
@@ -146,7 +148,7 @@ const Home: React.FC = () => {
                     className="block w-full max-w-[420px]"
                   >
                     <motion.div
-                      className="relative overflow-hidden rounded-xl shadow-lg group w-full aspect-[5/3]"
+                      className="relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow group w-full aspect-[5/3]"
                       initial={{ opacity: 0, y: 40 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
@@ -246,7 +248,7 @@ const Home: React.FC = () => {
                 <img
                   src={`${process.env.PUBLIC_URL}/Lock-It-Lending-Home1.png`}
                   alt="Modern house"
-                  className="w-full rounded-lg shadow-md"
+                  className="w-full rounded-lg shadow-lg"
                 />
               </div>
               <div className="w-full md:w-1/2 md:pl-12 text-center md:text-left">

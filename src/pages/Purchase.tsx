@@ -1,5 +1,6 @@
 import React from 'react';
 import { useCanonical } from '../hooks/useCanonical';
+import { businessSchema } from '../Seo/businessSchema';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import Header from '../components/Header';

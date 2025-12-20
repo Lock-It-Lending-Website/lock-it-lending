@@ -280,7 +280,7 @@ const AffordabilityCalculator: React.FC = () => {
         <Link
           to="/loan-calculator"
           className="relative block bg-[#cca249] text-white rounded-lg border-4 border-[#cca249] p-4 my-6
-                 w-64 mx-auto cursor-pointer transition-colors duration-300 hover:opacity-90 transition hover:text-white"
+                 w-64 mx-auto cursor-pointer transition-colors duration-300 shadow-lg hover:shadow-xl transition-shadow hover:opacity-90 transition hover:text-white"
           aria-label="Check your affordability"
         >
           <p className="text-xs sm:text-sm mb-0 text-center">Mortgage Breakdown </p>

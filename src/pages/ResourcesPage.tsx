@@ -31,7 +31,6 @@ export default function ResourceArticlePage() {
     <div className="bg-[#f9fbfc] font-sans text-black min-h-screen">
       <Header />
       <main className="max-w-5xl mx-auto px-4 py-16">
-        {/* Breadcrumbs */}
         <div className="text-sm text-[#D6A849]  font-medium mb-4 space-x-1">
           <Link to="/" className="hover:underline">
             Home
@@ -44,11 +43,10 @@ export default function ResourceArticlePage() {
           <span className="text-black">{article.title}</span>
         </div>
 
-        {/* Title */}
         <h1 className="font-bold mb-6 break-words text-[clamp(2rem,5vw,3rem)] leading-[1.1]">
           {article.title}
         </h1>
-        {/* Tags */}
+
         <div className="flex flex-wrap gap-2 mb-4">
           <span className="bg-[#D6A849] text-white text-sm px-3 py-1 rounded-full font-semibold">
             {article.author}
@@ -63,7 +61,6 @@ export default function ResourceArticlePage() {
           ))}
         </div>
 
-        {/* Date + Read Time */}
         <p className="text-sm text-gray-600 mb-6 font-medium">
           Published on{' '}
           {new Date(`${article.date}T00:00:00`).toLocaleDateString('en-US', {
@@ -74,7 +71,31 @@ export default function ResourceArticlePage() {
           • Read Time: {article.readTime}
         </p>
 
-        {/* Thumbnail Image */}
+        {article.isExpired && (
+          <div className="mb-8 rounded-2xl border border-[#D6A849]/30 bg-[#D6A849]/10 px-5 py-4 shadow-sm">
+            <div className="flex items-start gap-4">
+              {/* Icon */}
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#D6A849] text-white">
+                <span className="text-xl font-extrabold leading-none">!</span>
+              </div>
+
+              <div className="min-w-0">
+                <p className="text-lg font-extrabold text-black">This program is expired</p>
+                <p className="mt-1 text-sm text-gray-700">
+                  Please note, this article is archived as the Conventional 1% Down Program is no
+                  longer available.{' '}
+                  {/*<Link
+                    to="/resources"
+                    className="font-semibold text-[#D6A849] underline underline-offset-4"
+                  >
+                    See current down payment options →
+                  </Link>*/}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="rounded-2xl overflow-hidden shadow-md mb-8">
           {/* <img src={article.thumbnailUrl} alt={article.title} className="w-full object-cover" /> */}
           {article.mediaType === 'video' && article.mediaUrl ? (
@@ -96,8 +117,6 @@ export default function ResourceArticlePage() {
           )}
         </div>
 
-        {/* Content */}
-
         {article.content && (
           <div
             className="prose max-w-none mt-10 [&_h1]:text-4xl [&_h2]:text-2xl [&_h3]:text-xl"
@@ -106,7 +125,6 @@ export default function ResourceArticlePage() {
         )}
       </main>
 
-      {/* Footer with lighter background */}
       <div className="bg-[#f1f2f3]">
         <Footer />
       </div>

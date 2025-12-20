@@ -32,13 +32,13 @@ export default function CalculatorsPage() {
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 my-10 sm:my-16">
             <Link
               to="/loan-calculator"
-              className="w-full sm:w-auto text-center bg-[#cca249] text-white text-lg px-6 py-3 rounded-md font-semibold hover:opacity-90 transition duration-300"
+              className="w-full sm:w-auto text-center bg-[#cca249] text-white text-lg px-6 py-3 rounded-md font-semibold shadow-lg hover:shadow-xl transition-shadow hover:opacity-90 transition duration-300"
             >
               Mortgage Calculator
             </Link>
             <Link
               to="/affordability-calculator"
-              className="w-full sm:w-auto text-center bg-[#cca249] text-white text-lg px-6 py-3 rounded-md font-semibold hover:opacity-90 transition duration-300"
+              className="w-full sm:w-auto text-center bg-[#cca249] text-white text-lg px-6 py-3 rounded-md font-semibold shadow-lg hover:shadow-xl transition-shadow hover:opacity-90 transition duration-300"
             >
               Affordability Calculator
             </Link>
@@ -57,7 +57,7 @@ export default function CalculatorsPage() {
                   alike.
                 </p>
                 <Link to="/purchase">
-                  <button className="bg-[#cca249] text-white text-lg px-6 py-3 rounded-md font-semibold mt-4 hover:opacity-90 transition duration-300">
+                  <button className="bg-[#cca249] text-white text-lg px-6 py-3 rounded-md font-semibold mt-4 shadow-lg hover:shadow-xl transition-shadow hover:opacity-90 transition duration-300">
                     Learn More
                   </button>
                 </Link>
@@ -79,7 +79,7 @@ export default function CalculatorsPage() {
                   Understand common loan terms and concepts with our comprehensive glossary.
                 </p>
                 <Link to="/glossary">
-                  <button className="bg-[#cca249] text-white text-lg px-6 py-3 rounded-md font-semibold mt-4 hover:opacity-90 transition duration-300">
+                  <button className="bg-[#cca249] text-white text-lg px-6 py-3 rounded-md font-semibold mt-4 shadow-lg hover:shadow-xl transition-shadow hover:opacity-90 transition duration-300">
                     View Glossary
                   </button>
                 </Link>
@@ -100,7 +100,7 @@ export default function CalculatorsPage() {
                   Connect with our experienced loan officers to find the best loan for your needs.
                 </p>
                 <Link to="/meet-lock-it-lending">
-                  <button className="bg-[#cca249] text-white text-lg px-6 py-3 rounded-md font-semibold mt-4 hover:opacity-90 transition duration-300">
+                  <button className="bg-[#cca249] text-white text-lg px-6 py-3 rounded-md font-semibold mt-4 shadow-lg hover:shadow-xl transition-shadow hover:opacity-90 transition duration-300">
                     Find a Loan Officer
                   </button>
                 </Link>

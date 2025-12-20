@@ -21,13 +21,34 @@ export default function ResourcesPage() {
 
       <section className="max-w-[1600px] mx-auto px-10 py-28 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
         {resourcesData.map(
-          ({ slug, title, author, readTime, date, thumbnailUrl, excerpt, tags }) => (
+          ({ slug, title, author, readTime, date, thumbnailUrl, excerpt, tags, isExpired }) => (
             <Link
               key={slug}
               to={`/resources/${slug}`}
-              className="block bg-white shadow-xl rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow w-full max-w-[550px] mx-auto"
+              className="block bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow transition-shadow w-full max-w-[550px] mx-auto"
             >
-              <img src={thumbnailUrl} alt={title} className="w-full h-55 object-cover" />
+              <div className="relative">
+                <img
+                  src={thumbnailUrl}
+                  alt={title}
+                  className={`w-full h-56 object-cover ${isExpired ? 'grayscale opacity-70' : ''}`}
+                />
+
+                {isExpired && (
+                  <>
+                    <div className="absolute top-3 left-3 text-white/70 text-sm font-extrabold tracking-wide">
+                      EXPIRED
+                    </div>
+
+                    <div className="absolute top-3 right-3">
+                      <span className="inline-flex items-center rounded-full bg-gray-900/80 px-3 py-1 text-xs font-bold tracking-wide text-white shadow-sm backdrop-blur">
+                        EXPIRED
+                      </span>
+                    </div>
+                  </>
+                )}
+              </div>
+
               <div className="p-6">
                 <div className="flex flex-wrap gap-3 mb-4">
                   {tags.map(tag => (
@@ -39,12 +60,14 @@ export default function ResourcesPage() {
                     </span>
                   ))}
                 </div>
-                <p className="text-sm text-gray-500 mb-2 font-medium">
-                  {author} • {readTime}
-                </p>
+
                 <h3 className="text-2xl font-bold text-gray-900 mb-2 leading-snug">{title}</h3>
+
                 <p className="text-lg text-gray-700 line-clamp-2 mb-3">{excerpt}</p>
-                <p className="text-sm text-gray-400">{date}</p>
+
+                <div className="mt-4 flex items-center justify-between">
+                  <p className="text-sm text-gray-400">{date}</p>
+                </div>
               </div>
             </Link>
           )

@@ -10,6 +10,7 @@ export interface ResourceArticle {
   mediaUrl?: string;
   thumbnailUrl: string;
   content?: string;
+  isExpired?: boolean;
 }
 
 export const resourcesData: ResourceArticle[] = [
@@ -91,5 +92,6 @@ export const resourcesData: ResourceArticle[] = [
 <p>&nbsp;</p>
 <h2><strong>Take the First Step Towards Homeownership</strong></h2>
 <p>Don’t let the down payment be a barrier to your homeownership dreams. Contact Lock It Lending today to learn more about our 1% Down Program and how we can help you achieve your goal of owning a home. Our expert team is here to support you every step of the way. </p>`,
+    isExpired: true,
   },
 ];
