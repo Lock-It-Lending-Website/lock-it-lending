@@ -15,21 +15,21 @@ const videos: VideoItem[] = [
     speaker: 'Aron & Valeria',
     language: 'Spanish',
     thumbnail: '/video thumbnails/fha-conventional.png',
-    videoSrc: '/videos/Aron - FHA or Conventional Loan.mov',
+    videoSrc: '/videos/Aron - FHA or Conventional Loan.mp4',
   },
   {
     title: 'VA Loans Explained',
     speaker: 'Kent',
     language: 'English',
     thumbnail: '/video thumbnails/va-loans.png',
-    videoSrc: '/videos/Kent - VA loan.mov',
+    videoSrc: '/videos/Kent - VA loan.mp4',
   },
   {
     title: 'What is HELOC?',
     speaker: 'Kevin',
     language: 'Vietnamese',
     thumbnail: '/video thumbnails/heloc.png',
-    videoSrc: '/videos/Kevin - HELOC.mov',
+    videoSrc: '/videos/Kevin - HELOC.mp4',
   },
 ];
 
