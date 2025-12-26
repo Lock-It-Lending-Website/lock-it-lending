@@ -377,4 +377,13 @@ export const teamMembers: TeamMember[] = [
     slug: 'Jason-Quick',
     team: 'vortex',
   },
+  {
+    name: 'Laura Hidalgo',
+    title: 'Talent Acquisition Specialist',
+    email: 'laura.h@lockitlending.com',
+    phone: '(346) 589-8657',
+    image: `${base}/team/Laura-Hidalgo.png`,
+    slug: 'Laura-Hidalgo',
+    team: 'vortex',
+  },
 ];
