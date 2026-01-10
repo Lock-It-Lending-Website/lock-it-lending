@@ -249,17 +249,6 @@ export const teamMembers: TeamMember[] = [
     videoUrl: 'https://www.youtube.com/embed/ytFRk5XO8q4',
   },
   {
-    name: 'Syed Tirmzi',
-    title: 'Loan Officer',
-    nmls: '#2025956',
-    phone: '(361) 306-4592',
-    email: 'syed.t@lockitlending.com',
-    image: `${base}/team/Syed Tirmzi web size.jpg`,
-    slug: 'syed-tirmzi',
-    team: 'vortex',
-    bio: '',
-  },
-  {
     name: 'Celene Ngo',
     title: 'Independent Loan Officer',
     nmls: '#1053510',
