@@ -18,9 +18,9 @@ const seed = Math.floor(new Date().getTime() / (1000 * 60 * 60 * 6));
 const homepageReviews = getShuffledReviews(seed, 2);
 
 const ads = [
-  `${process.env.PUBLIC_URL}/closing/1.jpg`,
-  `${process.env.PUBLIC_URL}/closing/2.jpg`,
-  `${process.env.PUBLIC_URL}/closing/3.png`,
+  `${process.env.PUBLIC_URL}/closing/1.jpeg`,
+  `${process.env.PUBLIC_URL}/closing/2.jpeg`,
+  `${process.env.PUBLIC_URL}/closing/3.jpg`,
   `${process.env.PUBLIC_URL}/closing/4.jpg`,
   `${process.env.PUBLIC_URL}/closing/5.jpg`,
   `${process.env.PUBLIC_URL}/closing/6.jpg`,
