@@ -8,6 +8,7 @@ import HeroSection from '../components/HeroSection';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getShuffledReviews } from '../data/reviewData';
 import HomepageVideoTeaser from '../components/HomepageVideoTeaser';
+import TestimonialSection from '../components/TestimonialSection';
 
 declare global {
   interface Window {
@@ -118,8 +119,8 @@ const Home: React.FC = () => {
           </section>
 
           {/* Updates That Move You Section */}
-          <section className="py-4 bg-[#f7fbfd] px-8">
-            <div className="max-w-7xl mx-auto text-center pt-20">
+          <section className="py-20 bg-[#f7fbfd] px-8">
+            <div className="max-w-7xl mx-auto text-center">
               <h2 className="text-5xl font-extrabold mb-6">Updates That Move You—Literally 🏡</h2>
               <p className="text-2xl text-gray-600 mb-12 font-semibold">
                 Learn about products, events, and many other great offerings from Lock It Lending
@@ -172,6 +173,10 @@ const Home: React.FC = () => {
             </div>
           </section>
 
+          {/* Testimonials Section */}
+          <section className="py-4 bg-white px-8">
+            <TestimonialSection />
+          </section>
           {/* Reviews Section */}
           <section className="bg-gray-50 px-4 sm:px-6 md:px-8 pt-20 pb-28 text-center">
             <div className="max-w-7xl mx-auto w-full">
