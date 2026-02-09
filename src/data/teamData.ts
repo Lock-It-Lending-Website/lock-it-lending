@@ -329,6 +329,7 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Courtney Meekins websize.jpg`,
     slug: 'courtney-meekins',
     team: 'vortex',
+    videoUrl: 'https://www.youtube.com/embed/fkJ7yrK7tpw',
   },
   {
     name: 'Valeria Laverde',
