@@ -18,11 +18,11 @@ const videos: VideoItem[] = [
     videoSrc: '/videos/Aron - FHA or Conventional Loan.mp4',
   },
   {
-    title: 'VA Loans Explained',
+    title: 'FHA Loan Revised',
     speaker: 'Kent',
     language: 'English',
-    thumbnail: '/video thumbnails/va-loans.png',
-    videoSrc: '/videos/Kent - VA loan.mp4',
+    thumbnail: '/video thumbnails/kenton/size tiktok.png',
+    videoSrc: '/videos/kenton/Kent - FHA Loan revised.mp4',
   },
   {
     title: 'What is HELOC?',
@@ -66,7 +66,7 @@ export default function HomepageVideoTeaser() {
 
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-14 h-14 rounded-full bg-black/60 flex items-center justify-center">
-                      <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6 ml-1">
+                      <svg viewBox="0 0 24 24" className="h-6 w-6 translate-x-[1px] fill-white">
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     </div>

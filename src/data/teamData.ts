@@ -96,6 +96,13 @@ Our team of seasoned mortgage experts possesses a deep understanding of the ever
   },
 };
 
+export type teamVideos = {
+  id: string;
+  title: string;
+  videoSrc: string; // e.g. "/videos/kenton/clip1.mp4"
+  thumbnailSrc?: string; // optional image thumbnail (recommended)
+};
+
 export type TeamMember = {
   name: string;
   title: string;
@@ -108,6 +115,7 @@ export type TeamMember = {
   bio?: string;
   applyLink?: string;
   videoUrl?: string; // Optional video URL for team members
+  clips?: teamVideos[];
 };
 
 export const teamMembers: TeamMember[] = [
@@ -219,6 +227,20 @@ export const teamMembers: TeamMember[] = [
     applyLink:
       'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=bbe37d90-9957-4ef3-9163-40e27c6cad5c',
     videoUrl: 'https://www.youtube.com/embed/pIcVfMKGZyI',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'VA loans Explained',
+        videoSrc: '/videos/kenton/Kent - VA loan.mp4',
+        thumbnailSrc: '/video thumbnails/kenton/va-loans.png',
+      },
+      {
+        id: 'video-2',
+        title: 'FHA Loan Revised',
+        videoSrc: '/videos/kenton/Kent - FHA Loan revised.mp4',
+        thumbnailSrc: '/video thumbnails/kenton/size tiktok.png',
+      },
+    ],
   },
   {
     name: 'Jake Radom',
@@ -383,6 +405,16 @@ export const teamMembers: TeamMember[] = [
     phone: '(713) 647-1791',
     image: `${base}/team/Christopher Plaza.jpg`,
     slug: 'Christopher-Plaza',
+    team: 'vortex',
+  },
+  {
+    name: 'Miguel Gomez',
+    title: 'Independent Loan Officer',
+    nmls: '#1715476',
+    email: 'miguel.g@lockitlending.com',
+    phone: '(832) 588-1226',
+    image: `${base}/team/Miguel Gomez websize.jpg`,
+    slug: 'Miguel-Gomez',
     team: 'vortex',
   },
 ];
