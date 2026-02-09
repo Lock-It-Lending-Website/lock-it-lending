@@ -21,8 +21,8 @@ const videos: VideoItem[] = [
     title: 'FHA Loan Revised',
     speaker: 'Kent',
     language: 'English',
-    thumbnail: '/video thumbnails/kenton/size tiktok.png',
-    videoSrc: '/videos/kenton/Kent - FHA Loan revised.mp4',
+    thumbnail: '/video thumbnails/Kenton/size tiktok.png',
+    videoSrc: '/videos/Kenton/Kent - FHA Loan revised.mp4',
   },
   {
     title: 'What is HELOC?',
