@@ -14,22 +14,22 @@ const videos: VideoItem[] = [
     title: 'FHA vs Conventional Loans',
     speaker: 'Aron & Valeria',
     language: 'Spanish',
-    thumbnail: '/video thumbnails/fha-conventional.png',
-    videoSrc: '/videos/Aron - FHA or Conventional Loan.mp4',
+    thumbnail: '/video thumbnails/aron/fha-conventional.png',
+    videoSrc: '/videos/aron/Aron - FHA or Conventional Loan.mp4',
   },
   {
     title: 'FHA Loan Revised',
     speaker: 'Kent',
     language: 'English',
     thumbnail: '/video thumbnails/Kenton/size tiktok.png',
-    videoSrc: '/videos/Kenton/Kent - FHA Loan revised.mp4',
+    videoSrc: '/videos/kenton/Kent - FHA Loan revised.mp4',
   },
   {
     title: 'What is HELOC?',
     speaker: 'Kevin',
     language: 'Vietnamese',
-    thumbnail: '/video thumbnails/heloc.png',
-    videoSrc: '/videos/Kevin - HELOC.mp4',
+    thumbnail: '/video thumbnails/kevin/heloc.png',
+    videoSrc: '/videos/kevin/Kevin - HELOC.mp4',
   },
 ];
 

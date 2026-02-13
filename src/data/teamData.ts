@@ -114,6 +114,8 @@ export type TeamMember = {
   team: TeamSlug;
   bio?: string;
   applyLink?: string;
+  applyLinkEs?: string;
+  hideCtaBanner?: boolean;
   videoUrl?: string; // Optional video URL for team members
   clips?: teamVideos[];
 };
@@ -130,8 +132,9 @@ export const teamMembers: TeamMember[] = [
     slug: 'ann-luu',
     team: 'allstars',
     bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=ff2423e7-8b05-4ae6-bf35-c12e52b0f3c2',
+    applyLink: 'https://swifthomeloans.my1003app.com/2008554/register?time=1770666471785',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/2008554/register?POSAppLanguage=ES&time=1770666478323',
     videoUrl: 'https://www.youtube.com/embed/TsZf7ZCPeks',
   },
   {
@@ -144,8 +147,8 @@ export const teamMembers: TeamMember[] = [
     slug: 'lyn-ha',
     team: 'allstars',
     bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=675c970e-ee12-4ddf-a8a1-f8a7a28d6803',
+    applyLink: 'https://swifthomeloans.my1003app.com/2051826/register?time=1770666763467',
+    applyLinkEs: 'https://swifthomeloans.my1003app.com/2051826/register?POSAppLanguage=ES',
     videoUrl: 'https://www.youtube.com/embed/p1ka9yrrCEc',
   },
   {
@@ -158,8 +161,9 @@ export const teamMembers: TeamMember[] = [
     slug: 'kaden-nguyen',
     team: 'allstars',
     bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=7ec8115d-b864-43df-91bf-0d5090c6d167',
+    applyLink: 'https://swifthomeloans.my1003app.com/2117639/register?time=1770666881165',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/2117639/register?POSAppLanguage=ES&time=1770666889613',
     videoUrl: 'https://www.youtube.com/embed/fAZDxq-ya58',
   },
   {
@@ -172,9 +176,18 @@ export const teamMembers: TeamMember[] = [
     slug: 'kevin-huynh',
     team: 'allstars',
     bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=6c1e8c03-c9b4-40d8-abf4-d772f108cccf',
+    applyLink: 'https://swifthomeloans.my1003app.com/2441459/register?time=1770667090675',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/2441459/register?POSAppLanguage=ES&time=1770667095166',
     videoUrl: 'https://www.youtube.com/embed/YHWsOOt8Vxk',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'What is HELOC?',
+        videoSrc: '/videos/kevin/Kevin - HELOC.mp4',
+        thumbnailSrc: '/video thumbnails/kevin/heloc.png',
+      },
+    ],
   },
   {
     name: 'Hanh Dao',
@@ -186,7 +199,8 @@ export const teamMembers: TeamMember[] = [
     slug: 'hanh-dao',
     team: 'allstars',
     bio: '',
-    applyLink: 'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
+    applyLink: 'https://swifthomeloans.my1003app.com/1406378/register',
+    applyLinkEs: 'https://swifthomeloans.my1003app.com/1406378/register?POSAppLanguage=ES',
   },
   {
     name: 'Annie Tran',
@@ -198,7 +212,7 @@ export const teamMembers: TeamMember[] = [
     slug: 'annie-tran',
     team: 'allstars',
     bio: '',
-    applyLink: 'https://www.blink.mortgage/app/signup/p/swifthomeloansinc/lockitlending',
+    hideCtaBanner: true,
   },
   // Vortex
   {
@@ -211,8 +225,7 @@ export const teamMembers: TeamMember[] = [
     slug: 'robert-noonan',
     team: 'vortex',
     bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=3b2144c3-c5a1-40c5-8b83-1914a3fcb242',
+    hideCtaBanner: true,
   },
   {
     name: 'Kenton Wilson',
@@ -224,21 +237,22 @@ export const teamMembers: TeamMember[] = [
     slug: 'kenton-wilson',
     team: 'vortex',
     bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=bbe37d90-9957-4ef3-9163-40e27c6cad5c',
+    applyLink: 'https://swifthomeloans.my1003app.com/2600652/register',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/2600652/register?POSAppLanguage=ES&time=1770667000316',
     videoUrl: 'https://www.youtube.com/embed/pIcVfMKGZyI',
     clips: [
       {
         id: 'video-1',
         title: 'VA loans Explained',
         videoSrc: '/videos/kenton/Kent - VA loan.mp4',
-        thumbnailSrc: '/video thumbnails/Kenton/va-loans.png',
+        thumbnailSrc: '/video thumbnails/kenton/va-loans.png',
       },
       {
         id: 'video-2',
         title: 'FHA Loan Revised',
         videoSrc: '/videos/kenton/Kent - FHA Loan revised.mp4',
-        thumbnailSrc: '/video thumbnails/Kenton/size tiktok.png',
+        thumbnailSrc: '/video thumbnails/kenton/size tiktok.png',
       },
     ],
   },
@@ -252,9 +266,18 @@ export const teamMembers: TeamMember[] = [
     slug: 'jake-radom',
     team: 'vortex',
     bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=a5c8ec67-1dc5-4da8-99ac-90cbca54bd6e',
+    applyLink: 'https://swifthomeloans.my1003app.com/2359662/register?time=1770667235987',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/2359662/register?POSAppLanguage=ES&time=1770667251308',
     videoUrl: 'https://www.youtube.com/embed/ZbooO2xyYzM',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'Home Equity Line of Credit',
+        videoSrc: '/videos/jake/Jake-heloc.mp4',
+        thumbnailSrc: '/video thumbnails/jake/jake-heloc.png',
+      },
+    ],
   },
   {
     name: 'Maria Vazquez',
@@ -266,9 +289,24 @@ export const teamMembers: TeamMember[] = [
     slug: 'maria-vazquez',
     team: 'vortex',
     bio: '',
-    applyLink:
-      'https://prod.lendingpad.com/swift-home-loans/pos#/?loid=e20d6238-080d-4051-8dcc-d4a826ebbddb',
+    applyLink: 'https://swifthomeloans.my1003app.com/2661107/register?time=1770669282868',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/2661107/register?POSAppLanguage=ES&time=1770669282868',
     videoUrl: 'https://www.youtube.com/embed/ytFRk5XO8q4',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'Interés explicado',
+        videoSrc: '/videos/maria/Maria - Interest.mp4',
+        thumbnailSrc: '/video thumbnails/maria/maria-interest.png',
+      },
+      {
+        id: 'video-2',
+        title: 'Temporada de impuestos',
+        videoSrc: '/videos/maria/Maria x Valeria.mp4',
+        thumbnailSrc: '/video thumbnails/maria/mariaxvaleria.png',
+      },
+    ],
   },
   {
     name: 'Celene Ngo',
@@ -280,6 +318,9 @@ export const teamMembers: TeamMember[] = [
     slug: 'celene-ngo',
     team: 'vortex',
     bio: '',
+    applyLink: 'https://swifthomeloans.my1003app.com/1053510/register?time=1770669068023',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/2661107/register?POSAppLanguage=ES&time=1770669282868',
   },
   {
     name: 'Beatrice Fleming',
@@ -289,6 +330,7 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Beatrice Fleming web size.jpg`,
     slug: 'beatrice-fleming',
     team: 'vortex',
+    hideCtaBanner: true,
   },
   {
     name: 'Aron Padierna',
@@ -299,7 +341,30 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Aron-Padierna.png`,
     slug: 'aron-padierna',
     team: 'vortex',
+    applyLink: 'https://swifthomeloans.my1003app.com/2535426/register?time=1770666763330',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/2535426/register?POSAppLanguage=ES&time=1770666711433',
     videoUrl: 'https://www.youtube.com/embed/kJSh7LOiJpw',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'Shopping Around',
+        videoSrc: '/videos/aron/Aron-Shopping around, we beat t.mp4',
+        thumbnailSrc: '/video thumbnails/aron/Aron-shoppingaround.png',
+      },
+      {
+        id: 'video-2',
+        title: 'Cómo restablecer tu crédito',
+        videoSrc: '/videos/aron/Aron video.mp4',
+        thumbnailSrc: '/video thumbnails/aron/Aron-securedcreditcards.png',
+      },
+      {
+        id: 'video-3',
+        title: 'Préstamos FHA vs. préstamos convencionales',
+        videoSrc: '/videos/aron/Aron - FHA or Conventional Loan.mp4',
+        thumbnailSrc: '/video thumbnails/aron/fha-conventional.png',
+      },
+    ],
   },
   {
     name: 'Alex Hatherley',
@@ -309,6 +374,7 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Alex-Hatherley.png`,
     slug: 'alex-hatherley',
     team: 'vortex',
+    hideCtaBanner: true,
   },
   {
     name: 'Gabriel Melgar',
@@ -319,6 +385,7 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Gabriel Melgar websize.png`,
     slug: 'gabriel-melgar',
     team: 'vortex',
+    hideCtaBanner: true,
   },
   {
     name: 'Courtney Meekins',
@@ -329,17 +396,43 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Courtney Meekins websize.jpg`,
     slug: 'courtney-meekins',
     team: 'vortex',
+    applyLink: 'https://swifthomeloans.my1003app.com/2721865/register?time=1770668428084',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/2721865/register?POSAppLanguage=ES&time=1770668435477',
     videoUrl: 'https://www.youtube.com/embed/fkJ7yrK7tpw',
   },
   {
     name: 'Valeria Laverde',
     title: 'Independent Loan Officer',
     email: 'valeria.l@lockitlending.com',
-    phone: '(713)-836-9785',
+    phone: '(713) 836-9785',
     nmls: '#2571960',
     image: `${base}/team/Valeria Laverde web size.jpg`,
     slug: 'valeria-laverde',
     team: 'vortex',
+    applyLink: 'https://swifthomeloans.my1003app.com/2571960/register?time=1762804691282',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/2571960/register?POSAppLanguage=ES&time=1762805984194',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'Fannie Mae Explicado',
+        videoSrc: '/videos/valeria/Valeria - Fannie Mae.mp4',
+        thumbnailSrc: '/video thumbnails/valeria/valeria-fanniemae.png',
+      },
+      {
+        id: 'video-2',
+        title: 'Home Loan Myths',
+        videoSrc: '/videos/valeria/Valeria 2.mp4',
+        thumbnailSrc: '/video thumbnails/valeria/valeria-homeloanmyths.png',
+      },
+      {
+        id: 'video-3',
+        title: 'Puntaje de Crédito',
+        videoSrc: '/videos/valeria/Valerina - Credit Score.mp4',
+        thumbnailSrc: '/video thumbnails/valeria/valeria-interestandcredit.png',
+      },
+    ],
   },
 
   {
@@ -350,6 +443,8 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Ayesha-Khan.jpg`,
     slug: 'ayesha-khan',
     team: 'vortex',
+    hideCtaBanner: true,
+    videoUrl: 'https://www.youtube.com/embed/YaL4VzfaG5I',
   },
   {
     name: 'Charlene White',
@@ -360,6 +455,21 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Charlene-White.jpg`,
     slug: 'Charlene-White',
     team: 'vortex',
+    applyLink: 'https://swifthomeloans.my1003app.com/2246521/register?time=1770659850155',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'How to Buy a Home Before 2025',
+        videoSrc: '/videos/charlene/Charlene - buying home end of 2025.mp4',
+        thumbnailSrc: '/video thumbnails/charlene/Charlene-buyinghome2025.png',
+      },
+      {
+        id: 'video-2',
+        title: 'DSCR Loans Explained',
+        videoSrc: '/videos/charlene/Charlene - DSCR loan.mp4',
+        thumbnailSrc: '/video thumbnails/charlene/Charlene-DSCRloan.png',
+      },
+    ],
   },
   {
     name: 'Melinda Mazzola',
@@ -369,6 +479,7 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Melinda Mazzola web size.png`,
     slug: 'Melinda-Mazzola',
     team: 'vortex',
+    hideCtaBanner: true,
   },
   {
     name: 'Ana Rodriguez',
@@ -379,6 +490,9 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Ana-Rodriguez.jpg`,
     slug: 'Ana-Rodriguez',
     team: 'vortex',
+    applyLink: 'https://swifthomeloans.my1003app.com/1705055/register?time=1770657884254',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/1705055/register?POSAppLanguage=ES&time=1770657895904',
   },
   {
     name: 'Jason Quick',
@@ -388,6 +502,7 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Jason Quick.jpg`,
     slug: 'Jason-Quick',
     team: 'vortex',
+    hideCtaBanner: true,
   },
   {
     name: 'Laura Hidalgo',
@@ -397,6 +512,7 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Laura-Hidalgo.jpg`,
     slug: 'Laura-Hidalgo',
     team: 'vortex',
+    hideCtaBanner: true,
   },
   {
     name: 'Christopher Plaza',
@@ -407,6 +523,10 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Christopher Plaza.jpg`,
     slug: 'Christopher-Plaza',
     team: 'vortex',
+    applyLink: 'https://swifthomeloans.my1003app.com/1223176/register',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/1223176/register?POSAppLanguage=ES&time=1770663898930',
+    videoUrl: 'https://www.youtube.com/embed/9fEkILWq83c',
   },
   {
     name: 'Miguel Gomez',
@@ -417,5 +537,8 @@ export const teamMembers: TeamMember[] = [
     image: `${base}/team/Miguel Gomez websize.jpg`,
     slug: 'Miguel-Gomez',
     team: 'vortex',
+    applyLink: 'https://swifthomeloans.my1003app.com/1715476/register?time=1770662794162',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/1715476/register?POSAppLanguage=ES&time=1770662930833',
   },
 ];
