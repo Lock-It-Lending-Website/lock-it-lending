@@ -296,13 +296,13 @@ export const teamMembers: TeamMember[] = [
     clips: [
       {
         id: 'video-1',
-        title: 'Interés explicado',
+        title: 'Interés Explicado',
         videoSrc: '/videos/maria/Maria - Interest.mp4',
         thumbnailSrc: '/video thumbnails/maria/maria-interest.png',
       },
       {
         id: 'video-2',
-        title: 'Temporada de impuestos',
+        title: 'Temporada de Impuestos',
         videoSrc: '/videos/maria/Maria x Valeria.mp4',
         thumbnailSrc: '/video thumbnails/maria/mariaxvaleria.png',
       },
@@ -354,13 +354,13 @@ export const teamMembers: TeamMember[] = [
       },
       {
         id: 'video-2',
-        title: 'Cómo restablecer tu crédito',
+        title: 'Cómo Restablecer Tu Crédito',
         videoSrc: '/videos/aron/Aron video.mp4',
         thumbnailSrc: '/video thumbnails/aron/Aron-securedcreditcards.png',
       },
       {
         id: 'video-3',
-        title: 'Préstamos FHA vs. préstamos convencionales',
+        title: 'Préstamos FHA vs. Préstamos Convencionales',
         videoSrc: '/videos/aron/Aron - FHA or Conventional Loan.mp4',
         thumbnailSrc: '/video thumbnails/aron/fha-conventional.png',
       },
