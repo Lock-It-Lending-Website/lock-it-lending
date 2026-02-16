@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/**/*.ts": {
+      "includeFiles": "api/package.json"
+    },
+    "api/**/*.js": {
+      "includeFiles": "api/package.json"
+    }
+  }
+}
