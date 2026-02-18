@@ -13,7 +13,7 @@ type HeroSectionProps = {
 };
 
 const ads = [
-  `${process.env.PUBLIC_URL}/topproducers.jpg`,
+  `${process.env.PUBLIC_URL}/top producers Jan.jpg`,
   `${process.env.PUBLIC_URL}/image (1).jpg`,
 ];
 

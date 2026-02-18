@@ -1,40 +1,23 @@
-function getAllowedOrigins() {
-  const raw = process.env.ALLOWED_ORIGINS || '';
-  const list = raw
-    .split(',')
-    .map(s => s.trim())
-    .filter(Boolean);
+export default async function handler(req, res) {
+  const origin = req.headers.origin || '';
 
-  return new Set(
-    list.length
-      ? list
-      : [
-          'http://localhost:5173',
-          'http://localhost:3000',
-          'https://lockitlending.com',
-          'https://www.lockitlending.com',
-        ]
+  const allowed = new Set(
+    (process.env.ALLOWED_ORIGINS || '')
+      .split(',')
+      .map(s => s.trim())
+      .filter(Boolean)
   );
-}
 
-function setCors(res, origin) {
+  // Block if origin missing/not allowed
+  if (!origin || !allowed.has(origin)) {
+    return res.status(403).json({ error: 'Forbidden origin' });
+  }
+
   res.setHeader('Access-Control-Allow-Origin', origin);
   res.setHeader('Vary', 'Origin');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'content-type');
   res.setHeader('Cache-Control', 'no-store');
-}
-
-export default async function handler(req, res) {
-  const origin = req.headers.origin || '';
-  const allowed = getAllowedOrigins();
-
-  // Block unknown origins (your frontend must send Origin)
-  if (!origin || !allowed.has(origin)) {
-    return res.status(403).json({ error: 'Forbidden origin' });
-  }
-
-  setCors(res, origin);
 
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
@@ -49,9 +32,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000);
-
     const resp = await fetch(tokenEndpoint, {
       method: 'POST',
       headers: {
@@ -59,8 +39,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: '{}',
-      signal: controller.signal,
-    }).finally(() => clearTimeout(timeout));
+    });
 
     const text = await resp.text();
 
@@ -76,7 +55,6 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'application/json');
     return res.status(200).send(text);
   } catch (e) {
-    const msg = e?.name === 'AbortError' ? 'Upstream timeout' : e?.message || 'Server error';
-    return res.status(502).json({ error: msg });
+    return res.status(502).json({ error: e?.message || 'Server error' });
   }
 }
