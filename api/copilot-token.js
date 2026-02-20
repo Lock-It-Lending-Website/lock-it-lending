@@ -3,22 +3,23 @@
 module.exports = async function handler(req, res) {
   const origin = req.headers.origin || '';
 
-  // Allowlist origins (comma-separated)
   const allowed = (process.env.ALLOWED_ORIGINS || '')
     .split(',')
     .map(s => s.trim())
     .filter(Boolean);
 
-  // Enforce allowlist for browser requests (browser sends Origin)
-  if (!origin || (allowed.length && !allowed.includes(origin))) {
-    return res.status(403).json({ error: 'Forbidden origin' });
+  // If this is a browser call (Origin header exists), enforce allowlist + set CORS
+  if (origin) {
+    if (allowed.length && !allowed.includes(origin)) {
+      return res.status(403).json({ error: 'Forbidden origin' });
+    }
+
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'content-type');
   }
 
-  // CORS headers
-  res.setHeader('Access-Control-Allow-Origin', origin);
-  res.setHeader('Vary', 'Origin');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'content-type');
   res.setHeader('Cache-Control', 'no-store');
 
   if (req.method === 'OPTIONS') return res.status(204).end();
@@ -35,7 +36,7 @@ module.exports = async function handler(req, res) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
 
-    // IMPORTANT: Copilot Studio token endpoint is a GET
+    // Your observed working behavior: upstream token endpoint uses GET
     const upstream = await fetch(tokenEndpoint, {
       method: 'GET',
       headers: { Accept: 'application/json' },
