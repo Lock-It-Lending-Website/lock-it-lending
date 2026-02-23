@@ -10,8 +10,18 @@ module.exports = async function handler(req, res) {
 
   // If this is a browser call (Origin header exists), enforce allowlist + set CORS
   if (origin) {
-    if (allowed.length && !allowed.includes(origin)) {
-      return res.status(403).json({ error: 'Forbidden origin' });
+    const isVercelPreview = origin.endsWith('.vercel.app');
+    const isLocalhost =
+      origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:');
+
+    // Allow:
+    // - exact matches in ALLOWED_ORIGINS
+    // - localhost for local dev
+    // - any *.vercel.app for preview deployments
+    const isAllowed = isLocalhost || isVercelPreview || !allowed.length || allowed.includes(origin);
+
+    if (!isAllowed) {
+      return res.status(403).json({ error: 'Forbidden origin', origin });
     }
 
     res.setHeader('Access-Control-Allow-Origin', origin);
