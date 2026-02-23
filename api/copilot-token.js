@@ -1,4 +1,10 @@
-// api/copilot-token.js
+// Debug log
+console.log('copilot-token hit', {
+  method: req.method,
+  origin: req.headers.origin,
+  referer: req.headers.referer,
+  host: req.headers.host
+});
 
 module.exports = async function handler(req, res) {
   const origin = req.headers.origin || '';
