@@ -1,11 +1,3 @@
-// Debug log
-console.log('copilot-token hit', {
-  method: req.method,
-  origin: req.headers.origin,
-  referer: req.headers.referer,
-  host: req.headers.host,
-});
-
 // api/copilot-token.js
 
 module.exports = async function handler(req, res) {
@@ -16,33 +8,31 @@ module.exports = async function handler(req, res) {
     .map(s => s.trim())
     .filter(Boolean);
 
-  // If there's an Origin header, enforce allowlist and set CORS headers
+  const isAllowed =
+    !origin || // non-browser (no Origin header)
+    allowed.length === 0 ||
+    allowed.includes(origin) ||
+    /^https:\/\/.*\.vercel\.app$/.test(origin); // optional: allow Vercel previews
+
+  // Always set CORS headers for browser requests (even on errors)
   if (origin) {
-    const isAllowed =
-      !allowed.length ||
-      allowed.includes(origin) ||
-      // optional: allow any Vercel preview origin for your dev project
-      (/^https:\/\/.*\.vercel\.app$/i.test(origin) && process.env.ALLOW_VERCEL_PREVIEWS === 'true');
-
-    if (!isAllowed) {
-      // IMPORTANT: even on 403, still send CORS so browser can read it
-      res.setHeader('Access-Control-Allow-Origin', origin);
-      res.setHeader('Vary', 'Origin');
-      return res.status(403).json({ error: 'Forbidden origin', origin });
-    }
-
-    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Origin', isAllowed ? origin : origin);
     res.setHeader('Vary', 'Origin');
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'content-type');
   }
 
-  // Handle preflight BEFORE anything else
+  res.setHeader('Cache-Control', 'no-store');
+
+  // Preflight
   if (req.method === 'OPTIONS') {
-    return res.status(204).end();
+    return res.status(isAllowed ? 204 : 403).end();
   }
 
-  res.setHeader('Cache-Control', 'no-store');
+  // Enforce allowlist
+  if (origin && !isAllowed) {
+    return res.status(403).json({ error: 'Forbidden origin', origin, allowed });
+  }
 
   if (req.method !== 'GET' && req.method !== 'POST') {
     return res.status(405).json({ error: 'GET or POST only' });
@@ -63,7 +53,7 @@ module.exports = async function handler(req, res) {
 
     if (!upstream.ok) {
       return res.status(502).json({
-        error: 'Token exchange failed',
+        error: 'Upstream failed',
         status: upstream.status,
         details: text.slice(0, 500),
       });
