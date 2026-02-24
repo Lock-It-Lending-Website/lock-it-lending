@@ -3,8 +3,10 @@ console.log('copilot-token hit', {
   method: req.method,
   origin: req.headers.origin,
   referer: req.headers.referer,
-  host: req.headers.host
+  host: req.headers.host,
 });
+
+// api/copilot-token.js
 
 module.exports = async function handler(req, res) {
   const origin = req.headers.origin || '';
@@ -14,32 +16,35 @@ module.exports = async function handler(req, res) {
     .map(s => s.trim())
     .filter(Boolean);
 
-  // If this is a browser call (Origin header exists), enforce allowlist + set CORS
+  // If there's an Origin header, enforce allowlist and set CORS headers
   if (origin) {
-    const isVercelPreview = origin.endsWith('.vercel.app');
-    const isLocalhost =
-      origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:');
-
-    // Allow:
-    // - exact matches in ALLOWED_ORIGINS
-    // - localhost for local dev
-    // - any *.vercel.app for preview deployments
-    const isAllowed = isLocalhost || isVercelPreview || !allowed.length || allowed.includes(origin);
+    const isAllowed =
+      !allowed.length ||
+      allowed.includes(origin) ||
+      // optional: allow any Vercel preview origin for your dev project
+      (/^https:\/\/.*\.vercel\.app$/i.test(origin) && process.env.ALLOW_VERCEL_PREVIEWS === 'true');
 
     if (!isAllowed) {
+      // IMPORTANT: even on 403, still send CORS so browser can read it
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Vary', 'Origin');
       return res.status(403).json({ error: 'Forbidden origin', origin });
     }
 
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Vary', 'Origin');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'content-type');
+  }
+
+  // Handle preflight BEFORE anything else
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
   }
 
   res.setHeader('Cache-Control', 'no-store');
 
-  if (req.method === 'OPTIONS') return res.status(204).end();
-  if (req.method !== 'POST' && req.method !== 'GET') {
+  if (req.method !== 'GET' && req.method !== 'POST') {
     return res.status(405).json({ error: 'GET or POST only' });
   }
 
@@ -49,34 +54,24 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000);
-
-    // Your observed working behavior: upstream token endpoint uses GET
     const upstream = await fetch(tokenEndpoint, {
       method: 'GET',
       headers: { Accept: 'application/json' },
-      signal: controller.signal,
-    }).finally(() => clearTimeout(timeout));
+    });
 
     const text = await upstream.text();
 
     if (!upstream.ok) {
-      console.error('Upstream status:', upstream.status);
-      console.error('Upstream url:', upstream.url);
-      console.error('Upstream body (first 300):', text.slice(0, 300));
       return res.status(502).json({
         error: 'Token exchange failed',
         status: upstream.status,
         details: text.slice(0, 500),
-        finalUrl: upstream.url,
       });
     }
 
     res.setHeader('Content-Type', 'application/json');
     return res.status(200).send(text);
   } catch (e) {
-    const msg = e?.name === 'AbortError' ? 'Upstream timeout' : e?.message || 'Server error';
-    return res.status(502).json({ error: msg });
+    return res.status(502).json({ error: e?.message || 'Server error' });
   }
 };
