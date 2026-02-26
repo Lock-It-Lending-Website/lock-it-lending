@@ -38,12 +38,21 @@ export default function CopilotChatPopup() {
     return createStore({}, () => (next: WebChatNext) => (action: WebChatAction) => {
       if (action.type === 'WEB_CHAT/SEND_MESSAGE') setHasInteracted(true);
 
-      // Suppress the extra ✨ ... typing activity bubble from Copilot Studio
-      if (
-        action.type === 'DIRECT_LINE/INCOMING_ACTIVITY' &&
-        action.payload?.activity?.type === 'typing'
-      ) {
-        return;
+      // Suppress ALL typing indicator activities from Copilot Studio
+      if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY') {
+        const activity = action.payload?.activity;
+
+        // Drop typing activities
+        if (activity?.type === 'typing') return;
+
+        // Drop the ✨ ... emoji bubble — Copilot Studio sends a message activity
+        // that contains only whitespace, emoji, and/or dots before the real reply
+        if (activity?.type === 'message' && activity?.from?.role !== 'user') {
+          const text: string = (activity.text || '').trim();
+          // Match bubbles that are purely emoji/dots/whitespace with no real words
+          const isTypingBubble = /^[\s\u{1F300}-\u{1FAD6}\u{2600}-\u{27BF}\.…\*_~`]+$/u.test(text);
+          if (isTypingBubble) return;
+        }
       }
 
       // Remove the "Website" suggested action button from bot responses
@@ -294,6 +303,41 @@ export default function CopilotChatPopup() {
               {/* WebChat — always rendered so the composer (input bar) is always visible */}
               {directLine && !loading && !err && (
                 <div className="flex-1 min-h-0">
+                  <style>{`
+                    /* Animated dots typing indicator */
+                    .webchat__typing-indicator {
+                      display: flex;
+                      align-items: center;
+                      gap: 4px;
+                      padding: 12px 16px;
+                      background: #F3F4F6;
+                      border-radius: 18px;
+                      width: fit-content;
+                      margin: 4px 12px;
+                    }
+                    .webchat__typing-indicator__dot {
+                      width: 7px;
+                      height: 7px;
+                      background: #9ca3af;
+                      border-radius: 50%;
+                      animation: typingBounce 1.2s infinite ease-in-out;
+                    }
+                    .webchat__typing-indicator__dot:nth-child(1) { animation-delay: 0s; }
+                    .webchat__typing-indicator__dot:nth-child(2) { animation-delay: 0.2s; }
+                    .webchat__typing-indicator__dot:nth-child(3) { animation-delay: 0.4s; }
+                    @keyframes typingBounce {
+                      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+                      30% { transform: translateY(-6px); opacity: 1; }
+                    }
+                    /* Fade-in animation for new bot messages */
+                    .webchat__bubble:not(.webchat__bubble--from-user) {
+                      animation: fadeInUp 0.3s ease-out;
+                    }
+                    @keyframes fadeInUp {
+                      from { opacity: 0; transform: translateY(6px); }
+                      to   { opacity: 1; transform: translateY(0); }
+                    }
+                  `}</style>
                   <ReactWebChat
                     directLine={directLine}
                     store={store}
