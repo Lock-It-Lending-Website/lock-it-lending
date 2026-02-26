@@ -1,3 +1,4 @@
+// src/components/CopilotChatPopup.tsx
 import React, { useEffect, useMemo, useState } from 'react';
 import ReactWebChat, { createDirectLine, createStore } from 'botframework-webchat';
 
@@ -42,14 +43,18 @@ export default function CopilotChatPopup() {
         setPendingActivities(prev => ({ ...prev, waiting: true }));
       }
 
+      // Suppress ALL typing indicator activities from Copilot Studio
       if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY') {
         const activity = action.payload?.activity;
 
+        // Drop typing activities
         if (activity?.type === 'typing') return;
 
+        // Drop the ✨ ... emoji bubble — Copilot Studio sends a message activity
+        // that contains only whitespace, emoji, and/or dots before the real reply
         if (activity?.type === 'message' && activity?.from?.role !== 'user') {
           const text: string = (activity.text || '').trim();
-          const isTypingBubble = /^[\s\u{1F300}-\u{1FAD6}\u{2600}-\u{27BF}\.…\*_~]+$/u.test(text);
+          const isTypingBubble = /^[\s\u{1F300}-\u{1FAD6}\u{2600}-\u{27BF}\.…\*_~`]+$/u.test(text);
           if (isTypingBubble) return;
 
           if (activity?.from?.role !== 'user') {
@@ -71,6 +76,7 @@ export default function CopilotChatPopup() {
         }
       }
 
+      // Remove the "Website" suggested action button from bot responses
       if (
         action.type === 'DIRECT_LINE/INCOMING_ACTIVITY' &&
         action.payload?.activity?.suggestedActions?.actions
@@ -99,13 +105,16 @@ export default function CopilotChatPopup() {
 
   useEffect(() => {
     if (!open) return;
-    if (chatEnded || token) return;
+    if (chatEnded) return;
+    if (token) return;
 
     let cancelled = false;
+
     (async () => {
       try {
         setLoading(true);
         setErr(null);
+
         const r = await fetch(
           process.env.REACT_APP_COPILOT_TOKEN_URL ||
             'https://lock-it-lending-dev.vercel.app/api/copilot-token',
@@ -115,9 +124,12 @@ export default function CopilotChatPopup() {
             credentials: 'omit',
           }
         );
+
         const data = (await r.json()) as DirectLineTokenResponse;
+
         if (!r.ok) throw new Error((data as any)?.error || 'Failed to get token');
         if (!data.token) throw new Error('Token response missing "token".');
+
         if (!cancelled) setToken(data.token);
       } catch (e: unknown) {
         const msg = e instanceof Error ? e.message : 'Failed to get token';
@@ -126,6 +138,7 @@ export default function CopilotChatPopup() {
         if (!cancelled) setLoading(false);
       }
     })();
+
     return () => {
       cancelled = true;
     };
@@ -170,6 +183,7 @@ export default function CopilotChatPopup() {
 
   return (
     <>
+      {/* Floating button (hidden when panel is open) */}
       {!open && (
         <button
           type="button"
@@ -177,6 +191,7 @@ export default function CopilotChatPopup() {
           className="fixed bottom-10 right-8 z-[9999]"
           aria-label="Open chat"
         >
+          {/* Mobile: circle with logo + gold outline */}
           <span className="flex sm:hidden w-14 h-14 rounded-full bg-white items-center justify-center ring-[3px] ring-[#cca249] shadow-lg">
             <img
               src="/logo.ico"
@@ -184,19 +199,23 @@ export default function CopilotChatPopup() {
               className="w-9 h-9 rounded-full object-cover"
             />
           </span>
+          {/* Desktop: pill Chat button */}
           <span className={`hidden sm:inline-flex items-center ${FLOATING_BTN}`}>Let's Chat</span>
         </button>
       )}
 
+      {/* Panel — bottom-right corner aligned with button on desktop, fullscreen on mobile */}
       {open && (
         <div
           className={[
             'fixed z-[9999] bg-white shadow-2xl flex flex-col',
+            // Mobile: true fullscreen, no rounding
             'inset-0 rounded-none',
+            // Desktop: fixed size, rounded, anchored bottom-right
             'sm:inset-auto sm:right-8 sm:bottom-10 sm:w-[420px] sm:h-[650px] sm:rounded-2xl sm:overflow-hidden',
           ].join(' ')}
         >
-          {/* Header */}
+          {/* ── Header ── */}
           <div className="flex items-center justify-between border-b px-4 py-3 flex-shrink-0">
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
@@ -209,13 +228,20 @@ export default function CopilotChatPopup() {
               <div className="font-semibold">Lock It Lending Assist</div>
             </div>
             <div className="flex items-center gap-2">
-              <button type="button" onClick={handleMinimize} className={ICON_BTN} title="Minimize">
+              <button
+                type="button"
+                onClick={handleMinimize}
+                className={ICON_BTN}
+                aria-label="Minimize chat"
+                title="Minimize"
+              >
                 –
               </button>
               <button
                 type="button"
                 onClick={handleClearChat}
                 className={ICON_BTN}
+                aria-label="Clear chat"
                 title="Clear chat"
               >
                 ✕
@@ -223,7 +249,7 @@ export default function CopilotChatPopup() {
             </div>
           </div>
 
-          {/* Body */}
+          {/* ── Body ── */}
           {chatEnded ? (
             <div className="flex flex-col flex-1 min-h-0">
               <div className="flex-1 flex items-center justify-center text-sm text-gray-500">
@@ -246,6 +272,7 @@ export default function CopilotChatPopup() {
               )}
               {err && <div className="p-4 text-sm text-red-600 flex-shrink-0">{err}</div>}
 
+              {/* Welcome content — shown until user interacts */}
               {!hasInteracted && !loading && !err && (
                 <div className="flex flex-col gap-3 pt-5 pb-2 flex-shrink-0">
                   <p className="text-center text-xs text-gray-500 px-10">
@@ -300,8 +327,9 @@ export default function CopilotChatPopup() {
                 </div>
               )}
 
+              {/* WebChat — always rendered so the composer (input bar) is always visible */}
               {directLine && !loading && !err && (
-                <div className="flex-1 min-h-0">
+                <div className="flex-1 min-h-0 relative">
                   <style>{`
                     @keyframes typingBounce {
                       0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
@@ -319,44 +347,38 @@ export default function CopilotChatPopup() {
                     .lil-dot:nth-child(1) { animation-delay: 0s; }
                     .lil-dot:nth-child(2) { animation-delay: 0.2s; }
                     .lil-dot:nth-child(3) { animation-delay: 0.4s; }
-
-                    /* Alignment Fixes */
-                    .webchat__stacked-layout--from-bot .webchat__stacked-layout__main {
-                      padding-left: 0px !important;
-                    }
-                    .webchat__stacked-layout--from-bot .webchat__stacked-layout__content {
-                      margin-left: 0px !important;
-                    }
-                    .webchat__stacked-layout--from-bot .webchat__stacked-layout__alignment-wrapper {
-                      justify-content: flex-start !important;
-                    }
-
                     .bot-msg-reveal { animation: fadeInMsg 0.4s ease-out; }
                     @keyframes fadeInMsg {
                       from { opacity: 0; transform: translateY(4px); }
                       to   { opacity: 1; transform: translateY(0); }
                     }
                     .webchat__typing-indicator { display: none !important; }
+                    /* Force typing dots row to align with bot bubble left edge */
+                    .webchat__stacked-layout--from-bot .webchat__stacked-layout__content {
+                      margin-left: 0 !important;
+                    }
                   `}</style>
                   <ReactWebChat
                     directLine={directLine}
                     store={store}
                     activityMiddleware={() => (next: any) => (card: any) => {
                       const activity = card?.activity;
-                      if (activity?.type === 'message' && activity?.from?.role !== 'user') {
+                      if (
+                        activity?.type === 'message' &&
+                        activity?.from?.role !== 'user' &&
+                        activity?.text
+                      ) {
                         const id = activity.id || '';
-                        // If it's the fake typing or a pending real message, show dots
-                        if (activity?.text === '__typing__' || pendingActivities[id]) {
+                        if (pendingActivities[id]) {
                           return () => (
                             <div
                               style={{
                                 background: '#F3F4F6',
                                 borderRadius: 18,
-                                padding: '12px 16px', // Matches your standard bubble padding
+                                padding: '14px 18px',
                                 display: 'inline-flex',
                                 alignItems: 'center',
                                 minHeight: 44,
-                                marginLeft: 0,
                               }}
                             >
                               <span className="lil-dot" />
@@ -400,6 +422,29 @@ export default function CopilotChatPopup() {
                       suggestedActionBorderColorOnHover: '#b8912f',
                     }}
                   />
+
+                  {/* Dots overlay — sits inside WebChat container, uses same paddingRegular (12px) as bot bubbles */}
+                  {hasInteracted && pendingActivities.waiting && (
+                    <div
+                      className="absolute left-0 right-0 pointer-events-none"
+                      style={{ bottom: 56, padding: '0 12px' }}
+                    >
+                      <div
+                        style={{
+                          background: '#F3F4F6',
+                          borderRadius: 18,
+                          padding: '14px 18px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          minHeight: 44,
+                        }}
+                      >
+                        <span className="lil-dot" />
+                        <span className="lil-dot" />
+                        <span className="lil-dot" />
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
