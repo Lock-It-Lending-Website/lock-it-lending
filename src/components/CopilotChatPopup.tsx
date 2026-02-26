@@ -45,7 +45,8 @@ export default function CopilotChatPopup() {
 
         // IMPORTANT: call your Vercel token broker
         const r = await fetch(
-          'https://lock-it-lending-copilot-chatbot.vercel.app/api/copilot-token',
+          process.env.REACT_APP_COPILOT_TOKEN_URL ||
+            'https://lock-it-lending-copilot-chatbot.vercel.app/api/copilot-token',
           {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
