@@ -16,6 +16,33 @@ type WebChatAction = {
 
 type WebChatNext = (action: WebChatAction) => any;
 
+function genId() {
+  try {
+    const maybe = (globalThis as any)?.crypto?.randomUUID?.();
+    return maybe || Math.random().toString(36).slice(2);
+  } catch {
+    return Math.random().toString(36).slice(2);
+  }
+}
+
+function TypingBubble() {
+  // IMPORTANT: We mirror WebChat's stacked layout + bubble wrappers so it aligns
+  // exactly where bot bubbles (and suggested actions) start.
+  return (
+    <div className="webchat__stacked-layout webchat__stacked-layout--from-bot" role="status">
+      <div className="webchat__stacked-layout__content">
+        <div className="webchat__bubble webchat__bubble--from-bot">
+          <div className="webchat__bubble__content lil-typing-bubble" aria-label="Assistant typing">
+            <span className="lil-dot" />
+            <span className="lil-dot" />
+            <span className="lil-dot" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function CopilotChatPopup() {
   const [open, setOpen] = useState(false);
   const [token, setToken] = useState<string | null>(null);
@@ -27,76 +54,91 @@ export default function CopilotChatPopup() {
   const [sessionId, setSessionId] = useState(0);
 
   const CTA_BTN =
-    'rounded-full bg-[#cca249] text-white font-semibold shadow hover:opacity-90 transition-opacity';
+    'text-lg rounded-full bg-[#cca249] text-white font-semibold shadow hover:opacity-90 transition-opacity';
   const OPTION_BTN = `${CTA_BTN} text-sm px-3 py-1.5`;
   const FLOATING_BTN = `${CTA_BTN} text-base px-6 py-3 sm:text-lg sm:px-8 sm:py-4`;
   const ICON_BTN =
-    'w-9 h-9 rounded-full bg-gray-100 text-gray-800 flex items-center justify-center ' +
-    'hover:bg-gray-200 active:scale-[0.99]';
+    'w-9 h-9 rounded-full bg-gray-100 text-gray-800 flex items-center justify-center hover:bg-gray-200 active:scale-[0.99]';
 
+  // “pendingActivities[id] === true” means: show dots for this bot message for ~600ms before revealing it.
   const [pendingActivities, setPendingActivities] = useState<Record<string, boolean>>({});
 
   const store = useMemo(() => {
     return createStore({}, () => (next: WebChatNext) => (action: WebChatAction) => {
+      // Mark that user started chatting
       if (action.type === 'WEB_CHAT/SEND_MESSAGE') {
         setHasInteracted(true);
-        setPendingActivities(prev => ({ ...prev, waiting: true }));
+        return next(action);
       }
 
-      // Suppress ALL typing indicator activities from Copilot Studio
       if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY') {
-        const activity = action.payload?.activity;
+        const incoming = action.payload?.activity;
 
-        // Drop typing activities
-        if (activity?.type === 'typing') return;
+        // Drop typing activities entirely (Copilot Studio typing indicators)
+        if (incoming?.type === 'typing') return;
 
-        // Drop the ✨ ... emoji bubble — Copilot Studio sends a message activity
-        // that contains only whitespace, emoji, and/or dots before the real reply
-        if (activity?.type === 'message' && activity?.from?.role !== 'user') {
-          const text: string = (activity.text || '').trim();
-          const isTypingBubble = /^[\s\u{1F300}-\u{1FAD6}\u{2600}-\u{27BF}\.…\*_~`]+$/u.test(text);
+        // Drop the ✨/dots/whitespace “fake typing bubble” message Copilot Studio sometimes sends
+        if (incoming?.type === 'message' && incoming?.from?.role !== 'user') {
+          const text = String(incoming?.text ?? '').trim();
+          const isTypingBubble =
+            text.length > 0 && /^[\s\u{1F300}-\u{1FAD6}\u{2600}-\u{27BF}\.…\*_~`]+$/u.test(text);
+
           if (isTypingBubble) return;
-
-          if (activity?.from?.role !== 'user') {
-            const id = activity.id || Math.random().toString();
-            setPendingActivities(prev => {
-              const updated = { ...prev };
-              delete updated.waiting;
-              updated[id] = true;
-              return updated;
-            });
-            setTimeout(() => {
-              setPendingActivities(prev => {
-                const updated = { ...prev };
-                delete updated[id];
-                return updated;
-              });
-            }, 600);
-          }
         }
-      }
 
-      // Remove the "Website" suggested action button from bot responses
-      if (
-        action.type === 'DIRECT_LINE/INCOMING_ACTIVITY' &&
-        action.payload?.activity?.suggestedActions?.actions
-      ) {
-        const filtered = action.payload.activity.suggestedActions.actions.filter(
-          (a: any) => a.title?.toLowerCase() !== 'website'
-        );
-        return next({
-          ...action,
-          payload: {
-            ...action.payload,
-            activity: {
-              ...action.payload.activity,
-              suggestedActions: {
-                ...action.payload.activity.suggestedActions,
-                actions: filtered,
+        // Ensure activity.id exists so our pending map always matches what WebChat renders.
+        const ensuredId = incoming?.id || genId();
+        let patchedAction = action;
+
+        if (!incoming?.id) {
+          patchedAction = {
+            ...action,
+            payload: {
+              ...action.payload,
+              activity: {
+                ...incoming,
+                id: ensuredId,
               },
             },
-          },
-        });
+          };
+        }
+
+        const activity = patchedAction.payload.activity;
+
+        // For real bot messages: briefly show typing dots, then reveal message.
+        if (activity?.type === 'message' && activity?.from?.role !== 'user') {
+          setPendingActivities(prev => ({ ...prev, [ensuredId]: true }));
+          setTimeout(() => {
+            setPendingActivities(prev => {
+              const nextMap = { ...prev };
+              delete nextMap[ensuredId];
+              return nextMap;
+            });
+          }, 600);
+        }
+
+        // Remove the "Website" suggested action button from bot responses
+        if (activity?.suggestedActions?.actions) {
+          const filtered = activity.suggestedActions.actions.filter(
+            (a: any) => a?.title?.toLowerCase() !== 'website'
+          );
+
+          patchedAction = {
+            ...patchedAction,
+            payload: {
+              ...patchedAction.payload,
+              activity: {
+                ...activity,
+                suggestedActions: {
+                  ...activity.suggestedActions,
+                  actions: filtered,
+                },
+              },
+            },
+          };
+        }
+
+        return next(patchedAction);
       }
 
       return next(action);
@@ -204,17 +246,57 @@ export default function CopilotChatPopup() {
         </button>
       )}
 
-      {/* Panel — bottom-right corner aligned with button on desktop, fullscreen on mobile */}
+      {/* Panel */}
       {open && (
         <div
           className={[
             'fixed z-[9999] bg-white shadow-2xl flex flex-col',
-            // Mobile: true fullscreen, no rounding
+            // Mobile: fullscreen
             'inset-0 rounded-none',
-            // Desktop: fixed size, rounded, anchored bottom-right
+            // Desktop: anchored + rounded
             'sm:inset-auto sm:right-8 sm:bottom-10 sm:w-[420px] sm:h-[650px] sm:rounded-2xl sm:overflow-hidden',
           ].join(' ')}
         >
+          {/* Shared CSS for typing + reveal */}
+          <style>{`
+            @keyframes typingBounce {
+              0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+              30% { transform: translateY(-5px); opacity: 1; }
+            }
+            .lil-dot {
+              display: inline-block;
+              width: 7px;
+              height: 7px;
+              margin: 0 2px;
+              background: #9ca3af;
+              border-radius: 50%;
+              animation: typingBounce 1.2s infinite ease-in-out;
+            }
+            .lil-dot:nth-child(1) { animation-delay: 0s; }
+            .lil-dot:nth-child(2) { animation-delay: 0.2s; }
+            .lil-dot:nth-child(3) { animation-delay: 0.4s; }
+
+            .lil-typing-bubble {
+              background: #F3F4F6;
+              border-radius: 18px;
+              padding: 14px 18px;
+              display: inline-flex;
+              align-items: center;
+              min-height: 44px;
+              max-width: 320px;
+              box-sizing: border-box;
+            }
+
+            .bot-msg-reveal { animation: fadeInMsg 0.4s ease-out; }
+            @keyframes fadeInMsg {
+              from { opacity: 0; transform: translateY(4px); }
+              to   { opacity: 1; transform: translateY(0); }
+            }
+
+            /* Hide WebChat's built-in typing indicator */
+            .webchat__typing-indicator { display: none !important; }
+          `}</style>
+
           {/* ── Header ── */}
           <div className="flex items-center justify-between border-b px-4 py-3 flex-shrink-0">
             <div className="flex items-center gap-3">
@@ -227,6 +309,7 @@ export default function CopilotChatPopup() {
               </div>
               <div className="font-semibold">Lock It Lending Assist</div>
             </div>
+
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -259,7 +342,7 @@ export default function CopilotChatPopup() {
                 <button
                   type="button"
                   onClick={startNewChat}
-                  className={[CTA_BTN, 'text-lg px-8 py-4'].join(' ')}
+                  className={[CTA_BTN, 'px-8 py-4'].join(' ')}
                 >
                   Start new chat
                 </button>
@@ -283,6 +366,7 @@ export default function CopilotChatPopup() {
                     </a>
                     .
                   </p>
+
                   <div className="flex justify-start" style={{ paddingLeft: 12, paddingRight: 48 }}>
                     <div
                       style={{
@@ -299,6 +383,7 @@ export default function CopilotChatPopup() {
                         refinancing, or just exploring your options — I'm here to help you find the
                         right loan and lock in a great rate. What can I help you with today?
                       </div>
+
                       <div className="mt-3 flex flex-wrap gap-2">
                         <button
                           type="button"
@@ -327,90 +412,56 @@ export default function CopilotChatPopup() {
                 </div>
               )}
 
-              {/* WebChat — always rendered so the composer (input bar) is always visible */}
+              {/* WebChat */}
               {directLine && !loading && !err && (
-                <div className="flex-1 min-h-0 relative">
-                  <style>{`
-                    @keyframes typingBounce {
-                      0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
-                      30% { transform: translateY(-5px); opacity: 1; }
-                    }
-                    .lil-dot {
-                      display: inline-block;
-                      width: 7px;
-                      height: 7px;
-                      margin: 0 2px;
-                      background: #9ca3af;
-                      border-radius: 50%;
-                      animation: typingBounce 1.2s infinite ease-in-out;
-                    }
-                    .lil-dot:nth-child(1) { animation-delay: 0s; }
-                    .lil-dot:nth-child(2) { animation-delay: 0.2s; }
-                    .lil-dot:nth-child(3) { animation-delay: 0.4s; }
-                    .bot-msg-reveal { animation: fadeInMsg 0.4s ease-out; }
-                    @keyframes fadeInMsg {
-                      from { opacity: 0; transform: translateY(4px); }
-                      to   { opacity: 1; transform: translateY(0); }
-                    }
-                    .webchat__typing-indicator { display: none !important; }
-                    /* Force typing dots row to align with bot bubble left edge */
-                    .webchat__stacked-layout--from-bot .webchat__stacked-layout__content {
-                      margin-left: 0 !important;
-                    }
-                  `}</style>
+                <div className="flex-1 min-h-0">
                   <ReactWebChat
                     directLine={directLine}
                     store={store}
                     activityMiddleware={() => (next: any) => (card: any) => {
                       const activity = card?.activity;
-                      if (
-                        activity?.type === 'message' &&
-                        activity?.from?.role !== 'user' &&
-                        activity?.text
-                      ) {
-                        const id = activity.id || '';
-                        if (pendingActivities[id]) {
-                          return () => (
-                            <div
-                              style={{
-                                background: '#F3F4F6',
-                                borderRadius: 18,
-                                padding: '14px 18px',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                minHeight: 44,
-                              }}
-                            >
-                              <span className="lil-dot" />
-                              <span className="lil-dot" />
-                              <span className="lil-dot" />
-                            </div>
-                          );
+                      const isBotMessage =
+                        activity?.type === 'message' && activity?.from?.role !== 'user';
+
+                      if (isBotMessage) {
+                        const id: string = activity?.id || '';
+                        if (id && pendingActivities[id]) {
+                          // ✅ This is the aligned typing bubble (matches where you circled)
+                          return () => <TypingBubble />;
                         }
+
+                        // Default bot message with reveal animation
                         return () => <div className="bot-msg-reveal">{next(card)()}</div>;
                       }
+
                       return next(card);
                     }}
                     styleOptions={{
                       hideUploadButton: true,
                       backgroundColor: '#FFFFFF',
+
                       bubbleBackground: '#F3F4F6',
                       bubbleTextColor: '#111827',
                       bubbleBorderRadius: 18,
                       bubbleNubSize: 0,
                       bubbleBorderWidth: 0,
                       bubbleBorderColor: 'transparent',
+
                       bubbleFromUserBackground: '#111827',
                       bubbleFromUserTextColor: '#FFFFFF',
                       bubbleFromUserBorderRadius: 18,
                       bubbleFromUserNubSize: 0,
                       bubbleFromUserBorderWidth: 0,
                       bubbleFromUserBorderColor: 'transparent',
+
                       bubbleMinHeight: 44,
                       bubbleMaxWidth: 320,
+
                       paddingRegular: 12,
+
                       typingAnimationDuration: 0,
                       showAvatarInGroup: 'status',
+
                       suggestedActionBackground: '#cca249',
                       suggestedActionTextColor: '#FFFFFF',
                       suggestedActionBorderColor: '#cca249',
@@ -422,29 +473,6 @@ export default function CopilotChatPopup() {
                       suggestedActionBorderColorOnHover: '#b8912f',
                     }}
                   />
-
-                  {/* Dots overlay — sits inside WebChat container, uses same paddingRegular (12px) as bot bubbles */}
-                  {hasInteracted && pendingActivities.waiting && (
-                    <div
-                      className="absolute left-0 right-0 pointer-events-none"
-                      style={{ bottom: 56, padding: '0 12px' }}
-                    >
-                      <div
-                        style={{
-                          background: '#F3F4F6',
-                          borderRadius: 18,
-                          padding: '14px 18px',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          minHeight: 44,
-                        }}
-                      >
-                        <span className="lil-dot" />
-                        <span className="lil-dot" />
-                        <span className="lil-dot" />
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
