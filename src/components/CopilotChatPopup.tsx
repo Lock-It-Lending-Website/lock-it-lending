@@ -37,6 +37,38 @@ export default function CopilotChatPopup() {
   const store = useMemo(() => {
     return createStore({}, () => (next: WebChatNext) => (action: WebChatAction) => {
       if (action.type === 'WEB_CHAT/SEND_MESSAGE') setHasInteracted(true);
+
+      // Suppress the extra ✨ ... typing activity bubble from Copilot Studio
+      if (
+        action.type === 'DIRECT_LINE/INCOMING_ACTIVITY' &&
+        action.payload?.activity?.type === 'typing'
+      ) {
+        return;
+      }
+
+      // Remove the "Website" suggested action button from bot responses
+      if (
+        action.type === 'DIRECT_LINE/INCOMING_ACTIVITY' &&
+        action.payload?.activity?.suggestedActions?.actions
+      ) {
+        const filtered = action.payload.activity.suggestedActions.actions.filter(
+          (a: any) => a.title?.toLowerCase() !== 'website'
+        );
+        return next({
+          ...action,
+          payload: {
+            ...action.payload,
+            activity: {
+              ...action.payload.activity,
+              suggestedActions: {
+                ...action.payload.activity.suggestedActions,
+                actions: filtered,
+              },
+            },
+          },
+        });
+      }
+
       return next(action);
     });
   }, [sessionId]);
@@ -142,13 +174,12 @@ export default function CopilotChatPopup() {
         </button>
       )}
 
-      {/* Panel — same right-20 + bottom-10 so bottom-right corner aligns with the button */}
+      {/* Panel — bottom-right corner aligned with button on desktop, fullscreen on mobile */}
       {open && (
         <div
           className={[
-            // Mobile: true fullscreen; Desktop: anchored bottom-right
             'fixed z-[9999] bg-white shadow-2xl flex flex-col',
-            // Mobile: full screen, no rounding
+            // Mobile: true fullscreen, no rounding
             'inset-0 rounded-none',
             // Desktop: fixed size, rounded, anchored bottom-right
             'sm:inset-auto sm:right-8 sm:bottom-10 sm:w-[420px] sm:h-[650px] sm:rounded-2xl sm:overflow-hidden',
@@ -157,7 +188,7 @@ export default function CopilotChatPopup() {
           {/* ── Header ── */}
           <div className="flex items-center justify-between border-b px-4 py-3 flex-shrink-0">
             <div className="flex items-center gap-3">
-              <div className="h-9 w-9 rounded-full bg-gray-100 flex items-center justify-center">
+              <div className="h-9 w-9 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
                 <img
                   src="/logo.ico"
                   alt="Lock It Lending"
@@ -269,17 +300,43 @@ export default function CopilotChatPopup() {
                     styleOptions={{
                       hideUploadButton: true,
                       backgroundColor: '#FFFFFF',
+
+                      // Bot bubbles — no border
                       bubbleBackground: '#F3F4F6',
                       bubbleTextColor: '#111827',
                       bubbleBorderRadius: 18,
                       bubbleNubSize: 0,
+                      bubbleBorderWidth: 0,
+                      bubbleBorderColor: 'transparent',
+
+                      // User bubbles — no border
                       bubbleFromUserBackground: '#111827',
                       bubbleFromUserTextColor: '#FFFFFF',
                       bubbleFromUserBorderRadius: 18,
                       bubbleFromUserNubSize: 0,
+                      bubbleFromUserBorderWidth: 0,
+                      bubbleFromUserBorderColor: 'transparent',
+
                       bubbleMinHeight: 44,
                       bubbleMaxWidth: 320,
                       paddingRegular: 12,
+
+                      // Animated typing indicator
+                      typingAnimationDuration: 5000,
+                      showAvatarInGroup: 'status',
+
+                      // Suggested action buttons — gold, white text, rounded
+                      suggestedActionBackground: '#cca249',
+                      suggestedActionTextColor: '#FFFFFF',
+                      suggestedActionBorderColor: '#cca249',
+                      suggestedActionBorderRadius: 999,
+                      suggestedActionBorderWidth: 0,
+                      suggestedActionHeight: 40,
+
+                      // Hover state
+                      suggestedActionBackgroundColorOnHover: '#b8912f',
+                      suggestedActionTextColorOnHover: '#FFFFFF',
+                      suggestedActionBorderColorOnHover: '#b8912f',
                     }}
                   />
                 </div>
