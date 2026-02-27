@@ -1,5 +1,5 @@
 // src/components/CopilotChatPopup.tsx
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactWebChat, { createDirectLine, createStore } from 'botframework-webchat';
 
 type DirectLineTokenResponse = {
@@ -16,14 +16,11 @@ type WebChatAction = {
 
 type WebChatNext = (action: WebChatAction) => any;
 
-const SPACING = 15; // ✅ 15px between EVERYTHING
-
 const UI_CSS = `
   @keyframes typingBounce {
     0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
     30% { transform: translateY(-5px); opacity: 1; }
   }
-
   .lil-dot {
     display: inline-block;
     width: 8px; height: 8px;
@@ -35,7 +32,6 @@ const UI_CSS = `
   .lil-dot:nth-child(1) { animation-delay: 0s; }
   .lil-dot:nth-child(2) { animation-delay: 0.2s; }
   .lil-dot:nth-child(3) { animation-delay: 0.4s; }
-
   .bot-msg-reveal {
     animation: fadeInMsg 0.35s ease-out;
   }
@@ -43,54 +39,7 @@ const UI_CSS = `
     from { opacity: 0; transform: translateY(5px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-
-  /* Hide WebChat built-in typing indicator (we use our own fixed dots row) */
   .webchat__typing-indicator { display: none !important; }
-
-  /* ✅ 15px between all transcript activities (covers most WebChat layouts) */
-  .webchat__basic-transcript__activity + .webchat__basic-transcript__activity {
-    margin-top: ${SPACING}px !important;
-  }
-
-  /* ✅ Also handle stacked layout message blocks */
-  .webchat__stacked-layout__message + .webchat__stacked-layout__message {
-    margin-top: ${SPACING}px !important;
-  }
-
-  /* Sometimes bubbles are inside "stacked layout" activities */
-  .webchat__stacked-layout__activity + .webchat__stacked-layout__activity {
-    margin-top: ${SPACING}px !important;
-  }
-
-  /* Remove extra bottom padding so spacing is controlled by our typing row */
-  .webchat__basic-transcript__scrollable {
-    padding-bottom: 0 !important;
-  }
-
-  /* Our fixed typing row (inserted between transcript and send box) */
-  #lil-typing-row {
-    width: 100%;
-    display: none; /* toggled via JS */
-    justify-content: flex-start;
-    padding: ${SPACING}px ${SPACING}px; /* ✅ 15px above + below dots bubble */
-    box-sizing: border-box;
-    pointer-events: none;
-    background: transparent;
-  }
-
-  #lil-typing-bubble {
-    background: #F3F4F6;
-    border-radius: 18px;
-    padding: 12px 16px;
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
-  }
-
-  /* ✅ 15px space above the send box (input) always */
-  .webchat__send-box {
-    margin-top: ${SPACING}px !important;
-  }
 `;
 
 export default function CopilotChatPopup() {
@@ -100,12 +49,8 @@ export default function CopilotChatPopup() {
   const [loading, setLoading] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);
-
   const [chatEnded, setChatEnded] = useState(false);
   const [sessionId, setSessionId] = useState(0);
-
-  // Wrap WebChat so we can inject the fixed typing row inside it (between transcript and send box)
-  const webchatRef = useRef<HTMLDivElement | null>(null);
 
   const CTA_BTN =
     'rounded-full bg-[#cca249] text-white font-semibold shadow hover:opacity-90 transition-opacity';
@@ -117,7 +62,6 @@ export default function CopilotChatPopup() {
 
   const store = useMemo(() => {
     return createStore({}, () => (next: WebChatNext) => (action: WebChatAction) => {
-      // User sent — start waiting
       if (action.type === 'WEB_CHAT/SEND_MESSAGE') {
         setHasInteracted(true);
         setIsWaiting(true);
@@ -126,34 +70,26 @@ export default function CopilotChatPopup() {
       if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY') {
         const activity = action.payload?.activity;
 
-        // Drop typing events
         if (activity?.type === 'typing') return;
 
         if (activity?.type === 'message' && activity?.from?.role !== 'user') {
           const rawText = activity.text ?? '';
           const text = rawText.replace(/\u200B/g, '').trim();
-
           const attachments = Array.isArray(activity.attachments) ? activity.attachments : [];
           const suggested = activity.suggestedActions?.actions ?? [];
-
-          const hasRenderableContent =
-            text.length > 0 || attachments.length > 0 || suggested.length > 0;
-
-          // Accent-friendly check (no unicode property escapes needed)
           const hasRealChars = /[A-Za-z0-9\u00C0-\u024F]/.test(text);
-
           const isPlaceholder =
             attachments.length === 0 &&
             suggested.length === 0 &&
             !hasRealChars &&
             text.length <= 15;
 
-          if (!hasRenderableContent || isPlaceholder) return;
+          if (isPlaceholder) return;
 
-          // ✅ Bot actually responded — stop dots
+          // Real response — hide dots
           setIsWaiting(false);
 
-          // Strip "Website" from suggested actions if present
+          // Strip "Website" from suggested actions
           if (suggested.length) {
             const filtered = suggested.filter((a: any) => a.title?.toLowerCase() !== 'website');
             return next({
@@ -162,7 +98,10 @@ export default function CopilotChatPopup() {
                 ...action.payload,
                 activity: {
                   ...activity,
-                  suggestedActions: { ...(activity.suggestedActions || {}), actions: filtered },
+                  suggestedActions: {
+                    ...(activity.suggestedActions || {}),
+                    actions: filtered,
+                  },
                 },
               },
             });
@@ -176,20 +115,14 @@ export default function CopilotChatPopup() {
     });
   }, [sessionId]);
 
-  // ✅ Correct middleware wrapper that preserves render args
   const activityMiddleware = useMemo(() => {
     return () => (next: any) => (card: any) => {
       const activity = card?.activity;
-
       const render = next(card);
       if (!render) return render;
-
       if (activity?.type === 'message' && activity?.from?.role !== 'user') {
-        return (...renderArgs: any[]) => (
-          <div className="bot-msg-reveal">{render(...renderArgs)}</div>
-        );
+        return (...args: any[]) => <div className="bot-msg-reveal">{render(...args)}</div>;
       }
-
       return render;
     };
   }, []);
@@ -198,38 +131,26 @@ export default function CopilotChatPopup() {
     if (!open) return;
     if (chatEnded) return;
     if (token) return;
-
     let cancelled = false;
-
     (async () => {
       try {
         setLoading(true);
         setErr(null);
-
         const r = await fetch(
           process.env.REACT_APP_COPILOT_TOKEN_URL ||
             'https://lock-it-lending-dev.vercel.app/api/copilot-token',
-          {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'omit',
-          }
+          { method: 'GET', headers: { 'Content-Type': 'application/json' }, credentials: 'omit' }
         );
-
         const data = (await r.json()) as DirectLineTokenResponse;
-
         if (!r.ok) throw new Error((data as any)?.error || 'Failed to get token');
         if (!data.token) throw new Error('Token response missing "token".');
-
         if (!cancelled) setToken(data.token);
       } catch (e: unknown) {
-        const msg = e instanceof Error ? e.message : 'Failed to get token';
-        if (!cancelled) setErr(msg);
+        if (!cancelled) setErr(e instanceof Error ? e.message : 'Failed to get token');
       } finally {
         if (!cancelled) setLoading(false);
       }
     })();
-
     return () => {
       cancelled = true;
     };
@@ -275,68 +196,6 @@ export default function CopilotChatPopup() {
     setSessionId(s => s + 1);
   };
 
-  // ✅ Inject a fixed "typing row" BETWEEN transcript and send box (no overlay on scroll)
-  useEffect(() => {
-    if (!open) return;
-    if (!directLine) return;
-    if (loading || err) return;
-
-    let cancelled = false;
-    let raf = 0;
-
-    const ensureTypingRow = () => {
-      if (cancelled) return;
-
-      const root = webchatRef.current;
-      if (!root) {
-        raf = requestAnimationFrame(ensureTypingRow);
-        return;
-      }
-
-      const sendBox = root.querySelector('.webchat__send-box') as HTMLElement | null;
-      if (!sendBox || !sendBox.parentElement) {
-        raf = requestAnimationFrame(ensureTypingRow);
-        return;
-      }
-
-      let row = root.querySelector('#lil-typing-row') as HTMLElement | null;
-
-      if (!row) {
-        row = document.createElement('div');
-        row.id = 'lil-typing-row';
-        row.innerHTML = `
-          <div id="lil-typing-bubble">
-            <span class="lil-dot"></span>
-            <span class="lil-dot"></span>
-            <span class="lil-dot"></span>
-          </div>
-        `;
-        // Insert directly above the send box so it is "fixed" in layout, not overlaying transcript
-        sendBox.parentElement.insertBefore(row, sendBox);
-      }
-
-      row.style.display = isWaiting ? 'flex' : 'none';
-    };
-
-    raf = requestAnimationFrame(ensureTypingRow);
-
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-
-      const root = webchatRef.current;
-      const row = root?.querySelector('#lil-typing-row');
-      row?.remove();
-    };
-  }, [open, directLine, loading, err, sessionId, isWaiting]);
-
-  // ✅ Toggle typing row visibility whenever waiting changes
-  useEffect(() => {
-    const root = webchatRef.current;
-    const row = root?.querySelector('#lil-typing-row') as HTMLElement | null;
-    if (row) row.style.display = isWaiting ? 'flex' : 'none';
-  }, [isWaiting]);
-
   return (
     <>
       {!open && (
@@ -367,6 +226,7 @@ export default function CopilotChatPopup() {
         >
           <style>{UI_CSS}</style>
 
+          {/* Header */}
           <div className="flex items-center justify-between border-b px-4 py-3 flex-shrink-0">
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
@@ -378,7 +238,6 @@ export default function CopilotChatPopup() {
               </div>
               <div className="font-semibold">Lock It Lending Assist</div>
             </div>
-
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -401,6 +260,7 @@ export default function CopilotChatPopup() {
             </div>
           </div>
 
+          {/* Body */}
           {chatEnded ? (
             <div className="flex flex-col flex-1 min-h-0">
               <div className="flex-1 flex items-center justify-center text-sm text-gray-500">
@@ -423,6 +283,7 @@ export default function CopilotChatPopup() {
               )}
               {err && <div className="p-4 text-sm text-red-600 flex-shrink-0">{err}</div>}
 
+              {/* Welcome screen */}
               {!hasInteracted && !loading && !err && (
                 <div className="flex flex-col gap-3 px-4 pt-5 pb-2 flex-shrink-0">
                   <p className="text-center text-xs text-gray-500 px-6">
@@ -440,7 +301,6 @@ export default function CopilotChatPopup() {
                         refinancing, or just exploring your options — I'm here to help you find the
                         right loan and lock in a great rate. What can I help you with today?
                       </div>
-
                       <div className="mt-3 flex flex-wrap gap-2">
                         <button
                           type="button"
@@ -470,42 +330,74 @@ export default function CopilotChatPopup() {
               )}
 
               {directLine && !loading && !err && (
-                <div ref={webchatRef} className="flex-1 min-h-0">
-                  <ReactWebChat
-                    directLine={directLine}
-                    store={store}
-                    activityMiddleware={activityMiddleware}
-                    styleOptions={{
-                      hideUploadButton: true,
-                      backgroundColor: '#FFFFFF',
-                      bubbleBackground: '#F3F4F6',
-                      bubbleTextColor: '#111827',
-                      bubbleBorderRadius: 18,
-                      bubbleNubSize: 0,
-                      bubbleBorderWidth: 0,
-                      bubbleBorderColor: 'transparent',
-                      bubbleFromUserBackground: '#111827',
-                      bubbleFromUserTextColor: '#FFFFFF',
-                      bubbleFromUserBorderRadius: 18,
-                      bubbleFromUserNubSize: 0,
-                      bubbleFromUserBorderWidth: 0,
-                      bubbleFromUserBorderColor: 'transparent',
-                      bubbleMinHeight: 44,
-                      bubbleMaxWidth: 320,
-                      paddingRegular: 12,
-                      typingAnimationDuration: 0,
-                      showAvatarInGroup: 'status',
-                      suggestedActionBackgroundColor: '#cca249',
-                      suggestedActionTextColor: '#FFFFFF',
-                      suggestedActionBorderColor: '#cca249',
-                      suggestedActionBorderRadius: 999,
-                      suggestedActionBorderWidth: 0,
-                      suggestedActionHeight: 40,
-                      suggestedActionBackgroundColorOnHover: '#b8912f',
-                      suggestedActionTextColorOnHover: '#FFFFFF',
-                      suggestedActionBorderColorOnHover: '#b8912f',
-                    }}
-                  />
+                // KEY: This flex column keeps WebChat scroll area + dots row + nothing else
+                // The dots row is a SIBLING of WebChat, not inside it
+                // WebChat gets flex-1 so it fills space; dots row is flex-shrink-0 below it
+                <div className="flex flex-col flex-1 min-h-0">
+                  {/* WebChat — scrollable transcript + composer inside */}
+                  <div className="flex-1 min-h-0">
+                    <ReactWebChat
+                      directLine={directLine}
+                      store={store}
+                      activityMiddleware={activityMiddleware}
+                      styleOptions={{
+                        hideUploadButton: true,
+                        backgroundColor: '#FFFFFF',
+                        bubbleBackground: '#F3F4F6',
+                        bubbleTextColor: '#111827',
+                        bubbleBorderRadius: 18,
+                        bubbleNubSize: 0,
+                        bubbleBorderWidth: 0,
+                        bubbleBorderColor: 'transparent',
+                        bubbleFromUserBackground: '#111827',
+                        bubbleFromUserTextColor: '#FFFFFF',
+                        bubbleFromUserBorderRadius: 18,
+                        bubbleFromUserNubSize: 0,
+                        bubbleFromUserBorderWidth: 0,
+                        bubbleFromUserBorderColor: 'transparent',
+                        bubbleMinHeight: 44,
+                        bubbleMaxWidth: 320,
+                        paddingRegular: 12,
+                        typingAnimationDuration: 0,
+                        showAvatarInGroup: 'status',
+                        suggestedActionBackgroundColor: '#cca249',
+                        suggestedActionTextColor: '#FFFFFF',
+                        suggestedActionBorderColor: '#cca249',
+                        suggestedActionBorderRadius: 999,
+                        suggestedActionBorderWidth: 0,
+                        suggestedActionHeight: 40,
+                        suggestedActionBackgroundColorOnHover: '#b8912f',
+                        suggestedActionTextColorOnHover: '#FFFFFF',
+                        suggestedActionBorderColorOnHover: '#b8912f',
+                      }}
+                    />
+                  </div>
+
+                  {/*
+                    Dots row — React-rendered sibling OUTSIDE WebChat's DOM tree.
+                    flex-shrink-0 means it never scrolls, never overlays.
+                    It sits between the WebChat div and the bottom of the panel.
+                    WebChat's own send box is INSIDE the flex-1 div above,
+                    so the dots appear ABOVE the send box naturally.
+                  */}
+                  {isWaiting && (
+                    <div className="flex-shrink-0" style={{ padding: '8px 12px' }}>
+                      <div
+                        style={{
+                          background: '#F3F4F6',
+                          borderRadius: 18,
+                          padding: '12px 16px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 2,
+                        }}
+                      >
+                        <span className="lil-dot" />
+                        <span className="lil-dot" />
+                        <span className="lil-dot" />
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
