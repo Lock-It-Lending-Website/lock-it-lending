@@ -25,7 +25,7 @@ const WEBCHAT_CSS = `
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* --- Built-in typing indicator styled as ONE medium bubble with our dots --- */
+  /* --- ONE built-in typing indicator bubble with OUR animated dots --- */
   .webchat__typing-indicator {
     background-color: #F3F4F6 !important;
     border-radius: 18px !important;
@@ -39,7 +39,7 @@ const WEBCHAT_CSS = `
     box-sizing: border-box !important;
     box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important;
 
-    /* Our 3 dots (CSP-safe: no data URLs) */
+    /* Our 3 dots (CSP-safe) */
     background-image:
       radial-gradient(circle, #9ca3af 55%, transparent 56%),
       radial-gradient(circle, #9ca3af 55%, transparent 56%),
@@ -53,7 +53,7 @@ const WEBCHAT_CSS = `
     animation: typingDots 1.2s infinite ease-in-out !important;
   }
 
-  /* Spacer so bubble keeps width even if we hide WebChat internals */
+  /* Spacer so bubble keeps width even if WebChat inner animation is hidden */
   .webchat__typing-indicator::after {
     content: '' !important;
     display: block !important;
@@ -61,11 +61,16 @@ const WEBCHAT_CSS = `
     height: 16px !important;
   }
 
-  /* Hide WebChat's built-in typing visuals so we don't get a "second" dots layer */
+  /* Hide WebChat's internal typing animation layer without removing the indicator from DOM */
   .webchat__typing-indicator__animation,
-  .webchat__typing-indicator [class*="typing"],
-  .webchat__typing-indicator > * {
-    display: none !important;
+  .webchat__typing-indicator [class*="typing"] {
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: none !important;
   }
 
   @keyframes typingDots {
@@ -97,7 +102,6 @@ export default function CopilotChatPopup() {
 
   const store = useMemo(() => {
     return createStore({}, () => (next: WebChatNext) => (action: WebChatAction) => {
-      // User sent — mark interacted
       if (action.type === 'WEB_CHAT/SEND_MESSAGE') {
         setHasInteracted(true);
       }
@@ -105,34 +109,29 @@ export default function CopilotChatPopup() {
       if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY') {
         const activity = action.payload?.activity;
 
-        // ✅ Allow typing events so WebChat can render its built-in typing indicator
+        // ✅ Allow typing events so WebChat can render its typing indicator
         if (activity?.type === 'typing') return next(action);
 
         if (activity?.type === 'message' && activity?.from?.role !== 'user') {
           const rawText = activity.text ?? '';
-          const text = rawText.replace(/\u200B/g, '').trim(); // remove zero-width spaces too
+          const text = rawText.replace(/\u200B/g, '').trim();
 
           const attachments = Array.isArray(activity.attachments) ? activity.attachments : [];
           const suggested = activity.suggestedActions?.actions ?? [];
 
-          // Copilot may respond via attachments (Adaptive Cards) or suggested actions with empty text.
           const hasRenderableContent =
             text.length > 0 || attachments.length > 0 || suggested.length > 0;
 
-          // Accent-friendly check (no unicode property escapes needed)
           const hasRealChars = /[A-Za-z0-9\u00C0-\u024F]/.test(text);
 
-          // Only treat as placeholder if there are NO attachments/actions and text is tiny + non-wordy
           const isPlaceholder =
             attachments.length === 0 &&
             suggested.length === 0 &&
             !hasRealChars &&
             text.length <= 15;
 
-          // Drop truly empty/placeholder activities
           if (!hasRenderableContent || isPlaceholder) return;
 
-          // Strip "Website" from suggested actions if present, then pass through
           if (suggested.length) {
             const filtered = suggested.filter((a: any) => a.title?.toLowerCase() !== 'website');
             return next({
@@ -155,7 +154,6 @@ export default function CopilotChatPopup() {
     });
   }, [sessionId]);
 
-  // ✅ Correct activityMiddleware wrapper (preserves render args)
   const activityMiddleware = useMemo(() => {
     return () => (next: any) => (card: any) => {
       const activity = card?.activity;
@@ -253,7 +251,6 @@ export default function CopilotChatPopup() {
 
   return (
     <>
-      {/* Floating button */}
       {!open && (
         <button
           type="button"
@@ -272,7 +269,6 @@ export default function CopilotChatPopup() {
         </button>
       )}
 
-      {/* Panel */}
       {open && (
         <div
           className={[
@@ -338,7 +334,6 @@ export default function CopilotChatPopup() {
               )}
               {err && <div className="p-4 text-sm text-red-600 flex-shrink-0">{err}</div>}
 
-              {/* Welcome content */}
               {!hasInteracted && !loading && !err && (
                 <div className="flex flex-col gap-3 px-4 pt-5 pb-2 flex-shrink-0">
                   <p className="text-center text-xs text-gray-500 px-6">
@@ -384,7 +379,6 @@ export default function CopilotChatPopup() {
                 </div>
               )}
 
-              {/* WebChat (ONE typing indicator bubble, fully styled by CSS) */}
               {directLine && !loading && !err && (
                 <div className="flex-1 min-h-0 relative">
                   <style>{WEBCHAT_CSS}</style>
@@ -415,8 +409,8 @@ export default function CopilotChatPopup() {
                       bubbleMaxWidth: 320,
                       paddingRegular: 12,
 
-                      // ✅ Disable WebChat’s own typing animation visuals so we only see ours
-                      typingAnimationDuration: 0,
+                      // ✅ Keep typing indicator alive, but don't draw WebChat's dots
+                      typingAnimationDuration: 5000,
                       typingAnimationBackgroundImage: 'none',
 
                       showAvatarInGroup: 'status',
