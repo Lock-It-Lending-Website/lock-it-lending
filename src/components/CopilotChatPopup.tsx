@@ -1,5 +1,5 @@
 // src/components/CopilotChatPopup.tsx
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactWebChat, { createDirectLine, createStore } from 'botframework-webchat';
 
 type DirectLineTokenResponse = {
@@ -56,9 +56,24 @@ export default function CopilotChatPopup() {
   const [chatEnded, setChatEnded] = useState(false);
   const [sessionId, setSessionId] = useState(0);
 
-  // For dots positioning + consistent spacing
+  // Refs for WebChat DOM
   const webchatRef = useRef<HTMLDivElement | null>(null);
-  const [composerHeight, setComposerHeight] = useState(60);
+  const transcriptRef = useRef<HTMLElement | null>(null);
+
+  // For dots positioning + consistent spacing
+  const [composerHeight, _setComposerHeight] = useState(60);
+  const composerHeightRef = useRef(60);
+
+  // Track whether user is pinned to bottom (so dots don’t overlay when scrolling up)
+  const [isAtBottom, setIsAtBottom] = useState(true);
+
+  const setComposerHeight = useCallback((h: number) => {
+    if (!h) return;
+    if (h !== composerHeightRef.current) {
+      composerHeightRef.current = h;
+      _setComposerHeight(h);
+    }
+  }, []);
 
   const CHAT_PAD = 12; // left padding to align with bubbles
   const GAP = 12; // consistent vertical spacing above composer
@@ -73,12 +88,26 @@ export default function CopilotChatPopup() {
     'w-9 h-9 rounded-full bg-gray-100 text-gray-800 flex items-center justify-center ' +
     'hover:bg-gray-200 active:scale-[0.99]';
 
+  const scrollToBottom = useCallback((behavior: ScrollBehavior = 'auto') => {
+    const scroller = transcriptRef.current;
+    if (!scroller) return;
+    try {
+      scroller.scrollTo({ top: scroller.scrollHeight, behavior });
+    } catch {
+      scroller.scrollTop = scroller.scrollHeight;
+    }
+  }, []);
+
   const store = useMemo(() => {
     return createStore({}, () => (next: WebChatNext) => (action: WebChatAction) => {
-      // User sent — start waiting
+      // User sent — start waiting (and keep them pinned to bottom)
       if (action.type === 'WEB_CHAT/SEND_MESSAGE') {
         setHasInteracted(true);
         setIsWaiting(true);
+        setIsAtBottom(true);
+
+        // Ensure transcript snaps to bottom so dots don't appear over old messages
+        requestAnimationFrame(() => scrollToBottom('auto'));
       }
 
       if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY') {
@@ -135,7 +164,7 @@ export default function CopilotChatPopup() {
 
       return next(action);
     });
-  }, [sessionId]);
+  }, [sessionId, scrollToBottom]);
 
   // ✅ Correct activityMiddleware wrapper (preserves render args)
   const activityMiddleware = useMemo(() => {
@@ -165,9 +194,8 @@ export default function CopilotChatPopup() {
     const measure = () => {
       const composer = root.querySelector('.webchat__send-box') as HTMLElement | null;
       if (!composer) return;
-
       const h = Math.ceil(composer.getBoundingClientRect().height);
-      if (h && h !== composerHeight) setComposerHeight(h);
+      setComposerHeight(h);
     };
 
     measure();
@@ -192,7 +220,75 @@ export default function CopilotChatPopup() {
       mo.disconnect();
       ro?.disconnect();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, sessionId, chatEnded, setComposerHeight]);
+
+  // Track "isAtBottom" so typing dots never overlay when the user scrolls up
+  useEffect(() => {
+    if (!open) return;
+
+    const root = webchatRef.current;
+    if (!root) return;
+
+    let scroller: HTMLElement | null = null;
+    let raf = 0;
+
+    const findScroller = () =>
+      root.querySelector('.webchat__basic-transcript__scrollable') as HTMLElement | null;
+
+    const computeAtBottom = () => {
+      if (!scroller) return;
+      const threshold = 24; // px tolerance
+      const remaining = scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight;
+      setIsAtBottom(remaining <= threshold);
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(computeAtBottom);
+    };
+
+    const attach = () => {
+      scroller = findScroller();
+      if (!scroller) return false;
+
+      transcriptRef.current = scroller;
+      computeAtBottom();
+
+      scroller.addEventListener('scroll', onScroll, { passive: true });
+
+      // Also recompute when content size changes (new messages, font changes, etc.)
+      const ro =
+        typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => computeAtBottom()) : null;
+      ro?.observe(scroller);
+
+      return () => {
+        cancelAnimationFrame(raf);
+        scroller?.removeEventListener('scroll', onScroll);
+        ro?.disconnect();
+      };
+    };
+
+    // Try immediately; if not yet in DOM, watch until it appears
+    const cleanup = attach();
+    if (cleanup) return cleanup;
+
+    const mo = new MutationObserver(() => {
+      const maybeCleanup = attach();
+      if (maybeCleanup) {
+        mo.disconnect();
+        // store cleanup on the observer instance
+        (mo as any).__cleanup = maybeCleanup;
+      }
+    });
+
+    mo.observe(root, { childList: true, subtree: true });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      const stored = (mo as any).__cleanup as undefined | (() => void);
+      stored?.();
+      mo.disconnect();
+    };
   }, [open, sessionId, chatEnded]);
 
   useEffect(() => {
@@ -253,7 +349,9 @@ export default function CopilotChatPopup() {
   const sendQuick = (text: string) => {
     setHasInteracted(true);
     setIsWaiting(true);
+    setIsAtBottom(true);
     store.dispatch({ type: 'WEB_CHAT/SEND_MESSAGE', payload: { text } });
+    requestAnimationFrame(() => scrollToBottom('auto'));
   };
 
   const handleMinimize = () => setOpen(false);
@@ -274,7 +372,10 @@ export default function CopilotChatPopup() {
     setErr(null);
     setToken(null);
     setSessionId(s => s + 1);
+    setIsAtBottom(true);
   };
+
+  const showDots = isWaiting && isAtBottom;
 
   return (
     <>
@@ -414,9 +515,9 @@ export default function CopilotChatPopup() {
                 <div ref={webchatRef} className="flex-1 min-h-0 relative">
                   <style>{DOTS_CSS}</style>
 
-                  {/* Reserve space at bottom while waiting so dots never cover the last messages */}
+                  {/* Reserve space at bottom ONLY while dots are visible (prevents overlap) */}
                   <style>
-                    {isWaiting
+                    {showDots
                       ? `
                         .webchat__basic-transcript__scrollable {
                           padding-bottom: ${DOTS_RESERVE}px !important;
@@ -461,8 +562,11 @@ export default function CopilotChatPopup() {
                     }}
                   />
 
-                  {/* Fixed dots bubble — stays in place while loading, disappears when bot responds */}
-                  {isWaiting && (
+                  {/* Fixed dots bubble:
+                      - Shows ONLY when user is at bottom
+                      - Disappears when user scrolls up (prevents overlay)
+                    */}
+                  {showDots && (
                     <div
                       style={{
                         position: 'absolute',
