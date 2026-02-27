@@ -1,5 +1,5 @@
 // src/components/CopilotChatPopup.tsx
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactWebChat, { createDirectLine, createStore } from 'botframework-webchat';
 
 type DirectLineTokenResponse = {
@@ -32,6 +32,7 @@ const DOTS_CSS = `
   .lil-dot:nth-child(1) { animation-delay: 0s; }
   .lil-dot:nth-child(2) { animation-delay: 0.2s; }
   .lil-dot:nth-child(3) { animation-delay: 0.4s; }
+
   .bot-msg-reveal {
     animation: fadeInMsg 0.35s ease-out;
   }
@@ -39,7 +40,8 @@ const DOTS_CSS = `
     from { opacity: 0; transform: translateY(5px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  /* Hide ALL bot placeholder/emoji bubbles that Copilot Studio sends before the real reply */
+
+  /* Keep WebChat's own typing indicator hidden (we use our own dots) */
   .webchat__typing-indicator { display: none !important; }
 `;
 
@@ -53,6 +55,16 @@ export default function CopilotChatPopup() {
 
   const [chatEnded, setChatEnded] = useState(false);
   const [sessionId, setSessionId] = useState(0);
+
+  // WebChat DOM ref + scroll/composer measurements
+  const webchatRef = useRef<HTMLDivElement | null>(null);
+  const [isNearBottom, setIsNearBottom] = useState(true);
+  const [composerHeight, setComposerHeight] = useState(60);
+
+  // Tune these for spacing
+  const CHAT_PAD = 12; // left padding for dots bubble
+  const GAP = 12; // vertical gap above input
+  const DOTS_RESERVE = 64; // transcript bottom padding while waiting
 
   const CTA_BTN =
     'rounded-full bg-[#cca249] text-white font-semibold shadow hover:opacity-90 transition-opacity';
@@ -86,9 +98,8 @@ export default function CopilotChatPopup() {
           const hasRenderableContent =
             text.length > 0 || attachments.length > 0 || suggested.length > 0;
 
-          // Unicode-safe "has real letters/numbers" (works for Spanish, etc.)
-          // (If your build complains, tell me and I’ll swap it to a simpler regex.)
-          const hasRealChars = /[A-Za-z0-9]/.test(text);
+          // Accent-friendly without Unicode property escapes
+          const hasRealChars = /[A-Za-z0-9\u00C0-\u024F]/.test(text);
 
           // Only treat as placeholder if there are NO attachments/actions and text is tiny + non-wordy
           const isPlaceholder =
@@ -137,7 +148,7 @@ export default function CopilotChatPopup() {
     });
   }, [sessionId]);
 
-  // Fade-in real bot messages
+  // Fade-in bot messages (correct render signature)
   const activityMiddleware = useMemo(() => {
     return () => (next: any) => (card: any) => {
       const activity = card?.activity;
@@ -145,7 +156,6 @@ export default function CopilotChatPopup() {
       const render = next(card);
       if (!render) return render;
 
-      // Fade-in bot messages only
       if (activity?.type === 'message' && activity?.from?.role !== 'user') {
         return (...renderArgs: any[]) => (
           <div className="bot-msg-reveal">{render(...renderArgs)}</div>
@@ -156,6 +166,7 @@ export default function CopilotChatPopup() {
     };
   }, []);
 
+  // Fetch token when opened
   useEffect(() => {
     if (!open) return;
     if (chatEnded) return;
@@ -197,6 +208,7 @@ export default function CopilotChatPopup() {
     };
   }, [open, chatEnded, token, sessionId]);
 
+  // ESC closes chat
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -210,6 +222,53 @@ export default function CopilotChatPopup() {
     if (!token) return null;
     return createDirectLine({ token });
   }, [token]);
+
+  // Detect transcript scroll position + measure composer height
+  useEffect(() => {
+    if (!open) return;
+
+    const root = webchatRef.current;
+    if (!root) return;
+
+    const transcript = root.querySelector(
+      '.webchat__basic-transcript__scrollable'
+    ) as HTMLElement | null;
+
+    const composer = root.querySelector('.webchat__send-box') as HTMLElement | null;
+
+    if (!transcript) return;
+
+    const computeNearBottom = () => {
+      const distanceFromBottom =
+        transcript.scrollHeight - (transcript.scrollTop + transcript.clientHeight);
+      setIsNearBottom(distanceFromBottom < 120);
+    };
+
+    const measureComposer = () => {
+      if (!composer) return;
+      const h = composer.getBoundingClientRect().height;
+      if (h) setComposerHeight(h);
+    };
+
+    computeNearBottom();
+    measureComposer();
+
+    transcript.addEventListener('scroll', computeNearBottom, { passive: true });
+    window.addEventListener('resize', measureComposer);
+
+    // When WebChat adds messages, re-check + re-measure
+    const mo = new MutationObserver(() => {
+      computeNearBottom();
+      measureComposer();
+    });
+    mo.observe(transcript, { childList: true, subtree: true });
+
+    return () => {
+      transcript.removeEventListener('scroll', computeNearBottom);
+      window.removeEventListener('resize', measureComposer);
+      mo.disconnect();
+    };
+  }, [open, sessionId, chatEnded, token]);
 
   const sendQuick = (text: string) => {
     setHasInteracted(true);
@@ -372,8 +431,19 @@ export default function CopilotChatPopup() {
 
               {/* WebChat + dots bubble */}
               {directLine && !loading && !err && (
-                <div className="flex-1 min-h-0 relative">
+                <div ref={webchatRef} className="flex-1 min-h-0 relative">
                   <style>{DOTS_CSS}</style>
+
+                  {/* Reserve space in transcript while waiting (prevents overlay) */}
+                  <style>
+                    {isWaiting
+                      ? `
+                        .webchat__basic-transcript__scrollable {
+                          padding-bottom: ${DOTS_RESERVE}px !important;
+                        }
+                      `
+                      : ''}
+                  </style>
 
                   <ReactWebChat
                     directLine={directLine}
@@ -411,14 +481,13 @@ export default function CopilotChatPopup() {
                     }}
                   />
 
-                  {/* Dots bubble — absolute inside WebChat container, above the composer (60px) */}
-                  {isWaiting && (
+                  {/* Dots bubble — only show if waiting AND user is near bottom */}
+                  {isWaiting && isNearBottom && (
                     <div
                       style={{
                         position: 'absolute',
-                        // WebChat's composer is ~60px tall
-                        bottom: 60,
-                        left: 12,
+                        bottom: composerHeight + GAP,
+                        left: CHAT_PAD,
                         pointerEvents: 'none',
                         zIndex: 10,
                       }}
