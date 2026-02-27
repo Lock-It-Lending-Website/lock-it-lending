@@ -79,13 +79,18 @@ export default function CopilotChatPopup() {
         if (activity?.type === 'message' && activity?.from?.role !== 'user') {
           const text: string = (activity.text || '').trim();
 
-          // Drop emoji/dots placeholder bubbles entirely — don't let them into the transcript
-          const isPlaceholder =
-            text === '' ||
-            /^[\uD83C-\uDBFF\uDC00-\uDFFF\u2600-\u27BF\u2728\s\.\u2026]+$/.test(text);
+          console.log('[BOT ACTIVITY]', JSON.stringify({ text, len: text.length }));
 
-          if (isPlaceholder) return; // swallow it completely
+          // Only drop if text has zero real alphanumeric characters (pure emoji/dots/whitespace)
+          const hasRealWords = /[a-zA-Z0-9]/.test(text);
+          const isPlaceholder = !hasRealWords && text.length < 15;
 
+          if (isPlaceholder) {
+            console.log('[BOT ACTIVITY] -> DROPPED as placeholder');
+            return;
+          }
+
+          console.log('[BOT ACTIVITY] -> KEPT as real message');
           // Real bot message — stop waiting
           setIsWaiting(false);
         }
@@ -120,13 +125,18 @@ export default function CopilotChatPopup() {
 
   // Fade-in real bot messages
   const activityMiddleware = useMemo(() => {
-    return () => (next: any) => (card: any) => {
-      const activity = card?.activity;
-      if (activity?.type === 'message' && activity?.from?.role !== 'user') {
-        return () => <div className="bot-msg-reveal">{next(card)()}</div>;
-      }
-      return next(card);
-    };
+    return () =>
+      (next: any) =>
+      (...args: any[]) => {
+        const card = args[0];
+        const activity = card?.activity;
+        if (activity?.type === 'message' && activity?.from?.role !== 'user') {
+          const children = next(...args);
+          if (!children) return null;
+          return () => <div className="bot-msg-reveal">{children()}</div>;
+        }
+        return next(...args);
+      };
   }, []);
 
   useEffect(() => {
@@ -372,7 +382,7 @@ export default function CopilotChatPopup() {
                       paddingRegular: 12,
                       typingAnimationDuration: 0,
                       showAvatarInGroup: 'status',
-                      suggestedActionBackground: '#cca249',
+                      suggestedActionBackgroundColor: '#cca249',
                       suggestedActionTextColor: '#FFFFFF',
                       suggestedActionBorderColor: '#cca249',
                       suggestedActionBorderRadius: 999,
