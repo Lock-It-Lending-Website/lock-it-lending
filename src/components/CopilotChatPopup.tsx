@@ -16,22 +16,71 @@ type WebChatAction = {
 
 type WebChatNext = (action: WebChatAction) => any;
 
+// Animated dots component rendered inside WebChat's transcript
+const TypingDots = () => (
+  <>
+    <style>{`
+      @keyframes typingBounce {
+        0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+        30% { transform: translateY(-5px); opacity: 1; }
+      }
+      .lil-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin: 0 2px;
+        background: #9ca3af;
+        border-radius: 50%;
+        animation: typingBounce 1.2s infinite ease-in-out;
+      }
+      .lil-dot:nth-child(1) { animation-delay: 0s; }
+      .lil-dot:nth-child(2) { animation-delay: 0.2s; }
+      .lil-dot:nth-child(3) { animation-delay: 0.4s; }
+      .bot-msg-reveal {
+        animation: fadeInMsg 0.35s ease-out;
+      }
+      @keyframes fadeInMsg {
+        from { opacity: 0; transform: translateY(5px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      /* Hide WebChat's default typing indicator */
+      .webchat__typing-indicator { display: none !important; }
+    `}</style>
+    <div
+      style={{
+        background: '#F3F4F6',
+        borderRadius: 18,
+        padding: '12px 16px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 2,
+        minHeight: 44,
+      }}
+    >
+      <span className="lil-dot" />
+      <span className="lil-dot" />
+      <span className="lil-dot" />
+    </div>
+  </>
+);
+
 export default function CopilotChatPopup() {
   const [open, setOpen] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
-  const [isWaiting, setIsWaiting] = useState(false);
-
   const [chatEnded, setChatEnded] = useState(false);
   const [sessionId, setSessionId] = useState(0);
 
-  // Ref so store middleware can read/set isWaiting without stale closure
-  const isWaitingRef = useRef(false);
-  const setWaiting = (val: boolean) => {
-    isWaitingRef.current = val;
-    setIsWaiting(val);
+  // Track which activity IDs are "placeholder" emoji bubbles to replace with dots
+  const placeholderIdsRef = useRef<Set<string>>(new Set());
+  const [placeholderIds, setPlaceholderIds] = useState<Set<string>>(new Set());
+
+  const updatePlaceholders = (fn: (prev: Set<string>) => Set<string>) => {
+    const next = fn(placeholderIdsRef.current);
+    placeholderIdsRef.current = next;
+    setPlaceholderIds(new Set(next));
   };
 
   const CTA_BTN =
@@ -44,26 +93,46 @@ export default function CopilotChatPopup() {
 
   const store = useMemo(() => {
     return createStore({}, () => (next: WebChatNext) => (action: WebChatAction) => {
-      // User sent a message — show dots immediately
       if (action.type === 'WEB_CHAT/SEND_MESSAGE') {
         setHasInteracted(true);
-        setWaiting(true);
       }
 
-      // Incoming activity from bot
       if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY') {
         const activity = action.payload?.activity;
 
-        // Drop typing activities
+        // Drop raw typing activities
         if (activity?.type === 'typing') return;
 
-        // Real bot message — hide dots
         if (activity?.type === 'message' && activity?.from?.role !== 'user') {
-          setWaiting(false);
+          const text: string = (activity.text || '').trim();
+
+          // Detect the Copilot Studio emoji/dots placeholder bubble
+          const isEmojiPlaceholder =
+            /^[\s\uD83C-\uDBFF\uDC00-\uDFFF\u2600-\u27BF\.\u2026\*_~`]+$/.test(text) ||
+            text === '' ||
+            // catch the specific ✨ ... pattern
+            /^[\u2728\s\.]+$/.test(text);
+
+          if (isEmojiPlaceholder) {
+            // Mark this activity ID as a placeholder — activityMiddleware will render dots
+            const id = activity.id || `placeholder-${Date.now()}`;
+            updatePlaceholders(prev => new Set(Array.from(prev).concat([id])));
+            // Still let it through so WebChat renders it (we'll swap it for dots)
+            return next({
+              ...action,
+              payload: {
+                ...action.payload,
+                activity: { ...activity, id },
+              },
+            });
+          }
+
+          // Real bot message arrived — clear all placeholders
+          updatePlaceholders(() => new Set());
         }
       }
 
-      // Remove the "Website" suggested action button from bot responses
+      // Remove "Website" from suggested actions
       if (
         action.type === 'DIRECT_LINE/INCOMING_ACTIVITY' &&
         action.payload?.activity?.suggestedActions?.actions
@@ -89,6 +158,22 @@ export default function CopilotChatPopup() {
       return next(action);
     });
   }, [sessionId]);
+
+  // activityMiddleware: replace placeholder bubbles with dots, fade-in real responses
+  const activityMiddleware = useMemo(() => {
+    return () => (next: any) => (card: any) => {
+      const activity = card?.activity;
+      if (activity?.type === 'message' && activity?.from?.role !== 'user') {
+        // Replace emoji placeholder with animated dots
+        if (placeholderIdsRef.current.has(activity.id)) {
+          return () => <TypingDots />;
+        }
+        // Fade in real bot messages
+        return () => <div className="bot-msg-reveal">{next(card)()}</div>;
+      }
+      return next(card);
+    };
+  }, [placeholderIds]);
 
   useEffect(() => {
     if (!open) return;
@@ -155,7 +240,7 @@ export default function CopilotChatPopup() {
   const handleClearChat = () => {
     setChatEnded(true);
     setHasInteracted(false);
-    setWaiting(false);
+    updatePlaceholders(() => new Set());
     setErr(null);
     setLoading(false);
     setToken(null);
@@ -164,7 +249,7 @@ export default function CopilotChatPopup() {
   const startNewChat = () => {
     setChatEnded(false);
     setHasInteracted(false);
-    setWaiting(false);
+    updatePlaceholders(() => new Set());
     setErr(null);
     setToken(null);
     setSessionId(s => s + 1);
@@ -172,7 +257,7 @@ export default function CopilotChatPopup() {
 
   return (
     <>
-      {/* Floating button (hidden when panel is open) */}
+      {/* Floating button */}
       {!open && (
         <button
           type="button"
@@ -180,7 +265,6 @@ export default function CopilotChatPopup() {
           className="fixed bottom-10 right-8 z-[9999]"
           aria-label="Open chat"
         >
-          {/* Mobile: circle with logo + gold outline */}
           <span className="flex sm:hidden w-14 h-14 rounded-full bg-white items-center justify-center ring-[3px] ring-[#cca249] shadow-lg">
             <img
               src="/logo.ico"
@@ -188,7 +272,6 @@ export default function CopilotChatPopup() {
               className="w-9 h-9 rounded-full object-cover"
             />
           </span>
-          {/* Desktop: pill Chat button */}
           <span className={`hidden sm:inline-flex items-center ${FLOATING_BTN}`}>Let's Chat</span>
         </button>
       )}
@@ -259,7 +342,7 @@ export default function CopilotChatPopup() {
               )}
               {err && <div className="p-4 text-sm text-red-600 flex-shrink-0">{err}</div>}
 
-              {/* Welcome content — shown until user interacts */}
+              {/* Welcome content */}
               {!hasInteracted && !loading && !err && (
                 <div className="flex flex-col gap-3 px-4 pt-5 pb-2 flex-shrink-0">
                   <p className="text-center text-xs text-gray-500 px-6">
@@ -307,83 +390,31 @@ export default function CopilotChatPopup() {
 
               {/* WebChat */}
               {directLine && !loading && !err && (
-                <div className="flex-1 min-h-0 relative">
-                  <style>{`
-                    /* Hide the Copilot Studio emoji/dots message bubble entirely */
-                    .webchat__text-content.webchat__text-content--is-markdown {
-                      /* only hide it if it contains just the emoji typing indicator */
-                    }
-                    /* Hide any bot bubble whose only content is emoji + dots */
-                    .webchat__bubble:not(.webchat__bubble--from-user) .webchat__text-content--is-markdown:only-child {
-                      /* targeted below via JS class */
-                    }
-                    /* Hide the Copilot Studio ✨ ... bubble specifically */
-                    .hide-typing-bubble {
-                      display: none !important;
-                    }
-
-                    /* Bouncing dots */
-                    @keyframes typingBounce {
-                      0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
-                      30% { transform: translateY(-5px); opacity: 1; }
-                    }
-                    .lil-dot {
-                      display: inline-block;
-                      width: 8px;
-                      height: 8px;
-                      margin: 0 2px;
-                      background: #9ca3af;
-                      border-radius: 50%;
-                      animation: typingBounce 1.2s infinite ease-in-out;
-                    }
-                    .lil-dot:nth-child(1) { animation-delay: 0s; }
-                    .lil-dot:nth-child(2) { animation-delay: 0.2s; }
-                    .lil-dot:nth-child(3) { animation-delay: 0.4s; }
-
-                    /* Fade-in for real bot responses */
-                    .bot-msg-reveal {
-                      animation: fadeInMsg 0.35s ease-out;
-                    }
-                    @keyframes fadeInMsg {
-                      from { opacity: 0; transform: translateY(5px); }
-                      to   { opacity: 1; transform: translateY(0); }
-                    }
-
-                    /* Hide default webchat typing indicator */
-                    .webchat__typing-indicator { display: none !important; }
-                  `}</style>
-
+                <div className="flex-1 min-h-0">
                   <ReactWebChat
                     directLine={directLine}
                     store={store}
+                    activityMiddleware={activityMiddleware}
                     styleOptions={{
                       hideUploadButton: true,
                       backgroundColor: '#FFFFFF',
-
-                      // Bot bubbles — no border
                       bubbleBackground: '#F3F4F6',
                       bubbleTextColor: '#111827',
                       bubbleBorderRadius: 18,
                       bubbleNubSize: 0,
                       bubbleBorderWidth: 0,
                       bubbleBorderColor: 'transparent',
-
-                      // User bubbles — no border
                       bubbleFromUserBackground: '#111827',
                       bubbleFromUserTextColor: '#FFFFFF',
                       bubbleFromUserBorderRadius: 18,
                       bubbleFromUserNubSize: 0,
                       bubbleFromUserBorderWidth: 0,
                       bubbleFromUserBorderColor: 'transparent',
-
                       bubbleMinHeight: 44,
                       bubbleMaxWidth: 320,
                       paddingRegular: 12,
-
                       typingAnimationDuration: 0,
                       showAvatarInGroup: 'status',
-
-                      // Suggested action buttons — gold, white text, rounded
                       suggestedActionBackground: '#cca249',
                       suggestedActionTextColor: '#FFFFFF',
                       suggestedActionBorderColor: '#cca249',
@@ -395,37 +426,6 @@ export default function CopilotChatPopup() {
                       suggestedActionBorderColorOnHover: '#b8912f',
                     }}
                   />
-
-                  {/* Dots overlay — positioned to sit just above the composer,
-                      using the same left margin as WebChat bot bubbles (paddingRegular=12) */}
-                  {isWaiting && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        bottom: 52,
-                        left: 0,
-                        right: 0,
-                        // paddingRegular (12) matches WebChat's own bubble left padding
-                        paddingLeft: 12,
-                        pointerEvents: 'none',
-                      }}
-                    >
-                      <div
-                        style={{
-                          background: '#F3F4F6',
-                          borderRadius: 18,
-                          padding: '12px 16px',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: 2,
-                        }}
-                      >
-                        <span className="lil-dot" />
-                        <span className="lil-dot" />
-                        <span className="lil-dot" />
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
