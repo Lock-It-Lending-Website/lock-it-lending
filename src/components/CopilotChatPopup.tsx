@@ -16,13 +16,14 @@ type WebChatAction = {
 
 type WebChatNext = (action: WebChatAction) => any;
 
-const SPACING = 15;
+const SPACING = 15; // ✅ 15px between EVERYTHING
 
-const WEBCHAT_CSS = `
+const UI_CSS = `
   @keyframes typingBounce {
     0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
     30% { transform: translateY(-5px); opacity: 1; }
   }
+
   .lil-dot {
     display: inline-block;
     width: 8px; height: 8px;
@@ -43,60 +44,38 @@ const WEBCHAT_CSS = `
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Hide WebChat built-in typing indicator (we render our own) */
+  /* Hide WebChat built-in typing indicator (we use our own fixed dots row) */
   .webchat__typing-indicator { display: none !important; }
 
-  /* Make transcript scrollable and prevent it from scrolling under footer rows */
-  .webchat {
-    display: flex !important;
-    flex-direction: column !important;
-    height: 100% !important;
-  }
-  .webchat__basic-transcript {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    position: relative !important;
-  }
-  .webchat__basic-transcript__scrollable {
-    height: 100% !important;
-    overflow-y: auto !important;
-    padding-bottom: 0 !important;
-  }
-
-  /* Ensure send box behaves like a footer row */
-  .webchat__send-box {
-    flex: 0 0 auto !important;
-    position: relative !important;
-    bottom: auto !important;
-    left: auto !important;
-    right: auto !important;
-    margin-top: 0 !important;
-  }
-
-  /* 15px spacing between messages */
+  /* ✅ 15px between all transcript activities (covers most WebChat layouts) */
   .webchat__basic-transcript__activity + .webchat__basic-transcript__activity {
     margin-top: ${SPACING}px !important;
   }
-  .webchat__stacked-layout__activity + .webchat__stacked-layout__activity {
-    margin-top: ${SPACING}px !important;
-  }
+
+  /* ✅ Also handle stacked layout message blocks */
   .webchat__stacked-layout__message + .webchat__stacked-layout__message {
     margin-top: ${SPACING}px !important;
   }
 
-  /* Our injected typing row */
+  /* Sometimes bubbles are inside "stacked layout" activities */
+  .webchat__stacked-layout__activity + .webchat__stacked-layout__activity {
+    margin-top: ${SPACING}px !important;
+  }
+
+  /* Remove extra bottom padding so spacing is controlled by our typing row */
+  .webchat__basic-transcript__scrollable {
+    padding-bottom: 0 !important;
+  }
+
+  /* Our fixed typing row (inserted between transcript and send box) */
   #lil-typing-row {
-    display: none;                 /* toggled in JS */
-    flex: 0 0 auto;
     width: 100%;
+    display: none; /* toggled via JS */
+    justify-content: flex-start;
+    padding: ${SPACING}px ${SPACING}px; /* ✅ 15px above + below dots bubble */
     box-sizing: border-box;
     pointer-events: none;
-    background: transparent;       /* no white rectangle */
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: ${SPACING}px;      /* 15px between last message and dots */
-    margin-bottom: ${SPACING}px;   /* 15px between dots and input */
-    padding-right: ${SPACING}px;
+    background: transparent;
   }
 
   #lil-typing-bubble {
@@ -106,6 +85,11 @@ const WEBCHAT_CSS = `
     display: inline-flex;
     align-items: center;
     gap: 2px;
+  }
+
+  /* ✅ 15px space above the send box (input) always */
+  .webchat__send-box {
+    margin-top: ${SPACING}px !important;
   }
 `;
 
@@ -120,7 +104,8 @@ export default function CopilotChatPopup() {
   const [chatEnded, setChatEnded] = useState(false);
   const [sessionId, setSessionId] = useState(0);
 
-  const hostRef = useRef<HTMLDivElement | null>(null);
+  // Wrap WebChat so we can inject the fixed typing row inside it (between transcript and send box)
+  const webchatRef = useRef<HTMLDivElement | null>(null);
 
   const CTA_BTN =
     'rounded-full bg-[#cca249] text-white font-semibold shadow hover:opacity-90 transition-opacity';
@@ -132,6 +117,7 @@ export default function CopilotChatPopup() {
 
   const store = useMemo(() => {
     return createStore({}, () => (next: WebChatNext) => (action: WebChatAction) => {
+      // User sent — start waiting
       if (action.type === 'WEB_CHAT/SEND_MESSAGE') {
         setHasInteracted(true);
         setIsWaiting(true);
@@ -140,6 +126,7 @@ export default function CopilotChatPopup() {
       if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY') {
         const activity = action.payload?.activity;
 
+        // Drop typing events
         if (activity?.type === 'typing') return;
 
         if (activity?.type === 'message' && activity?.from?.role !== 'user') {
@@ -152,6 +139,7 @@ export default function CopilotChatPopup() {
           const hasRenderableContent =
             text.length > 0 || attachments.length > 0 || suggested.length > 0;
 
+          // Accent-friendly check (no unicode property escapes needed)
           const hasRealChars = /[A-Za-z0-9\u00C0-\u024F]/.test(text);
 
           const isPlaceholder =
@@ -162,8 +150,10 @@ export default function CopilotChatPopup() {
 
           if (!hasRenderableContent || isPlaceholder) return;
 
+          // ✅ Bot actually responded — stop dots
           setIsWaiting(false);
 
+          // Strip "Website" from suggested actions if present
           if (suggested.length) {
             const filtered = suggested.filter((a: any) => a.title?.toLowerCase() !== 'website');
             return next({
@@ -186,9 +176,11 @@ export default function CopilotChatPopup() {
     });
   }, [sessionId]);
 
+  // ✅ Correct middleware wrapper that preserves render args
   const activityMiddleware = useMemo(() => {
     return () => (next: any) => (card: any) => {
       const activity = card?.activity;
+
       const render = next(card);
       if (!render) return render;
 
@@ -243,6 +235,15 @@ export default function CopilotChatPopup() {
     };
   }, [open, chatEnded, token, sessionId]);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
+
   const directLine = useMemo(() => {
     if (!token) return null;
     return createDirectLine({ token });
@@ -274,136 +275,65 @@ export default function CopilotChatPopup() {
     setSessionId(s => s + 1);
   };
 
-  // ✅ Robust typing-row injection (works across WebChat class variations)
+  // ✅ Inject a fixed "typing row" BETWEEN transcript and send box (no overlay on scroll)
   useEffect(() => {
-    if (!open || !directLine || loading || err) return;
+    if (!open) return;
+    if (!directLine) return;
+    if (loading || err) return;
 
-    const host = hostRef.current;
-    if (!host) return;
-
+    let cancelled = false;
     let raf = 0;
 
-    const findFirst = <T extends Element>(selectors: string[]): T | null => {
-      for (const s of selectors) {
-        const el = host.querySelector(s);
-        if (el) return el as T;
-      }
-      return null;
-    };
+    const ensureTypingRow = () => {
+      if (cancelled) return;
 
-    const mount = () => {
-      const webchatRoot =
-        (host.querySelector('.webchat') as HTMLElement | null) ||
-        (host.querySelector('[class*="webchat"]') as HTMLElement | null) ||
-        (host.firstElementChild as HTMLElement | null);
-
-      const sendBox = findFirst<HTMLElement>([
-        '.webchat__send-box',
-        '.webchat__sendbox',
-        '[class*="send-box"]',
-        '[class*="sendbox"]',
-        'form',
-      ]);
-
-      const transcriptScrollable = findFirst<HTMLElement>([
-        '.webchat__basic-transcript__scrollable',
-        '.webchat__basic-transcript',
-        '[class*="transcript"]',
-        '[role="log"]',
-      ]);
-
-      if (!webchatRoot || !sendBox) {
-        raf = requestAnimationFrame(mount);
+      const root = webchatRef.current;
+      if (!root) {
+        raf = requestAnimationFrame(ensureTypingRow);
         return;
       }
 
-      let row = host.querySelector('#lil-typing-row') as HTMLElement | null;
+      const sendBox = root.querySelector('.webchat__send-box') as HTMLElement | null;
+      if (!sendBox || !sendBox.parentElement) {
+        raf = requestAnimationFrame(ensureTypingRow);
+        return;
+      }
+
+      let row = root.querySelector('#lil-typing-row') as HTMLElement | null;
 
       if (!row) {
         row = document.createElement('div');
         row.id = 'lil-typing-row';
-        row.style.display = 'none';
-        row.style.width = '100%';
-        row.style.boxSizing = 'border-box';
-        row.style.pointerEvents = 'none';
-        row.style.background = 'transparent';
-        row.style.justifyContent = 'flex-start';
-        row.style.alignItems = 'center';
-        row.style.marginTop = `${SPACING}px`;
-        row.style.marginBottom = `${SPACING}px`;
-        row.style.paddingRight = `${SPACING}px`;
-
         row.innerHTML = `
-          <div id="lil-typing-bubble"
-               style="background:#F3F4F6;border-radius:18px;padding:12px 16px;display:inline-flex;align-items:center;gap:2px;">
+          <div id="lil-typing-bubble">
             <span class="lil-dot"></span>
             <span class="lil-dot"></span>
             <span class="lil-dot"></span>
           </div>
         `;
-
-        // Insert right above the send box
-        sendBox.parentElement?.insertBefore(row, sendBox);
+        // Insert directly above the send box so it is "fixed" in layout, not overlaying transcript
+        sendBox.parentElement.insertBefore(row, sendBox);
       }
-
-      const syncIndent = () => {
-        if (!transcriptScrollable) {
-          row!.style.paddingLeft = `${SPACING}px`;
-          return;
-        }
-
-        const scrollRect = transcriptScrollable.getBoundingClientRect();
-        const computed = window.getComputedStyle(transcriptScrollable);
-        const fallbackLeft = parseInt(computed.paddingLeft || '0', 10) || SPACING;
-
-        const botBubble = transcriptScrollable.querySelector(
-          '.webchat__bubble:not(.webchat__bubble--from-user), [class*="bubble"]:not([class*="from-user"])'
-        ) as HTMLElement | null;
-
-        const leftIndent = botBubble
-          ? Math.max(0, Math.round(botBubble.getBoundingClientRect().left - scrollRect.left))
-          : fallbackLeft;
-
-        row!.style.paddingLeft = `${leftIndent}px`;
-      };
-
-      syncIndent();
-
-      const mo =
-        transcriptScrollable &&
-        new MutationObserver(() => {
-          syncIndent();
-        });
-
-      if (transcriptScrollable && mo) {
-        mo.observe(transcriptScrollable, { childList: true, subtree: true });
-      }
-
-      const onResize = () => syncIndent();
-      window.addEventListener('resize', onResize);
-
-      (row as any).__cleanup = () => {
-        mo?.disconnect();
-        window.removeEventListener('resize', onResize);
-      };
 
       row.style.display = isWaiting ? 'flex' : 'none';
     };
 
-    raf = requestAnimationFrame(mount);
+    raf = requestAnimationFrame(ensureTypingRow);
 
     return () => {
+      cancelled = true;
       cancelAnimationFrame(raf);
-      const row = host.querySelector('#lil-typing-row') as HTMLElement | null;
-      if (row && (row as any).__cleanup) (row as any).__cleanup();
+
+      const root = webchatRef.current;
+      const row = root?.querySelector('#lil-typing-row');
       row?.remove();
     };
   }, [open, directLine, loading, err, sessionId, isWaiting]);
 
-  // Toggle visibility instantly
+  // ✅ Toggle typing row visibility whenever waiting changes
   useEffect(() => {
-    const host = hostRef.current;
-    const row = host?.querySelector('#lil-typing-row') as HTMLElement | null;
+    const root = webchatRef.current;
+    const row = root?.querySelector('#lil-typing-row') as HTMLElement | null;
     if (row) row.style.display = isWaiting ? 'flex' : 'none';
   }, [isWaiting]);
 
@@ -435,7 +365,7 @@ export default function CopilotChatPopup() {
             'sm:inset-auto sm:right-8 sm:bottom-10 sm:w-[420px] sm:h-[650px] sm:rounded-2xl sm:overflow-hidden',
           ].join(' ')}
         >
-          <style>{WEBCHAT_CSS}</style>
+          <style>{UI_CSS}</style>
 
           <div className="flex items-center justify-between border-b px-4 py-3 flex-shrink-0">
             <div className="flex items-center gap-3">
@@ -540,36 +470,40 @@ export default function CopilotChatPopup() {
               )}
 
               {directLine && !loading && !err && (
-                <div ref={hostRef} className="flex-1 min-h-0">
+                <div ref={webchatRef} className="flex-1 min-h-0">
                   <ReactWebChat
                     directLine={directLine}
                     store={store}
                     activityMiddleware={activityMiddleware}
                     styleOptions={{
                       hideUploadButton: true,
-                      paddingRegular: SPACING,
-                      groupTimestamp: false,
                       backgroundColor: '#FFFFFF',
-
                       bubbleBackground: '#F3F4F6',
                       bubbleTextColor: '#111827',
                       bubbleBorderRadius: 18,
                       bubbleNubSize: 0,
                       bubbleBorderWidth: 0,
                       bubbleBorderColor: 'transparent',
-
                       bubbleFromUserBackground: '#111827',
                       bubbleFromUserTextColor: '#FFFFFF',
                       bubbleFromUserBorderRadius: 18,
                       bubbleFromUserNubSize: 0,
                       bubbleFromUserBorderWidth: 0,
                       bubbleFromUserBorderColor: 'transparent',
-
                       bubbleMinHeight: 44,
                       bubbleMaxWidth: 320,
-
+                      paddingRegular: 12,
                       typingAnimationDuration: 0,
                       showAvatarInGroup: 'status',
+                      suggestedActionBackgroundColor: '#cca249',
+                      suggestedActionTextColor: '#FFFFFF',
+                      suggestedActionBorderColor: '#cca249',
+                      suggestedActionBorderRadius: 999,
+                      suggestedActionBorderWidth: 0,
+                      suggestedActionHeight: 40,
+                      suggestedActionBackgroundColorOnHover: '#b8912f',
+                      suggestedActionTextColorOnHover: '#FFFFFF',
+                      suggestedActionBorderColorOnHover: '#b8912f',
                     }}
                   />
                 </div>
