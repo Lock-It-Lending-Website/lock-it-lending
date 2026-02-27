@@ -1,46 +1,53 @@
 // src/components/CopilotChatPopup.tsx
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactWebChat, { createDirectLine, createStore } from 'botframework-webchat';
 
-type DirectLineTokenResponse = {
-  token: string;
-  expires_in?: number;
-  conversationId?: string;
-};
-
-type WebChatAction = {
-  type: string;
-  payload?: any;
-  [key: string]: any;
-};
-
+type DirectLineTokenResponse = { token: string; expires_in?: number; conversationId?: string };
+type WebChatAction = { type: string; payload?: any; [key: string]: any };
 type WebChatNext = (action: WebChatAction) => any;
+
+const TYPING_ACTIVITY_ID = '__lil_typing__';
 
 const UI_CSS = `
   @keyframes typingBounce {
     0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
-    30% { transform: translateY(-5px); opacity: 1; }
+    30%            { transform: translateY(-5px); opacity: 1; }
   }
   .lil-dot {
-    display: inline-block;
-    width: 8px; height: 8px;
-    margin: 0 2px;
-    background: #9ca3af;
-    border-radius: 50%;
+    display: inline-block; width: 8px; height: 8px; margin: 0 2px;
+    background: #9ca3af; border-radius: 50%;
     animation: typingBounce 1.2s infinite ease-in-out;
   }
   .lil-dot:nth-child(1) { animation-delay: 0s; }
   .lil-dot:nth-child(2) { animation-delay: 0.2s; }
   .lil-dot:nth-child(3) { animation-delay: 0.4s; }
-  .bot-msg-reveal {
-    animation: fadeInMsg 0.35s ease-out;
-  }
+  .bot-msg-reveal { animation: fadeInMsg 0.35s ease-out; }
   @keyframes fadeInMsg {
     from { opacity: 0; transform: translateY(5px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   .webchat__typing-indicator { display: none !important; }
 `;
+
+function TypingBubble() {
+  return (
+    <div
+      style={{
+        background: '#F3F4F6',
+        borderRadius: 18,
+        padding: '12px 16px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 2,
+        minHeight: 44,
+      }}
+    >
+      <span className="lil-dot" />
+      <span className="lil-dot" />
+      <span className="lil-dot" />
+    </div>
+  );
+}
 
 export default function CopilotChatPopup() {
   const [open, setOpen] = useState(false);
@@ -52,16 +59,44 @@ export default function CopilotChatPopup() {
   const [chatEnded, setChatEnded] = useState(false);
   const [sessionId, setSessionId] = useState(0);
 
+  // Keep a ref so the store middleware (closed over on mount) can always read latest value
+  const storeRef = useRef<any>(null);
+
   const CTA_BTN =
     'rounded-full bg-[#cca249] text-white font-semibold shadow hover:opacity-90 transition-opacity';
   const OPTION_BTN = `${CTA_BTN} text-sm px-3 py-1.5`;
   const FLOATING_BTN = `${CTA_BTN} text-base px-6 py-3 sm:text-lg sm:px-8 sm:py-4`;
   const ICON_BTN =
-    'w-9 h-9 rounded-full bg-gray-100 text-gray-800 flex items-center justify-center ' +
-    'hover:bg-gray-200 active:scale-[0.99]';
+    'w-9 h-9 rounded-full bg-gray-100 text-gray-800 flex items-center justify-center hover:bg-gray-200 active:scale-[0.99]';
+
+  // Inject / remove the fake typing activity whenever isWaiting changes
+  useEffect(() => {
+    const s = storeRef.current;
+    if (!s) return;
+    if (isWaiting) {
+      s.dispatch({
+        type: 'DIRECT_LINE/INCOMING_ACTIVITY',
+        payload: {
+          activity: {
+            id: TYPING_ACTIVITY_ID,
+            type: 'message',
+            from: { id: 'bot', role: 'bot' },
+            text: TYPING_ACTIVITY_ID,
+            timestamp: new Date().toISOString(),
+          },
+        },
+      });
+    } else {
+      // Remove by dispatching a delete — WebChat honours this action
+      s.dispatch({
+        type: 'DIRECT_LINE/DELETE_ACTIVITY',
+        payload: { activityID: TYPING_ACTIVITY_ID },
+      });
+    }
+  }, [isWaiting]);
 
   const store = useMemo(() => {
-    return createStore({}, () => (next: WebChatNext) => (action: WebChatAction) => {
+    const s = createStore({}, () => (next: WebChatNext) => (action: WebChatAction) => {
       if (action.type === 'WEB_CHAT/SEND_MESSAGE') {
         setHasInteracted(true);
         setIsWaiting(true);
@@ -70,13 +105,16 @@ export default function CopilotChatPopup() {
       if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY') {
         const activity = action.payload?.activity;
 
+        // Drop raw typing events from Copilot Studio
         if (activity?.type === 'typing') return;
 
         if (activity?.type === 'message' && activity?.from?.role !== 'user') {
-          const rawText = activity.text ?? '';
-          const text = rawText.replace(/\u200B/g, '').trim();
+          // Always let our own fake typing activity through
+          if (activity.id === TYPING_ACTIVITY_ID) return next(action);
+
+          const text = (activity.text ?? '').replace(/\u200B/g, '').trim();
           const attachments = Array.isArray(activity.attachments) ? activity.attachments : [];
-          const suggested = activity.suggestedActions?.actions ?? [];
+          const suggested = (activity.suggestedActions?.actions ?? []) as any[];
           const hasRealChars = /[A-Za-z0-9\u00C0-\u024F]/.test(text);
           const isPlaceholder =
             attachments.length === 0 &&
@@ -84,12 +122,11 @@ export default function CopilotChatPopup() {
             !hasRealChars &&
             text.length <= 15;
 
-          if (isPlaceholder) return;
+          if (isPlaceholder) return; // drop emoji/dots stub
 
-          // Real response — hide dots
+          // Real reply — remove typing bubble then pass through
           setIsWaiting(false);
 
-          // Strip "Website" from suggested actions
           if (suggested.length) {
             const filtered = suggested.filter((a: any) => a.title?.toLowerCase() !== 'website');
             return next({
@@ -98,39 +135,39 @@ export default function CopilotChatPopup() {
                 ...action.payload,
                 activity: {
                   ...activity,
-                  suggestedActions: {
-                    ...(activity.suggestedActions || {}),
-                    actions: filtered,
-                  },
+                  suggestedActions: { ...(activity.suggestedActions || {}), actions: filtered },
                 },
               },
             });
           }
-
           return next(action);
         }
       }
 
       return next(action);
     });
+    storeRef.current = s;
+    return s;
   }, [sessionId]);
 
+  // activityMiddleware: render typing bubble for fake activity, fade-in for real bot messages
   const activityMiddleware = useMemo(() => {
     return () => (next: any) => (card: any) => {
       const activity = card?.activity;
-      const render = next(card);
-      if (!render) return render;
       if (activity?.type === 'message' && activity?.from?.role !== 'user') {
+        if (activity.id === TYPING_ACTIVITY_ID) {
+          return () => <TypingBubble />;
+        }
+        const render = next(card);
+        if (!render) return render;
         return (...args: any[]) => <div className="bot-msg-reveal">{render(...args)}</div>;
       }
-      return render;
+      return next(card);
     };
   }, []);
 
   useEffect(() => {
-    if (!open) return;
-    if (chatEnded) return;
-    if (token) return;
+    if (!open || chatEnded || token) return;
     let cancelled = false;
     (async () => {
       try {
@@ -143,7 +180,7 @@ export default function CopilotChatPopup() {
         );
         const data = (await r.json()) as DirectLineTokenResponse;
         if (!r.ok) throw new Error((data as any)?.error || 'Failed to get token');
-        if (!data.token) throw new Error('Token response missing "token".');
+        if (!data.token) throw new Error('Token missing.');
         if (!cancelled) setToken(data.token);
       } catch (e: unknown) {
         if (!cancelled) setErr(e instanceof Error ? e.message : 'Failed to get token');
@@ -165,10 +202,7 @@ export default function CopilotChatPopup() {
     return () => window.removeEventListener('keydown', onKey);
   }, [open]);
 
-  const directLine = useMemo(() => {
-    if (!token) return null;
-    return createDirectLine({ token });
-  }, [token]);
+  const directLine = useMemo(() => (token ? createDirectLine({ token }) : null), [token]);
 
   const sendQuick = (text: string) => {
     setHasInteracted(true);
@@ -177,7 +211,6 @@ export default function CopilotChatPopup() {
   };
 
   const handleMinimize = () => setOpen(false);
-
   const handleClearChat = () => {
     setChatEnded(true);
     setHasInteracted(false);
@@ -186,7 +219,6 @@ export default function CopilotChatPopup() {
     setLoading(false);
     setToken(null);
   };
-
   const startNewChat = () => {
     setChatEnded(false);
     setHasInteracted(false);
@@ -329,75 +361,45 @@ export default function CopilotChatPopup() {
                 </div>
               )}
 
+              {/* WebChat — typing bubble is injected as a real activity inside the transcript,
+                  so it naturally sits above the send box and scrolls with the conversation */}
               {directLine && !loading && !err && (
-                // KEY: This flex column keeps WebChat scroll area + dots row + nothing else
-                // The dots row is a SIBLING of WebChat, not inside it
-                // WebChat gets flex-1 so it fills space; dots row is flex-shrink-0 below it
-                <div className="flex flex-col flex-1 min-h-0">
-                  {/* WebChat — scrollable transcript + composer inside */}
-                  <div className="flex-1 min-h-0">
-                    <ReactWebChat
-                      directLine={directLine}
-                      store={store}
-                      activityMiddleware={activityMiddleware}
-                      styleOptions={{
-                        hideUploadButton: true,
-                        backgroundColor: '#FFFFFF',
-                        bubbleBackground: '#F3F4F6',
-                        bubbleTextColor: '#111827',
-                        bubbleBorderRadius: 18,
-                        bubbleNubSize: 0,
-                        bubbleBorderWidth: 0,
-                        bubbleBorderColor: 'transparent',
-                        bubbleFromUserBackground: '#111827',
-                        bubbleFromUserTextColor: '#FFFFFF',
-                        bubbleFromUserBorderRadius: 18,
-                        bubbleFromUserNubSize: 0,
-                        bubbleFromUserBorderWidth: 0,
-                        bubbleFromUserBorderColor: 'transparent',
-                        bubbleMinHeight: 44,
-                        bubbleMaxWidth: 320,
-                        paddingRegular: 12,
-                        typingAnimationDuration: 0,
-                        showAvatarInGroup: 'status',
-                        suggestedActionBackgroundColor: '#cca249',
-                        suggestedActionTextColor: '#FFFFFF',
-                        suggestedActionBorderColor: '#cca249',
-                        suggestedActionBorderRadius: 999,
-                        suggestedActionBorderWidth: 0,
-                        suggestedActionHeight: 40,
-                        suggestedActionBackgroundColorOnHover: '#b8912f',
-                        suggestedActionTextColorOnHover: '#FFFFFF',
-                        suggestedActionBorderColorOnHover: '#b8912f',
-                      }}
-                    />
-                  </div>
-
-                  {/*
-                    Dots row — React-rendered sibling OUTSIDE WebChat's DOM tree.
-                    flex-shrink-0 means it never scrolls, never overlays.
-                    It sits between the WebChat div and the bottom of the panel.
-                    WebChat's own send box is INSIDE the flex-1 div above,
-                    so the dots appear ABOVE the send box naturally.
-                  */}
-                  {isWaiting && (
-                    <div className="flex-shrink-0" style={{ padding: '8px 12px' }}>
-                      <div
-                        style={{
-                          background: '#F3F4F6',
-                          borderRadius: 18,
-                          padding: '12px 16px',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: 2,
-                        }}
-                      >
-                        <span className="lil-dot" />
-                        <span className="lil-dot" />
-                        <span className="lil-dot" />
-                      </div>
-                    </div>
-                  )}
+                <div className="flex-1 min-h-0">
+                  <ReactWebChat
+                    directLine={directLine}
+                    store={store}
+                    activityMiddleware={activityMiddleware}
+                    styleOptions={{
+                      hideUploadButton: true,
+                      backgroundColor: '#FFFFFF',
+                      bubbleBackground: '#F3F4F6',
+                      bubbleTextColor: '#111827',
+                      bubbleBorderRadius: 18,
+                      bubbleNubSize: 0,
+                      bubbleBorderWidth: 0,
+                      bubbleBorderColor: 'transparent',
+                      bubbleFromUserBackground: '#111827',
+                      bubbleFromUserTextColor: '#FFFFFF',
+                      bubbleFromUserBorderRadius: 18,
+                      bubbleFromUserNubSize: 0,
+                      bubbleFromUserBorderWidth: 0,
+                      bubbleFromUserBorderColor: 'transparent',
+                      bubbleMinHeight: 44,
+                      bubbleMaxWidth: 320,
+                      paddingRegular: 12,
+                      typingAnimationDuration: 0,
+                      showAvatarInGroup: 'status',
+                      suggestedActionBackgroundColor: '#cca249',
+                      suggestedActionTextColor: '#FFFFFF',
+                      suggestedActionBorderColor: '#cca249',
+                      suggestedActionBorderRadius: 999,
+                      suggestedActionBorderWidth: 0,
+                      suggestedActionHeight: 40,
+                      suggestedActionBackgroundColorOnHover: '#b8912f',
+                      suggestedActionTextColorOnHover: '#FFFFFF',
+                      suggestedActionBorderColorOnHover: '#b8912f',
+                    }}
+                  />
                 </div>
               )}
             </div>
