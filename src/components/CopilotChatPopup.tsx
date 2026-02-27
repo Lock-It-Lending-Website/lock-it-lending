@@ -16,9 +16,10 @@ type WebChatAction = {
 
 type WebChatNext = (action: WebChatAction) => any;
 
-const SPACING = 15; // ✅ global spacing target like Rocket
+const SPACING = 15;
 
-const DOTS_CSS = `
+const WEBCHAT_CSS = `
+  /* --- Typing dots animation --- */
   @keyframes typingBounce {
     0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
     30% { transform: translateY(-5px); opacity: 1; }
@@ -43,17 +44,72 @@ const DOTS_CSS = `
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* We render our own typing bubble, so hide WebChat's typing indicator */
+  /* Hide WebChat built-in typing indicator (we render our own) */
   .webchat__typing-indicator { display: none !important; }
 
-  /* Prevent transcript bottom padding from creating weird extra gaps */
-  .webchat__basic-transcript__scrollable { padding-bottom: 0 !important; }
+  /* ✅ Force real layout: Transcript (scroll) ABOVE footer rows (typing + composer)
+     This prevents ANYTHING from scrolling under the dots bubble. */
+  .webchat {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+  }
 
-  /* Make sure our injected typing row never captures clicks */
-  #lil-typing-row { pointer-events: none; }
+  .webchat__basic-transcript {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    position: relative !important;
+  }
 
-  /* Don’t add extra top margin to send box; our typing row handles spacing */
-  .webchat__send-box { margin-top: 0 !important; }
+  .webchat__basic-transcript__scrollable {
+    height: 100% !important;
+    overflow-y: auto !important;
+    padding-bottom: 0 !important; /* footer rows handle spacing */
+  }
+
+  .webchat__send-box {
+    flex: 0 0 auto !important;
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    margin-top: 0 !important; /* we control spacing */
+  }
+
+  /* ✅ 15px spacing between messages (covers both layouts WebChat can use) */
+  .webchat__basic-transcript__activity + .webchat__basic-transcript__activity {
+    margin-top: ${SPACING}px !important;
+  }
+  .webchat__stacked-layout__activity + .webchat__stacked-layout__activity {
+    margin-top: ${SPACING}px !important;
+  }
+  .webchat__stacked-layout__message + .webchat__stacked-layout__message {
+    margin-top: ${SPACING}px !important;
+  }
+
+  /* Our injected typing row */
+  #lil-typing-row {
+    display: none;                 /* toggled in JS */
+    flex: 0 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    pointer-events: none;
+    background: transparent;       /* ✅ removes “white rectangle” look */
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: ${SPACING}px;      /* ✅ 15px between last message and dots */
+    margin-bottom: ${SPACING}px;   /* ✅ 15px between dots and input */
+    padding-right: ${SPACING}px;
+  }
+
+  #lil-typing-bubble {
+    background: #F3F4F6;
+    border-radius: 18px;
+    padding: 12px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
 `;
 
 export default function CopilotChatPopup() {
@@ -61,14 +117,13 @@ export default function CopilotChatPopup() {
   const [token, setToken] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);
+
   const [chatEnded, setChatEnded] = useState(false);
   const [sessionId, setSessionId] = useState(0);
 
-  // Wrapper ref around ReactWebChat so we can find transcript + sendbox and insert a fixed typing row
-  const webchatHostRef = useRef<HTMLDivElement | null>(null);
+  const hostRef = useRef<HTMLDivElement | null>(null);
 
   const CTA_BTN =
     'rounded-full bg-[#cca249] text-white font-semibold shadow hover:opacity-90 transition-opacity';
@@ -88,7 +143,7 @@ export default function CopilotChatPopup() {
       if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY') {
         const activity = action.payload?.activity;
 
-        // Keep typing events dropped (we show our own fixed dots bubble)
+        // Drop typing events (we use our own)
         if (activity?.type === 'typing') return;
 
         if (activity?.type === 'message' && activity?.from?.role !== 'user') {
@@ -101,10 +156,8 @@ export default function CopilotChatPopup() {
           const hasRenderableContent =
             text.length > 0 || attachments.length > 0 || suggested.length > 0;
 
-          // Accent-friendly “real chars” check (no unicode property escapes)
           const hasRealChars = /[A-Za-z0-9\u00C0-\u024F]/.test(text);
 
-          // Only drop tiny non-word placeholders IF there are no cards/actions
           const isPlaceholder =
             attachments.length === 0 &&
             suggested.length === 0 &&
@@ -113,10 +166,10 @@ export default function CopilotChatPopup() {
 
           if (!hasRenderableContent || isPlaceholder) return;
 
-          // ✅ Bot responded: hide dots
+          // ✅ Bot responded -> stop dots
           setIsWaiting(false);
 
-          // Strip "Website" suggested action
+          // Strip "Website" suggested action if present
           if (suggested.length) {
             const filtered = suggested.filter((a: any) => a.title?.toLowerCase() !== 'website');
             return next({
@@ -139,7 +192,6 @@ export default function CopilotChatPopup() {
     });
   }, [sessionId]);
 
-  // ✅ Correct activityMiddleware wrapper that preserves render args
   const activityMiddleware = useMemo(() => {
     return () => (next: any) => (card: any) => {
       const activity = card?.activity;
@@ -151,7 +203,6 @@ export default function CopilotChatPopup() {
           <div className="bot-msg-reveal">{render(...renderArgs)}</div>
         );
       }
-
       return render;
     };
   }, []);
@@ -197,15 +248,6 @@ export default function CopilotChatPopup() {
     };
   }, [open, chatEnded, token, sessionId]);
 
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [open]);
-
   const directLine = useMemo(() => {
     if (!token) return null;
     return createDirectLine({ token });
@@ -237,27 +279,24 @@ export default function CopilotChatPopup() {
     setSessionId(s => s + 1);
   };
 
-  /**
-   * ✅ KEY PART:
-   * Insert a “typing row” as a real layout row between transcript and composer.
-   * It will stay fixed above input, never overlay transcript.
-   * Then measure the bot bubble indent and apply it so the dots align exactly.
-   */
+  // ✅ Insert typing row between transcript and send box (true “fixed” footer row)
   useEffect(() => {
-    if (!open) return;
-    if (!directLine) return;
-    if (loading || err) return;
+    if (!open || !directLine || loading || err) return;
 
-    const host = webchatHostRef.current;
+    const host = hostRef.current;
     if (!host) return;
 
     let raf = 0;
-    let cleanupFns: Array<() => void> = [];
 
-    const ensureTypingRow = () => {
+    const mount = () => {
+      const webchat = host.querySelector('.webchat') as HTMLElement | null;
       const sendBox = host.querySelector('.webchat__send-box') as HTMLElement | null;
-      if (!sendBox || !sendBox.parentElement) {
-        raf = requestAnimationFrame(ensureTypingRow);
+      const transcriptScrollable = host.querySelector(
+        '.webchat__basic-transcript__scrollable'
+      ) as HTMLElement | null;
+
+      if (!webchat || !sendBox || !transcriptScrollable) {
+        raf = requestAnimationFrame(mount);
         return;
       }
 
@@ -266,100 +305,68 @@ export default function CopilotChatPopup() {
       if (!row) {
         row = document.createElement('div');
         row.id = 'lil-typing-row';
-
-        // Real layout row (no absolute positioning)
-        row.style.display = 'none';
-        row.style.width = '100%';
-        row.style.boxSizing = 'border-box';
-        row.style.justifyContent = 'flex-start';
-        row.style.alignItems = 'center';
-        row.style.marginTop = `${SPACING}px`; // ✅ 15px between last bubble and dots
-        row.style.marginBottom = `${SPACING}px`; // ✅ 15px between dots and input
-
         row.innerHTML = `
-          <div id="lil-typing-bubble"
-               style="
-                 background:#F3F4F6;
-                 border-radius:18px;
-                 padding:12px 16px;
-                 display:inline-flex;
-                 align-items:center;
-                 gap:2px;">
+          <div id="lil-typing-bubble">
             <span class="lil-dot"></span>
             <span class="lil-dot"></span>
             <span class="lil-dot"></span>
           </div>
         `;
 
-        // Insert just above the send box
-        sendBox.parentElement.insertBefore(row, sendBox);
+        // IMPORTANT: insert directly before send box (sibling), not into transcript
+        webchat.insertBefore(row, sendBox);
       }
 
-      // Align the dots bubble with the bot bubble left edge (Rocket-like)
+      // Align left edge with bot bubbles (Rocket-like)
       const syncIndent = () => {
-        const transcript = host.querySelector(
-          '.webchat__basic-transcript__scrollable'
-        ) as HTMLElement | null;
-
-        if (!transcript) return;
-
-        const transcriptRect = transcript.getBoundingClientRect();
-        const style = window.getComputedStyle(transcript);
-        const fallbackLeft = parseInt(style.paddingLeft || '0', 10) || SPACING;
-        const fallbackRight = parseInt(style.paddingRight || '0', 10) || SPACING;
-
-        // Find a bot bubble to measure. If none exists yet, fall back to transcript padding.
-        const botBubble = transcript.querySelector(
+        const scrollRect = transcriptScrollable.getBoundingClientRect();
+        const botBubble = transcriptScrollable.querySelector(
           '.webchat__bubble:not(.webchat__bubble--from-user)'
         ) as HTMLElement | null;
 
+        // fallback: use transcript padding-left
+        const computed = window.getComputedStyle(transcriptScrollable);
+        const fallbackLeft = parseInt(computed.paddingLeft || '0', 10) || SPACING;
+
         const leftIndent = botBubble
-          ? Math.max(0, Math.round(botBubble.getBoundingClientRect().left - transcriptRect.left))
+          ? Math.max(0, Math.round(botBubble.getBoundingClientRect().left - scrollRect.left))
           : fallbackLeft;
 
-        // Apply same indent to row so bubble lines up with bot bubble start
         row!.style.paddingLeft = `${leftIndent}px`;
-        row!.style.paddingRight = `${fallbackRight}px`;
       };
 
-      // Run once now, and again when DOM changes / resizes
       syncIndent();
 
-      const transcript = host.querySelector(
-        '.webchat__basic-transcript__scrollable'
-      ) as HTMLElement | null;
-
-      const mo = transcript ? new MutationObserver(() => syncIndent()) : null;
-
-      if (transcript && mo) mo.observe(transcript, { childList: true, subtree: true });
+      // Keep it updated as messages/cards render
+      const mo = new MutationObserver(() => syncIndent());
+      mo.observe(transcriptScrollable, { childList: true, subtree: true });
 
       const onResize = () => syncIndent();
       window.addEventListener('resize', onResize);
 
-      cleanupFns.push(() => {
-        mo?.disconnect();
-        window.removeEventListener('resize', onResize);
-      });
-
-      // Keep visibility synced to isWaiting
+      // Set initial visibility
       row.style.display = isWaiting ? 'flex' : 'none';
+
+      // cleanup store on the element so we can remove later
+      (row as any).__cleanup = () => {
+        mo.disconnect();
+        window.removeEventListener('resize', onResize);
+      };
     };
 
-    raf = requestAnimationFrame(ensureTypingRow);
+    raf = requestAnimationFrame(mount);
 
     return () => {
       cancelAnimationFrame(raf);
-      cleanupFns.forEach(fn => fn());
-
-      // Remove typing row when unmounting / resetting
       const row = host.querySelector('#lil-typing-row') as HTMLElement | null;
+      if (row && (row as any).__cleanup) (row as any).__cleanup();
       row?.remove();
     };
-  }, [open, directLine, loading, err, sessionId, isWaiting]);
+  }, [open, directLine, loading, err, sessionId]);
 
-  // Just in case: toggle row display on waiting changes
+  // Toggle visibility without remounting
   useEffect(() => {
-    const host = webchatHostRef.current;
+    const host = hostRef.current;
     const row = host?.querySelector('#lil-typing-row') as HTMLElement | null;
     if (row) row.style.display = isWaiting ? 'flex' : 'none';
   }, [isWaiting]);
@@ -392,9 +399,8 @@ export default function CopilotChatPopup() {
             'sm:inset-auto sm:right-8 sm:bottom-10 sm:w-[420px] sm:h-[650px] sm:rounded-2xl sm:overflow-hidden',
           ].join(' ')}
         >
-          <style>{DOTS_CSS}</style>
+          <style>{WEBCHAT_CSS}</style>
 
-          {/* Header */}
           <div className="flex items-center justify-between border-b px-4 py-3 flex-shrink-0">
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
@@ -406,6 +412,7 @@ export default function CopilotChatPopup() {
               </div>
               <div className="font-semibold">Lock It Lending Assist</div>
             </div>
+
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -428,7 +435,6 @@ export default function CopilotChatPopup() {
             </div>
           </div>
 
-          {/* Body */}
           {chatEnded ? (
             <div className="flex flex-col flex-1 min-h-0">
               <div className="flex-1 flex items-center justify-center text-sm text-gray-500">
@@ -451,7 +457,6 @@ export default function CopilotChatPopup() {
               )}
               {err && <div className="p-4 text-sm text-red-600 flex-shrink-0">{err}</div>}
 
-              {/* Welcome */}
               {!hasInteracted && !loading && !err && (
                 <div className="flex flex-col gap-3 px-4 pt-5 pb-2 flex-shrink-0">
                   <p className="text-center text-xs text-gray-500 px-6">
@@ -469,6 +474,7 @@ export default function CopilotChatPopup() {
                         refinancing, or just exploring your options — I'm here to help you find the
                         right loan and lock in a great rate. What can I help you with today?
                       </div>
+
                       <div className="mt-3 flex flex-wrap gap-2">
                         <button
                           type="button"
@@ -497,22 +503,16 @@ export default function CopilotChatPopup() {
                 </div>
               )}
 
-              {/* WebChat */}
               {directLine && !loading && !err && (
-                <div ref={webchatHostRef} className="flex-1 min-h-0">
+                <div ref={hostRef} className="flex-1 min-h-0">
                   <ReactWebChat
                     directLine={directLine}
                     store={store}
                     activityMiddleware={activityMiddleware}
                     styleOptions={{
                       hideUploadButton: true,
-
-                      // ✅ Rocket-like consistent spacing baseline
                       paddingRegular: SPACING,
-
-                      // ✅ Rocket-like: remove "14 minutes ago / just now" blocks
-                      groupTimestamp: false,
-
+                      groupTimestamp: false, // removes “14 minutes ago / just now” gaps
                       backgroundColor: '#FFFFFF',
 
                       bubbleBackground: '#F3F4F6',
@@ -532,20 +532,8 @@ export default function CopilotChatPopup() {
                       bubbleMinHeight: 44,
                       bubbleMaxWidth: 320,
 
-                      // Keep typing indicator OFF (we render our own)
                       typingAnimationDuration: 0,
-
                       showAvatarInGroup: 'status',
-
-                      suggestedActionBackgroundColor: '#cca249',
-                      suggestedActionTextColor: '#FFFFFF',
-                      suggestedActionBorderColor: '#cca249',
-                      suggestedActionBorderRadius: 999,
-                      suggestedActionBorderWidth: 0,
-                      suggestedActionHeight: 40,
-                      suggestedActionBackgroundColorOnHover: '#b8912f',
-                      suggestedActionTextColorOnHover: '#FFFFFF',
-                      suggestedActionBorderColorOnHover: '#b8912f',
                     }}
                   />
                 </div>
