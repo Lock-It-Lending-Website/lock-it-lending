@@ -16,26 +16,6 @@ type WebChatAction = {
 
 type WebChatNext = (action: WebChatAction) => any;
 
-// 3-bounce dots SVG (encoded) for WebChat built-in typing indicator
-const TYPING_SVG = encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" width="36" height="16" viewBox="0 0 36 16">
-  <circle cx="6" cy="10" r="4" fill="#9ca3af">
-    <animate attributeName="cy" values="10;5;10" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0s"/>
-    <animate attributeName="opacity" values="0.35;1;0.35" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0s"/>
-  </circle>
-  <circle cx="18" cy="10" r="4" fill="#9ca3af">
-    <animate attributeName="cy" values="10;5;10" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0.2s"/>
-    <animate attributeName="opacity" values="0.35;1;0.35" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0.2s"/>
-  </circle>
-  <circle cx="30" cy="10" r="4" fill="#9ca3af">
-    <animate attributeName="cy" values="10;5;10" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0.4s"/>
-    <animate attributeName="opacity" values="0.35;1;0.35" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0.4s"/>
-  </circle>
-</svg>
-`);
-
-const TYPING_BG = `url("data:image/svg+xml;charset=utf-8,${TYPING_SVG}")`;
-
 const WEBCHAT_CSS = `
   .bot-msg-reveal {
     animation: fadeInMsg 0.35s ease-out;
@@ -45,7 +25,7 @@ const WEBCHAT_CSS = `
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Style WebChat's built-in typing indicator to look like your bot bubble */
+  /* Bubble container (matches your bot bubble) */
   .webchat__typing-indicator {
     background: #F3F4F6 !important;
     border-radius: 18px !important;
@@ -54,18 +34,62 @@ const WEBCHAT_CSS = `
     align-items: center !important;
     width: fit-content !important;
     max-width: 85% !important;
+    min-height: 44px !important; /* "medium" bubble height */
     box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important;
-
-    /* Center the typing animation background */
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    background-size: 36px 16px !important;
   }
 
-  /* Some WebChat builds render the typing animation on a child element. Cover both. */
-  .webchat__typing-indicator * {
-    background-repeat: no-repeat !important;
-    background-position: center !important;
+  /* --- Medium bouncing dots (no images, no CSP issues) --- */
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+    30% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  /* In some WebChat builds, the animation lives here */
+  .webchat__typing-indicator__animation,
+  /* Fallback: if markup differs */
+  .webchat__typing-indicator > div,
+  .webchat__typing-indicator > span {
+    position: relative !important;
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 999px !important;
+    background: #9ca3af !important;
+    animation: typingBounce 1.2s infinite ease-in-out !important;
+    margin: 0 !important;
+    background-image: none !important;
+    mask-image: none !important;
+  }
+
+  .webchat__typing-indicator__animation::before,
+  .webchat__typing-indicator__animation::after,
+  .webchat__typing-indicator > div::before,
+  .webchat__typing-indicator > div::after,
+  .webchat__typing-indicator > span::before,
+  .webchat__typing-indicator > span::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 999px !important;
+    background: #9ca3af !important;
+    animation: typingBounce 1.2s infinite ease-in-out !important;
+  }
+
+  /* dot 2 */
+  .webchat__typing-indicator__animation::before,
+  .webchat__typing-indicator > div::before,
+  .webchat__typing-indicator > span::before {
+    left: 12px !important;
+    animation-delay: 0.2s !important;
+  }
+
+  /* dot 3 */
+  .webchat__typing-indicator__animation::after,
+  .webchat__typing-indicator > div::after,
+  .webchat__typing-indicator > span::after {
+    left: 24px !important;
+    animation-delay: 0.4s !important;
   }
 `;
 
@@ -407,12 +431,7 @@ export default function CopilotChatPopup() {
                       bubbleMaxWidth: 320,
                       paddingRegular: 12,
 
-                      // ✅ Enable & style WebChat's built-in typing indicator animation
-                      typingAnimationBackgroundImage: TYPING_BG,
-                      typingAnimationWidth: 36,
-                      typingAnimationHeight: 16,
-                      typingAnimationDuration: 5000,
-
+                      // Let WebChat show typing activities (we style them via CSS above)
                       showAvatarInGroup: 'status',
 
                       suggestedActionBackgroundColor: '#cca249',
