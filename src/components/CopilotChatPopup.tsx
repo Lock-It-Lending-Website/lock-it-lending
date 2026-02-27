@@ -25,71 +25,58 @@ const WEBCHAT_CSS = `
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Bubble container (matches your bot bubble) */
+  /* --- Built-in typing indicator styled as a medium bubble with animated dots --- */
   .webchat__typing-indicator {
-    background: #F3F4F6 !important;
+    background-color: #F3F4F6 !important;
     border-radius: 18px !important;
     padding: 12px 16px !important;
     display: inline-flex !important;
     align-items: center !important;
     width: fit-content !important;
     max-width: 85% !important;
-    min-height: 44px !important; /* "medium" bubble height */
+    min-height: 44px !important; /* medium height */
     box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important;
-  }
 
-  /* --- Medium bouncing dots (no images, no CSP issues) --- */
-  @keyframes typingBounce {
-    0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
-    30% { transform: translateY(-5px); opacity: 1; }
-  }
-
-  /* In some WebChat builds, the animation lives here */
-  .webchat__typing-indicator__animation,
-  /* Fallback: if markup differs */
-  .webchat__typing-indicator > div,
-  .webchat__typing-indicator > span {
     position: relative !important;
-    width: 8px !important;
-    height: 8px !important;
-    border-radius: 999px !important;
-    background: #9ca3af !important;
-    animation: typingBounce 1.2s infinite ease-in-out !important;
-    margin: 0 !important;
-    background-image: none !important;
-    mask-image: none !important;
+
+    /* Draw 3 dots using background layers (CSP-safe: no data: urls) */
+    background-image:
+      radial-gradient(circle, #9ca3af 55%, transparent 56%),
+      radial-gradient(circle, #9ca3af 55%, transparent 56%),
+      radial-gradient(circle, #9ca3af 55%, transparent 56%) !important;
+    background-repeat: no-repeat !important;
+    background-size: 8px 8px, 8px 8px, 8px 8px !important;
+
+    /* Initial positions for 3 dots */
+    background-position: 16px 50%, 28px 50%, 40px 50% !important;
+
+    animation: typingDots 1.2s infinite ease-in-out !important;
   }
 
-  .webchat__typing-indicator__animation::before,
-  .webchat__typing-indicator__animation::after,
-  .webchat__typing-indicator > div::before,
-  .webchat__typing-indicator > div::after,
-  .webchat__typing-indicator > span::before,
-  .webchat__typing-indicator > span::after {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    width: 8px !important;
-    height: 8px !important;
-    border-radius: 999px !important;
-    background: #9ca3af !important;
-    animation: typingBounce 1.2s infinite ease-in-out !important;
+  /* Hide whatever WebChat puts inside the typing indicator so only our dots show */
+  .webchat__typing-indicator > * {
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
   }
 
-  /* dot 2 */
-  .webchat__typing-indicator__animation::before,
-  .webchat__typing-indicator > div::before,
-  .webchat__typing-indicator > span::before {
-    left: 12px !important;
-    animation-delay: 0.2s !important;
-  }
-
-  /* dot 3 */
-  .webchat__typing-indicator__animation::after,
-  .webchat__typing-indicator > div::after,
-  .webchat__typing-indicator > span::after {
-    left: 24px !important;
-    animation-delay: 0.4s !important;
+  @keyframes typingDots {
+    0%, 100% {
+      background-position: 16px 50%, 28px 50%, 40px 50%;
+    }
+    20% {
+      background-position: 16px 35%, 28px 50%, 40px 50%;
+    }
+    40% {
+      background-position: 16px 50%, 28px 35%, 40px 50%;
+    }
+    60% {
+      background-position: 16px 50%, 28px 50%, 40px 35%;
+    }
+    80% {
+      background-position: 16px 50%, 28px 50%, 40px 50%;
+    }
   }
 `;
 
@@ -304,7 +291,7 @@ export default function CopilotChatPopup() {
                 <img
                   src="/logo.ico"
                   alt="Lock It Lending"
-                  className="h-9 w-9 rounded-full object-cover"
+                  className="h-9 h-9 w-9 rounded-full object-cover"
                 />
               </div>
               <div className="font-semibold">Lock It Lending Assist</div>
@@ -431,7 +418,7 @@ export default function CopilotChatPopup() {
                       bubbleMaxWidth: 320,
                       paddingRegular: 12,
 
-                      // Let WebChat show typing activities (we style them via CSS above)
+                      // Let WebChat show typing activities (we fully style it via CSS above)
                       showAvatarInGroup: 'status',
 
                       suggestedActionBackgroundColor: '#cca249',
