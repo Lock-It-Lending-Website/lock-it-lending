@@ -1,5 +1,5 @@
 // src/components/CopilotChatPopup.tsx
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactWebChat, { createDirectLine, createStore } from 'botframework-webchat';
 
 type DirectLineTokenResponse = {
@@ -16,23 +16,27 @@ type WebChatAction = {
 
 type WebChatNext = (action: WebChatAction) => any;
 
-const DOTS_CSS = `
-  @keyframes typingBounce {
-    0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
-    30% { transform: translateY(-5px); opacity: 1; }
-  }
-  .lil-dot {
-    display: inline-block;
-    width: 8px; height: 8px;
-    margin: 0 2px;
-    background: #9ca3af;
-    border-radius: 50%;
-    animation: typingBounce 1.2s infinite ease-in-out;
-  }
-  .lil-dot:nth-child(1) { animation-delay: 0s; }
-  .lil-dot:nth-child(2) { animation-delay: 0.2s; }
-  .lil-dot:nth-child(3) { animation-delay: 0.4s; }
+// 3-bounce dots SVG (encoded) for WebChat built-in typing indicator
+const TYPING_SVG = encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="16" viewBox="0 0 36 16">
+  <circle cx="6" cy="10" r="4" fill="#9ca3af">
+    <animate attributeName="cy" values="10;5;10" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0s"/>
+    <animate attributeName="opacity" values="0.35;1;0.35" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0s"/>
+  </circle>
+  <circle cx="18" cy="10" r="4" fill="#9ca3af">
+    <animate attributeName="cy" values="10;5;10" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0.2s"/>
+    <animate attributeName="opacity" values="0.35;1;0.35" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0.2s"/>
+  </circle>
+  <circle cx="30" cy="10" r="4" fill="#9ca3af">
+    <animate attributeName="cy" values="10;5;10" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0.4s"/>
+    <animate attributeName="opacity" values="0.35;1;0.35" keyTimes="0;0.3;1" dur="1.2s" repeatCount="indefinite" begin="0.4s"/>
+  </circle>
+</svg>
+`);
 
+const TYPING_BG = `url("data:image/svg+xml;charset=utf-8,${TYPING_SVG}")`;
+
+const WEBCHAT_CSS = `
   .bot-msg-reveal {
     animation: fadeInMsg 0.35s ease-out;
   }
@@ -41,8 +45,28 @@ const DOTS_CSS = `
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Hide WebChat's built-in typing indicator (we render our own dots bubble) */
-  .webchat__typing-indicator { display: none !important; }
+  /* Style WebChat's built-in typing indicator to look like your bot bubble */
+  .webchat__typing-indicator {
+    background: #F3F4F6 !important;
+    border-radius: 18px !important;
+    padding: 12px 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    width: fit-content !important;
+    max-width: 85% !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important;
+
+    /* Center the typing animation background */
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 36px 16px !important;
+  }
+
+  /* Some WebChat builds render the typing animation on a child element. Cover both. */
+  .webchat__typing-indicator * {
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
 `;
 
 export default function CopilotChatPopup() {
@@ -51,34 +75,9 @@ export default function CopilotChatPopup() {
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
-  const [isWaiting, setIsWaiting] = useState(false);
 
   const [chatEnded, setChatEnded] = useState(false);
   const [sessionId, setSessionId] = useState(0);
-
-  // Refs for WebChat DOM
-  const webchatRef = useRef<HTMLDivElement | null>(null);
-  const transcriptRef = useRef<HTMLElement | null>(null);
-
-  // For dots positioning + consistent spacing
-  const [composerHeight, _setComposerHeight] = useState(60);
-  const composerHeightRef = useRef(60);
-
-  // Track whether user is pinned to bottom (so dots don’t overlay when scrolling up)
-  const [isAtBottom, setIsAtBottom] = useState(true);
-
-  const setComposerHeight = useCallback((h: number) => {
-    if (!h) return;
-    if (h !== composerHeightRef.current) {
-      composerHeightRef.current = h;
-      _setComposerHeight(h);
-    }
-  }, []);
-
-  const CHAT_PAD = 12; // left padding to align with bubbles
-  const GAP = 12; // consistent vertical spacing above composer
-  const DOTS_HEIGHT = 44; // approx height of dots bubble
-  const DOTS_RESERVE = DOTS_HEIGHT + GAP * 2; // reserve space so dots never cover messages
 
   const CTA_BTN =
     'rounded-full bg-[#cca249] text-white font-semibold shadow hover:opacity-90 transition-opacity';
@@ -88,33 +87,18 @@ export default function CopilotChatPopup() {
     'w-9 h-9 rounded-full bg-gray-100 text-gray-800 flex items-center justify-center ' +
     'hover:bg-gray-200 active:scale-[0.99]';
 
-  const scrollToBottom = useCallback((behavior: ScrollBehavior = 'auto') => {
-    const scroller = transcriptRef.current;
-    if (!scroller) return;
-    try {
-      scroller.scrollTo({ top: scroller.scrollHeight, behavior });
-    } catch {
-      scroller.scrollTop = scroller.scrollHeight;
-    }
-  }, []);
-
   const store = useMemo(() => {
     return createStore({}, () => (next: WebChatNext) => (action: WebChatAction) => {
-      // User sent — start waiting (and keep them pinned to bottom)
+      // User sent — mark interacted
       if (action.type === 'WEB_CHAT/SEND_MESSAGE') {
         setHasInteracted(true);
-        setIsWaiting(true);
-        setIsAtBottom(true);
-
-        // Ensure transcript snaps to bottom so dots don't appear over old messages
-        requestAnimationFrame(() => scrollToBottom('auto'));
       }
 
       if (action.type === 'DIRECT_LINE/INCOMING_ACTIVITY') {
         const activity = action.payload?.activity;
 
-        // Drop typing events
-        if (activity?.type === 'typing') return;
+        // ✅ Allow typing events so WebChat can render its built-in typing indicator
+        if (activity?.type === 'typing') return next(action);
 
         if (activity?.type === 'message' && activity?.from?.role !== 'user') {
           const rawText = activity.text ?? '';
@@ -140,9 +124,6 @@ export default function CopilotChatPopup() {
           // Drop truly empty/placeholder activities
           if (!hasRenderableContent || isPlaceholder) return;
 
-          // ✅ Real reply (text OR card OR suggested actions)
-          setIsWaiting(false);
-
           // Strip "Website" from suggested actions if present, then pass through
           if (suggested.length) {
             const filtered = suggested.filter((a: any) => a.title?.toLowerCase() !== 'website');
@@ -164,7 +145,7 @@ export default function CopilotChatPopup() {
 
       return next(action);
     });
-  }, [sessionId, scrollToBottom]);
+  }, [sessionId]);
 
   // ✅ Correct activityMiddleware wrapper (preserves render args)
   const activityMiddleware = useMemo(() => {
@@ -183,113 +164,6 @@ export default function CopilotChatPopup() {
       return render;
     };
   }, []);
-
-  // Measure composer height so dots spacing stays consistent
-  useEffect(() => {
-    if (!open) return;
-
-    const root = webchatRef.current;
-    if (!root) return;
-
-    const measure = () => {
-      const composer = root.querySelector('.webchat__send-box') as HTMLElement | null;
-      if (!composer) return;
-      const h = Math.ceil(composer.getBoundingClientRect().height);
-      setComposerHeight(h);
-    };
-
-    measure();
-
-    const ro =
-      typeof ResizeObserver !== 'undefined'
-        ? new ResizeObserver(() => {
-            measure();
-          })
-        : null;
-
-    const composer = root.querySelector('.webchat__send-box') as HTMLElement | null;
-    if (ro && composer) ro.observe(composer);
-
-    const mo = new MutationObserver(() => measure());
-    mo.observe(root, { childList: true, subtree: true });
-
-    window.addEventListener('resize', measure);
-
-    return () => {
-      window.removeEventListener('resize', measure);
-      mo.disconnect();
-      ro?.disconnect();
-    };
-  }, [open, sessionId, chatEnded, setComposerHeight]);
-
-  // Track "isAtBottom" so typing dots never overlay when the user scrolls up
-  useEffect(() => {
-    if (!open) return;
-
-    const root = webchatRef.current;
-    if (!root) return;
-
-    let scroller: HTMLElement | null = null;
-    let raf = 0;
-
-    const findScroller = () =>
-      root.querySelector('.webchat__basic-transcript__scrollable') as HTMLElement | null;
-
-    const computeAtBottom = () => {
-      if (!scroller) return;
-      const threshold = 24; // px tolerance
-      const remaining = scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight;
-      setIsAtBottom(remaining <= threshold);
-    };
-
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(computeAtBottom);
-    };
-
-    const attach = () => {
-      scroller = findScroller();
-      if (!scroller) return false;
-
-      transcriptRef.current = scroller;
-      computeAtBottom();
-
-      scroller.addEventListener('scroll', onScroll, { passive: true });
-
-      // Also recompute when content size changes (new messages, font changes, etc.)
-      const ro =
-        typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => computeAtBottom()) : null;
-      ro?.observe(scroller);
-
-      return () => {
-        cancelAnimationFrame(raf);
-        scroller?.removeEventListener('scroll', onScroll);
-        ro?.disconnect();
-      };
-    };
-
-    // Try immediately; if not yet in DOM, watch until it appears
-    const cleanup = attach();
-    if (cleanup) return cleanup;
-
-    const mo = new MutationObserver(() => {
-      const maybeCleanup = attach();
-      if (maybeCleanup) {
-        mo.disconnect();
-        // store cleanup on the observer instance
-        (mo as any).__cleanup = maybeCleanup;
-      }
-    });
-
-    mo.observe(root, { childList: true, subtree: true });
-
-    return () => {
-      cancelAnimationFrame(raf);
-      const stored = (mo as any).__cleanup as undefined | (() => void);
-      stored?.();
-      mo.disconnect();
-    };
-  }, [open, sessionId, chatEnded]);
 
   useEffect(() => {
     if (!open) return;
@@ -348,10 +222,7 @@ export default function CopilotChatPopup() {
 
   const sendQuick = (text: string) => {
     setHasInteracted(true);
-    setIsWaiting(true);
-    setIsAtBottom(true);
     store.dispatch({ type: 'WEB_CHAT/SEND_MESSAGE', payload: { text } });
-    requestAnimationFrame(() => scrollToBottom('auto'));
   };
 
   const handleMinimize = () => setOpen(false);
@@ -359,7 +230,6 @@ export default function CopilotChatPopup() {
   const handleClearChat = () => {
     setChatEnded(true);
     setHasInteracted(false);
-    setIsWaiting(false);
     setErr(null);
     setLoading(false);
     setToken(null);
@@ -368,14 +238,10 @@ export default function CopilotChatPopup() {
   const startNewChat = () => {
     setChatEnded(false);
     setHasInteracted(false);
-    setIsWaiting(false);
     setErr(null);
     setToken(null);
     setSessionId(s => s + 1);
-    setIsAtBottom(true);
   };
-
-  const showDots = isWaiting && isAtBottom;
 
   return (
     <>
@@ -510,21 +376,10 @@ export default function CopilotChatPopup() {
                 </div>
               )}
 
-              {/* WebChat + fixed dots bubble */}
+              {/* WebChat (built-in typing indicator styled like your dots bubble) */}
               {directLine && !loading && !err && (
-                <div ref={webchatRef} className="flex-1 min-h-0 relative">
-                  <style>{DOTS_CSS}</style>
-
-                  {/* Reserve space at bottom ONLY while dots are visible (prevents overlap) */}
-                  <style>
-                    {showDots
-                      ? `
-                        .webchat__basic-transcript__scrollable {
-                          padding-bottom: ${DOTS_RESERVE}px !important;
-                        }
-                      `
-                      : ''}
-                  </style>
+                <div className="flex-1 min-h-0 relative">
+                  <style>{WEBCHAT_CSS}</style>
 
                   <ReactWebChat
                     directLine={directLine}
@@ -533,23 +388,33 @@ export default function CopilotChatPopup() {
                     styleOptions={{
                       hideUploadButton: true,
                       backgroundColor: '#FFFFFF',
+
                       bubbleBackground: '#F3F4F6',
                       bubbleTextColor: '#111827',
                       bubbleBorderRadius: 18,
                       bubbleNubSize: 0,
                       bubbleBorderWidth: 0,
                       bubbleBorderColor: 'transparent',
+
                       bubbleFromUserBackground: '#111827',
                       bubbleFromUserTextColor: '#FFFFFF',
                       bubbleFromUserBorderRadius: 18,
                       bubbleFromUserNubSize: 0,
                       bubbleFromUserBorderWidth: 0,
                       bubbleFromUserBorderColor: 'transparent',
+
                       bubbleMinHeight: 44,
                       bubbleMaxWidth: 320,
                       paddingRegular: 12,
-                      typingAnimationDuration: 0,
+
+                      // ✅ Enable & style WebChat's built-in typing indicator animation
+                      typingAnimationBackgroundImage: TYPING_BG,
+                      typingAnimationWidth: 36,
+                      typingAnimationHeight: 16,
+                      typingAnimationDuration: 5000,
+
                       showAvatarInGroup: 'status',
+
                       suggestedActionBackgroundColor: '#cca249',
                       suggestedActionTextColor: '#FFFFFF',
                       suggestedActionBorderColor: '#cca249',
@@ -561,37 +426,6 @@ export default function CopilotChatPopup() {
                       suggestedActionBorderColorOnHover: '#b8912f',
                     }}
                   />
-
-                  {/* Fixed dots bubble:
-                      - Shows ONLY when user is at bottom
-                      - Disappears when user scrolls up (prevents overlay)
-                    */}
-                  {showDots && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        bottom: composerHeight + GAP,
-                        left: CHAT_PAD,
-                        pointerEvents: 'none',
-                        zIndex: 10,
-                      }}
-                    >
-                      <div
-                        style={{
-                          background: '#F3F4F6',
-                          borderRadius: 18,
-                          padding: '12px 16px',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: 2,
-                        }}
-                      >
-                        <span className="lil-dot" />
-                        <span className="lil-dot" />
-                        <span className="lil-dot" />
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
