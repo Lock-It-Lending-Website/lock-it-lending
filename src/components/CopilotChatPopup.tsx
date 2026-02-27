@@ -51,6 +51,7 @@ export default function CopilotChatPopup() {
   const [loading, setLoading] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);
+
   const [chatEnded, setChatEnded] = useState(false);
   const [sessionId, setSessionId] = useState(0);
 
@@ -77,35 +78,53 @@ export default function CopilotChatPopup() {
         if (activity?.type === 'typing') return;
 
         if (activity?.type === 'message' && activity?.from?.role !== 'user') {
-          const text: string = (activity.text || '').trim();
+          const rawText = activity.text ?? '';
+          const text = rawText.replace(/\u200B/g, '').trim(); // remove zero-width spaces too
 
-          console.log('[BOT ACTIVITY]', JSON.stringify({ text, len: text.length }));
+          const attachments = Array.isArray(activity.attachments) ? activity.attachments : [];
+          const suggested = activity.suggestedActions?.actions ?? [];
 
-          // Only drop the specific placeholder — short text with no real words
-          const hasRealWords = /[a-zA-Z0-9]/.test(text);
-          const isPlaceholder = !hasRealWords && text.length < 15;
+          const hasRenderableContent =
+            text.length > 0 || attachments.length > 0 || suggested.length > 0;
 
-          if (isPlaceholder) {
+          // Unicode-safe "has real letters/numbers" (works for Spanish, etc.)
+          // (If your build complains, tell me and I’ll swap it to a simpler regex.)
+          const hasRealChars = /[A-Za-z0-9]/.test(text);
+
+          // Only treat as placeholder if there are NO attachments/actions and text is tiny + non-wordy
+          const isPlaceholder =
+            attachments.length === 0 &&
+            suggested.length === 0 &&
+            !hasRealChars &&
+            text.length <= 15;
+
+          console.log('[BOT ACTIVITY]', {
+            text,
+            textLen: text.length,
+            attachments: attachments.length,
+            suggested: suggested.length,
+            firstAttachmentType: attachments[0]?.contentType,
+          });
+
+          // Drop truly empty/placeholder messages
+          if (!hasRenderableContent || isPlaceholder) {
             console.log('[BOT ACTIVITY] -> DROPPED as placeholder');
             return;
           }
 
-          console.log('[BOT ACTIVITY] -> KEPT as real message');
+          // ✅ Real reply (text OR card OR suggested actions)
           setIsWaiting(false);
 
           // Strip "Website" from suggested actions if present, then pass through
-          const suggestedActions = activity.suggestedActions;
-          if (suggestedActions?.actions) {
-            const filtered = suggestedActions.actions.filter(
-              (a: any) => a.title?.toLowerCase() !== 'website'
-            );
+          if (suggested.length) {
+            const filtered = suggested.filter((a: any) => a.title?.toLowerCase() !== 'website');
             return next({
               ...action,
               payload: {
                 ...action.payload,
                 activity: {
                   ...activity,
-                  suggestedActions: { ...suggestedActions, actions: filtered },
+                  suggestedActions: { ...(activity.suggestedActions || {}), actions: filtered },
                 },
               },
             });
