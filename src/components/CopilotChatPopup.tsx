@@ -40,7 +40,6 @@ const DOTS_CSS = `
     to   { opacity: 1; transform: translateY(0); }
   }
   /* Hide ALL bot placeholder/emoji bubbles that Copilot Studio sends before the real reply */
-  .webchat__bubble:not(.webchat__bubble--from-user) .webchat__render-markdown p:empty,
   .webchat__typing-indicator { display: none !important; }
 `;
 
@@ -140,18 +139,21 @@ export default function CopilotChatPopup() {
 
   // Fade-in real bot messages
   const activityMiddleware = useMemo(() => {
-    return () =>
-      (next: any) =>
-      (...args: any[]) => {
-        const card = args[0];
-        const activity = card?.activity;
-        if (activity?.type === 'message' && activity?.from?.role !== 'user') {
-          const children = next(...args);
-          if (!children) return null;
-          return () => <div className="bot-msg-reveal">{children()}</div>;
-        }
-        return next(...args);
-      };
+    return () => (next: any) => (card: any) => {
+      const activity = card?.activity;
+
+      const render = next(card);
+      if (!render) return render;
+
+      // Fade-in bot messages only
+      if (activity?.type === 'message' && activity?.from?.role !== 'user') {
+        return (...renderArgs: any[]) => (
+          <div className="bot-msg-reveal">{render(...renderArgs)}</div>
+        );
+      }
+
+      return render;
+    };
   }, []);
 
   useEffect(() => {
