@@ -81,7 +81,7 @@ export default function CopilotChatPopup() {
 
           console.log('[BOT ACTIVITY]', JSON.stringify({ text, len: text.length }));
 
-          // Only drop if text has zero real alphanumeric characters (pure emoji/dots/whitespace)
+          // Only drop the specific placeholder — short text with no real words
           const hasRealWords = /[a-zA-Z0-9]/.test(text);
           const isPlaceholder = !hasRealWords && text.length < 15;
 
@@ -91,32 +91,28 @@ export default function CopilotChatPopup() {
           }
 
           console.log('[BOT ACTIVITY] -> KEPT as real message');
-          // Real bot message — stop waiting
           setIsWaiting(false);
-        }
-      }
 
-      // Remove "Website" from suggested actions
-      if (
-        action.type === 'DIRECT_LINE/INCOMING_ACTIVITY' &&
-        action.payload?.activity?.suggestedActions?.actions
-      ) {
-        const filtered = action.payload.activity.suggestedActions.actions.filter(
-          (a: any) => a.title?.toLowerCase() !== 'website'
-        );
-        return next({
-          ...action,
-          payload: {
-            ...action.payload,
-            activity: {
-              ...action.payload.activity,
-              suggestedActions: {
-                ...action.payload.activity.suggestedActions,
-                actions: filtered,
+          // Strip "Website" from suggested actions if present, then pass through
+          const suggestedActions = activity.suggestedActions;
+          if (suggestedActions?.actions) {
+            const filtered = suggestedActions.actions.filter(
+              (a: any) => a.title?.toLowerCase() !== 'website'
+            );
+            return next({
+              ...action,
+              payload: {
+                ...action.payload,
+                activity: {
+                  ...activity,
+                  suggestedActions: { ...suggestedActions, actions: filtered },
+                },
               },
-            },
-          },
-        });
+            });
+          }
+
+          return next(action);
+        }
       }
 
       return next(action);
