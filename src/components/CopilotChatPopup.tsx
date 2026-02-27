@@ -34,10 +34,11 @@ const WEBCHAT_CSS = `
     align-items: center !important;
     width: fit-content !important;
     max-width: 85% !important;
-    min-height: 44px !important; /* medium height */
+    min-height: 44px !important;   /* medium bubble height */
+    min-width: 72px !important;    /* IMPORTANT: gives dots room */
+    box-sizing: border-box !important;
+    overflow: visible !important;
     box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important;
-
-    position: relative !important;
 
     /* Draw 3 dots using background layers (CSP-safe: no data: urls) */
     background-image:
@@ -47,36 +48,30 @@ const WEBCHAT_CSS = `
     background-repeat: no-repeat !important;
     background-size: 8px 8px, 8px 8px, 8px 8px !important;
 
-    /* Initial positions for 3 dots */
-    background-position: 16px 50%, 28px 50%, 40px 50% !important;
+    /* Keep dots well inside the bubble */
+    background-position: 20px 50%, 34px 50%, 48px 50% !important;
 
     animation: typingDots 1.2s infinite ease-in-out !important;
   }
 
-  /* Hide whatever WebChat puts inside the typing indicator so only our dots show */
+  /* DO NOT collapse children to 0 (that makes the bubble too narrow). */
+  /* Instead, keep a hidden spacer so the bubble always fits the dots. */
   .webchat__typing-indicator > * {
     opacity: 0 !important;
-    width: 0 !important;
-    height: 0 !important;
+    width: 44px !important;     /* spacer width */
+    height: 16px !important;    /* spacer height */
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
     overflow: hidden !important;
   }
 
   @keyframes typingDots {
-    0%, 100% {
-      background-position: 16px 50%, 28px 50%, 40px 50%;
-    }
-    20% {
-      background-position: 16px 35%, 28px 50%, 40px 50%;
-    }
-    40% {
-      background-position: 16px 50%, 28px 35%, 40px 50%;
-    }
-    60% {
-      background-position: 16px 50%, 28px 50%, 40px 35%;
-    }
-    80% {
-      background-position: 16px 50%, 28px 50%, 40px 50%;
-    }
+    0%, 100% { background-position: 20px 50%, 34px 50%, 48px 50%; }
+    20%      { background-position: 20px 35%, 34px 50%, 48px 50%; }
+    40%      { background-position: 20px 50%, 34px 35%, 48px 50%; }
+    60%      { background-position: 20px 50%, 34px 50%, 48px 35%; }
+    80%      { background-position: 20px 50%, 34px 50%, 48px 50%; }
   }
 `;
 
