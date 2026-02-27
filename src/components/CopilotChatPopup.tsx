@@ -41,7 +41,7 @@ const DOTS_CSS = `
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Keep WebChat's own typing indicator hidden (we use our own dots) */
+  /* Hide WebChat's built-in typing indicator (we render our own dots bubble) */
   .webchat__typing-indicator { display: none !important; }
 `;
 
@@ -56,15 +56,14 @@ export default function CopilotChatPopup() {
   const [chatEnded, setChatEnded] = useState(false);
   const [sessionId, setSessionId] = useState(0);
 
-  // WebChat DOM ref + scroll/composer measurements
+  // For dots positioning + consistent spacing
   const webchatRef = useRef<HTMLDivElement | null>(null);
-  const [isNearBottom, setIsNearBottom] = useState(true);
   const [composerHeight, setComposerHeight] = useState(60);
 
-  // Tune these for spacing
-  const CHAT_PAD = 12; // left padding for dots bubble
-  const GAP = 12; // vertical gap above input
-  const DOTS_RESERVE = 64; // transcript bottom padding while waiting
+  const CHAT_PAD = 12; // left padding to align with bubbles
+  const GAP = 12; // consistent vertical spacing above composer
+  const DOTS_HEIGHT = 44; // approx height of dots bubble
+  const DOTS_RESERVE = DOTS_HEIGHT + GAP * 2; // reserve space so dots never cover messages
 
   const CTA_BTN =
     'rounded-full bg-[#cca249] text-white font-semibold shadow hover:opacity-90 transition-opacity';
@@ -95,10 +94,11 @@ export default function CopilotChatPopup() {
           const attachments = Array.isArray(activity.attachments) ? activity.attachments : [];
           const suggested = activity.suggestedActions?.actions ?? [];
 
+          // Copilot may respond via attachments (Adaptive Cards) or suggested actions with empty text.
           const hasRenderableContent =
             text.length > 0 || attachments.length > 0 || suggested.length > 0;
 
-          // Accent-friendly without Unicode property escapes
+          // Accent-friendly check (no unicode property escapes needed)
           const hasRealChars = /[A-Za-z0-9\u00C0-\u024F]/.test(text);
 
           // Only treat as placeholder if there are NO attachments/actions and text is tiny + non-wordy
@@ -108,19 +108,8 @@ export default function CopilotChatPopup() {
             !hasRealChars &&
             text.length <= 15;
 
-          console.log('[BOT ACTIVITY]', {
-            text,
-            textLen: text.length,
-            attachments: attachments.length,
-            suggested: suggested.length,
-            firstAttachmentType: attachments[0]?.contentType,
-          });
-
-          // Drop truly empty/placeholder messages
-          if (!hasRenderableContent || isPlaceholder) {
-            console.log('[BOT ACTIVITY] -> DROPPED as placeholder');
-            return;
-          }
+          // Drop truly empty/placeholder activities
+          if (!hasRenderableContent || isPlaceholder) return;
 
           // ✅ Real reply (text OR card OR suggested actions)
           setIsWaiting(false);
@@ -148,7 +137,7 @@ export default function CopilotChatPopup() {
     });
   }, [sessionId]);
 
-  // Fade-in bot messages (correct render signature)
+  // ✅ Correct activityMiddleware wrapper (preserves render args)
   const activityMiddleware = useMemo(() => {
     return () => (next: any) => (card: any) => {
       const activity = card?.activity;
@@ -166,7 +155,46 @@ export default function CopilotChatPopup() {
     };
   }, []);
 
-  // Fetch token when opened
+  // Measure composer height so dots spacing stays consistent
+  useEffect(() => {
+    if (!open) return;
+
+    const root = webchatRef.current;
+    if (!root) return;
+
+    const measure = () => {
+      const composer = root.querySelector('.webchat__send-box') as HTMLElement | null;
+      if (!composer) return;
+
+      const h = Math.ceil(composer.getBoundingClientRect().height);
+      if (h && h !== composerHeight) setComposerHeight(h);
+    };
+
+    measure();
+
+    const ro =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(() => {
+            measure();
+          })
+        : null;
+
+    const composer = root.querySelector('.webchat__send-box') as HTMLElement | null;
+    if (ro && composer) ro.observe(composer);
+
+    const mo = new MutationObserver(() => measure());
+    mo.observe(root, { childList: true, subtree: true });
+
+    window.addEventListener('resize', measure);
+
+    return () => {
+      window.removeEventListener('resize', measure);
+      mo.disconnect();
+      ro?.disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, sessionId, chatEnded]);
+
   useEffect(() => {
     if (!open) return;
     if (chatEnded) return;
@@ -208,7 +236,6 @@ export default function CopilotChatPopup() {
     };
   }, [open, chatEnded, token, sessionId]);
 
-  // ESC closes chat
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -222,53 +249,6 @@ export default function CopilotChatPopup() {
     if (!token) return null;
     return createDirectLine({ token });
   }, [token]);
-
-  // Detect transcript scroll position + measure composer height
-  useEffect(() => {
-    if (!open) return;
-
-    const root = webchatRef.current;
-    if (!root) return;
-
-    const transcript = root.querySelector(
-      '.webchat__basic-transcript__scrollable'
-    ) as HTMLElement | null;
-
-    const composer = root.querySelector('.webchat__send-box') as HTMLElement | null;
-
-    if (!transcript) return;
-
-    const computeNearBottom = () => {
-      const distanceFromBottom =
-        transcript.scrollHeight - (transcript.scrollTop + transcript.clientHeight);
-      setIsNearBottom(distanceFromBottom < 120);
-    };
-
-    const measureComposer = () => {
-      if (!composer) return;
-      const h = composer.getBoundingClientRect().height;
-      if (h) setComposerHeight(h);
-    };
-
-    computeNearBottom();
-    measureComposer();
-
-    transcript.addEventListener('scroll', computeNearBottom, { passive: true });
-    window.addEventListener('resize', measureComposer);
-
-    // When WebChat adds messages, re-check + re-measure
-    const mo = new MutationObserver(() => {
-      computeNearBottom();
-      measureComposer();
-    });
-    mo.observe(transcript, { childList: true, subtree: true });
-
-    return () => {
-      transcript.removeEventListener('scroll', computeNearBottom);
-      window.removeEventListener('resize', measureComposer);
-      mo.disconnect();
-    };
-  }, [open, sessionId, chatEnded, token]);
 
   const sendQuick = (text: string) => {
     setHasInteracted(true);
@@ -429,12 +409,12 @@ export default function CopilotChatPopup() {
                 </div>
               )}
 
-              {/* WebChat + dots bubble */}
+              {/* WebChat + fixed dots bubble */}
               {directLine && !loading && !err && (
                 <div ref={webchatRef} className="flex-1 min-h-0 relative">
                   <style>{DOTS_CSS}</style>
 
-                  {/* Reserve space in transcript while waiting (prevents overlay) */}
+                  {/* Reserve space at bottom while waiting so dots never cover the last messages */}
                   <style>
                     {isWaiting
                       ? `
@@ -481,8 +461,8 @@ export default function CopilotChatPopup() {
                     }}
                   />
 
-                  {/* Dots bubble — only show if waiting AND user is near bottom */}
-                  {isWaiting && isNearBottom && (
+                  {/* Fixed dots bubble — stays in place while loading, disappears when bot responds */}
+                  {isWaiting && (
                     <div
                       style={{
                         position: 'absolute',
