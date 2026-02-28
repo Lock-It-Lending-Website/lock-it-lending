@@ -495,16 +495,6 @@ export const teamMembers: TeamMember[] = [
       'https://swifthomeloans.my1003app.com/1705055/register?POSAppLanguage=ES&time=1770657895904',
   },
   {
-    name: 'Jason Quick',
-    title: 'Mortgage Recruiter',
-    email: 'Jason.q@lockitlending.com',
-    phone: '(832) 626-2199',
-    image: `${base}/team/Jason Quick.jpg`,
-    slug: 'Jason-Quick',
-    team: 'vortex',
-    hideCtaBanner: true,
-  },
-  {
     name: 'Laura Hidalgo',
     title: 'Talent Acquisition Specialist',
     email: 'laura.h@lockitlending.com',

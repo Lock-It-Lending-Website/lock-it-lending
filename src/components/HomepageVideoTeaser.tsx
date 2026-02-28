@@ -25,11 +25,11 @@ const videos: VideoItem[] = [
     videoSrc: '/videos/kenton/Kent - FHA Loan revised.mp4',
   },
   {
-    title: 'What is HELOC?',
-    speaker: 'Kevin',
-    language: 'Vietnamese',
-    thumbnail: '/video thumbnails/kevin/heloc.png',
-    videoSrc: '/videos/kevin/Kevin - HELOC.mp4',
+    title: 'DPA Explained',
+    speaker: 'Chris & Miguel',
+    language: 'English',
+    thumbnail: '/video thumbnails/chris/chris-miguel.png',
+    videoSrc: '/videos/chris/Entertaining video - Chris & Miguel 1.2 4.mp4',
   },
 ];
 
