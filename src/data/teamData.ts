@@ -228,6 +228,30 @@ export const teamMembers: TeamMember[] = [
     hideCtaBanner: true,
   },
   {
+    name: 'Claudia Ceballos',
+    title: 'Independent Loan Officer',
+    nmls: '#1519916',
+    email: 'claudia.c@lockitlending.com',
+    phone: '(832) 279-1434',
+    image: `${base}/team/Claudia Ceballos web size.jpg`,
+    slug: 'Claudia-Ceballos',
+    team: 'vortex',
+    hideCtaBanner: true,
+  },
+  {
+    name: 'Andy Vo',
+    title: 'Independent Loan Officer',
+    nmls: '#2706461',
+    email: 'claudia.c@lockitlending.com',
+    phone: '(818) 448-1708',
+    image: `${base}/team/andy_vo.jpg`,
+    slug: 'Andy-Vo',
+    team: 'vortex',
+    applyLink: 'https://swifthomeloans.my1003app.com/2706461/register?time=1770662506474',
+    applyLinkEs:
+      'https://swifthomeloans.my1003app.com/2706461/register?POSAppLanguage=ES&time=1770662512794',
+  },
+  {
     name: 'Kenton Wilson',
     title: 'Loan Officer',
     nmls: '#2600652',
@@ -517,6 +541,14 @@ export const teamMembers: TeamMember[] = [
     applyLinkEs:
       'https://swifthomeloans.my1003app.com/1223176/register?POSAppLanguage=ES&time=1770663898930',
     videoUrl: 'https://www.youtube.com/embed/9fEkILWq83c',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'DPA Explained',
+        videoSrc: '/videos/chris/Entertaining video - Chris & Miguel 1.2 4.mp4',
+        thumbnailSrc: '/video thumbnails/chris/chris-miguel.png',
+      },
+    ],
   },
   {
     name: 'Miguel Gomez',
@@ -530,5 +562,13 @@ export const teamMembers: TeamMember[] = [
     applyLink: 'https://swifthomeloans.my1003app.com/1715476/register?time=1770662794162',
     applyLinkEs:
       'https://swifthomeloans.my1003app.com/1715476/register?POSAppLanguage=ES&time=1770662930833',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'DPA Explained',
+        videoSrc: '/videos/miguel/Entertaining video - Chris & Miguel 1.2 4.mp4',
+        thumbnailSrc: '/video thumbnails/miguel/chris-miguel.png',
+      },
+    ],
   },
 ];
