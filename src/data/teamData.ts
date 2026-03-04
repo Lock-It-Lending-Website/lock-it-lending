@@ -242,7 +242,7 @@ export const teamMembers: TeamMember[] = [
     name: 'Andy Vo',
     title: 'Independent Loan Officer',
     nmls: '#2706461',
-    email: 'claudia.c@lockitlending.com',
+    email: 'andy.v@lockitlending.com',
     phone: '(818) 448-1708',
     image: `${base}/team/andy_vo.jpg`,
     slug: 'Andy-Vo',
