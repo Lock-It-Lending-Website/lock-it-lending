@@ -26,7 +26,8 @@ module.exports = async function handler(req, res) {
 
   try {
     const isAllowed = setCORS();
-    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
 
     if (!isAllowed && origin) {
       return res.status(403).json({ error: 'Forbidden origin', origin });
