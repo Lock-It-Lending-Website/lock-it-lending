@@ -136,6 +136,32 @@ export const teamMembers: TeamMember[] = [
     applyLinkEs:
       'https://swifthomeloans.my1003app.com/2008554/register?POSAppLanguage=ES&time=1770666478323',
     videoUrl: 'https://www.youtube.com/embed/TsZf7ZCPeks',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'Vay FHA Không Cần Trả Trước',
+        videoSrc: '/videos/ann/Ann-FHA loan with no down payment-VN.mp4',
+        thumbnailSrc: '/video thumbnails/ann/Ann-FHA loan with no down payment-VN.png',
+      },
+      {
+        id: 'video-2',
+        title: 'Tiền Trả Trước Là Gì',
+        videoSrc: '/videos/ann/Ann-down payment-VN.mp4',
+        thumbnailSrc: '/video thumbnails/ann/Ann-down payment-VN.png',
+      },
+      {
+        id: 'video-3',
+        title: 'Giải Thích CTC',
+        videoSrc: '/videos/ann/Ann-CTC-VN.mp4',
+        thumbnailSrc: '/video thumbnails/ann/Ann-CTC-VN.png',
+      },
+      {
+        id: 'video-4',
+        title: 'Giải Thích PITIA',
+        videoSrc: '/videos/ann/Ann-PITIA-VN.mp4',
+        thumbnailSrc: '/video thumbnails/ann/Ann-PITIA-VN.png',
+      },
+    ],
   },
   {
     name: 'Lyn Ha',
@@ -150,6 +176,26 @@ export const teamMembers: TeamMember[] = [
     applyLink: 'https://swifthomeloans.my1003app.com/2051826/register?time=1770666763467',
     applyLinkEs: 'https://swifthomeloans.my1003app.com/2051826/register?POSAppLanguage=ES',
     videoUrl: 'https://www.youtube.com/embed/p1ka9yrrCEc',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'Giải thích về Fix & Flip',
+        videoSrc: '/videos/lyn/Lyn-FixNFlip-VN.mp4',
+        thumbnailSrc: '/video thumbnails/lyn/Lyn-FixNFlip-VN.png',
+      },
+      {
+        id: 'video-2',
+        title: 'Chấm Dứt Hợp Đồng',
+        videoSrc: '/videos/lyn/Lynn- Terminate Contract-VN.mp4',
+        thumbnailSrc: '/video thumbnails/lyn/Lynn- Terminate Contract-VN.png',
+      },
+      {
+        id: 'video-3',
+        title: 'Hỗ Trợ Trả Trước (DPA)',
+        videoSrc: '/videos/lyn/Lyn - DPA-VN.mp4',
+        thumbnailSrc: '/video thumbnails/lyn/Lyn - DPA-VN.png',
+      },
+    ],
   },
   {
     name: 'Kaden Nguyen',
@@ -165,6 +211,44 @@ export const teamMembers: TeamMember[] = [
     applyLinkEs:
       'https://swifthomeloans.my1003app.com/2117639/register?POSAppLanguage=ES&time=1770666889613',
     videoUrl: 'https://www.youtube.com/embed/fAZDxq-ya58',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'Người Mua Nhà Lần Đầu',
+        videoSrc: '/videos/kaden/kaden-FirstTimeHomebuyer-VN.mp4',
+        thumbnailSrc: '/video thumbnails/kaden/kaden-FirstTimeHomebuyer-VN.png',
+      },
+      {
+        id: 'video-2',
+        title: 'Tại Sao Cần Được Phê Duyệt Trước',
+        videoSrc: '/videos/kaden/kaden-WhyNeedPreapproval-VN.mp4',
+        thumbnailSrc: '/video thumbnails/kaden/kaden-WhyNeedPreapproval-VN.png',
+      },
+      {
+        id: 'video-3',
+        title: 'Khoản Vay Non-QM',
+        videoSrc: '/videos/kaden/kaden-NonQMLoans-VN.mp4',
+        thumbnailSrc: '/video thumbnails/kaden/kaden-NonQMLoans-VN.png',
+      },
+      {
+        id: 'video-4',
+        title: 'Trả Trước 1%',
+        videoSrc: '/videos/kaden/kaden-1PercentDown-VN.mp4',
+        thumbnailSrc: '/video thumbnails/kaden/kaden-1PercentDown-VN.png',
+      },
+      {
+        id: 'video-5',
+        title: 'Dành Cho Người Mua Nhà Mới',
+        videoSrc: '/videos/kaden/kaden-New Homebuyers-VN.mp4',
+        thumbnailSrc: '/video thumbnails/kaden/kaden-New Homebuyers-VN.png',
+      },
+      {
+        id: 'video-6',
+        title: 'Giải Thích về HELOC',
+        videoSrc: '/videos/kaden/kaden-HELOC-VN.mp4',
+        thumbnailSrc: '/video thumbnails/kaden/kaden-HELOC-VN.png',
+      },
+    ],
   },
   {
     name: 'Kevin Huynh',
@@ -183,9 +267,21 @@ export const teamMembers: TeamMember[] = [
     clips: [
       {
         id: 'video-1',
-        title: 'What is HELOC?',
-        videoSrc: '/videos/kevin/Kevin - HELOC.mp4',
-        thumbnailSrc: '/video thumbnails/kevin/heloc.png',
+        title: 'Giải thích về HELOC',
+        videoSrc: '/videos/kevin/Kevin - HELOC-VN.mp4',
+        thumbnailSrc: '/video thumbnails/kevin/Kevin - HELOC-VN.png',
+      },
+      {
+        id: 'video-2',
+        title: 'HELOC in 24 Hours',
+        videoSrc: '/videos/kevin/Kevin - 24hrs HELOC.mp4',
+        thumbnailSrc: '/video thumbnails/kevin/Kevin - 24hrs HELOC.png',
+      },
+      {
+        id: 'video-3',
+        title: 'HELOC với Hanh',
+        videoSrc: '/videos/kevin/kevin-hanh-HELOC-VN.mp4',
+        thumbnailSrc: '/video thumbnails/kevin/kevin-hanh-HELOC-VN.png',
       },
     ],
   },
@@ -201,6 +297,20 @@ export const teamMembers: TeamMember[] = [
     bio: '',
     applyLink: 'https://swifthomeloans.my1003app.com/1406378/register',
     applyLinkEs: 'https://swifthomeloans.my1003app.com/1406378/register?POSAppLanguage=ES',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'UWM Live Event',
+        videoSrc: '/videos/hanh/Hanh-UWM Live.mp4',
+        thumbnailSrc: '/video thumbnails/hanh/Hanh-UWM Live.png',
+      },
+      {
+        id: 'video-2',
+        title: 'Trợ Cấp $50K - Thành Phố Houston',
+        videoSrc: '/videos/hanh/Hanh-50k-GrantCityofHouston-VN.mp4',
+        thumbnailSrc: '/video thumbnails/hanh/Hanh-50k-GrantCityofHouston-VN.png',
+      },
+    ],
   },
   {
     name: 'Annie Tran',
@@ -278,6 +388,24 @@ export const teamMembers: TeamMember[] = [
         videoSrc: '/videos/kenton/Kent - FHA Loan revised.mp4',
         thumbnailSrc: '/video thumbnails/Kenton/size tiktok.png',
       },
+      {
+        id: 'video-3',
+        title: 'Grants and Local Incentives',
+        videoSrc: '/videos/kenton/Kenton-GrantsandLocalIncentives.mp4',
+        thumbnailSrc: '/video thumbnails/Kenton/Kenton-GrantsandLocalIncentives.png',
+      },
+      {
+        id: 'video-4',
+        title: '1% Down Program',
+        videoSrc: '/videos/kenton/Kenton-1Down.mp4',
+        thumbnailSrc: '/video thumbnails/Kenton/Kenton-1Down.png',
+      },
+      {
+        id: 'video-5',
+        title: 'Get to Know Kenton',
+        videoSrc: '/videos/kenton/Kent-GetToKnow.mp4',
+        thumbnailSrc: '/video thumbnails/Kenton/Kent-GetToKnow.png',
+      },
     ],
   },
   {
@@ -300,6 +428,18 @@ export const teamMembers: TeamMember[] = [
         title: 'Home Equity Line of Credit',
         videoSrc: '/videos/jake/Jake-heloc.mp4',
         thumbnailSrc: '/video thumbnails/jake/jake-heloc.png',
+      },
+      {
+        id: 'video-2',
+        title: 'First Time Homebuyer Event',
+        videoSrc: '/videos/jake/Jake-FTHB-event video.mp4',
+        thumbnailSrc: '/video thumbnails/jake/Jake-FTHB-event video.png',
+      },
+      {
+        id: 'video-3',
+        title: 'Clean Hands & High Credit',
+        videoSrc: '/videos/jake/Kent-Jake-Clean hands, high credit.mp4',
+        thumbnailSrc: '/video thumbnails/jake/Kent-Jake-Clean hands, high credit.png',
       },
     ],
   },
@@ -330,6 +470,24 @@ export const teamMembers: TeamMember[] = [
         videoSrc: '/videos/maria/Maria x Valeria.mp4',
         thumbnailSrc: '/video thumbnails/maria/mariaxvaleria.png',
       },
+      {
+        id: 'video-3',
+        title: 'Programa de 1% de Entrada',
+        videoSrc: '/videos/maria/Maria-1 down-ES.mp4',
+        thumbnailSrc: '/video thumbnails/maria/Maria-1 down-ES.png',
+      },
+      {
+        id: 'video-4',
+        title: 'Sesión de Entrenamiento con Jake',
+        videoSrc: '/videos/maria/MariaJake training session 2.mp4',
+        thumbnailSrc: '/video thumbnails/maria/MariaJake training session 2.png',
+      },
+      {
+        id: 'video-5',
+        title: 'Consejos para Compradores de Casa',
+        videoSrc: '/videos/maria/Maria-HB-tips.mp4',
+        thumbnailSrc: '/video thumbnails/maria/Maria-HB-tips.png',
+      },
     ],
   },
   {
@@ -345,6 +503,20 @@ export const teamMembers: TeamMember[] = [
     applyLink: 'https://swifthomeloans.my1003app.com/1053510/register?time=1770669068023',
     applyLinkEs:
       'https://swifthomeloans.my1003app.com/2661107/register?POSAppLanguage=ES&time=1770669282868',
+    clips: [
+      {
+        id: 'video-1',
+        title: 'Lừa Đảo Thanh Toán Thế Chấp 2 Tuần',
+        videoSrc: '/videos/celene/Celene-Mortgage-Bi-WeeklyPayment-Scam-VN.mp4',
+        thumbnailSrc: '/video thumbnails/celene/Celene-Mortgage-Bi-WeeklyPayment-Scam-VN.png',
+      },
+      {
+        id: 'video-2',
+        title: 'Câu Chuyện Vay 50 Năm',
+        videoSrc: '/videos/celene/Celene-50-year-loan-story-VN.mp4',
+        thumbnailSrc: '/video thumbnails/celene/Celene-50-year-loan-story-VN.png',
+      },
+    ],
   },
   {
     name: 'Beatrice Fleming',
@@ -373,7 +545,7 @@ export const teamMembers: TeamMember[] = [
       {
         id: 'video-1',
         title: 'Shopping Around',
-        videoSrc: '/videos/aron/Aron-Shopping around, we beat t.mp4',
+        videoSrc: '/videos/aron/Aron-WhyWorkWithUs.mp4',
         thumbnailSrc: '/video thumbnails/aron/Aron-shoppingaround.png',
       },
       {
@@ -387,6 +559,18 @@ export const teamMembers: TeamMember[] = [
         title: 'Préstamos FHA vs. Préstamos Convencionales',
         videoSrc: '/videos/aron/Aron - FHA or Conventional Loan.mp4',
         thumbnailSrc: '/video thumbnails/aron/fha-conventional.png',
+      },
+      {
+        id: 'video-4',
+        title: '¿Por Qué Trabajar Con Nosotros?',
+        videoSrc: '/videos/aron/Aron-WhyWorkWithUs-ES.mp4',
+        thumbnailSrc: '/video thumbnails/aron/Aron-WhyWorkWithUs-ES.png',
+      },
+      {
+        id: 'video-5',
+        title: 'First Time Homebuyer Event',
+        videoSrc: '/videos/aron/Aron-FirstTimeHomebuyerEvent.mp4',
+        thumbnailSrc: '/video thumbnails/aron/Aron-FirstTimeHomebuyerEvent.png',
       },
     ],
   },
@@ -456,6 +640,18 @@ export const teamMembers: TeamMember[] = [
         videoSrc: '/videos/valeria/Valerina - Credit Score.mp4',
         thumbnailSrc: '/video thumbnails/valeria/valeria-interestandcredit.png',
       },
+      {
+        id: 'video-4',
+        title: 'A Day at the Office',
+        videoSrc: '/videos/valeria/Valeria-Office.mp4',
+        thumbnailSrc: '/video thumbnails/valeria/Valeria-Office.png',
+      },
+      {
+        id: 'video-5',
+        title: '¡Feliz Navidad!',
+        videoSrc: '/videos/valeria/Valeria-Gabriel-MerryChristmas-ES.mp4',
+        thumbnailSrc: '/video thumbnails/valeria/Valeria-Gabriel-MerryChristmas-ES.png',
+      },
     ],
   },
 
@@ -492,6 +688,12 @@ export const teamMembers: TeamMember[] = [
         title: 'DSCR Loans Explained',
         videoSrc: '/videos/charlene/Charlene - DSCR loan.mp4',
         thumbnailSrc: '/video thumbnails/charlene/Charlene-DSCRloan.png',
+      },
+      {
+        id: 'video-3',
+        title: 'LIL Promo',
+        videoSrc: '/videos/charlene/Charlene White-Promo.mp4',
+        thumbnailSrc: '/video thumbnails/charlene/Charlene White-Promo.png',
       },
     ],
   },
@@ -568,6 +770,53 @@ export const teamMembers: TeamMember[] = [
         title: 'DPA Explained',
         videoSrc: '/videos/miguel/Entertaining video - Chris & Miguel 1.2 4.mp4',
         thumbnailSrc: '/video thumbnails/miguel/chris-miguel.png',
+      },
+    ],
+  },
+  {
+    name: 'Mellody Reyes',
+    title: 'Independent Loan Officer',
+    email: 'mellody.r@lockitlending.com',
+    phone: '(832) 332-5164',
+    nmls: '#1435824',
+    image: `${base}/team/Mellody Reyes websize.jpg`,
+    slug: 'Mellody-Reyes',
+    team: 'vortex',
+    hideCtaBanner: true,
+  },
+  {
+    name: 'Melissa Ospina',
+    title: 'Independent Loan Officer',
+    email: 'melissa.o@lockitlending.com',
+    phone: '(713) 677-4884',
+    nmls: '#2128784',
+    image: `${base}/team/Melissa Ospina websize.jpg`,
+    slug: 'Melissa-Ospina',
+    team: 'vortex',
+    hideCtaBanner: true,
+  },
+  {
+    name: 'Luke Roberts',
+    title: 'Loan Office',
+    email: 'luke.ro@lockitlending.com',
+    phone: '(469) 933-0878',
+    nmls: '#2630023',
+    image: `${base}/team/Luke-Roberts.png`,
+    slug: 'Luke-Roberts',
+    team: 'vortex',
+    hideCtaBanner: true,
+    clips: [
+      {
+        id: 'video-1',
+        title: 'Client Success Story #1',
+        videoSrc: '/videos/luke/Luke-ClientStory.mp4',
+        thumbnailSrc: '/video thumbnails/luke/Luke-ClientStory.png',
+      },
+      {
+        id: 'video-2',
+        title: 'Client Success Story #2',
+        videoSrc: '/videos/luke/Luke-ClientSuccessStory.mp4',
+        thumbnailSrc: '/video thumbnails/luke/Luke-ClientSuccessStory.png',
       },
     ],
   },
