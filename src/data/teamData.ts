@@ -585,17 +585,6 @@ export const teamMembers: TeamMember[] = [
     hideCtaBanner: true,
   },
   {
-    name: 'Gabriel Melgar',
-    title: 'Junior Loan Advisor',
-    email: 'gabriel.m@lockitlending.com',
-    phone: '(469) 933-0878',
-    nmls: '#2389416',
-    image: `${base}/team/Gabriel Melgar websize.png`,
-    slug: 'gabriel-melgar',
-    team: 'vortex',
-    hideCtaBanner: true,
-  },
-  {
     name: 'Courtney Meekins',
     title: 'Retail Loan Officer',
     email: 'courtney.m@lockitlending.com',
