@@ -585,20 +585,6 @@ export const teamMembers: TeamMember[] = [
     hideCtaBanner: true,
   },
   {
-    name: 'Courtney Meekins',
-    title: 'Retail Loan Officer',
-    email: 'courtney.m@lockitlending.com',
-    phone: '(346) 474-6555',
-    nmls: '#2721865',
-    image: `${base}/team/Courtney Meekins websize.jpg`,
-    slug: 'courtney-meekins',
-    team: 'vortex',
-    applyLink: 'https://swifthomeloans.my1003app.com/2721865/register?time=1770668428084',
-    applyLinkEs:
-      'https://swifthomeloans.my1003app.com/2721865/register?POSAppLanguage=ES&time=1770668435477',
-    videoUrl: 'https://www.youtube.com/embed/fkJ7yrK7tpw',
-  },
-  {
     name: 'Valeria Laverde',
     title: 'Independent Loan Officer',
     email: 'valeria.l@lockitlending.com',
